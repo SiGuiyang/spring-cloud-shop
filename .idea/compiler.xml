@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="shop-activity" />
+        <module name="shop-cart" />
+        <module name="shop-common" />
+        <module name="shop-goods" />
+        <module name="shop-manage" />
+        <module name="shop-model" />
+        <module name="shop-mq" />
+        <module name="shop-order" />
+        <module name="shop-server" />
+        <module name="shop-settlement" />
+        <module name="shop-user" />
+        <module name="shop-zuul" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="shop-activity" target="1.8" />
+      <module name="shop-cart" target="1.8" />
+      <module name="shop-common" target="1.8" />
+      <module name="shop-goods" target="1.8" />
+      <module name="shop-manage" target="1.8" />
+      <module name="shop-mapper" target="1.8" />
+      <module name="shop-model" target="1.8" />
+      <module name="shop-mq" target="1.8" />
+      <module name="shop-order" target="1.8" />
+      <module name="shop-server" target="1.8" />
+      <module name="shop-settlement" target="1.8" />
+      <module name="shop-user" target="1.8" />
+      <module name="shop-zuul" target="1.8" />
+      <module name="spring-cloud-shop" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

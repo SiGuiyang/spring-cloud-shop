@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/shop-activity/shop-activity.iml" filepath="$PROJECT_DIR$/shop-activity/shop-activity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-cart/shop-cart.iml" filepath="$PROJECT_DIR$/shop-cart/shop-cart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-common/shop-common.iml" filepath="$PROJECT_DIR$/shop-common/shop-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-goods/shop-goods.iml" filepath="$PROJECT_DIR$/shop-goods/shop-goods.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-manage/shop-manage.iml" filepath="$PROJECT_DIR$/shop-manage/shop-manage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-model/shop-model.iml" filepath="$PROJECT_DIR$/shop-model/shop-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-mq/shop-mq.iml" filepath="$PROJECT_DIR$/shop-mq/shop-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-order/shop-order.iml" filepath="$PROJECT_DIR$/shop-order/shop-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-server/shop-server.iml" filepath="$PROJECT_DIR$/shop-server/shop-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-settlement/shop-settlement.iml" filepath="$PROJECT_DIR$/shop-settlement/shop-settlement.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-user/shop-user.iml" filepath="$PROJECT_DIR$/shop-user/shop-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-zuul/shop-zuul.iml" filepath="$PROJECT_DIR$/shop-zuul/shop-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/spring-cloud-shop.iml" filepath="$PROJECT_DIR$/.idea/spring-cloud-shop.iml" />
+    </modules>
+  </component>
+</project>
