@@ -1,3 +1,5 @@
 spring:
   profiles:
     active: dev
+  application:
+    name: shop-goods

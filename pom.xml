@@ -131,10 +131,11 @@
         <module>shop-cart</module>
         <module>shop-common</module>
         <module>shop-goods</module>
-        <module>shop-order</module>
         <module>shop-manage</module>
         <module>shop-model</module>
         <module>shop-mq</module>
+        <module>shop-order</module>
+        <module>shop-seller</module>
         <module>shop-server</module>
         <module>shop-settlement</module>
         <module>shop-user</module>
