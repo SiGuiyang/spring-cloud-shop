@@ -20,19 +20,41 @@ public class RedisService {
 
     /**
      * set
-     * @param key
-     * @param value
-     * @param time
+     *
+     * @param key   redis key
+     * @param value 存储redis 的值
+     * @param time  时间 秒
      */
     public void set(String key, Serializable value, long time) {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
     }
 
     /**
+     * 设置hash 值
+     *
+     * @param key redis key
+     */
+    public void setFromHash(String key, Serializable value) {
+        redisTemplate.opsForHash().put(key, key.hashCode(), value);
+    }
+
+    /**
+     * 从hash 中获取
+     *
+     * @param key redis key
+     */
+    public <T extends Serializable> T getFromHash(String key) {
+        return (T) redisTemplate.opsForHash().get(key, key.hashCode());
+    }
+
+    public void delFromHash(String key) {
+        redisTemplate.opsForHash().delete(key, key.hashCode());
+    }
+
+    /**
      * get
-     * @param key
-     * @param <T>
-     * @return
+     *
+     * @param key redis key
      */
     public <T extends Serializable> T get(String key) {
         return (T) redisTemplate.opsForValue().get(key);
@@ -40,11 +62,12 @@ public class RedisService {
 
 
     /**
-     * del
-     * @param key
+     * del 删除
+     *
+     * @param key redis key
      */
     public void del(String key) {
         redisTemplate.delete(key);
     }
-    
+
 }

@@ -1,10 +1,12 @@
-eureka:
-  instance:
-    hostname: ${spring.application.name}
-  client:
-    service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-    name: shop-server
-    port: 8761
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.199.102:3306/pay?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

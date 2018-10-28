@@ -1,5 +1,5 @@
 spring:
-  profiles:
-    active: dev
   application:
     name: shop-user
+  profiles:
+    active: dev

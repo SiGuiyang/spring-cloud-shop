@@ -8,3 +8,19 @@ eureka:
   node1:
     name: shop-server
     port: 8761
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 12345678
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    host: 127.0.0.1
+    port: 6379

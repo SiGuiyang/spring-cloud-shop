@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -29,7 +30,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .forCodeGeneration(true)
                 .pathMapping("/")
-                .select()
+                .select().apis(RequestHandlerSelectors.basePackage("quick.pager.shop.user.controller"))
                 .paths(any())
                 .build()
                 .apiInfo(apiInfo());
