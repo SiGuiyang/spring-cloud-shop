@@ -3,6 +3,8 @@ package quick.pager.shop.user.controller;
 import cn.hutool.core.util.RandomUtil;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,8 @@ public class TestController {
 
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @PostMapping("/test/sendSms")
     public Response<String> testSendSms(@RequestParam("phone") String phone, @RequestParam("event") String event) {
@@ -33,6 +37,11 @@ public class TestController {
 
         }
         return new Response<>(code);
+    }
+
+    @GetMapping("/test/pub")
+    public void testPub(){
+        stringRedisTemplate.convertAndSend("hello", "I am come from redis message!");
     }
 
 

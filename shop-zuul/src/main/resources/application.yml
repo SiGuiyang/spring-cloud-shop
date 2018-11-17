@@ -3,3 +3,31 @@ spring:
     active: dev
   application:
     name: shop-zuul
+zuul:
+  routes:
+    shop-activity:
+      path: /activity/**
+      serviceId: shop-activity
+    shop-cart:
+      path: /cart/**
+      serviceId: shop-cart
+    shop-goods:
+      path: /goods/**
+      serviceId: shop-goods
+    shop-order:
+      path: /order/**
+      serviceId: shop-order
+    shop-seller:
+      path: /seller/**
+      serviceId: shop-seller
+    shop-settlement:
+      path: /settlement/**
+      serviceId: shop-settlement
+    shop-user:
+      path: /user/**
+      serviceId: shop-user
+
+
+
+
+

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import quick.pager.shop.user.redis.RedisService;
 import quick.pager.shop.user.request.ForgetPasswordRequest;
 import quick.pager.shop.user.request.LoginRequest;
 import quick.pager.shop.user.request.SubscribeRequest;
+import quick.pager.shop.user.request.UserInfoRequest;
 import quick.pager.shop.user.response.LoginOrSubscribeResponse;
 import quick.pager.shop.user.service.UserForgetPasswordService;
 import quick.pager.shop.user.service.UserInfoService;
@@ -91,6 +93,13 @@ public class UserController {
         dto.setPhone(request.getPhone());
 
         return userLoginService.doService(dto);
+    }
+
+    @ApiOperation("修改用户信息")
+    @PostMapping("/user/edit")
+    public Response edit(UserInfoRequest request) {
+
+        return null;
     }
 
     /**

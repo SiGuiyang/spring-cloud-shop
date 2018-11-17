@@ -11,9 +11,9 @@ eureka:
 
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://192.168.184.129:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
-    password: 12345678
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   rabbitmq:
@@ -22,5 +22,11 @@ spring:
     username: guest
     password: guest
   redis:
-    host: 127.0.0.1
-    port: 6379
+    cluster:
+      nodes:
+        - 192.168.184.132:7001
+        - 192.168.184.132:7002
+        - 192.168.184.132:7003
+        - 192.168.184.132:7004
+        - 192.168.184.132:7005
+        - 192.168.184.132:7006
