@@ -40,7 +40,11 @@ public class CartController {
      */
     @RequestMapping("/cart/modify")
     public Response addCart(CartRequest request) {
-        return null;
+        CartDTO dto = CartDTO.builder()
+                .userId(request.getUserId())
+                .goodsIds(request.getGoodsIds())
+                .operation(request.getOperation()).build();
+        return cartModifyService.doService(dto);
     }
 
 

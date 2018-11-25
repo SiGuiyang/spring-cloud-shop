@@ -28,4 +28,12 @@ public class UserManageController {
     public Response logout() {
         return null;
     }
+
+    /**
+     * 会员列表
+     */
+    @PostMapping("/admin/member/list")
+    public Response memberList() {
+        return null;
+    }
 }

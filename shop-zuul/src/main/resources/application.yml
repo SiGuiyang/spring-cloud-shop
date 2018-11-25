@@ -14,6 +14,9 @@ zuul:
     shop-goods:
       path: /goods/**
       serviceId: shop-goods
+    shop-manage:
+      path: /admin/**
+      serviceId: shop-manage
     shop-order:
       path: /order/**
       serviceId: shop-order
