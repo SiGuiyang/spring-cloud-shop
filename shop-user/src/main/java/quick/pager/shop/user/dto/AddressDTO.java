@@ -7,7 +7,6 @@ import quick.pager.common.dto.DTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
 public class AddressDTO extends DTO {
     private static final long serialVersionUID = -7357193842467214331L;
 

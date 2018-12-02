@@ -1,0 +1,11 @@
+server:
+  port: 8099
+spring:
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: refresh,health,info

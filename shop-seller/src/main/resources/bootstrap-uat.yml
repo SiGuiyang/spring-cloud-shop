@@ -1,0 +1,34 @@
+
+spring:
+  profiles:
+    active: uat
+  application:
+    name: shop-seller
+  cloud:
+    config:
+      uri: http://localhost:8889/
+      label: master
+      profile: uat
+  datasource:
+    url: jdbc:mysql://192.168.199.113:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
+
+  node1:
+    name: shop-server
+    port: 8761
+
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: refresh,health,info

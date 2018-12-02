@@ -31,22 +31,25 @@ public class UserAddressController {
     @PostMapping("/user/address/{userId}")
     @ApiOperation("地址列表")
     public Response address(@PathVariable("userId") Long userId) {
-        return userAddressService.doService(AddressDTO.builder().userId(userId).build());
+        AddressDTO dto = new AddressDTO();
+        dto.setUserId(userId);
+        return userAddressService.doService(dto);
     }
 
     @PostMapping("/user/modify/address")
     @ApiOperation("地址修改")
     public Response modifyAddress(AddressRequest request) {
-        AddressDTO dto = AddressDTO.builder()
-                .event(request.getEvent())
-                .userId(request.getUserId())
-                .area(request.getArea())
-                .defaultAddress(request.getDefaultAddress())
-                .detailAddress(request.getDetailAddress())
-                .phone(request.getPhone())
-                .label(request.getLabel())
-                .username(request.getUsername())
-                .build();
+        AddressDTO dto = new AddressDTO();
+        dto.setEvent(request.getEvent());
+
+        dto.setUserId(request.getUserId());
+        dto.setArea(request.getArea());
+        dto.setDefaultAddress(request.getDefaultAddress());
+        dto.setDetailAddress(request.getDetailAddress());
+        dto.setPhone(request.getPhone());
+        dto.setLabel(request.getLabel());
+        dto.setUsername(request.getUsername());
+
         return userAddressService.doService(dto);
     }
 

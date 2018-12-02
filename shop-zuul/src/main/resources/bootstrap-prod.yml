@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8889/
+      label: master
+      profile: prod
+  application:
+    name: shop-zuul
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
+
+  node1:
+    name: shop-server
+    port: 8761
