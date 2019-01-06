@@ -6,6 +6,11 @@ package quick.pager.common.constants;
  * @author siguiyang
  */
 public interface RedisKeys {
+    // activity 模块
+    interface ActivityKeys {
+        // banner 列表
+        String SHOP_BANNER_LIST = "shop_banner_list";
+    }
 
     // user 模块
     interface UserKeys {
@@ -26,6 +31,11 @@ public interface RedisKeys {
         String SHOP_SMS_TEMPLATE = "shop_sms_template:";
         // 图形验证码
         String SHOP_GRAPHICS_CODE = "SHP_graphics_code_";
+    }
+    // goods 模块
+    interface GoodsKeys {
+        // 商品分类缓存
+        String SHOP_GOODS_CLASS = "pager_goods_class";
     }
 
 

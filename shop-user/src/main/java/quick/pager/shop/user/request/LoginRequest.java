@@ -25,7 +25,7 @@ public class LoginRequest extends Request {
     /**
      * 短信验证码
      */
-    @ApiModelProperty(value = "短信验证码", required = true)
+    @ApiModelProperty(value = "短信验证码")
     private String verifyCode;
     /**
      * 登陆密码

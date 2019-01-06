@@ -5,14 +5,13 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="server_status" jdbcType="TINYINT" property="serverStatus" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, phone, password, server_status, create_time, update_time, delete_status
+    id, phone, password, create_time, update_time, delete_status
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -39,9 +38,6 @@
       <if test="password != null">
         password,
       </if>
-      <if test="serverStatus != null">
-        server_status,
-      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -62,9 +58,6 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="serverStatus != null">
-        #{serverStatus,jdbcType=TINYINT},
-      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -84,9 +77,6 @@
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="serverStatus != null">
-        server_status = #{serverStatus,jdbcType=TINYINT},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -113,7 +103,6 @@
       t.id,
       t.phone,
       t.password,
-      t.server_status AS serverStatus,
       ti.username,
       ti.gender,
       ti.age,

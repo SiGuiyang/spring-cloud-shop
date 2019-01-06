@@ -2,7 +2,6 @@ package quick.pager.shop.user.service;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
-import com.alibaba.fastjson.JSON;
 import java.text.MessageFormat;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +46,6 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
 
     @Override
     public Response<LoginOrSubscribeResponse> doService(DTO dto) {
-        log.info("开始注册服务 params = {}", JSON.toJSONString(dto));
 
         UserSubscribeDTO subscribeDTO = (UserSubscribeDTO) dto;
 
@@ -62,7 +60,6 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         user.setPhone(subscribeDTO.getPhone());
         user.setPassword(SecureUtil.md5(password));
         user.setCreateTime(new Date());
-        user.setServerStatus(Constants.NORMAL);
 
         userMapper.insertSelective(user);
 

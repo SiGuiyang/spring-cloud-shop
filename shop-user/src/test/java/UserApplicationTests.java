@@ -47,7 +47,6 @@ public class UserApplicationTests {
         User user = new User();
         user.setPassword("33333");
         user.setPhone("323234999");
-        user.setServerStatus((byte) 3);
         user.setId(444L);
         redisService.setFromHash(user.getId() + "", user);
 

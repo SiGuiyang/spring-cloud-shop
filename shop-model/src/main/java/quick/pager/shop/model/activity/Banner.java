@@ -31,10 +31,6 @@ public class Banner extends Model {
      */
     private String bannerType;
     /**
-     * 展示的设备
-     */
-    private String device;
-    /**
      * 分享地址
      */
     private String shareUrl;
@@ -54,6 +50,8 @@ public class Banner extends Model {
      * 分享渠道
      */
     private String shareChannel;
+
+    private String createUser;
 
 
 }

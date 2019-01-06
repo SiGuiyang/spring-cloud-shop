@@ -1,10 +1,6 @@
 package quick.pager.common.response;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
 
 import java.io.Serializable;
@@ -31,6 +27,9 @@ public class Response<T> implements Serializable {
      * 响应数据
      */
     private T data;
+
+    private long timestamp = System.currentTimeMillis();
+
     /**
      * 分页总数
      */

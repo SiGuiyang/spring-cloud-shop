@@ -15,6 +15,15 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    cluster:
+      nodes:
+        - 192.168.199.113:7001
+        - 192.168.199.113:7002
+        - 192.168.199.113:7003
+        - 192.168.199.113:7004
+        - 192.168.199.113:7005
+        - 192.168.199.113:7006
 
 eureka:
   instance:

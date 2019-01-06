@@ -17,13 +17,24 @@ public interface Constants {
      * 项目模块
      */
     interface Module {
-        String ACTIVITY = "activity";
-        String GOODS = "goods";
-        String MANAGE = "manage";
-        String ORDER = "order";
-        String SELLER = "seller";
-        String SETTLEMENT = "settlement";
-        String USER = "user";
+        String ACTIVITY = "/activity";
+        String CART = "/cart";
+        String GOODS = "/goods";
+        String MANAGE = "/admin";
+        String ORDER = "/order";
+        String SELLER = "/seller";
+        String SETTLEMENT = "/settlement";
+        String USER = "/user";
+    }
+
+    /**
+     * 基础增删改查 操作
+     */
+    interface Event {
+        String LIST = "list";
+        String MODIFY = "modify";
+        String ADD = "add";
+        String DELETE = "delete";
     }
 
     /**

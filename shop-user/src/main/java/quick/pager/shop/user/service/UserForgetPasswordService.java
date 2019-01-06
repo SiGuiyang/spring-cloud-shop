@@ -39,7 +39,6 @@ public class UserForgetPasswordService implements IService {
 
     @Override
     public Response doService(DTO dto) {
-        log.info("开始调用忘记密码服务 params = {}", JSON.toJSONString(dto));
 
         ForgetPasswordDTO forgetPasswordDTO = (ForgetPasswordDTO) dto;
 

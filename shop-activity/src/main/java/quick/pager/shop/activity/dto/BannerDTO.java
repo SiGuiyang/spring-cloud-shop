@@ -10,6 +10,6 @@ public class BannerDTO extends DTO {
     private static final long serialVersionUID = 2378276818835084161L;
 
 
-    private String device;
+    private String bannerType;
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.activity.Banner;
 
-public interface BannerMapper {
+public interface  BannerMapper {
 
     int insertSelective(Banner record);
 
@@ -15,6 +15,6 @@ public interface BannerMapper {
     /**
      * 查询所有banner
      */
-    List<Banner> selectAll();
+    List<Banner> selectAll(@Param("bannerType") String bannerType);
 
 }

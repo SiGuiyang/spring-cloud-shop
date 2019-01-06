@@ -18,7 +18,11 @@ public interface ResponseStatus {
         int EXCEPTION_CODE = 3000;
         // 成功码
         int SUCCESS = 200;
+        // 没有权限返回吗
+        int NO_PERMISSION = 5000;
     }
+
+    String NO_PERMISSION = "您没有权限访问";
 
     String SUCCESS_MSG = "请求成功";
 
@@ -34,7 +38,10 @@ public interface ResponseStatus {
 
     String USER_PHONE_REGISTERED = "此号码已注册";
 
+    String USER_GRAPHIC_CODE_EMPTY = "图形验证码不能为空";
+
     String SMS_CODE_NOT_EMPTY = "短信验证码不能为空";
+
 
     String SMS_CODE_EXPIRE = "短信验证码已过期";
 

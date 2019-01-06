@@ -10,7 +10,7 @@ spring:
       label: master
       profile: dev
   datasource:
-    url: jdbc:mysql://192.168.199.113:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -26,6 +26,11 @@ eureka:
   node1:
     name: shop-server
     port: 8761
+
+qiniu:
+  access_key: 3GFM-RrkWFKk4jNLSxWlN42hmYHyDu4TDCa25-hz
+  secret_key: 6mQej9LvN8SvJTZnDroSU3fQY1TW9Vy7HE4Wa8am
+  bucket: static
 
 management:
   endpoints:

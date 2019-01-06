@@ -17,8 +17,6 @@ public class UserInfoResponse implements Serializable{
 
     private String password;
 
-    private Byte serverStatus;
-
     private String username;
 
     private Boolean gender;

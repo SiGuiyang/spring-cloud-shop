@@ -1,11 +1,11 @@
 package quick.pager.shop.order.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.order.service.OrderDetailService;
 import quick.pager.shop.order.service.OrderListService;
@@ -21,6 +21,7 @@ import quick.pager.shop.order.service.OrderStatusService;
  * @author siguiyang
  */
 @RestController
+@RequestMapping(Constants.Module.ORDER)
 public class OrderController {
 
     @Autowired
@@ -37,7 +38,7 @@ public class OrderController {
      *
      * @param userId 用户Id
      */
-    @RequestMapping(value = "/order/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{userId}", method = RequestMethod.POST)
     public Response orderList(@PathVariable("userId") Long userId) {
         return null;
     }
@@ -47,7 +48,7 @@ public class OrderController {
      *
      * @param userId 用户Id
      */
-    @RequestMapping(value = "/order/detail/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/detail/{userId}", method = RequestMethod.POST)
     public Response orderDetail(@PathVariable("userId") Long userId) {
         return null;
     }
@@ -57,7 +58,7 @@ public class OrderController {
      *
      * @param orderId 订单Id
      */
-    @RequestMapping(value = "/order/status/{orderId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/status/{orderId}", method = RequestMethod.POST)
     public Response orderStatus(@PathVariable("orderId") Long orderId) {
         return null;
     }

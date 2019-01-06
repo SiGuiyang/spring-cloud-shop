@@ -141,6 +141,5 @@
         <module>shop-settlement</module>
         <module>shop-user</module>
         <module>shop-zuul</module>
-
     </modules>
 </project>

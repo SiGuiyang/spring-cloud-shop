@@ -1,8 +1,12 @@
 package quick.pager.shop.seller.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
+import quick.pager.shop.seller.request.SellerLoginRequest;
+import quick.pager.shop.seller.request.SellerSubscribeRequest;
 
 /**
  * 商家服务
@@ -10,28 +14,29 @@ import quick.pager.common.response.Response;
  * @author siguiyang
  */
 @RestController
+@RequestMapping(Constants.Module.SELLER)
 public class SellerController {
 
     /**
      * 登陆
      */
-    @PostMapping("/seller/login")
-    public Response login() {
+    @PostMapping("/login")
+    public Response login(SellerLoginRequest request) {
         return null;
     }
 
     /**
      * 注册
      */
-    @PostMapping("/seller/subscribe")
-    public Response subscribe() {
+    @PostMapping("/subscribe")
+    public Response subscribe(SellerSubscribeRequest request) {
         return null;
     }
 
     /**
      * 商家信息
      */
-    @PostMapping("/seller/info")
+    @PostMapping("/info")
     public Response sellerInfo() {
         return null;
     }

@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
@@ -32,8 +34,6 @@ public class UserLoginService implements IService<LoginOrSubscribeResponse> {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private SmsTemplateMapper smsTemplateMapper;
 
     @Autowired
     private RedisService redisService;
@@ -42,7 +42,6 @@ public class UserLoginService implements IService<LoginOrSubscribeResponse> {
 
     @Override
     public Response<LoginOrSubscribeResponse> doService(DTO dto) {
-        log.info("开始登陆 params = {}", JSON.toJSONString(dto));
         UserLoginDTO userLoginDTO = (UserLoginDTO) dto;
 
         UserInfoDTO user = userMapper.selectInfoByPhone(userLoginDTO.getPhone());
@@ -54,18 +53,12 @@ public class UserLoginService implements IService<LoginOrSubscribeResponse> {
             return userSubscribeService.doService(userSubscribeDTO);
         }
 
-        // 用户被删除或者冻结状态，则提示用户账号异常
-        if (Constants.DELETE.equals(user.getServerStatus()) || Constants.FROZEN.equals(user.getServerStatus())) {
-            log.info("用户状态异常 params = {}", JSON.toJSONString(dto));
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_PHONE_EXCEPTION);
-        }
-
         // 账号密码不匹配
         if (!user.getPassword().equals(SecureUtil.md5(userLoginDTO.getPassword()))) {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_ACCOUNT_PASSWORD_NOT_CORRECT);
         }
 
-        redisService.delFromHash(String.valueOf(user.getId()));
+        redisService.delFromHash(user.getId().toString());
 
         String token = UUID.randomUUID().toString();
 
@@ -77,7 +70,7 @@ public class UserLoginService implements IService<LoginOrSubscribeResponse> {
         loginOrSubscribeResponse.setAvatar(user.getAvatar());
         loginOrSubscribeResponse.setUserId(user.getId());
 
-        redisService.setFromHash(String.valueOf(user.getId()), token);
+        redisService.setFromHash(user.getId().toString(), token);
 
 
         return new Response<>(loginOrSubscribeResponse);

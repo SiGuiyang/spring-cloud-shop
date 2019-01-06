@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @EnableZuulProxy
 @EnableEurekaClient
-@EnableCircuitBreaker
-@EnableHystrix
-@RestController
-@RefreshScope
+//@EnableCircuitBreaker
+//@EnableHystrix
+//@RestController
+//@RefreshScope
 public class ZuulApplication {
 
 	public static void main(String[] args) {

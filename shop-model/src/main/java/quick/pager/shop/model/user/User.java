@@ -14,6 +14,4 @@ public class User extends Model {
 
     private String password;
 
-    private Byte serverStatus;
-
 }

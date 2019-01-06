@@ -13,3 +13,13 @@ management:
     web:
       exposure:
         exclude: refresh,health,info
+mybatis:
+  configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:quick/pager/shop/goods/mapper/*.xml
+  type-aliases-package: quick.pager.shop.model
+pagehelper:
+  auto-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+

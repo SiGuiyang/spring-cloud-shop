@@ -20,9 +20,10 @@ public class RedisService {
 
     /**
      * set
-     * @param key
-     * @param value
-     * @param time
+     *
+     * @param key   redis key
+     * @param value redis value
+     * @param time  过期时间
      */
     public void set(String key, Serializable value, long time) {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -30,9 +31,8 @@ public class RedisService {
 
     /**
      * get
-     * @param key
-     * @param <T>
-     * @return
+     *
+     * @param key redis key
      */
     public <T extends Serializable> T get(String key) {
         return (T) redisTemplate.opsForValue().get(key);
@@ -41,10 +41,11 @@ public class RedisService {
 
     /**
      * del
-     * @param key
+     *
+     * @param key redis key
      */
     public void del(String key) {
         redisTemplate.delete(key);
     }
-    
+
 }

@@ -32,7 +32,6 @@ public class UserInfoService implements IService<UserInfoResponse> {
 
     @Override
     public Response<UserInfoResponse> doService(DTO dto) {
-        log.info("开始调用用户信息服务 params = {}", JSON.toJSONString(dto));
 
         UserInfoDTO userInfoDTO = (UserInfoDTO) dto;
 
@@ -51,7 +50,6 @@ public class UserInfoService implements IService<UserInfoResponse> {
         userInfoResponse.setEmail(userInfo.getEmail());
         userInfoResponse.setGender(userInfo.getGender());
         userInfoResponse.setPhone(user.getPhone());
-        userInfoResponse.setServerStatus(user.getServerStatus());
         userInfoResponse.setUsername(userInfo.getUsername());
         userInfoResponse.setUserId(user.getId());
 

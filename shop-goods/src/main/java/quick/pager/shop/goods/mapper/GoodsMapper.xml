@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.goods.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="quick.pager.shop.model.goods.Goods">
+
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gcs_id" jdbcType="BIGINT" property="gcsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
+    <result column="goods_status" jdbcType="TINYINT" property="goodsStatus" />
+    <result column="goods_amount" jdbcType="DECIMAL" property="goodsAmount" />
+    <result column="goods_discount_amount" jdbcType="DECIMAL" property="goodsDiscountAmount" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="goods_inventory" jdbcType="INTEGER" property="goodsInventory" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+
+    id, gcs_id, goods_name, goods_code, goods_status, goods_amount, goods_discount_amount,
+    description, integral, goods_inventory, create_time, update_time, delete_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.Goods">
+
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gcsId != null">
+        gcs_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsCode != null">
+        goods_code,
+      </if>
+      <if test="goodsStatus != null">
+        goods_status,
+      </if>
+      <if test="goodsAmount != null">
+        goods_amount,
+      </if>
+      <if test="goodsDiscountAmount != null">
+        goods_discount_amount,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="goodsInventory != null">
+        goods_inventory,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteStatus != null">
+        delete_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gcsId != null">
+        #{gcsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null">
+        #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="goodsAmount != null">
+        #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsDiscountAmount != null">
+        #{goodsDiscountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="goodsInventory != null">
+        #{goodsInventory,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.Goods">
+
+    update t_goods
+    <set>
+      <if test="gcsId != null">
+        gcs_id = #{gcsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCode != null">
+        goods_code = #{goodsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="goodsAmount != null">
+        goods_amount = #{goodsAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="goddsDiscountAmount != null">
+        goods_discount_amount = #{goodsDiscountAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="goodsInventory != null">
+        goods_inventory = #{goodsInventory,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectShelfGoods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_goods
+    where goods_status = 2 and delete_status = 0
+  </select>
+
+  <select id="selectByGoodsClassId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_goods
+    where gcs_id = #{goodsClassId,jdbcType=BIGINT}
+      and goods_status = 2
+      and delete_status = 0
+      and goods_inventory > 0
+  </select>
+
+  <select id="selectByGoodsName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_goods
+    where goods_name = concat('%',#{goodsName},'%')
+  </select>
+</mapper>

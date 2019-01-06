@@ -6,10 +6,12 @@ spring:
       profile: dev
   application:
     name: shop-zuul
+  profiles:
+    active: dev
 
 eureka:
   instance:
-    hostname: ${spring.application.name}
+    hostname: ${eureka.node1.name}
   client:
     service-url:
       defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/

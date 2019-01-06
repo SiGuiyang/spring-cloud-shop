@@ -4,6 +4,41 @@ spring:
   profiles:
     active: dev
 
+zuul:
+  routes:
+    shop-activity:
+      path: /activity/**
+      serviceId: shop-activity
+      stripPrefix: false
+    shop-cart:
+      path: /cart/**
+      serviceId: shop-cart
+      stripPrefix: false
+    shop-goods:
+      path: /goods/**
+      serviceId: shop-goods
+      stripPrefix: false
+    shop-manage:
+      path: /admin/**
+      serviceId: shop-manage
+      stripPrefix: false
+    shop-order:
+      path: /order/**
+      serviceId: shop-order
+      stripPrefix: false
+    shop-seller:
+      path: /seller/**
+      serviceId: shop-seller
+      stripPrefix: false
+    shop-settlement:
+      path: /settlement/**
+      serviceId: shop-settlement
+      stripPrefix: false
+    shop-user:
+      path: /user/**
+      serviceId: shop-user
+      stripPrefix: false
+      
 management:
   endpoints:
     web:
