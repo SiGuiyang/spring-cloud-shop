@@ -18,4 +18,4 @@ management:
   endpoints:
     web:
       exposure:
-        exclude: refresh,health,info
+        include: refresh,health,info

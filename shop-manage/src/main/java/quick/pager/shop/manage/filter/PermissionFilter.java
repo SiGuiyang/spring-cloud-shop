@@ -36,6 +36,7 @@ public class PermissionFilter implements Filter {
         WHITE_LIST.add("/admin/login");
         WHITE_LIST.add("/admin/system/role/classification");
         WHITE_LIST.add("/admin/upload");
+        WHITE_LIST.add("/admin/download");
         WHITE_LIST.add("/admin/activity/coupon/template/enable");
         WHITE_LIST.add("/admin/publish/coupon");
     }
@@ -55,7 +56,7 @@ public class PermissionFilter implements Filter {
 
         log.info("进入权限过滤器。。。");
         if (!WHITE_LIST.contains(requestURI)
-                && StringUtils.isEmpty(sysCode)
+                && !StringUtils.isEmpty(sysCode)
                 && !PermissionMap.contains(sysCode, requestURI)) {
             log.info("您没有权限操作此功能。。。");
             httpResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);

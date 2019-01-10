@@ -1,6 +1,5 @@
 package quick.pager.shop.user.service;
 
-import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.model.user.User;
 import quick.pager.shop.model.user.UserInfo;
-import quick.pager.shop.user.dto.UserInfoDTO;
+import quick.pager.shop.model.feign.dto.UserInfoDTO;
 import quick.pager.shop.user.mapper.UserInfoMapper;
 import quick.pager.shop.user.mapper.UserMapper;
 import quick.pager.shop.user.response.UserInfoResponse;

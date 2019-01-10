@@ -1,11 +1,11 @@
 package quick.pager.shop.user.mapper;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.user.User;
-import quick.pager.shop.user.dto.UserInfoDTO;
+import quick.pager.shop.model.feign.dto.UserInfoDTO;
 
 public interface UserMapper {
-    int deleteByPrimaryKey(Long id);
 
     int insertSelective(User record);
 
@@ -26,4 +26,18 @@ public interface UserMapper {
      * @param phone 手机号
      */
     UserInfoDTO selectInfoByPhone(@Param("phone") String phone);
+
+    /**
+     * 根据用户Id批量查询
+     * @param userIds
+     * @return
+     */
+    List<UserInfoDTO> selectByBatchPrimaryKey(@Param("userIds") List<Long> userIds);
+
+    /**
+     * 根据手机号查询用户
+     *
+     * @param phone 手机号
+     */
+    List<User> isExists(@Param("phones") List<String> phone);
 }

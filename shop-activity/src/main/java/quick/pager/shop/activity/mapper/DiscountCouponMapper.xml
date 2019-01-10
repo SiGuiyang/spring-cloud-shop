@@ -5,9 +5,13 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="template_id" jdbcType="BIGINT" property="templateId" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
-    <result column="discount_amount" jdbcType="DECIMAL" property="discountAmount" />
+    <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount" />
+    <result column="discount_strength" jdbcType="VARCHAR" property="discountStrength" />
     <result column="discount_type" jdbcType="INTEGER" property="discountType" />
+    <result column="used" jdbcType="BIT" property="used" />
     <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -16,7 +20,7 @@
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, template_id, order_amount, discount_amount, discount_type, begin_time, 
+    id, user_id, template_id, coupon_name, phone, order_amount, coupon_amount, discount_strength, discount_type, used, begin_time,
     end_time, description, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -38,14 +42,26 @@
       <if test="templateId != null">
         template_id,
       </if>
+      <if test="couponName != null">
+        coupon_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
       <if test="orderAmount != null">
         order_amount,
       </if>
-      <if test="discountAmount != null">
-        discount_amount,
+      <if test="couponAmount != null">
+        coupon_amount,
+      </if>
+      <if test="discountStrength != null">
+        discount_strength,
       </if>
       <if test="discountType != null">
         discount_type,
+      </if>
+      <if test="used != null">
+        used,
       </if>
       <if test="beginTime != null">
         begin_time,
@@ -76,14 +92,26 @@
       <if test="templateId != null">
         #{templateId,jdbcType=BIGINT},
       </if>
+      <if test="couponName != null">
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
       <if test="orderAmount != null">
         #{orderAmount,jdbcType=DECIMAL},
       </if>
-      <if test="discountAmount != null">
-        #{discountAmount,jdbcType=DECIMAL},
+      <if test="couponAmount != null">
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountStrength != null">
+        #{discountStrength,jdbcType=VARCHAR},
       </if>
       <if test="discountType != null">
         #{discountType,jdbcType=INTEGER},
+      </if>
+      <if test="used != null">
+        #{used,jdbcType=BIT},
       </if>
       <if test="beginTime != null">
         #{beginTime,jdbcType=TIMESTAMP},
@@ -105,6 +133,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.DiscountCoupon">
     update t_discount_coupon
     <set>
@@ -114,14 +143,26 @@
       <if test="templateId != null">
         template_id = #{templateId,jdbcType=BIGINT},
       </if>
+      <if test="couponName != null">
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
       <if test="orderAmount != null">
         order_amount = #{orderAmount,jdbcType=DECIMAL},
       </if>
-      <if test="discountAmount != null">
-        discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      <if test="couponAmount != null">
+        coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountStrength != null">
+        discount_strength = #{discountStrength,jdbcType=VARCHAR},
       </if>
       <if test="discountType != null">
         discount_type = #{discountType,jdbcType=INTEGER},
+      </if>
+      <if test="used != null">
+        used = #{used,jdbcType=BIT},
       </if>
       <if test="beginTime != null">
         begin_time = #{beginTime,jdbcType=TIMESTAMP},
@@ -145,4 +186,67 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <insert id="batchInsertSelective">
+    insert into t_discount_coupon (
+        user_id,
+        template_id,
+        coupon_name,
+        order_amount,
+        coupon_amount,
+        discount_strength,
+        discount_type,
+        begin_time,
+        end_time,
+        description,
+        create_time,
+        delete_status) values
+      <foreach collection ="list" item="record" index= "index" separator =",">
+        (
+        #{record.userId,jdbcType=BIGINT},
+        #{record.templateId,jdbcType=BIGINT},
+        #{record.couponName,jdbcType=VARCHAR},
+        #{record.orderAmount,jdbcType=DECIMAL},
+        #{record.couponAmount,jdbcType=DECIMAL},
+        #{record.discountStrength,jdbcType=VARCHAR},
+        #{record.discountType,jdbcType=INTEGER},
+        #{record.beginTime,jdbcType=TIMESTAMP},
+        #{record.endTime,jdbcType=TIMESTAMP},
+        #{record.description,jdbcType=VARCHAR},
+        #{record.createTime,jdbcType=TIMESTAMP},
+        #{record.deleteStatus,jdbcType=BIT}
+        )
+      </foreach>
+  </insert>
+
+  <select id="selectCoupons" resultMap="BaseResultMap" parameterType="quick.pager.shop.model.feign.dto.CouponDTO">
+    select <include refid="Base_Column_List"/>
+    from t_discount_coupon
+    where
+      DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[<=]]> create_time
+
+      <if test="couponName != null">
+        and coupon_name like concat(#{couponName}, '%')
+      </if>
+      <if test="phone != null">
+        and phone = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="discountType != null and discountType != ''">
+        and discount_type = #{discountType,jdbcType=INTEGER}
+      </if>
+      <if test="beginTime != null and beginTime != ''">
+        and date_format(begin_time,'%Y-%m-%d') = #{beginTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and date_format(end_time, '%Y-%m-%d') = #{endTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+
+  <select id="selectCouponsByUserId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_discount_coupon
+    where delete_status = false
+      and user_id = #{userId,jdbcType=BIGINT}
+      and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[<=]]> create_time
+      order by id desc limit #{page}, #{pageSize}
+  </select>
 </mapper>

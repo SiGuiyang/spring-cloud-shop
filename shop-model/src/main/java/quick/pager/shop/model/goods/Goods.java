@@ -17,7 +17,9 @@ public class Goods extends Model{
 
     private String goodsCode;
 
-    private Byte goodsStatus;
+    private Integer goodsStatus;
+
+    private Integer goodsType;
 
     private BigDecimal goodsAmount;
 

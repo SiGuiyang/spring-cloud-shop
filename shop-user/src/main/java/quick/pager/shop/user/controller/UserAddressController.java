@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.common.annotation.Login;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.user.dto.AddressDTO;
@@ -32,6 +33,7 @@ public class UserAddressController {
     private AreaService areaService;
 
     @ApiOperation("地址列表")
+    @Login
     @PostMapping("/address/{userId}")
     public Response address(@PathVariable("userId") Long userId) {
         AddressDTO dto = new AddressDTO();

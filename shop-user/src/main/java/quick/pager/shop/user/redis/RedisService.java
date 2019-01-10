@@ -29,26 +29,12 @@ public class RedisService {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
     }
 
-    /**
-     * 设置hash 值
-     *
-     * @param key redis key
-     */
-    public void setFromHash(String key, Serializable value) {
-        redisTemplate.opsForHash().put(key, key.hashCode(), value);
+    public void setValueOps(String key, Serializable value, long time) {
+        redisTemplate.boundValueOps(key).set(value, time, TimeUnit.SECONDS);
     }
 
-    /**
-     * 从hash 中获取
-     *
-     * @param key redis key
-     */
-    public <T extends Serializable> T getFromHash(String key) {
-        return (T) redisTemplate.opsForHash().get(key, key.hashCode());
-    }
-
-    public void delFromHash(String key) {
-        redisTemplate.opsForHash().delete(key, key.hashCode());
+    public Object getValueOps(String key) {
+        return redisTemplate.boundValueOps(key).get();
     }
 
     /**

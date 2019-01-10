@@ -23,7 +23,7 @@ public interface GoodsMapper {
      *
      * @param goodsClassId 商品分类Id
      */
-    List<Goods> selectByGoodsClassId(@Param("goodsClassId") Long goodsClassId);
+    List<Goods> selectByGoodsClassId(@Param("goodsClassId") Long goodsClassId, @Param("page") Integer page, @Param("pageSize") Integer pageSize);
 
     /**
      * 根据商品名称模糊搜索

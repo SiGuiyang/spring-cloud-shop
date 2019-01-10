@@ -12,7 +12,7 @@ management:
   endpoints:
     web:
       exposure:
-        exclude: refresh,health,info
+        include: refresh,health,info
 mybatis:
   configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

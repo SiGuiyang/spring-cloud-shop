@@ -1,3 +1,4 @@
+import cn.hutool.core.util.RandomUtil;
 import java.text.MessageFormat;
 import java.util.List;
 import org.junit.Test;
@@ -48,11 +49,11 @@ public class UserApplicationTests {
         user.setPassword("33333");
         user.setPhone("323234999");
         user.setId(444L);
-        redisService.setFromHash(user.getId() + "", user);
+        String token = RandomUtil.randomUUID().replace("-", "");
+        System.out.println(token);
+        redisService.setValueOps(String.valueOf(user.getId()), token, 10 * 24 * 60 * 60);
 
-        User fromHash = redisService.getFromHash(user.getId() + "");
-
-        System.out.println(fromHash);
+        System.out.println(redisService.getValueOps(String.valueOf(user.getId())));
     }
 
     @Test

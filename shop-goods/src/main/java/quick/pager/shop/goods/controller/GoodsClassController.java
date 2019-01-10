@@ -3,12 +3,16 @@ package quick.pager.shop.goods.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
+import quick.pager.shop.goods.dto.ClassificationDTO;
+import quick.pager.shop.goods.request.GoodsRequest;
 import quick.pager.shop.goods.service.GoodsClassService;
+import quick.pager.shop.goods.service.GoodsModifyService;
 
 /**
  * 商品分类
@@ -22,10 +26,25 @@ public class GoodsClassController {
 
     @Autowired
     private GoodsClassService goodsClassService;
+    @Autowired
+    private GoodsModifyService goodsModifyService;
 
     @ApiOperation("商品分类列表")
-    @PostMapping("/class/list")
-    public Response goodsClassList() {
-        return goodsClassService.doService(null);
+    @RequestMapping(value = "/class/list", method = RequestMethod.POST)
+    public Response goodsClassList(String className) {
+        ClassificationDTO dto = new ClassificationDTO();
+        dto.setClassName(className);
+        return goodsClassService.doService(dto);
+    }
+
+    @RequestMapping(value = "/class/modify", method = RequestMethod.POST)
+    public Response modifyGoodsClass(@RequestBody GoodsRequest request) {
+        ClassificationDTO dto = new ClassificationDTO();
+        dto.setId(request.getId());
+        dto.setClassName(request.getClassName());
+        dto.setIcon(request.getIcon());
+        dto.setCreateUser(request.getCreateUser());
+        dto.setEvent(Constants.Event.MODIFY);
+        return goodsModifyService.doService(dto);
     }
 }

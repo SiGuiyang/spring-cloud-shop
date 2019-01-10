@@ -12,6 +12,8 @@
     <properties>
         <junit.version>4.12</junit.version>
         <hutool.version>4.1.12</hutool.version>
+        <poi.version>3.17</poi.version>
+        <xerces.version>2.11.0</xerces.version>
         <fastjson.version>1.2.47</fastjson.version>
         <guava.version>20.0</guava.version>
         <qiniu.version>7.2.11</qiniu.version>
@@ -51,6 +53,12 @@
                         <artifactId>commons-codec</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>${xerces.version}</version>
             </dependency>
 
             <dependency>
@@ -128,7 +136,6 @@
     </build>
     <modules>
         <module>shop-activity</module>
-        <module>shop-cart</module>
         <module>shop-common</module>
         <module>shop-config</module>
         <module>shop-goods</module>

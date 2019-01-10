@@ -2,6 +2,7 @@ package quick.pager.shop.user.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.shop.model.feign.dto.UserInfoDTO;
 
 /**
  * 登陆

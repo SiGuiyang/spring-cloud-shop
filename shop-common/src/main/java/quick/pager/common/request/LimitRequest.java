@@ -19,5 +19,5 @@ public class LimitRequest extends Request {
     /**
      * 页码
      */
-    private Integer pageNum;
+    private Integer page;
 }

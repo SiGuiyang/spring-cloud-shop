@@ -15,7 +15,7 @@ import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.shop.user.dto.ForgetPasswordDTO;
-import quick.pager.shop.user.dto.UserInfoDTO;
+import quick.pager.shop.model.feign.dto.UserInfoDTO;
 import quick.pager.shop.user.dto.UserLoginDTO;
 import quick.pager.shop.user.dto.UserSubscribeDTO;
 import quick.pager.shop.user.redis.RedisService;

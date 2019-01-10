@@ -29,7 +29,7 @@ public class SettlementController {
      */
     @RequestMapping("/{orderId}")
     public Response settlement(@PathVariable("cartId") Long cartId) {
-        return settlementService.doService(DTO.builder().id(cartId).build());
+        return settlementService.doService(new DTO(cartId));
     }
 
 }

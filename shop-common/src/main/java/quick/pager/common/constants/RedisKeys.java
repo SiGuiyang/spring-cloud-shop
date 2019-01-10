@@ -6,6 +6,12 @@ package quick.pager.common.constants;
  * @author siguiyang
  */
 public interface RedisKeys {
+
+    // 管理后台
+    interface ManageKeys {
+        // 系统补发优惠券
+        String SEND_COUPON_LIST = "send_coupon_list";
+    }
     // activity 模块
     interface ActivityKeys {
         // banner 列表

@@ -7,15 +7,16 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author siguiyang
  */
 @SpringBootApplication
+@EnableEurekaClient
 @MapperScan("quick.pager.shop.goods.mapper")
-public class GoodsApplication implements WebMvcConfigurer {
+public class GoodsApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GoodsApplication.class, args);

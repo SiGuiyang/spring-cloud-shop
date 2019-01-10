@@ -3,16 +3,15 @@ server:
 spring:
   profiles:
     active: dev
+ribbon:
+  ReadTimeout: 100000  # 单位毫秒数
+  SocketTimeout: 100000
 
 zuul:
   routes:
     shop-activity:
       path: /activity/**
       serviceId: shop-activity
-      stripPrefix: false
-    shop-cart:
-      path: /cart/**
-      serviceId: shop-cart
       stripPrefix: false
     shop-goods:
       path: /goods/**
@@ -38,9 +37,13 @@ zuul:
       path: /user/**
       serviceId: shop-user
       stripPrefix: false
-      
+  host:
+    connect-timeout-millis: 6000
+    max-per-route-connections: 6000
+    socket-timeout-millis: 20000
+
 management:
   endpoints:
     web:
       exposure:
-        exclude: refresh,health,info
+        include: refresh,health,info

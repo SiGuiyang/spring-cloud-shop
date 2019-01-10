@@ -13,4 +13,6 @@ public class GoodsClass extends Model {
 
     private String icon;
 
+    private String createUser;
+
 }

@@ -1,20 +1,29 @@
 
 spring:
   profiles:
-    active: prod
+    active: dev
   application:
     name: shop-goods
   cloud:
     config:
       uri: http://localhost:8889/
       label: master
-      profile: prod
+      profile: dev
   datasource:
     url: jdbc:mysql://192.168.199.113:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    cluster:
+      nodes:
+        - 192.168.199.113:7001
+        - 192.168.199.113:7002
+        - 192.168.199.113:7003
+        - 192.168.199.113:7004
+        - 192.168.199.113:7005
+        - 192.168.199.113:7006
 
 eureka:
   instance:
@@ -26,9 +35,3 @@ eureka:
   node1:
     name: shop-server
     port: 8761
-
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: refresh,health,info

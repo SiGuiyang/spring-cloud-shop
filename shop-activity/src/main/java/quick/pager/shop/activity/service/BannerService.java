@@ -1,6 +1,7 @@
 package quick.pager.shop.activity.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,12 @@ public class BannerService implements IService<List<Banner>> {
         Response<List<Banner>> response = redisService.get(key);
 
         if (!ObjectUtils.isEmpty(response)) {
-//            return response;
+            return response;
         }
         response = new Response<>();
-        List<Banner> banners = bannerMapper.selectAll(bannerDTO.getBannerType());
+        List<Banner> banners = bannerMapper.selectBanner(null, bannerDTO.getBannerType());
+
+        banners = banners.stream().filter(banner -> !banner.getDeleteStatus()).collect(Collectors.toList());
         response.setData(banners);
 
         redisService.set(key, response, 30 * 24 * 60 * 60L);

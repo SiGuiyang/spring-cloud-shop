@@ -32,8 +32,3 @@ qiniu:
   secret_key: 6mQej9LvN8SvJTZnDroSU3fQY1TW9Vy7HE4Wa8am
   bucket: static
 
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: refresh,health,info

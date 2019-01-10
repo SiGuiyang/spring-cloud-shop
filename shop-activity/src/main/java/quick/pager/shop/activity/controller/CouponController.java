@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.shop.activity.request.GiftCouponRequest;
 import quick.pager.shop.activity.service.CouponService;
@@ -35,15 +37,21 @@ public class CouponController {
     @RequestMapping(value = "/coupons/{userId}", method = RequestMethod.POST)
     @ApiOperation("用户优惠券列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户Id", required = true, dataType = "Long", paramType = "query")})
-    public Response coupons(@PathVariable("userId") Long userId) {
-        return null;
+            @ApiImplicitParam(name = "userId", value = "用户Id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "页数", required = true, dataType = "Integer", paramType = "query")})
+    public Response coupons(@PathVariable("userId") Long userId, @RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        DTO dto = new DTO();
+        dto.setId(userId);
+        dto.setPage(page);
+        dto.setPageSize(pageSize);
+        return couponService.doService(dto);
     }
 
     @ApiOperation("赠送优惠券")
-    @RequestMapping(value = "/coupons/gift", method = RequestMethod.POST)
-    public Response giftCoupon(GiftCouponRequest request) {
-        return null;
+    @RequestMapping(value = "/coupons/gift/{userId}", method = RequestMethod.POST)
+    public Response giftCoupon(@PathVariable("userId") Long userId) {
+        return giftCouponService.doService(new DTO(userId));
     }
 
 }

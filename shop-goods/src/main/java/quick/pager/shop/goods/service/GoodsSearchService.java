@@ -14,27 +14,42 @@ import quick.pager.shop.model.goods.Goods;
 
 /**
  * 商品搜索服务
+ *
  * @author siguiyang
  */
 @Service
-public class GoodsSearchService implements IService {
+public class GoodsSearchService implements IService<List<Goods>> {
 
     @Autowired
     private GoodsMapper goodsMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response<List<Goods>> doService(DTO dto) {
         GoodsSearchDTO goodsSearchDTO = (GoodsSearchDTO) dto;
         List<Goods> goods = Lists.newArrayList();
+
+        Response<List<Goods>> response = new Response<>();
         // 商品分类搜索
         if (GoodsConstants.SEARCH_CLASSIFICATION_EVENT.equals(goodsSearchDTO.getEvent())) {
             Long goodsClassId = goodsSearchDTO.getGoodsClassId();
-            goods = goodsMapper.selectByGoodsClassId(goodsClassId);
-        }
-        else
-        {
+
+            response = queryByClassificationId(dto.getPage(), dto.getPageSize(), goodsClassId);
+        } else {
             goods = goodsMapper.selectByGoodsName(goodsSearchDTO.getGoodsName());
         }
+
+        return response;
+    }
+
+    /**
+     * 根据商品分类的Id查询商品
+     *
+     * @param page         页码
+     * @param pageSize     页数
+     * @param goodsClassId 商品分类Id
+     */
+    private Response<List<Goods>> queryByClassificationId(Integer page, Integer pageSize, Long goodsClassId) {
+
 
         return null;
     }

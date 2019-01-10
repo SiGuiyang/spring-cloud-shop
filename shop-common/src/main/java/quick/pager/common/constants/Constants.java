@@ -45,6 +45,20 @@ public interface Constants {
         String SEND_SMS = "sendSMS";
     }
 
+    enum CouponType {
+
+        COUPON(1, "优惠券"),
+        DICOUNT(2, "折扣券");
+
+        public int type;
+        private String name;
+
+        CouponType(int type, String name) {
+            this.type = type;
+            this.name = name;
+        }
+    }
+
     /**
      * 短信模板code
      */

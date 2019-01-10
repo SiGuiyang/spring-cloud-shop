@@ -17,11 +17,17 @@ public class DiscountCoupon extends Model {
 
     private String couponName;
 
+    private String phone;
+
     private BigDecimal orderAmount;
 
-    private BigDecimal discountAmount;
+    private BigDecimal couponAmount;
+
+    private BigDecimal discountStrength;
 
     private Integer discountType;
+
+    private Boolean used;
 
     private Date beginTime;
 

@@ -5,12 +5,13 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="class_name" jdbcType="VARCHAR" property="className" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, class_name, icon, create_time, update_time, delete_status
+    id, class_name, icon, create_user, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -30,6 +31,9 @@
       </if>
       <if test="icon != null">
         icon,
+      </if>
+      <if test="createUser != null">
+        create_user,
       </if>
       <if test="createTime != null">
         create_time,
@@ -51,6 +55,9 @@
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
       </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -71,6 +78,9 @@
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
       </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -84,10 +94,15 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="selectAll" resultMap="BaseResultMap">
+    <select id="selectClassification" resultMap="BaseResultMap">
       select <include refid="Base_Column_List"/>
       from t_goods_class
       where delete_status = 0
+
+      <if test="className != null">
+        and class_name = #{className,jdbcType=VARCHAR}
+      </if>
+
     </select>
 
 </mapper>

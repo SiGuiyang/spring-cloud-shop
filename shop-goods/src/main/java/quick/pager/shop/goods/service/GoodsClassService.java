@@ -9,6 +9,7 @@ import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.shop.goods.dto.ClassificationDTO;
 import quick.pager.shop.goods.mapper.GoodsClassMapper;
 import quick.pager.shop.goods.redis.RedisService;
 import quick.pager.shop.model.goods.GoodsClass;
@@ -29,7 +30,9 @@ public class GoodsClassService implements IService<List<GoodsClass>> {
     @Override
     public Response<List<GoodsClass>> doService(DTO dto) {
 
-        String key = RedisKeys.GoodsKeys.SHOP_GOODS_CLASS;
+        ClassificationDTO classificationDTO = (ClassificationDTO) dto;
+
+        String key = RedisKeys.GoodsKeys.SHOP_GOODS_CLASS + classificationDTO.getClassName();
 
         Response<List<GoodsClass>> response = redisService.get(key);
 
@@ -42,7 +45,7 @@ public class GoodsClassService implements IService<List<GoodsClass>> {
 
         response = new Response<>();
 
-        List<GoodsClass> goodsClasses = goodsClassMapper.selectAll();
+        List<GoodsClass> goodsClasses = goodsClassMapper.selectClassification(classificationDTO.getClassName());
         response.setData(goodsClasses);
 
         redisService.set(key, response, 30 * 24 * 60 * 60L);

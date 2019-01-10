@@ -2,7 +2,7 @@ package quick.pager.shop.manage.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.request.Request;
+import quick.pager.common.request.ManageRequest;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

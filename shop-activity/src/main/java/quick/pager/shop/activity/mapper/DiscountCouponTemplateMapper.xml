@@ -4,20 +4,18 @@
   <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.DiscountCouponTemplate">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
-    <result column="discount_amount" jdbcType="DECIMAL" property="discountAmount" />
+    <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount" />
+    <result column="discount_strength" jdbcType="VARCHAR" property="discountStrength" />
     <result column="template_type" jdbcType="INTEGER" property="templateType" />
-    <result column="tempate_name" jdbcType="VARCHAR" property="tempateName" />
-    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
-    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="template_name" jdbcType="VARCHAR" property="templateName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_amount, discount_amount, template_type, tempate_name, begin_time, end_time, 
-    update_user, create_user, create_time, update_time, delete_status
+    id, order_amount, coupon_amount, discount_strength, template_type, template_name, description, create_user, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -35,23 +33,20 @@
       <if test="orderAmount != null">
         order_amount,
       </if>
-      <if test="discountAmount != null">
-        discount_amount,
+      <if test="couponAmount != null">
+        coupon_amount,
+      </if>
+      <if test="discountStrength != null">
+        discount_strength,
       </if>
       <if test="templateType != null">
         template_type,
       </if>
-      <if test="tempateName != null">
-        tempate_name,
+      <if test="templateName != null">
+        template_name,
       </if>
-      <if test="beginTime != null">
-        begin_time,
-      </if>
-      <if test="endTime != null">
-        end_time,
-      </if>
-      <if test="updateUser != null">
-        update_user,
+      <if test="description != null">
+        description,
       </if>
       <if test="createUser != null">
         create_user,
@@ -73,23 +68,20 @@
       <if test="orderAmount != null">
         #{orderAmount,jdbcType=DECIMAL},
       </if>
-      <if test="discountAmount != null">
-        #{discountAmount,jdbcType=DECIMAL},
+      <if test="couponAmount != null">
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountStrength != null">
+        #{discountStrength,jdbcType=VARCHAR},
       </if>
       <if test="templateType != null">
         #{templateType,jdbcType=INTEGER},
       </if>
-      <if test="tempateName != null">
-        #{tempateName,jdbcType=VARCHAR},
+      <if test="templateName != null">
+        #{templateName,jdbcType=VARCHAR},
       </if>
-      <if test="beginTime != null">
-        #{beginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUser != null">
-        #{updateUser,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null">
         #{createUser,jdbcType=VARCHAR},
@@ -105,29 +97,27 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.DiscountCouponTemplate">
     update t_discount_coupon_template
     <set>
       <if test="orderAmount != null">
         order_amount = #{orderAmount,jdbcType=DECIMAL},
       </if>
-      <if test="discountAmount != null">
-        discount_amount = #{discountAmount,jdbcType=DECIMAL},
+      <if test="couponAmount != null">
+        coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="discountStrength != null">
+        discount_strength = #{discountStrength,jdbcType=VARCHAR},
       </if>
       <if test="templateType != null">
         template_type = #{templateType,jdbcType=INTEGER},
       </if>
-      <if test="tempateName != null">
-        tempate_name = #{tempateName,jdbcType=VARCHAR},
+      <if test="templateName != null">
+        template_name = #{templateName,jdbcType=VARCHAR},
       </if>
-      <if test="beginTime != null">
-        begin_time = #{beginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
-        end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateUser != null">
-        update_user = #{updateUser,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="createUser != null">
         create_user = #{createUser,jdbcType=VARCHAR},
@@ -145,4 +135,17 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <select id="selectTemplates" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_discount_coupon_template
+    <where>
+      <if test="templateName != null">
+        template_name = #{templateName,jdbcType=VARCHAR}
+      </if>
+      <if test="templateType != null">
+        and template_type = #{templateType,jdbcType=INTEGER}
+      </if>
+    </where>
+    order by id desc
+  </select>
 </mapper>

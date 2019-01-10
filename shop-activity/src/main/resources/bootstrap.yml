@@ -20,3 +20,5 @@ management:
     web:
       exposure:
         exclude: refresh,health,info
+ribbon:
+  MaxAutoRetriesNextServer: 0

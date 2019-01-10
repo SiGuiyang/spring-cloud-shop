@@ -1,5 +1,3 @@
-server:
-  port: 8091
 
 spring:
   application:
@@ -14,25 +12,19 @@ spring:
       profile: dev
 
   datasource:
-    url: jdbc:mysql://192.168.199.113:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
   redis:
-    cluster:
-      nodes:
-        - 192.168.199.113:7001
-        - 192.168.199.113:7002
-        - 192.168.199.113:7003
-        - 192.168.199.113:7004
-        - 192.168.199.113:7005
-        - 192.168.199.113:7006
+    host: localhost
+    port: 6379
 
 eureka:
   instance:

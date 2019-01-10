@@ -13,12 +13,13 @@
     <result column="share_icon" jdbcType="VARCHAR" property="shareIcon" />
     <result column="share_channel" jdbcType="VARCHAR" property="shareChannel" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
     id, title, banner_url, banner_click_url, banner_type, share_url, share_title,
-    share_subtitle, share_icon, share_channel, create_time, update_time, delete_status
+    share_subtitle, share_icon, share_channel, create_time, create_user, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -63,6 +64,9 @@
       <if test="createTime != null">
         create_time,
       </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
       <if test="updateTime != null">
         update_time,
       </if>
@@ -103,6 +107,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
@@ -145,6 +152,9 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
@@ -155,10 +165,18 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <select id="selectAll" resultMap="BaseResultMap">
+  <select id="selectBanner" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from t_banner
-    where delete_status = 0 and banner_type = #{bannerType,jdbcType=VARCHAR}
+    <where>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="bannerType != null and bannerType != ''">
+        and banner_type = #{bannerType,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by id desc
   </select>
 
 </mapper>

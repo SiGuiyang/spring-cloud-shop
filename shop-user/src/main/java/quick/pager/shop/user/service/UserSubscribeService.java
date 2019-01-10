@@ -24,7 +24,6 @@ import quick.pager.shop.user.redis.RedisService;
 import quick.pager.shop.user.response.LoginOrSubscribeResponse;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * 用户注册服务
@@ -64,8 +63,9 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         userMapper.insertSelective(user);
 
 
-        String token = UUID.randomUUID().toString();
+        String token = RandomUtil.randomUUID().replace("-", "");
 
+        redisService.setValueOps(String.valueOf(user.getId()), token, 10 * 24 * 60 * 60);
         LoginOrSubscribeResponse loginOrSubscribeResponse = new LoginOrSubscribeResponse();
         loginOrSubscribeResponse.setPhone(user.getPhone());
         loginOrSubscribeResponse.setToken(token);
@@ -73,8 +73,6 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         loginOrSubscribeResponse.setUsername("");
         loginOrSubscribeResponse.setAvatar("");
         loginOrSubscribeResponse.setUserId(user.getId());
-
-        redisService.setFromHash(String.valueOf(user.getId()), token);
 
         // 使用队列发送短信初始密码
         List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule(Constants.Module.USER, Constants.SMS.INITIAL_CIPHER_SMS);

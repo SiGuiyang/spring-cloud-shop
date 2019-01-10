@@ -21,11 +21,6 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-
   <insert id="insertSelective" parameterType="quick.pager.shop.model.user.User">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -98,7 +93,7 @@
   </select>
 
 
-  <select id="selectInfoByPhone" resultType="quick.pager.shop.user.dto.UserInfoDTO">
+  <select id="selectInfoByPhone" resultType="quick.pager.shop.model.feign.dto.UserInfoDTO">
     select
       t.id,
       t.phone,
@@ -111,5 +106,30 @@
       ti.avatar
       from t_user t inner join t_user_info ti on t.id = ti.user_id
     where t.phone = #{phone,jdbcType=VARCHAR} and t.delete_status = 0
+  </select>
+
+  <select id="selectByBatchPrimaryKey" resultType="quick.pager.shop.model.feign.dto.UserInfoDTO">
+    select
+      t.id,
+      t.phone,
+      t.password,
+      ti.username,
+      ti.gender,
+      ti.age,
+      ti.email,
+      ti.birthday,
+      ti.avatar
+      from t_user t inner join t_user_info ti on t.id = ti.user_id
+      where t.id in
+      <foreach collection="userIds" item="id" index="index" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+  </select>
+
+  <select id="isExists" resultMap="BaseResultMap">
+    select id, phone from t_user where delete_status = 0 and phone in
+    <foreach collection="phones" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
   </select>
 </mapper>

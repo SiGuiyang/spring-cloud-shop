@@ -47,7 +47,7 @@ class UploadConfiguration {
         UploadManager uploadManager = UploadConfiguration.getUploadManager();
         try {
 
-            Response response = uploadManager.put(is, DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN) + "/" + fileName, UploadConfiguration.getToken(), null, null);
+            Response response = uploadManager.put(is, SysConfigMap.get(SysConfigKeys.QINIU_BUCKET) + '/'+ DateUtil.format(new Date(), DatePattern.PURE_DATE_PATTERN) + "/" + fileName, UploadConfiguration.getToken(), null, null);
             if (response.isOK()) {
                 DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
                 return putRet.key;

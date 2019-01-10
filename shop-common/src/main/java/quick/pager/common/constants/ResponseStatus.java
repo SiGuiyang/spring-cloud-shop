@@ -16,10 +16,12 @@ public interface ResponseStatus {
         int ERROR_CODE = 2000;
         // 异常码
         int EXCEPTION_CODE = 3000;
-        // 成功码
-        int SUCCESS = 200;
         // 没有权限返回吗
         int NO_PERMISSION = 5000;
+        // 登陆过期
+        int LOGIN_EXPIRE = 4000;
+        // 成功码
+        int SUCCESS = 200;
     }
 
     String NO_PERMISSION = "您没有权限访问";
@@ -46,6 +48,8 @@ public interface ResponseStatus {
     String SMS_CODE_EXPIRE = "短信验证码已过期";
 
     String SMS_CODE_ERROR = "短信验证码不正确";
+
+    String LOGIN_EXPIRE = "登陆过期，请重新登陆";
 
 
 }

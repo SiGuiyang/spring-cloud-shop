@@ -8,6 +8,7 @@
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_code" jdbcType="VARCHAR" property="goodsCode" />
     <result column="goods_status" jdbcType="TINYINT" property="goodsStatus" />
+    <result column="goods_type" jdbcType="TINYINT" property="goodsType" />
     <result column="goods_amount" jdbcType="DECIMAL" property="goodsAmount" />
     <result column="goods_discount_amount" jdbcType="DECIMAL" property="goodsDiscountAmount" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -19,7 +20,7 @@
   </resultMap>
   <sql id="Base_Column_List">
 
-    id, gcs_id, goods_name, goods_code, goods_status, goods_amount, goods_discount_amount,
+    id, gcs_id, goods_name, goods_code, goods_status, goods_type, goods_amount, goods_discount_amount,
     description, integral, goods_inventory, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -48,6 +49,9 @@
       </if>
       <if test="goodsStatus != null">
         goods_status,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
       </if>
       <if test="goodsAmount != null">
         goods_amount,
@@ -89,6 +93,9 @@
       </if>
       <if test="goodsStatus != null">
         #{goodsStatus,jdbcType=TINYINT},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=TINYINT},
       </if>
       <if test="goodsAmount != null">
         #{goodsAmount,jdbcType=DECIMAL},
@@ -132,6 +139,9 @@
       <if test="goodsStatus != null">
         goods_status = #{goodsStatus,jdbcType=TINYINT},
       </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=TINYINT},
+      </if>
       <if test="goodsAmount != null">
         goods_amount = #{goodsAmount,jdbcType=DECIMAL},
       </if>
@@ -173,11 +183,13 @@
       and goods_status = 2
       and delete_status = 0
       and goods_inventory > 0
+    order by goods_inventory desc
+    limit #{page}, #{pageSize}
   </select>
 
   <select id="selectByGoodsName" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from t_goods
-    where goods_name = concat('%',#{goodsName},'%')
+    where goods_name = concat('%',#{goodsName,jdbcType=VARCHAR},'%')
   </select>
 </mapper>
