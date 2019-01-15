@@ -14,6 +14,13 @@ public interface DiscountCouponMapper {
     int updateByPrimaryKeySelective(DiscountCoupon record);
 
     /**
+     * 根据id批量获取优惠券
+     *
+     * @param ids
+     */
+    List<DiscountCoupon> selectBatchByPrimaryKey(List<Long> ids);
+
+    /**
      * 批量插入优惠券
      */
     int batchInsertSelective(List<DiscountCoupon> records);

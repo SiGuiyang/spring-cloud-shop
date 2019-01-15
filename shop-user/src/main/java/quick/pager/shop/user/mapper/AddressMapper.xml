@@ -112,6 +112,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.common.Address">
     update t_address
     <set>
@@ -155,10 +156,19 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <select id="selectBatchByPrimaryKey" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_address
+    where id in
+      <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+  </select>
+
   <select id="selectAddressByUserId" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from t_address
-    where user_id = #{userId,jdbcType=BIGINT} and delete_status = 0
+    where user_id = #{userId,jdbcType=BIGINT} and delete_status = false
   </select>
 </mapper>

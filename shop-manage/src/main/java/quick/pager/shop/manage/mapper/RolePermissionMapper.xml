@@ -84,4 +84,16 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <select id="selectPermissions" resultMap="BaseResultMap">
+    select
+      rp.id,
+      rp.role_id,
+      rp.permission_id,
+      rp.create_time,
+      rp.update_time,
+      rp.delete_status
+    from t_permission as p right join t_role_permission as rp on p.id = rp.permission_id and rp.delete_status = false
+    where rp.role_id =  #{roleId,jdbcType=BIGINT}
+  </select>
+
 </mapper>

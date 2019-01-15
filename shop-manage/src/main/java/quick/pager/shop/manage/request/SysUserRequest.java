@@ -14,9 +14,11 @@ public class SysUserRequest extends ManageRequest {
 
     private String sysCode;
 
+    private String loginCode;
+
     private String password;
 
-    private List<String> roleCode;
+    private List<Long> roleIds;
 
     private String avatar;
 

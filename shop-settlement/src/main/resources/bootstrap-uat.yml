@@ -16,8 +16,6 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 eureka:
-  instance:
-    hostname: ${spring.application.name}
   client:
     service-url:
       defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/

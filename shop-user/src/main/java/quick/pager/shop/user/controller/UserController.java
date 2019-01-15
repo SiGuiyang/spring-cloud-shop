@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.constants.ResponseStatus;
+import quick.pager.common.dto.DTO;
+import quick.pager.common.request.AppRequest;
 import quick.pager.common.response.Response;
 import quick.pager.shop.user.dto.ForgetPasswordDTO;
 import quick.pager.shop.model.feign.dto.UserInfoDTO;
+import quick.pager.shop.user.dto.StationMessageDTO;
 import quick.pager.shop.user.dto.UserLoginDTO;
 import quick.pager.shop.user.dto.UserSubscribeDTO;
 import quick.pager.shop.user.redis.RedisService;
@@ -24,6 +27,7 @@ import quick.pager.shop.user.request.LoginRequest;
 import quick.pager.shop.user.request.SubscribeRequest;
 import quick.pager.shop.user.request.UserInfoRequest;
 import quick.pager.shop.user.response.LoginOrSubscribeResponse;
+import quick.pager.shop.user.service.StationMessageService;
 import quick.pager.shop.user.service.UserForgetPasswordService;
 import quick.pager.shop.user.service.UserInfoService;
 import quick.pager.shop.user.service.UserLoginService;
@@ -50,6 +54,8 @@ public class UserController {
     @Autowired
     private UserForgetPasswordService userForgetPasswordService;
     @Autowired
+    private StationMessageService stationMessageService;
+    @Autowired
     private RedisService redisService;
 
 
@@ -74,7 +80,7 @@ public class UserController {
 
         // 密码为空 则使用短信验证码登陆
         if (StringUtils.isEmpty(request.getPassword())) {
-            log.info("密码为空，使用短信验证码登陆 phone = {}",request.getPhone());
+            log.info("密码为空，使用短信验证码登陆 phone = {}", request.getPhone());
             // 验证短信验证码
             String smsKey = RedisKeys.UserKeys.SHOP_LOGIN_SMS + request.getPhone();
 
@@ -198,6 +204,26 @@ public class UserController {
         dto.setPhone(request.getPhone());
 
         return userForgetPasswordService.doService(dto);
+    }
+
+    @ApiOperation("站内信列表")
+    @RequestMapping(value = "/station/message", method = RequestMethod.POST)
+    public Response message(AppRequest request) {
+        StationMessageDTO dto = new StationMessageDTO();
+        dto.setId(request.getUserId());
+        dto.setEvent(request.getEvent());
+        dto.setPageSize(request.getPageSize());
+        dto.setPage(request.getPage());
+        return stationMessageService.doService(dto);
+    }
+
+    @ApiOperation("未读站内信个数")
+    @PostMapping("/station/count")
+    public Response messageCount(@PathVariable("userId") Long userId) {
+        StationMessageDTO stationMessageDTO = new StationMessageDTO();
+        stationMessageDTO.setUserId(userId);
+        stationMessageDTO.setEvent("count");
+        return stationMessageService.doService(stationMessageDTO);
     }
 }
 

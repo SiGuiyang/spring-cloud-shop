@@ -18,21 +18,19 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
-  <sql id="Base_Column_List">
 
+  <sql id="Base_Column_List">
     id, gcs_id, goods_name, goods_code, goods_status, goods_type, goods_amount, goods_discount_amount,
     description, integral, goods_inventory, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-
     select 
     <include refid="Base_Column_List" />
     from t_goods
     where id = #{id,jdbcType=BIGINT}
   </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.Goods">
-
+  <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.Goods" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
     insert into t_goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -124,7 +122,6 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.Goods">
-
     update t_goods
     <set>
       <if test="gcsId != null">
@@ -145,7 +142,7 @@
       <if test="goodsAmount != null">
         goods_amount = #{goodsAmount,jdbcType=DECIMAL},
       </if>
-      <if test="goddsDiscountAmount != null">
+      <if test="goodsDiscountAmount != null">
         goods_discount_amount = #{goodsDiscountAmount,jdbcType=DECIMAL},
       </if>
       <if test="description != null">
@@ -190,6 +187,27 @@
   <select id="selectByGoodsName" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
     from t_goods
-    where goods_name = concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+    where goods_name = concat(#{goodsName,jdbcType=VARCHAR},'%')
+  </select>
+
+  <select id="queryGoodsList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_goods
+    <where>
+      <if test="goodsName != null and goodsName !=''">
+        goods_name = concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="goodsStatus != null and goodsStatus != ''">
+        and goods_status = #{goodsStatus,jdbcType=TINYINT}
+      </if>
+      <if test="goodsType != null and goodsType != ''">
+        and goods_type = #{goodsType,jdbcType=TINYINT}
+      </if>
+      <if test="gcsId != null and gcsId !=''">
+        and gcs_id = #{gcsId,jdbcType=BIGINT}
+      </if>
+    </where>
+    order by id desc
+
   </select>
 </mapper>

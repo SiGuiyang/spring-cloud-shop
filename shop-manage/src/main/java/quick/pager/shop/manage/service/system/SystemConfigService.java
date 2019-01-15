@@ -68,6 +68,7 @@ public class SystemConfigService implements IService {
 
         if (Constants.Event.ADD.equals(dto.getEvent())) {
             config.setCreateTime(new Date());
+            config.setDeleteStatus(false);
             systemConfigMapper.insertSelective(config);
         } else {
             systemConfigMapper.updateByPrimaryKeySelective(config);

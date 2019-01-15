@@ -16,7 +16,7 @@ public class SysUser extends Model {
 
     private String password;
 
-    private String roleCode;
+    private String roleIds;
 
     private String avatar;
 

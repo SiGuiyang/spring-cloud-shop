@@ -51,5 +51,7 @@ public interface ResponseStatus {
 
     String LOGIN_EXPIRE = "登陆过期，请重新登陆";
 
+    String GOODS_EXPIRE = "商品已失效";
+
 
 }

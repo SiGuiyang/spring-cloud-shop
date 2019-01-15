@@ -4,26 +4,30 @@
   <resultMap id="BaseResultMap" type="quick.pager.shop.model.order.UserOrder">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="buy_order_cart_id" jdbcType="BIGINT" property="buyOrderCartId" />
     <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
     <result column="ship_id" jdbcType="BIGINT" property="shipId" />
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
     <result column="order_type" jdbcType="INTEGER" property="orderType" />
     <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
     <result column="integral" jdbcType="DECIMAL" property="integral" />
     <result column="integral_amount" jdbcType="DECIMAL" property="integralAmount" />
-    <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
+    <result column="discount_amount" jdbcType="DECIMAL" property="discountAmount" />
     <result column="self" jdbcType="BIT" property="self" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
+
   <sql id="Base_Column_List">
-    id, user_id, goods_id, seller_id, ship_id, order_code, order_status, order_type, 
-    order_amount, integral, integral_amount, goods_count, self, create_time, update_time, 
+    id, user_id, buy_order_cart_id, seller_id, ship_id, coupon_id, order_code, phone, order_status,
+    order_type, order_amount, integral, integral_amount, discount_amount, self, create_time, update_time,
     delete_status
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -40,14 +44,20 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="goodsId != null">
-        goods_id,
+      <if test="buyOrderCartId != null">
+        buy_order_cart_id,
       </if>
       <if test="sellerId != null">
         seller_id,
       </if>
       <if test="shipId != null">
         ship_id,
+      </if>
+      <if test="couponId != null">
+        coupon_id,
+      </if>
+      <if test="phone != null">
+        phone,
       </if>
       <if test="orderCode != null">
         order_code,
@@ -67,8 +77,8 @@
       <if test="integralAmount != null">
         integral_amount,
       </if>
-      <if test="goodsCount != null">
-        goods_count,
+      <if test="discountAmount != null">
+        discount_amount,
       </if>
       <if test="self != null">
         self,
@@ -90,14 +100,20 @@
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
       </if>
-      <if test="goodsId != null">
-        #{goodsId,jdbcType=BIGINT},
+      <if test="buyOrderCartId != null">
+        #{buyOrderCartId,jdbcType=BIGINT},
       </if>
       <if test="sellerId != null">
         #{sellerId,jdbcType=BIGINT},
       </if>
       <if test="shipId != null">
         #{shipId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="orderCode != null">
         #{orderCode,jdbcType=VARCHAR},
@@ -117,8 +133,8 @@
       <if test="integralAmount != null">
         #{integralAmount,jdbcType=DECIMAL},
       </if>
-      <if test="goodsCount != null">
-        #{goodsCount,jdbcType=INTEGER},
+      <if test="discountAmount != null">
+        #{discountAmount,jdbcType=DECIMAL},
       </if>
       <if test="self != null">
         #{self,jdbcType=BIT},
@@ -134,20 +150,27 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.order.UserOrder">
     update t_user_order
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="goodsId != null">
-        goods_id = #{goodsId,jdbcType=BIGINT},
+      <if test="buyOrderCartId != null">
+        buy_order_cart_id = #{buyOrderCartId,jdbcType=BIGINT},
       </if>
       <if test="sellerId != null">
         seller_id = #{sellerId,jdbcType=BIGINT},
       </if>
       <if test="shipId != null">
         ship_id = #{shipId,jdbcType=BIGINT},
+      </if>
+      <if test="couponId != null">
+        coupon_id = #{couponId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="orderCode != null">
         order_code = #{orderCode,jdbcType=VARCHAR},
@@ -167,8 +190,8 @@
       <if test="integralAmount != null">
         integral_amount = #{integralAmount,jdbcType=DECIMAL},
       </if>
-      <if test="goodsCount != null">
-        goods_count = #{goodsCount,jdbcType=INTEGER},
+      <if test="discountAmount != null">
+        discount_amount = #{discountAmount,jdbcType=DECIMAL},
       </if>
       <if test="self != null">
         self = #{self,jdbcType=BIT},
@@ -185,5 +208,46 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectOrders" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_user_order
+    where delete_status = false
+      and user_id = #{userId,jdbcType=BIGINT}
+      <if test="order != null">
+        and order_status in
+        <foreach collection="orderStatusList" item="item" index="index" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+      order by id desc
+      limit #{page},#{pageSize}
+  </select>
+
+  <select id="selectUserOrders" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_user_order
+    <where>
+      <if test="phone != null and phone !=''">
+        phone = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="orderCode != null and orderCode != ''">
+        and order_code = #{orderCode,jdbcType=VARCHAR}
+      </if>
+      <if test="orderStatus != null and orderStatus != ''">
+        and order_status = #{orderStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="orderType !=null and orderType != ''">
+        and order_type = #{orderType,jdbcType=INTEGER}
+      </if>
+      <if test="beginTime !=null and beginTime != ''">
+        and date_format(create_time, '%Y-%m-%d') <![CDATA[>=]]> date_format(#{beginTime}, '%Y-%m-%d')
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and date_format(create_time, '%Y-%m-%d') <![CDATA[<=]]> date_format(#{endTime, '%Y-%m-%d')
+      </if>
+    </where>
+    order by id desc
+  </select>
 
 </mapper>

@@ -8,8 +8,6 @@ spring:
     name: shop-zuul
 
 eureka:
-  instance:
-    hostname: ${spring.application.name}
   client:
     service-url:
       defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/

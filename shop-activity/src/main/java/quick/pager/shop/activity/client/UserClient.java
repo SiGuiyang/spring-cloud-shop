@@ -7,22 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.common.response.Response;
+import quick.pager.shop.activity.fallback.UserFallback;
 import quick.pager.shop.model.feign.dto.UserInfoDTO;
-import quick.pager.shop.model.user.User;
 
 /**
  * 用户模块
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-user")
+@FeignClient(value = "shop-user", fallback = UserFallback.class)
 public interface UserClient {
 
     /**
      * 获取用户信息
      *
      * @param userId 用户Id
-     * @return
      */
     @RequestMapping(value = "/user/getUser/{userId}", method = RequestMethod.POST)
     Response<UserInfoDTO> getUser(@PathVariable("userId") Long userId);

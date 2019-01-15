@@ -6,7 +6,7 @@
     <result column="sys_name" jdbcType="VARCHAR" property="sysName" />
     <result column="sys_code" jdbcType="VARCHAR" property="sysCode" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -14,7 +14,7 @@
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, sys_name, sys_code, password, avatar, role_code, create_time, create_user, update_time,
+    id, sys_name, sys_code, password, avatar, role_ids, create_time, create_user, update_time,
     delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -24,7 +24,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.manage.SysUser">
+  <insert id="insertSelective" parameterType="quick.pager.shop.model.manage.SysUser" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
     insert into t_sys_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -42,8 +42,8 @@
       <if test="avatar != null">
         avatar,
       </if>
-      <if test="roleCode != null">
-        role_code,
+      <if test="roleIds != null">
+        role_ids,
       </if>
       <if test="createTime != null">
         create_time,
@@ -74,8 +74,8 @@
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="roleCode != null">
-        #{roleCode,jdbcType=VARCHAR},
+      <if test="roleIds != null">
+        #{roleIds,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -106,8 +106,8 @@
       <if test="avatar != null">
         avatar = #{avatar,jdbcType=VARCHAR},
       </if>
-      <if test="roleCode != null">
-        role_code = #{roleCode,jdbcType=VARCHAR},
+      <if test="roleIds != null">
+        role_ids = #{roleIds,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

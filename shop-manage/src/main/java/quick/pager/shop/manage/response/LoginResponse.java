@@ -9,4 +9,6 @@ public class LoginResponse implements Serializable{
 
     private String sysCode;
 
+    private String sysName;
+
 }

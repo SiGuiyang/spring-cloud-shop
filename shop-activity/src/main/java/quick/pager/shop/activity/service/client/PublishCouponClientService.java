@@ -45,9 +45,9 @@ public class PublishCouponClientService implements IService {
     @Autowired
     private DiscountCouponMapper discountCouponMapper;
     @Autowired
-    private UserClient userClient;
-    @Autowired
     private RedisService redisService;
+    @Autowired
+    private UserClient userClient;
 
 
     @Override
@@ -55,9 +55,7 @@ public class PublishCouponClientService implements IService {
 
         PublishCouponDTO publishCouponDTO = (PublishCouponDTO) dto;
 
-        Response response = new Response();
-
-        response = checkCouponTemplate(response, publishCouponDTO.getTemplateId());
+        Response response = checkCouponTemplate(publishCouponDTO.getTemplateId());
 
         // 选择的优惠券模板可用
         if (ResponseStatus.Code.SUCCESS == response.getCode()) {
@@ -157,7 +155,8 @@ public class PublishCouponClientService implements IService {
      *
      * @param templateId 模板Id
      */
-    private Response checkCouponTemplate(Response response, Long templateId) {
+    private Response<DiscountCouponTemplate> checkCouponTemplate(Long templateId) {
+        Response<DiscountCouponTemplate> response = new Response<>();
         DiscountCouponTemplate template = discountCouponTemplateMapper.selectByPrimaryKey(templateId);
         if (ObjectUtils.isEmpty(template)) {
             response.setCode(ResponseStatus.Code.FAIL_CODE);

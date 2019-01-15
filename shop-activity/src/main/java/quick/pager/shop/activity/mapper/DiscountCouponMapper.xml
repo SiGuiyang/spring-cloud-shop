@@ -186,6 +186,16 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <select id="selectBatchByPrimaryKey" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from t_discount_coupon
+    where delete_status = false
+      and id in
+      <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+  </select>
+
   <insert id="batchInsertSelective">
     insert into t_discount_coupon (
         user_id,

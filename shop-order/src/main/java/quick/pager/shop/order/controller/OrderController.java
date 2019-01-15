@@ -1,12 +1,16 @@
 package quick.pager.shop.order.controller;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
+import quick.pager.shop.order.dto.OrderDTO;
 import quick.pager.shop.order.service.OrderDetailService;
 import quick.pager.shop.order.service.OrderListService;
 import quick.pager.shop.order.service.OrderStatusService;
@@ -38,9 +42,21 @@ public class OrderController {
      *
      * @param userId 用户Id
      */
-    @RequestMapping(value = "/{userId}", method = RequestMethod.POST)
-    public Response orderList(@PathVariable("userId") Long userId) {
-        return null;
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "手机号码", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "order", value = "所有订单 1, 待付款 2, 待收货 3, 待自提 4, 待评价 5", required = true, dataType = "String", paramType = "query")})
+    @RequestMapping(value = "/orderList/{userId}", method = RequestMethod.POST)
+    public Response orderList(@PathVariable("userId") Long userId,
+                              @RequestParam("order") String order,
+                              @RequestParam("page") Integer page,
+                              @RequestParam("pageSize") Integer pageSize) {
+
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrder(order);
+        orderDTO.setUserId(userId);
+        orderDTO.setPage(page);
+        orderDTO.setPageSize(pageSize);
+        return orderListService.doService(orderDTO);
     }
 
     /**

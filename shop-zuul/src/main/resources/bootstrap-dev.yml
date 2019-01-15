@@ -17,5 +17,5 @@ eureka:
       defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
 
   node1:
-    name: shop-server
+    name: localhost
     port: 8761

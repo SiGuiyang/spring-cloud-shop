@@ -3,13 +3,16 @@ package quick.pager.shop.manage.controller.system;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
+import quick.pager.shop.manage.dto.AuthorizationDTO;
 import quick.pager.shop.manage.dto.LoginDTO;
 import quick.pager.shop.manage.dto.RoleDTO;
 import quick.pager.shop.manage.dto.SysUserDTO;
@@ -19,6 +22,7 @@ import quick.pager.shop.manage.request.RoleRequest;
 import quick.pager.shop.manage.request.SysUserRequest;
 import quick.pager.shop.manage.service.system.LoginService;
 import quick.pager.shop.manage.service.system.MenuService;
+import quick.pager.shop.manage.service.system.PermissionService;
 import quick.pager.shop.manage.service.system.RoleService;
 import quick.pager.shop.manage.service.system.SysUserInfoService;
 import quick.pager.shop.manage.service.system.SysUserService;
@@ -46,6 +50,8 @@ public class SystemController {
     private RoleService roleService;
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private PermissionService permissionService;
 
     @ApiOperation("登陆")
     @PostMapping("/login")
@@ -66,7 +72,6 @@ public class SystemController {
 
         return sysUserInfoService.doService(dto);
     }
-
 
     /**
      * 退出
@@ -96,12 +101,12 @@ public class SystemController {
         SysUserDTO dto = new SysUserDTO();
         dto.setId(request.getId());
         dto.setSysName(request.getSysName());
+        dto.setSysCode(request.getLoginCode());
         dto.setAvatar(request.getAvatar());
         dto.setPassword(request.getPassword());
-        dto.setRoleCode(request.getRoleCode());
+        dto.setRoleIds(request.getRoleIds());
         dto.setCreateUser(request.getCreateUser());
-        dto.setPage(request.getPage());
-        dto.setPageSize(request.getPageSize());
+        dto.setDeleteStatus(request.getDeleteStatus());
         dto.setEvent(request.getEvent());
 
         return sysUserService.doService(dto);
@@ -113,10 +118,13 @@ public class SystemController {
         return menuService.doService(null);
     }
 
-    @ApiOperation("查看某个系统用户的权限列表")
-    @PostMapping("/system/menu/{sysId}")
-    public Response querySysUserPermission(@PathVariable("sysId") Long sysId) {
-        return null;
+    @ApiOperation("查看某个系统角色的权限列表")
+    @PostMapping("/system/menu/role")
+    public Response querySysUserPermission(@RequestParam Long roleId) {
+        RoleDTO dto = new RoleDTO();
+        dto.setId(roleId);
+        dto.setEvent("rolePermission");
+        return roleService.doService(dto);
     }
 
     @ApiOperation("获取系统角色")
@@ -152,8 +160,16 @@ public class SystemController {
 
     @ApiOperation("菜单授权")
     @PostMapping("/system/permission")
-    public Response permission() {
-        return null;
+    public Response permission(String permissions, Long roleId) {
+
+        if (StringUtils.isEmpty(permissions)) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+        }
+        AuthorizationDTO dto = new AuthorizationDTO();
+        dto.setId(roleId);
+        dto.setPermissions(permissions);
+
+        return permissionService.doService(dto);
     }
 
     @ApiOperation("系统配置列表")

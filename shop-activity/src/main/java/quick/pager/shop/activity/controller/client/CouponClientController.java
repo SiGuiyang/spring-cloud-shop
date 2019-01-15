@@ -3,6 +3,7 @@ package quick.pager.shop.activity.controller.client;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,10 @@ import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.activity.service.client.CouponClientService;
 import quick.pager.shop.activity.service.client.CouponTemplateClientService;
+//import quick.pager.shop.activity.service.client.PublishCouponClientService;
 import quick.pager.shop.activity.service.client.PublishCouponClientService;
+import quick.pager.shop.activity.service.client.SingleCouponService;
+import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.feign.dto.CouponDTO;
 import quick.pager.shop.model.feign.dto.CouponTemplateDTO;
 import quick.pager.shop.model.feign.dto.PublishCouponDTO;
@@ -30,6 +34,8 @@ public class CouponClientController {
     private CouponTemplateClientService couponTemplateClientService;
     @Autowired
     private PublishCouponClientService publishCouponClientService;
+    @Autowired
+    private SingleCouponService singleCouponService;
 
     @ApiOperation("发送优惠券")
     @PostMapping("/publish/coupon")
@@ -84,4 +90,13 @@ public class CouponClientController {
         dto.setEvent(Constants.Event.LIST);
         return couponClientService.doService(dto);
     }
+
+
+    @ApiOperation("获取一张优惠券详情")
+    @PostMapping("/userCoupons/{couponId}")
+    public Response<DiscountCoupon> userCoupons(@PathVariable("couponId") Long couponId) {
+
+        return new Response<>(singleCouponService.getCoupons(couponId));
+    }
+
 }

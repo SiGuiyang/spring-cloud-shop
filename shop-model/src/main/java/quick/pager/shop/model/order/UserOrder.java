@@ -12,11 +12,15 @@ public class UserOrder extends Model {
     private static final long serialVersionUID = -4697773373352516686L;
     private Long userId;
 
-    private Long goodsId;
+    private Long buyOrderCartId;
 
     private Long sellerId;
 
     private Long shipId;
+
+    private Long couponId;
+
+    private String phone;
 
     private String orderCode;
 
@@ -30,7 +34,7 @@ public class UserOrder extends Model {
 
     private BigDecimal integralAmount;
 
-    private Integer goodsCount;
+    private BigDecimal discountAmount;
 
     private Boolean self;
 

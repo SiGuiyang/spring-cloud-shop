@@ -10,7 +10,7 @@ spring:
 
 mybatis:
   configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:quick/pager/shop/activity/mapper/*.xml
   type-aliases-package: quick.pager.shop.model
 
@@ -19,6 +19,6 @@ management:
   endpoints:
     web:
       exposure:
-        exclude: refresh,health,info
+        include: refresh,health,info
 ribbon:
   MaxAutoRetriesNextServer: 0

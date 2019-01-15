@@ -32,4 +32,5 @@ public interface GoodsMapper {
      */
     List<Goods> selectByGoodsName(@Param("goodsName") String goodsName);
 
+    List<Goods> queryGoodsList(@Param("goodsName") String goodsName, @Param("goodsStatus") Integer goodsStatus, @Param("goodsType") Integer goodsType, @Param("gcsId") Long gcsId);
 }

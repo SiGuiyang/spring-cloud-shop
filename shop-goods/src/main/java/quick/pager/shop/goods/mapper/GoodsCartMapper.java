@@ -1,6 +1,8 @@
 package quick.pager.shop.goods.mapper;
 
-import quick.pager.shop.model.cart.GoodsCart;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import quick.pager.shop.model.goods.GoodsCart;
 
 public interface GoodsCartMapper {
 
@@ -9,5 +11,12 @@ public interface GoodsCartMapper {
     GoodsCart selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(GoodsCart record);
+
+    /**
+     * 查询用户的购物车列表
+     */
+    List<GoodsCart> selectCarts(@Param("userId") Long userId);
+
+    List<GoodsCart> selectByBuyCartId(@Param("buyerCartId") Long buyerCartId);
 
 }

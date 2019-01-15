@@ -26,8 +26,6 @@ spring:
         - 192.168.199.113:7006
 
 eureka:
-  instance:
-    hostname: ${spring.application.name}
   client:
     service-url:
       defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/

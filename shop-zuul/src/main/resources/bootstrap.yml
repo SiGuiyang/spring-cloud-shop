@@ -25,16 +25,16 @@ zuul:
       path: /order/**
       serviceId: shop-order
       stripPrefix: false
-    shop-seller:
-      path: /seller/**
-      serviceId: shop-seller
-      stripPrefix: false
     shop-settlement:
       path: /settlement/**
       serviceId: shop-settlement
       stripPrefix: false
     shop-user:
       path: /user/**
+      serviceId: shop-user
+      stripPrefix: false
+    shop-user-seller:
+      path: /seller/**
       serviceId: shop-user
       stripPrefix: false
   host:

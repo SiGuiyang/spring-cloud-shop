@@ -13,6 +13,10 @@ public interface AddressMapper {
 
     int updateByPrimaryKeySelective(Address record);
 
+    /**
+     * 根据id批量获取地址
+     */
+    List<Address> selectBatchByPrimaryKey(List<Long> id);
 
     /**
      * 查询用户地址列表

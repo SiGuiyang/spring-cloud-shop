@@ -42,8 +42,8 @@ public class GoodsController {
     @PostMapping("/home/goods/list")
     public Response homeGoodsList(AppRequest request) {
         GoodsDTO dto = new GoodsDTO();
-//        dto.setPage(request.getPage());
-//        dto.setPageSize(request.getPageSize());
+        dto.setPage(request.getPage());
+        dto.setPageSize(request.getPageSize());
         return goodsHomeListService.doService(dto);
     }
 
@@ -53,15 +53,15 @@ public class GoodsController {
 
         GoodsSearchDTO dto = new GoodsSearchDTO();
         dto.setGoodsName(request.getGoodsName());
-//        dto.setPage(request.getPage());
-//        dto.setPageSize(request.getPageSize());
+        dto.setPage(request.getPage());
+        dto.setPageSize(request.getPageSize());
         dto.setEvent(GoodsConstants.SEARCH_GOODS_SEARCH_EVENT);
         return goodsSearchService.doService(dto);
     }
 
     @ApiOperation("查看商品详情")
-    @PostMapping("/detail/{goodsId}")
-    public Response goodsDetail(@PathVariable("goodsId") Long goodsId) {
+    @PostMapping("/goodsInfo/{goodsId}")
+    public Response goodsInfo(@PathVariable("goodsId") Long goodsId) {
 
         return goodsDetailService.doService(new DTO(goodsId));
 

@@ -10,15 +10,13 @@ spring:
       label: master
       profile: test
   datasource:
-    url: jdbc:mysql://192.168.199.113:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://192.168.199.113:3306/pager_order?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
 eureka:
-  instance:
-    hostname: ${spring.application.name}
   client:
     service-url:
       defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/

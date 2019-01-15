@@ -72,7 +72,7 @@ public class CouponTemplateClientService implements IService {
         BeanUtils.copyProperties(couponTemplateDTO, template);
 
         // 如果是折扣券
-        if (Constants.CouponType.DICOUNT.type == template.getTemplateType()) {
+        if (Constants.CouponType.DISCOUNT.type == template.getTemplateType()) {
             BigDecimal hundred = new BigDecimal("100");
 
             if (hundred.compareTo(template.getDiscountStrength()) <= 0) {

@@ -16,7 +16,7 @@ public class SysUserDTO extends DTO {
 
     private String password;
 
-    private List<String> roleCode;
+    private List<Long> roleIds;
 
     private String avatar;
 

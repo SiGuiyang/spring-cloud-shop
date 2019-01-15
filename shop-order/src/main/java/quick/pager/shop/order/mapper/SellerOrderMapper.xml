@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.order.mapper.SellerOrderMapper">
-  <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.SellerOrder">
+  <resultMap id="BaseResultMap" type="quick.pager.shop.model.order.SellerOrder">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
     <result column="user_order_id" jdbcType="BIGINT" property="userOrderId" />
@@ -23,7 +23,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.activity.SellerOrder">
+  <insert id="insertSelective" parameterType="quick.pager.shop.model.order.SellerOrder">
     insert into t_seller_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,7 +84,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.SellerOrder">
+  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.order.SellerOrder">
     update t_seller_order
     <set>
       <if test="sellerId != null">

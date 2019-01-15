@@ -23,9 +23,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/pager_shop"
+                        connectionURL="jdbc:mysql://localhost:3306/pager_shop"
                         userId="root"
-                        password="12345678">
+                        password="root">
         </jdbcConnection>
         <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
             <property name="forceBigDecimals" value="false"/>
@@ -80,8 +80,8 @@
         15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
      -->
-        <table tableName="t_city"
-               domainObjectName="City"
+        <table tableName="t_station_letter"
+               domainObjectName="StationLetter"
                enableDeleteByExample="false"
                enableCountByExample="false"
                enableUpdateByExample="false"

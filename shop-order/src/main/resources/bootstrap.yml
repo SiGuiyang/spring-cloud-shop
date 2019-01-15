@@ -7,9 +7,13 @@ spring:
   application:
     name: shop-order
 
-
 management:
   endpoints:
     web:
       exposure:
-        exclude: refresh,health,info
+        include: refresh,health,info
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: quick.pager.shop.model
+  mapper-locations: classpath:quick/pager/shop/order/mapper/*.xml

@@ -18,6 +18,10 @@ public class Request implements Serializable {
      */
     private long id;
     /**
+     * 手机号
+     */
+    private String phone;
+    /**
      * 操作事件
      */
     private String event;

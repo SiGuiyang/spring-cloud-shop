@@ -39,6 +39,7 @@ public class PermissionFilter implements Filter {
         WHITE_LIST.add("/admin/download");
         WHITE_LIST.add("/admin/activity/coupon/template/enable");
         WHITE_LIST.add("/admin/publish/coupon");
+        WHITE_LIST.add("/admin/order/status");
     }
 
     @Override

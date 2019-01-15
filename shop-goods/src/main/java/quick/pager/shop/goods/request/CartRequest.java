@@ -21,13 +21,6 @@ public class CartRequest extends Request {
     private Long userId;
 
     /**
-     * 购物车的操作方式<br />
-     * add 新增
-     * sub 减少
-     * delete 选中删除
-     */
-    private String operation;
-    /**
      * 商品id集合
      */
     private List<Long> goodsIds;

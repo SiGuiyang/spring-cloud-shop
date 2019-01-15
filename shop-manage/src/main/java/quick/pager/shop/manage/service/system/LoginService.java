@@ -1,7 +1,6 @@
 package quick.pager.shop.manage.service.system;
 
 import cn.hutool.crypto.SecureUtil;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +48,7 @@ public class LoginService implements IService<LoginResponse> {
         }
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setSysCode(loginDTO.getUsername());
+        loginResponse.setSysName(sysUser.getSysName());
         response.setData(loginResponse);
 
         return response;

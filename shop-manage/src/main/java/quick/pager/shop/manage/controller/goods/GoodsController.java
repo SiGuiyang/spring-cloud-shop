@@ -3,6 +3,7 @@ package quick.pager.shop.manage.controller.goods;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.manage.client.GoodsClient;
 import quick.pager.shop.manage.request.ClassificationRequest;
+import quick.pager.shop.model.feign.request.GoodsRequest;
+import quick.pager.shop.model.feign.response.GoodsResponse;
 
 @Api(description = "商品管理")
 @RestController
@@ -21,8 +24,20 @@ public class GoodsController {
     private GoodsClient goodsClient;
 
     @PostMapping("/goods/list")
-    public Response goods() {
-        return null;
+    public Response goods(GoodsRequest request) {
+        return goodsClient.queryGoodsList(request);
+    }
+
+    @ApiOperation("商品新增|修改")
+    @PostMapping("/goods/modify")
+    public Response goodsModify(GoodsRequest request) {
+        return goodsClient.modifyGoods(request);
+    }
+
+    @ApiOperation("查看商品详情")
+    @PostMapping("/goods/info")
+    public Response<GoodsResponse> goodsInfo(Long goodsId) {
+        return goodsClient.goodsInfo(goodsId);
     }
 
     @ApiOperation("商品分类列表")

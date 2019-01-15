@@ -2,6 +2,7 @@ package quick.pager.shop.manage.service.system;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,10 @@ import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.manage.dto.RoleDTO;
 import quick.pager.shop.manage.mapper.RoleMapper;
+import quick.pager.shop.manage.mapper.RolePermissionMapper;
+import quick.pager.shop.model.manage.Permission;
 import quick.pager.shop.model.manage.Role;
+import quick.pager.shop.model.manage.RolePermission;
 
 /**
  * 角色
@@ -27,6 +31,8 @@ public class RoleService implements IService {
 
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
     @Override
     public Response doService(DTO dto) {
@@ -43,8 +49,20 @@ public class RoleService implements IService {
             case "classification":
                 response = getRoleClassification();
                 break;
+            case "rolePermission": // 查看某个角色的权限
+                response = getRolePermission(roleDTO);
         }
         return response;
+    }
+
+    /**
+     * 查看某个角色的权限
+     */
+    private Response<List<Long>> getRolePermission(RoleDTO roleDTO) {
+        List<RolePermission> permissions = rolePermissionMapper.selectPermissions(roleDTO.getId());
+        List<Long> ids = Lists.newArrayList();
+        permissions.forEach(permission -> ids.add(permission.getPermissionId()));
+        return new Response<>(ids);
     }
 
     // 角色分类
@@ -74,6 +92,7 @@ public class RoleService implements IService {
         BeanUtils.copyProperties(dto, role);
         if (Constants.Event.ADD.equals(dto.getEvent())) { // 新增
             role.setCreateTime(new Date());
+            role.setDeleteStatus(false);
             roleMapper.insertSelective(role);
         } else {
             roleMapper.updateByPrimaryKeySelective(role);

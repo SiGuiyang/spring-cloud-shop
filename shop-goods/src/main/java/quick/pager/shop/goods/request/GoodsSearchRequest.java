@@ -2,6 +2,7 @@ package quick.pager.shop.goods.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.common.request.AppRequest;
 import quick.pager.common.request.Request;
 
 /**
@@ -9,7 +10,7 @@ import quick.pager.common.request.Request;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GoodsSearchRequest extends Request {
+public class GoodsSearchRequest extends AppRequest {
     private static final long serialVersionUID = 6685702979479512148L;
 
     private String goodsName;
