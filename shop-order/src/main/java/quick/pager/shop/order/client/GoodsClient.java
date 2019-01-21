@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.common.response.Response;
 import quick.pager.shop.model.feign.response.GoodsResponse;
-import quick.pager.shop.order.fallback.GoodsFallback;
+import quick.pager.shop.order.fallback.GoodsClientFallbackFactory;
 
 /**
  * 商品模块
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-goods", fallback = GoodsFallback.class)
+@FeignClient(value = "shop-goods", fallbackFactory = GoodsClientFallbackFactory.class)
 public interface GoodsClient {
 
 

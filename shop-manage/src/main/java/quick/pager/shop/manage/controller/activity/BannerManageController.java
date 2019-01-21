@@ -1,5 +1,6 @@
 package quick.pager.shop.manage.controller.activity;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ public class BannerManageController {
     @Autowired
     private ActivityClient activityClient;
 
+    @HystrixCommand
     @ApiOperation("banner 列表")
     @PostMapping("/activity/banner/list")
     public Response list(BannerRequest request) {

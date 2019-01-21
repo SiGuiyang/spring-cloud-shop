@@ -1,125 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.goods.mapper.GoodsCartMapper">
-  <resultMap id="BaseResultMap" type="quick.pager.shop.model.goods.GoodsCart">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="buy_cart_id" jdbcType="BIGINT" property="buyCartId" />
-    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="goods_count" jdbcType="INTEGER" property="goodsCount" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.goods.GoodsCart">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="buy_cart_id" jdbcType="BIGINT" property="buyCartId"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="goods_count" jdbcType="INTEGER" property="goodsCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
-    id, user_id, buy_cart_id, goods_id, goods_count, create_time, update_time, delete_status
-  </sql>
+    <sql id="Base_Column_List">
+        id, user_id, buy_cart_id, goods_id, goods_count, create_time, update_time, delete_status
+    </sql>
 
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods_cart
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods_cart
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.GoodsCart">
-    insert into t_goods_cart
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="buyCartId != null">
-        buy_cart_id,
-      </if>
-      <if test="goodsId != null">
-        goods_id,
-      </if>
-      <if test="goodsCount != null">
-        goods_count,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="deleteStatus != null">
-        delete_status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="buyCartId != null">
-        #{buyCartId,jdbcType=BIGINT},
-      </if>
-      <if test="goodsId != null">
-        #{goodsId,jdbcType=BIGINT},
-      </if>
-      <if test="goodsCount != null">
-        #{goodsCount,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteStatus != null">
-        #{deleteStatus,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.GoodsCart">
+        insert into t_goods_cart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="buyCartId != null">
+                buy_cart_id,
+            </if>
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="goodsCount != null">
+                goods_count,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="buyCartId != null">
+                #{buyCartId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCount != null">
+                #{goodsCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.GoodsCart">
-    update t_goods_cart
-    <set>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="buyCartId != null">
-        buy_cart_id = #{buyCartId,jdbcType=BIGINT},
-      </if>
-      <if test="goodsId != null">
-        goods_id = #{goodsId,jdbcType=BIGINT},
-      </if>
-      <if test="goodsCount != null">
-        goods_count = #{goodsCount,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteStatus != null">
-        delete_status = #{deleteStatus,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.GoodsCart">
+        update t_goods_cart
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="buyCartId != null">
+                buy_cart_id = #{buyCartId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsCount != null">
+                goods_count = #{goodsCount,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
-  <select id="selectCarts" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"/>
-    from t_goods_cart
-    where delete_status = false
-    and user_id = #{userId,jdbcType=BIGINT}
-    order by id desc
-  </select>
+    <select id="selectCarts" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods_cart
+        where delete_status = false
+        and user_id = #{userId,jdbcType=BIGINT}
+        order by id desc
+    </select>
 
-  <select id="selectByBuyCartId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"/>
-    from t_goods_cart
-    where delete_status = false
-    and buy_cart_id = #{buyerCartId,jdbcType=BIGINT}
-  </select>
+    <select id="selectByBuyCartId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods_cart
+        where delete_status = false
+        and buy_cart_id = #{buyerCartId,jdbcType=BIGINT}
+    </select>
 
 </mapper>

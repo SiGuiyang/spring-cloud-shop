@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.fallback.GoodsClientFallback;
+import quick.pager.shop.manage.fallback.GoodsClientFallbackFactory;
 import quick.pager.shop.manage.request.ClassificationRequest;
 import quick.pager.shop.model.feign.request.GoodsRequest;
 import quick.pager.shop.model.feign.response.GoodsResponse;
@@ -19,7 +19,7 @@ import quick.pager.shop.model.goods.Goods;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-goods", fallback = GoodsClientFallback.class)
+@FeignClient(value = "shop-goods", fallbackFactory = GoodsClientFallbackFactory.class)
 public interface GoodsClient {
 
     /**

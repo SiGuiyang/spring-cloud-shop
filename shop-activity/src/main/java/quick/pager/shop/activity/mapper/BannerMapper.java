@@ -15,8 +15,8 @@ public interface BannerMapper {
     /**
      * 查询所有banner
      *
-     * @param title         活动标题
-     * @param bannerType    banner 类型
+     * @param title      活动标题
+     * @param bannerType banner 类型
      */
     List<Banner> selectBanner(@Param("title") String title, @Param("bannerType") String bannerType);
 

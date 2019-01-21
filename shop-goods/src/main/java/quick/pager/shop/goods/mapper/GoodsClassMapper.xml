@@ -1,107 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.goods.mapper.GoodsClassMapper">
-  <resultMap id="BaseResultMap" type="quick.pager.shop.model.goods.GoodsClass">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="class_name" jdbcType="VARCHAR" property="className" />
-    <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, class_name, icon, create_user, create_time, update_time, delete_status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods_class
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.goods.GoodsClass">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="class_name" jdbcType="VARCHAR" property="className"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, class_name, icon, create_user, create_time, update_time, delete_status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods_class
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.GoodsClass">
-    insert into t_goods_class
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="className != null">
-        class_name,
-      </if>
-      <if test="icon != null">
-        icon,
-      </if>
-      <if test="createUser != null">
-        create_user,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="deleteStatus != null">
-        delete_status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="className != null">
-        #{className,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteStatus != null">
-        #{deleteStatus,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.GoodsClass">
-    update t_goods_class
-    <set>
-      <if test="className != null">
-        class_name = #{className,jdbcType=VARCHAR},
-      </if>
-      <if test="icon != null">
-        icon = #{icon,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null">
-        create_user = #{createUser,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteStatus != null">
-        delete_status = #{deleteStatus,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.GoodsClass">
+        insert into t_goods_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="className != null">
+                class_name,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="className != null">
+                #{className,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.GoodsClass">
+        update t_goods_class
+        <set>
+            <if test="className != null">
+                class_name = #{className,jdbcType=VARCHAR},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
     <select id="selectClassification" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List"/>
-      from t_goods_class
-      where delete_status = 0
+        select
+        <include refid="Base_Column_List"/>
+        from t_goods_class
+        where delete_status = 0
 
-      <if test="className != null">
-        and class_name = #{className,jdbcType=VARCHAR}
-      </if>
+        <if test="className != null">
+            and class_name = #{className,jdbcType=VARCHAR}
+        </if>
 
     </select>
 

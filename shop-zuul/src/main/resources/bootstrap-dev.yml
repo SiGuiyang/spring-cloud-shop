@@ -1,21 +1,14 @@
 spring:
-  cloud:
-    config:
-      uri: http://localhost:8889/
-      label: master
-      profile: dev
   application:
     name: shop-zuul
   profiles:
     active: dev
+  redis:
+    host: localhost
+    port: 6379
+
 
 eureka:
-  instance:
-    hostname: ${eureka.node1.name}
   client:
     service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-    name: localhost
-    port: 8761
+      defaultZone: http://172.16.11.118:8761/eureka/

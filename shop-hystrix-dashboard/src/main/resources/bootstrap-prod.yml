@@ -1,0 +1,7 @@
+
+spring:
+  application:
+    name: shop-hystrix-dashboard
+  profiles:
+    active: prod
+

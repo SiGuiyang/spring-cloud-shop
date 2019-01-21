@@ -14,12 +14,12 @@ public class IController {
     private DiscoveryClient discoveryClient;
 
     @RequestMapping("/list")
-    public void list(){
+    public void list() {
         List<String> services = discoveryClient.getServices();
         System.out.println(services);
         List<ServiceInstance> instances = discoveryClient.getInstances("shop-user");
 
-        instances.forEach(inst->{
+        instances.forEach(inst -> {
             System.out.println(inst.getHost());
             System.out.println(inst.getPort());
             System.out.println(inst.getServiceId());

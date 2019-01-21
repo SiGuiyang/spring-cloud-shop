@@ -15,13 +15,13 @@ public class FinanceController {
 
     @ApiOperation("资金管理")
     @PostMapping("/finance/fund")
-    public Response fund () {
+    public Response fund() {
         return null;
     }
 
     @ApiOperation("交易管理")
     @PostMapping("/finance/trade")
-    public Response trade () {
+    public Response trade() {
         return null;
     }
 }

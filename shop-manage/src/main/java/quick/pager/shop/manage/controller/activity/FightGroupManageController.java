@@ -16,12 +16,12 @@ import quick.pager.common.response.Response;
 public class FightGroupManageController {
 
     @PostMapping("/activity/fightGroup/rule")
-    public Response rule () {
+    public Response rule() {
         return null;
     }
 
     @PostMapping("/activity/fightGroup/goods")
-    public Response goods () {
+    public Response goods() {
         return null;
     }
 }

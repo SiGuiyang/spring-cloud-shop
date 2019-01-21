@@ -9,9 +9,9 @@ import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.goods.dto.ClassificationDTO;
 import quick.pager.shop.goods.mapper.GoodsClassMapper;
-import quick.pager.shop.goods.redis.RedisService;
 import quick.pager.shop.model.goods.GoodsClass;
 
 /**

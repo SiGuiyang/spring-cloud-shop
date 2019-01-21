@@ -30,7 +30,7 @@ public class NativeMessageController {
 
     @PostMapping("/message/modify")
     @ApiOperation("站内消息操作 删除 已读")
-    public Response modifyMessage(MessageRequest request){
+    public Response modifyMessage(MessageRequest request) {
         return null;
     }
 }

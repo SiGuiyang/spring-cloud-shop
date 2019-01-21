@@ -1,118 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.order.mapper.SellerOrderMapper">
-  <resultMap id="BaseResultMap" type="quick.pager.shop.model.order.SellerOrder">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="seller_id" jdbcType="BIGINT" property="sellerId" />
-    <result column="user_order_id" jdbcType="BIGINT" property="userOrderId" />
-    <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
-    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
-    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, seller_id, user_order_id, order_amount, order_code, order_status, create_time, 
-    update_time, delete_status
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_seller_order
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.order.SellerOrder">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="seller_id" jdbcType="BIGINT" property="sellerId"/>
+        <result column="user_order_id" jdbcType="BIGINT" property="userOrderId"/>
+        <result column="order_amount" jdbcType="DECIMAL" property="orderAmount"/>
+        <result column="order_code" jdbcType="VARCHAR" property="orderCode"/>
+        <result column="order_status" jdbcType="INTEGER" property="orderStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, seller_id, user_order_id, order_amount, order_code, order_status, create_time,
+        update_time, delete_status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_seller_order
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.order.SellerOrder">
-    insert into t_seller_order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="sellerId != null">
-        seller_id,
-      </if>
-      <if test="userOrderId != null">
-        user_order_id,
-      </if>
-      <if test="orderAmount != null">
-        order_amount,
-      </if>
-      <if test="orderCode != null">
-        order_code,
-      </if>
-      <if test="orderStatus != null">
-        order_status,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="deleteStatus != null">
-        delete_status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="sellerId != null">
-        #{sellerId,jdbcType=BIGINT},
-      </if>
-      <if test="userOrderId != null">
-        #{userOrderId,jdbcType=BIGINT},
-      </if>
-      <if test="orderAmount != null">
-        #{orderAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="orderCode != null">
-        #{orderCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orderStatus != null">
-        #{orderStatus,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteStatus != null">
-        #{deleteStatus,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.order.SellerOrder">
-    update t_seller_order
-    <set>
-      <if test="sellerId != null">
-        seller_id = #{sellerId,jdbcType=BIGINT},
-      </if>
-      <if test="userOrderId != null">
-        user_order_id = #{userOrderId,jdbcType=BIGINT},
-      </if>
-      <if test="orderAmount != null">
-        order_amount = #{orderAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="orderCode != null">
-        order_code = #{orderCode,jdbcType=VARCHAR},
-      </if>
-      <if test="orderStatus != null">
-        order_status = #{orderStatus,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteStatus != null">
-        delete_status = #{deleteStatus,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.order.SellerOrder">
+        insert into t_seller_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="userOrderId != null">
+                user_order_id,
+            </if>
+            <if test="orderAmount != null">
+                order_amount,
+            </if>
+            <if test="orderCode != null">
+                order_code,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="userOrderId != null">
+                #{userOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="orderAmount != null">
+                #{orderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="orderCode != null">
+                #{orderCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.order.SellerOrder">
+        update t_seller_order
+        <set>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="userOrderId != null">
+                user_order_id = #{userOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="orderAmount != null">
+                order_amount = #{orderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="orderCode != null">
+                order_code = #{orderCode,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
 </mapper>

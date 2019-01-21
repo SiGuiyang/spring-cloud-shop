@@ -14,8 +14,9 @@ public interface SystemConfigMapper {
 
     /**
      * 配置列表
+     *
      * @param configName 配置项名称
-     * @param module 所属模块
+     * @param module     所属模块
      */
     List<SystemConfig> selectSystemConfig(@Param("configName") String configName, @Param("module") String module);
 

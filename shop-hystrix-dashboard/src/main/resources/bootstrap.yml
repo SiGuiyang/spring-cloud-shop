@@ -1,0 +1,8 @@
+server:
+  port: 9099
+
+spring:
+  application:
+    name: shop-hystrix-dashboard
+  profiles:
+    active: dev

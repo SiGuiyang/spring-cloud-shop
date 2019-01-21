@@ -13,8 +13,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, config_name, config_value, module, description, create_time, update_time, delete_status
-  </sql>
+        id, config_name, config_value, module, description, create_time, update_time, delete_status
+    </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -107,7 +107,8 @@
     </update>
 
     <select id="selectSystemConfig" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
+        select
+        <include refid="Base_Column_List"/>
         from t_system_config
         <where>
             <if test="configName != null">

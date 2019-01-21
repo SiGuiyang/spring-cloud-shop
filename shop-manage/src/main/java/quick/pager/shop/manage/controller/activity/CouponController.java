@@ -1,5 +1,6 @@
 package quick.pager.shop.manage.controller.activity;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class CouponController {
         return activityClient.publishCoupon(file, templateId);
     }
 
+    @HystrixCommand
     @ApiOperation("优惠券模板列表")
     @PostMapping("/activity/coupon/template")
     public Response template(CouponTemplateRequest request) {
@@ -39,6 +41,7 @@ public class CouponController {
         return activityClient.modifyTemplate(request);
     }
 
+    @HystrixCommand
     @ApiOperation("用户优惠券列表")
     @PostMapping("/activity/coupon/list")
     public Response coupons(CouponRequest request) {

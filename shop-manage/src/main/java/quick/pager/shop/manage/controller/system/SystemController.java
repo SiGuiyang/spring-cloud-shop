@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,7 +64,7 @@ public class SystemController {
     }
 
     @ApiOperation("系统登陆用户吧信息")
-    @PostMapping("/system/userInfo")
+    @PostMapping("/system/adminInfo")
     public Response sysUserInfo(@RequestParam String sysCode) {
         LoginDTO dto = new LoginDTO();
         dto.setUsername(sysCode);
@@ -76,7 +75,7 @@ public class SystemController {
     /**
      * 退出
      */
-    @PostMapping("/admin/logout")
+    @PostMapping("/logout")
     public Response logout() {
         return null;
     }

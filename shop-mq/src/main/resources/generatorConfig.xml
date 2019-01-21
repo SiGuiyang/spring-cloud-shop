@@ -35,7 +35,8 @@
         <sqlMapGenerator targetPackage="quick.pager.shop.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
-        <javaClientGenerator targetPackage="quick.pager.shop.mapper.activity" type="XMLMAPPER" targetProject="src/main/java">
+        <javaClientGenerator targetPackage="quick.pager.shop.mapper.activity" type="XMLMAPPER"
+                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
@@ -75,10 +76,10 @@
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
      -->
         <!--<table tableName="t_merchant_pay_channel"-->
-               <!--domainObjectName="MerchantPayChannel"-->
-               <!--enableDeleteByExample="false"-->
-               <!--enableCountByExample="false"-->
-               <!--enableUpdateByExample="false"-->
-               <!--enableSelectByExample="false"/>-->
+        <!--domainObjectName="MerchantPayChannel"-->
+        <!--enableDeleteByExample="false"-->
+        <!--enableCountByExample="false"-->
+        <!--enableUpdateByExample="false"-->
+        <!--enableSelectByExample="false"/>-->
     </context>
 </generatorConfiguration>

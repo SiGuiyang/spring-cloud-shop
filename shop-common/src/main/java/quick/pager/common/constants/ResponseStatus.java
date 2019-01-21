@@ -30,6 +30,8 @@ public interface ResponseStatus {
 
     String PARAMS_EXCEPTION = "网络出了点小问题";
 
+    String TELNET_EXCEPTION = "网络连接错误，请稍后重试";
+
     String REPEAT_SUBMIT = "请勿重复提交";
 
     String USER_PHONE_NOT_EXISTS = "用户不存在";

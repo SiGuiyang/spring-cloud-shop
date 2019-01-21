@@ -1,0 +1,22 @@
+
+spring:
+  application:
+    name: shop-hystrix-dashboard
+  profiles:
+    active: dev
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
+
+  node1:
+#    name: localhost
+    name: 192.168.199.113
+    port: 8761
+
+turbine:
+  combine-host-port: true
+  app-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user
+  aggregator:
+    cluster-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user

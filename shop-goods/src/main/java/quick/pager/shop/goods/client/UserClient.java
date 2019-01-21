@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.common.response.Response;
+import quick.pager.shop.goods.fallback.UserFallbackFactory;
 import quick.pager.shop.model.feign.dto.UserInfoDTO;
 
 /**
@@ -12,7 +13,7 @@ import quick.pager.shop.model.feign.dto.UserInfoDTO;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-user")
+@FeignClient(value = "shop-user", path = "/user", fallbackFactory = UserFallbackFactory.class)
 public interface UserClient {
 
     /**
@@ -20,7 +21,7 @@ public interface UserClient {
      *
      * @param userId 用户Id
      */
-    @RequestMapping(value = "/user/getUser/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/getUser/{userId}", method = RequestMethod.POST)
     Response<UserInfoDTO> getUser(@PathVariable("userId") Long userId);
 
 }

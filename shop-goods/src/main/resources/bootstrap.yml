@@ -7,6 +7,9 @@ spring:
   application:
     name: shop-goods
 
+feign:
+  hystrix:
+    enabled: true
 
 management:
   endpoints:

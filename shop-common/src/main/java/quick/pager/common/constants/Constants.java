@@ -130,11 +130,10 @@ public interface Constants {
      * 订单类型
      */
     enum OrderType {
-        SPECIAL(1,"专区订单"),
-        NORMAL(2,"普通订单"),
-        SELF(3,"自提订单"),
-        SEC_KILL(4,"秒杀订单")
-        ;
+        SPECIAL(1, "专区订单"),
+        NORMAL(2, "普通订单"),
+        SELF(3, "自提订单"),
+        SEC_KILL(4, "秒杀订单");
 
         public int type;
 

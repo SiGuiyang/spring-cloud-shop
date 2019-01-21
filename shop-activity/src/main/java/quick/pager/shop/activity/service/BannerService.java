@@ -10,9 +10,9 @@ import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.activity.dto.BannerDTO;
 import quick.pager.shop.activity.mapper.BannerMapper;
-import quick.pager.shop.activity.redis.RedisService;
 import quick.pager.shop.model.activity.Banner;
 
 @Service

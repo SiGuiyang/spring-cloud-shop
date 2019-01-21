@@ -7,10 +7,11 @@ spring:
   application:
     name: shop-manage
 
+feign:
+  hystrix:
+    enabled: true
 
 mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:quick/pager/shop/manage/mapper/*.xml
   type-aliases-package: quick.pager.shop.model
 

@@ -6,7 +6,7 @@ import quick.pager.common.request.Request;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AddressRequest extends Request{
+public class AddressRequest extends Request {
     private static final long serialVersionUID = 480728885297418424L;
 
     private Long userId;

@@ -33,6 +33,4 @@ public class Permission extends Model {
     private List<Permission> children = new ArrayList<>();
 
 
-
-
 }

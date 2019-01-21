@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.common.request.ManageRequest;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.fallback.UserClientFallback;
+import quick.pager.shop.manage.fallback.UserClientFallbackFactory;
 import quick.pager.shop.model.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.user.StationLetter;
 import quick.pager.shop.model.user.User;
@@ -19,7 +19,7 @@ import quick.pager.shop.model.user.User;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-user", fallback = UserClientFallback.class)
+@FeignClient(value = "shop-user", fallbackFactory = UserClientFallbackFactory.class)
 public interface UserClient {
 
     /**

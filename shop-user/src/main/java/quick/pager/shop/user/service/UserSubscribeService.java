@@ -14,13 +14,13 @@ import quick.pager.common.dto.DTO;
 import quick.pager.common.dto.SMSDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.common.SmsTemplate;
 import quick.pager.shop.model.user.User;
 import quick.pager.shop.user.dto.UserSubscribeDTO;
 import quick.pager.shop.user.mapper.SmsTemplateMapper;
 import quick.pager.shop.user.mapper.UserMapper;
 import quick.pager.shop.user.mq.MqService;
-import quick.pager.shop.user.redis.RedisService;
 import quick.pager.shop.user.response.LoginOrSubscribeResponse;
 
 import java.util.Date;

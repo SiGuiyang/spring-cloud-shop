@@ -11,8 +11,8 @@
         <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, module, sms_template_code, sms_template_content, create_time, update_time, delete_status
-  </sql>
+        id, module, sms_template_code, sms_template_content, create_time, update_time, delete_status
+    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

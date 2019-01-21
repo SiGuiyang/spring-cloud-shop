@@ -6,10 +6,16 @@ spring:
     active: dev
   application:
     name: shop-settlement
-
+feign:
+  hystrix:
+    enabled: true
 
 management:
   endpoints:
     web:
       exposure:
         include: refresh,health,info
+
+mybatis:
+  type-aliases-package: quick.pager.shop.model
+  mapper-locations: classpath:quick/pager/shop/settlement/mapper/*.xml

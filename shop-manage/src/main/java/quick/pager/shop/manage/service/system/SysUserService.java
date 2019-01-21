@@ -101,7 +101,7 @@ public class SysUserService implements IService {
                 sysRole.setCreateTime(new Date());
                 sysRole.setDeleteStatus(false);
                 sysRoleMapper.insertSelective(sysRole);
-                index[0] ++;
+                index[0]++;
             }
 
         });

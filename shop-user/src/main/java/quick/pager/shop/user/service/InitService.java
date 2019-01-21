@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.RedisKeys;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.common.SmsTemplate;
 import quick.pager.shop.model.common.SystemConfig;
 import quick.pager.shop.user.mapper.SmsTemplateMapper;
 import quick.pager.shop.user.mapper.SystemConfigMapper;
-import quick.pager.shop.user.redis.RedisService;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

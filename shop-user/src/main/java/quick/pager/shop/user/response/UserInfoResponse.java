@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class UserInfoResponse implements Serializable{
+public class UserInfoResponse implements Serializable {
     private static final long serialVersionUID = -4170663634334464488L;
 
     private Long userId;

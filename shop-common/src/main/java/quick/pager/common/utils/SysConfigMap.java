@@ -33,7 +33,7 @@ public class SysConfigMap {
     }
 
 
-    public static Map<String,String> getCache () {
+    public static Map<String, String> getCache() {
         return SysConfigMap.CACHE;
     }
 

@@ -1,11 +1,9 @@
 package quick.pager.shop.user.controller;
 
-import cn.hutool.core.util.ImageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,14 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.response.Response;
+import quick.pager.common.service.RedisService;
 import quick.pager.common.utils.VerifyCodeUtils;
-import quick.pager.shop.user.redis.RedisService;
 import quick.pager.shop.user.request.SMSRequest;
 
-import javax.imageio.stream.ImageOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -50,7 +45,7 @@ public class UserCodeController {
     /**
      * 发送图形验证码
      *
-     * @param phone  手机号码
+     * @param phone    手机号码
      * @param response response
      */
     @RequestMapping(value = "/send/code/graphic", method = RequestMethod.GET)

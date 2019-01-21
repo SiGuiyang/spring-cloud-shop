@@ -68,6 +68,7 @@ public class UserClientController {
 
     /**
      * 根据手机号查询用户信息
+     *
      * @param phone 手机号
      */
     @RequestMapping(value = "/queryUser/profile", method = RequestMethod.POST)

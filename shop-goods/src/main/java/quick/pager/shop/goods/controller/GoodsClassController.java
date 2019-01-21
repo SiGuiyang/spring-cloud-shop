@@ -30,7 +30,7 @@ public class GoodsClassController {
     private GoodsModifyService goodsModifyService;
 
     @ApiOperation("商品分类列表")
-    @RequestMapping(value = "/class/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/classification/list", method = RequestMethod.POST)
     public Response goodsClassList(String className) {
         ClassificationDTO dto = new ClassificationDTO();
         dto.setClassName(className);

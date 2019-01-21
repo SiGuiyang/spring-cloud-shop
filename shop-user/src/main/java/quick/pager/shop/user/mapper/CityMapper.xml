@@ -1,72 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.user.mapper.CityMapper">
-  <resultMap id="BaseResultMap" type="quick.pager.shop.model.user.City">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
-    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
-    <result column="parent_city_code" jdbcType="VARCHAR" property="parentCityCode" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, city_code, city_name, parent_city_code
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_city
-    where id = #{id,jdbcType=BIGINT}
-  </select>
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.user.City">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="city_code" jdbcType="VARCHAR" property="cityCode"/>
+        <result column="city_name" jdbcType="VARCHAR" property="cityName"/>
+        <result column="parent_city_code" jdbcType="VARCHAR" property="parentCityCode"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, city_code, city_name, parent_city_code
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_city
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.user.City">
-    insert into t_city
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="cityCode != null">
-        city_code,
-      </if>
-      <if test="cityName != null">
-        city_name,
-      </if>
-      <if test="parentCityCode != null">
-        parent_city_code,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="cityCode != null">
-        #{cityCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cityName != null">
-        #{cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentCityCode != null">
-        #{parentCityCode,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.user.City">
-    update t_city
-    <set>
-      <if test="cityCode != null">
-        city_code = #{cityCode,jdbcType=VARCHAR},
-      </if>
-      <if test="cityName != null">
-        city_name = #{cityName,jdbcType=VARCHAR},
-      </if>
-      <if test="parentCityCode != null">
-        parent_city_code = #{parentCityCode,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.user.City">
+        insert into t_city
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cityCode != null">
+                city_code,
+            </if>
+            <if test="cityName != null">
+                city_name,
+            </if>
+            <if test="parentCityCode != null">
+                parent_city_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="cityCode != null">
+                #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCityCode != null">
+                #{parentCityCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.user.City">
+        update t_city
+        <set>
+            <if test="cityCode != null">
+                city_code = #{cityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentCityCode != null">
+                parent_city_code = #{parentCityCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
-  <select id="selectAll" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"/>
-    from t_city
-  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_city
+    </select>
 
 </mapper>

@@ -64,8 +64,6 @@ eureka:
     name: shop-server
     port: 8761
 
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: refresh,health,info
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

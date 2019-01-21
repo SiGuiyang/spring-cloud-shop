@@ -6,7 +6,7 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class CouponResponse implements Serializable{
+public class CouponResponse implements Serializable {
     private static final long serialVersionUID = 9121464674006896865L;
 
     /**

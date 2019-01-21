@@ -7,7 +7,7 @@ import quick.pager.common.dto.DTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class StationMessageDTO extends DTO{
+public class StationMessageDTO extends DTO {
     private static final long serialVersionUID = 473556005516138206L;
 
     private Long userId;

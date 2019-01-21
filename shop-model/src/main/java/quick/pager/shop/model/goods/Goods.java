@@ -7,7 +7,7 @@ import quick.pager.shop.model.Model;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Goods extends Model{
+public class Goods extends Model {
 
     private static final long serialVersionUID = 4792746346655301002L;
 

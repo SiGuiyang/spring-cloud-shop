@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.fallback.OrderClientFallback;
+import quick.pager.shop.manage.fallback.OrderClientFallbackFactory;
 import quick.pager.shop.model.feign.request.OrderRequest;
 import quick.pager.shop.model.feign.request.SellerOrderRequest;
 
@@ -15,7 +15,7 @@ import quick.pager.shop.model.feign.request.SellerOrderRequest;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-order", fallback = OrderClientFallback.class)
+@FeignClient(value = "shop-order", fallbackFactory = OrderClientFallbackFactory.class)
 public interface OrderClient {
 
     /**

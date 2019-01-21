@@ -30,7 +30,7 @@ public class PermissionMap {
     }
 
 
-    public static void clear () {
+    public static void clear() {
         getPermission().clear();
     }
 }

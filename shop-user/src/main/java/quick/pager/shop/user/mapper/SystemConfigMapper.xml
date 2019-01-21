@@ -13,8 +13,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, config_name, config_value, module, description, create_time, update_time, delete_status
-  </sql>
+        id, config_name, config_value, module, description, create_time, update_time, delete_status
+    </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -24,9 +24,9 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_system_config
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from t_system_config
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
 
     <insert id="insertSelective" parameterType="quick.pager.shop.model.common.SystemConfig">
         insert into t_system_config

@@ -20,13 +20,13 @@ import quick.pager.common.response.Response;
 public class StatisticsManageController {
     @ApiOperation("优惠券统计")
     @PostMapping("/statistics/coupon")
-    public Response coupon () {
+    public Response coupon() {
         return null;
     }
 
     @ApiOperation("拼团统计")
     @PostMapping("/statistics/fightGroup")
-    public Response fightGroup () {
+    public Response fightGroup() {
         return null;
     }
 

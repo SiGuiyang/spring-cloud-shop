@@ -12,6 +12,7 @@ public interface RedisKeys {
         // 系统补发优惠券
         String SEND_COUPON_LIST = "send_coupon_list";
     }
+
     // activity 模块
     interface ActivityKeys {
         // banner 列表
@@ -38,6 +39,7 @@ public interface RedisKeys {
         // 图形验证码
         String SHOP_GRAPHICS_CODE = "SHP_graphics_code_";
     }
+
     // goods 模块
     interface GoodsKeys {
         // 商品分类缓存

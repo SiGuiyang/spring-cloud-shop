@@ -35,7 +35,7 @@ public class QiniuUpload {
     /**
      * 字节数组上传
      *
-     * @param data    字节数组
+     * @param data     字节数组
      * @param fileName 文件名
      * @return 文件全路径
      */

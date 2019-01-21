@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 分页请求基类
+ *
  * @author siguiyang
  */
 @EqualsAndHashCode(callSuper = true)

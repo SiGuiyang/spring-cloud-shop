@@ -70,9 +70,3 @@ qiniu:
   access_key: 3GFM-RrkWFKk4jNLSxWlN42hmYHyDu4TDCa25-hz
   secret_key: 6mQej9LvN8SvJTZnDroSU3fQY1TW9Vy7HE4Wa8am
   bucket: static
-
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: refresh,health,info

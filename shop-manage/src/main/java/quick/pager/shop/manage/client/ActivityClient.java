@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.fallback.ActivityClientFallback;
+import quick.pager.shop.manage.fallback.ActivityClientFallbackFactory;
 import quick.pager.shop.model.feign.request.BannerRequest;
 import quick.pager.shop.model.feign.request.CouponRequest;
 import quick.pager.shop.model.feign.request.CouponTemplateRequest;
@@ -16,7 +16,7 @@ import quick.pager.shop.model.feign.request.CouponTemplateRequest;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-activity",fallback = ActivityClientFallback.class)
+@FeignClient(value = "shop-activity", fallbackFactory = ActivityClientFallbackFactory.class)
 public interface ActivityClient {
 
     @RequestMapping(value = "/activity/banner/fetch", method = RequestMethod.POST)

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.response.Response;
-import quick.pager.shop.user.redis.RedisService;
+import quick.pager.common.service.RedisService;
 
 @RestController
 @Api(description = "短信redis测试")
@@ -40,7 +40,7 @@ public class TestController {
     }
 
     @GetMapping("/test/pub")
-    public void testPub(){
+    public void testPub() {
         stringRedisTemplate.convertAndSend("hello", "I am come from redis message!");
     }
 

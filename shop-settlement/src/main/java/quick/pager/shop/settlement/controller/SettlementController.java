@@ -27,7 +27,7 @@ public class SettlementController {
      *
      * @param cartId 支付购买的购物车Id
      */
-    @RequestMapping("/{orderId}")
+    @RequestMapping("/{cartId}")
     public Response settlement(@PathVariable("cartId") Long cartId) {
         return settlementService.doService(new DTO(cartId));
     }

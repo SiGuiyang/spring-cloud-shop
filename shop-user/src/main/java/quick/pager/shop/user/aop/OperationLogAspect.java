@@ -35,6 +35,6 @@ public class OperationLogAspect {
 
         log.info("= SERVICE RESPONSE : {}", JSON.toJSONString(result));
         log.info("========================================================================================");
-        return (Response) pjp.proceed();
+        return result;
     }
 }

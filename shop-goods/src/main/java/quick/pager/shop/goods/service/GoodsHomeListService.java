@@ -26,7 +26,7 @@ public class GoodsHomeListService implements IService {
     public Response<List<Goods>> doService(DTO dto) {
 
         GoodsDTO goodsDTO = (GoodsDTO) dto;
-        PageHelper.startPage(goodsDTO.getPage(),goodsDTO.getPageSize());
+        PageHelper.startPage(goodsDTO.getPage(), goodsDTO.getPageSize());
         List<Goods> goods = goodsMapper.selectShelfGoods();
 
         return new Response<>(goods);

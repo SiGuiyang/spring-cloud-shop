@@ -6,7 +6,7 @@ import quick.pager.common.dto.DTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GoodsSearchDTO extends DTO{
+public class GoodsSearchDTO extends DTO {
     private static final long serialVersionUID = -5201517264758579637L;
 
     private Long goodsClassId;

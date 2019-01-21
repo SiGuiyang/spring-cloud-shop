@@ -1,6 +1,8 @@
 package quick.pager.shop.manage.service.system;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,7 @@ import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
-import quick.pager.common.utils.PermissionMap;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.manage.dto.LoginDTO;
 import quick.pager.shop.manage.mapper.PermissionMapper;
 import quick.pager.shop.manage.mapper.SysUserMapper;
@@ -28,6 +30,8 @@ public class SysUserInfoService implements IService<SysUserResponse> {
     private PermissionMapper permissionMapper;
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public Response<SysUserResponse> doService(DTO dto) {
@@ -54,7 +58,9 @@ public class SysUserInfoService implements IService<SysUserResponse> {
             sysUserResponse.getPermission().add(permission.getPermission());
         });
 
-        PermissionMap.put(sysUser.getSysCode(), sysUserResponse.getPermission());
+        Map<Long, String> map = permissions.stream().collect(Collectors.toMap(Permission::getId, Permission::getPermission, (k1, k2) -> k1));
+
+        redisService.setMapOps(sysUser.getSysCode(), map);
 
         response.setData(sysUserResponse);
 

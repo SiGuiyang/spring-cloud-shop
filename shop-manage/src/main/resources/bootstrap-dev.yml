@@ -60,15 +60,13 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-    name: localhost
-#    name: 192.168.199.113
-    port: 8761
+      defaultZone: http://172.16.11.118:8761/eureka/
 
 qiniu:
   access_key: 3GFM-RrkWFKk4jNLSxWlN42hmYHyDu4TDCa25-hz
   secret_key: 6mQej9LvN8SvJTZnDroSU3fQY1TW9Vy7HE4Wa8am
   bucket: static
 
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

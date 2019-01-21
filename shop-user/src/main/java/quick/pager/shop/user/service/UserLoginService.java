@@ -11,14 +11,12 @@ import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.feign.dto.UserInfoDTO;
 import quick.pager.shop.user.dto.UserLoginDTO;
 import quick.pager.shop.user.dto.UserSubscribeDTO;
 import quick.pager.shop.user.mapper.UserMapper;
-import quick.pager.shop.user.redis.RedisService;
 import quick.pager.shop.user.response.LoginOrSubscribeResponse;
-
-import java.util.UUID;
 
 /**
  * 用户登陆
