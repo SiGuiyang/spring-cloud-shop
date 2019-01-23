@@ -9,6 +9,13 @@ spring:
       uri: http://localhost:8889/
       label: master
       profile: dev
+    consul:
+      host: 172.16.11.118
+      port: 8500
+      discovery:
+        tags: author=pager
+        healthCheckPath:  /health
+        healthCheckInterval: 15s
   datasource:
     url: jdbc:mysql://192.168.199.113:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root

@@ -110,17 +110,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>tx-client-springcloud</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>

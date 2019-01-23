@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import quick.pager.common.constants.SysConfigKeys;
@@ -16,9 +16,9 @@ import quick.pager.common.utils.SysConfigMap;
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.manage", "com.codingapi.txlcn.logger"})
+@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.manage"})
 @MapperScan(basePackages = "quick.pager.shop.manage.mapper")
-@EnableEurekaClient
+@EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
 @Slf4j

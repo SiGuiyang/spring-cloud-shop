@@ -1,14 +1,18 @@
 
 spring:
-  profiles:
-    active: dev
   application:
     name: shop-activity
   cloud:
     config:
-      uri: http://localhost:8889/
+      uri: http://172.16.11.118:8889/
       label: master
       profile: dev
+    consul:
+      host: 172.16.11.118
+      port: 8500
+      discovery:
+        tags: author=pager
+        healthCheckInterval: 15s
   datasource:
     url: jdbc:mysql://localhost:3306/pager_activity?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
@@ -60,7 +64,7 @@ spring:
     host: localhost
     port: 6379
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://172.16.11.118:8761/eureka/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://172.16.11.118:8761/eureka/

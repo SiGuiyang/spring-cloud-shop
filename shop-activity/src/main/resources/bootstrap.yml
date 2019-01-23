@@ -25,3 +25,5 @@ management:
         include: refresh,health,info
 ribbon:
   MaxAutoRetriesNextServer: 0
+  ReadTimeout: 4000
+  ConnectTimeout: 3000
