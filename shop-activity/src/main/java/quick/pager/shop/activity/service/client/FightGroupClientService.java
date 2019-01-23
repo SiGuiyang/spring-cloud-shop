@@ -14,6 +14,7 @@ import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
+import quick.pager.shop.activity.client.UserClient;
 import quick.pager.shop.activity.mapper.FightGroupGoodsMapper;
 import quick.pager.shop.activity.mapper.FightGroupMapper;
 import quick.pager.shop.activity.mapper.FightGroupMemberMapper;
@@ -24,7 +25,10 @@ import quick.pager.shop.model.activity.FightGroupGoods;
 import quick.pager.shop.model.activity.FightGroupMember;
 import quick.pager.shop.model.activity.FightGroupRecord;
 import quick.pager.shop.model.activity.FightGroupRule;
+import quick.pager.shop.model.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.feign.request.FightGroupRequest;
+import quick.pager.shop.model.feign.response.FightGroupMemberResponse;
+import quick.pager.shop.model.feign.response.FightGroupRecordResponse;
 import quick.pager.shop.model.feign.response.FightGroupResponse;
 
 /**
@@ -44,6 +48,8 @@ public class FightGroupClientService {
     private FightGroupRecordMapper fightGroupRecordMapper;
     @Autowired
     private FightGroupMemberMapper fightGroupMemberMapper;
+    @Autowired
+    private UserClient userClient;
 
     /**
      * 拼团活动列表
@@ -188,14 +194,28 @@ public class FightGroupClientService {
     /**
      * 成团记录列表
      */
-    public Response records(Long groupId, Integer page, Integer pageSize) {
+    public Response records(Long groupId, String beginTime, String endTime, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
 
-        List<FightGroupRecord> fightGroupRecords = fightGroupRecordMapper.selectFightGroupRecord(groupId);
+        List<FightGroupRecord> fightGroupRecords = fightGroupRecordMapper.selectFightGroupRecord(groupId, beginTime, endTime);
 
-        PageInfo<FightGroupRecord> pageInfo = new PageInfo<>(fightGroupRecords);
+        List<FightGroupRecordResponse> recordResponseList = Lists.newArrayList();
+        fightGroupRecords.forEach(fightGroupRecord -> {
 
-        Response<List<FightGroupRecord>> response = new Response<>();
+            FightGroupRecordResponse recordResponse = new FightGroupRecordResponse();
+            BeanUtils.copyProperties(fightGroupRecord, recordResponse);
+            FightGroup group = fightGroupMapper.selectByPrimaryKey(fightGroupRecord.getGroupId());
+
+            if (!ObjectUtils.isEmpty(group)) {
+                recordResponse.setActivityName(group.getActivityName());
+            }
+
+            recordResponseList.add(recordResponse);
+        });
+
+        PageInfo<FightGroupRecordResponse> pageInfo = new PageInfo<>(recordResponseList);
+
+        Response<List<FightGroupRecordResponse>> response = new Response<>();
         response.setData(pageInfo.getList());
         response.setTotal(pageInfo.getTotal());
 
@@ -205,8 +225,32 @@ public class FightGroupClientService {
     /**
      * 拼团成员
      */
-    public Response members(Long recordId) {
-        return new Response<>(fightGroupMemberMapper.selectFightGroupMember(recordId));
+    public Response members(Long recordId, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<FightGroupMember> fightGroupMembers = fightGroupMemberMapper.selectFightGroupMember(recordId);
+
+        List<FightGroupMemberResponse> fightGroupMemberResponseList = Lists.newArrayList();
+
+        fightGroupMembers.forEach(fightGroupMember -> {
+            FightGroupMemberResponse fightGroupMemberResponse = new FightGroupMemberResponse();
+            BeanUtils.copyProperties(fightGroupMember, fightGroupMemberResponse);
+            Response<UserInfoDTO> user = userClient.getUser(fightGroupMember.getUserId());
+            UserInfoDTO userInfoDTO = user.getData();
+
+            if (!ObjectUtils.isEmpty(userInfoDTO)) {
+                fightGroupMemberResponse.setPhone(userInfoDTO.getPhone());
+                fightGroupMemberResponse.setUsername(userInfoDTO.getUsername());
+            }
+
+            fightGroupMemberResponseList.add(fightGroupMemberResponse);
+        });
+
+        PageInfo<FightGroupMemberResponse> pageInfo = new PageInfo<>(fightGroupMemberResponseList);
+        Response<List<FightGroupMemberResponse>> response = new Response<>();
+        response.setTotal(pageInfo.getTotal());
+        response.setData(pageInfo.getList());
+
+        return response;
     }
 
     /**

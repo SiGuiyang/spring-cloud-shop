@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
@@ -63,12 +64,12 @@ public class FightGroupClientController {
     @ApiOperation("成团记录")
     @RequestMapping(value = "/fightGroup/records", method = RequestMethod.POST)
     public Response records(@RequestBody FightGroupRequest request) {
-        return fightGroupClientService.records(request.getId(), request.getPage(), request.getPageSize());
+        return fightGroupClientService.records(request.getId(), request.getBeginTime(), request.getEndTime(), request.getPage(), request.getPageSize());
     }
 
     @ApiOperation("参与成团人员")
     @RequestMapping(value = "/fightGroup/members", method = RequestMethod.POST)
-    public Response members(@RequestBody FightGroupRequest request) {
-        return fightGroupClientService.members(request.getRecordId());
+    public Response members(@RequestParam("recordId") Long recordId, @RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
+        return fightGroupClientService.members(recordId, page, pageSize);
     }
 }

@@ -70,6 +70,6 @@ public interface ActivityClient {
 
     // 参与成团人员
     @RequestMapping(value = "/fightGroup/members", method = RequestMethod.POST)
-    Response members(@RequestBody FightGroupRequest request);
+    Response members(@RequestParam("recordId") Long recordId, @RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize);
 
 }

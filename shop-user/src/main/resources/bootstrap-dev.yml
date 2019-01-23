@@ -7,7 +7,7 @@ spring:
 
   cloud:
     config:
-      uri: http://localhost:8099/
+      uri: http://172.16.11.118:8889/
       label: master
       profile: dev
     consul:
@@ -15,7 +15,6 @@ spring:
       port: 8500
       discovery:
         tags: author=pager
-        healthCheckPath:  /health
         healthCheckInterval: 15s
 
   datasource:

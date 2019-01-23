@@ -4,12 +4,13 @@
   <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.FightGroupRecord">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="TIMESTAMP" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, group_id, create_time, update_time, delete_status
+    id, group_id, status, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,6 +27,9 @@
       </if>
       <if test="groupId != null">
         group_id,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="createTime != null">
         create_time,
@@ -44,6 +48,9 @@
       <if test="groupId != null">
         #{groupId,jdbcType=BIGINT},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -61,6 +68,9 @@
       <if test="groupId != null">
         group_id = #{groupId,jdbcType=BIGINT},
       </if>
+      <if test="status != null">
+        status =  #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -77,7 +87,14 @@
   <select id="selectFightGroupRecord" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from t_fight_group_record
-    where group_id = #{groupId,jdbcType=BIGINT}
+    where
+      group_id = #{groupId,jdbcType=BIGINT}
+    <if test="beginTime != null and beginTime != ''">
+      and begin_time <![CDATA[>=]]> #{beginTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null and endTime != ''">
+      and end_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+    </if>
     order by id desc
   </select>
 

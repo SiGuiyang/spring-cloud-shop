@@ -68,4 +68,17 @@ public class FightGroupManageController {
     public Response goods(FightGroupRequest request) {
         return activityClient.goodsModify(request);
     }
+
+    /**
+     * 活动成团记录
+     */
+    @PostMapping("/activity/fightGroup/record")
+    public Response record(FightGroupRequest request) {
+        return activityClient.records(request);
+    }
+
+    @PostMapping("/activity/fightGroup/members")
+    public Response members(Long recordId, Integer page, Integer pageSize) {
+        return activityClient.members(recordId, page, pageSize);
+    }
 }

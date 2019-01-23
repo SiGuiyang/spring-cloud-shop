@@ -95,7 +95,7 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             }
 
             @Override
-            public Response members(FightGroupRequest request) {
+            public Response members(Long recordId, Integer page, Integer pageSize) {
                 return null;
             }
         };
