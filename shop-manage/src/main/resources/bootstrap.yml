@@ -20,3 +20,15 @@ management:
     web:
       exposure:
         include: refresh,health,info
+
+
+
+tx-lcn:
+  client:
+    control-order: 0 # 事务控制切面控制次序
+    resource-order: 0 # 资源切面次序
+  logger:
+    enabled: true # 开启日志数据库记录存储
+  message:
+    netty:
+      wait-time: 5 # 与TxManager通讯最大等待时间（秒）

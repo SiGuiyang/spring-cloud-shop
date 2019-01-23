@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.shop.manage.response.EnumResponse;
 
@@ -33,6 +34,8 @@ public class CommonEnumService {
             case Constants.Type.COUPON_TYPE:
                 response = getCouponType();
                 break;
+            default:
+                response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         return response;
     }
@@ -47,8 +50,8 @@ public class CommonEnumService {
 
         for (Constants.CouponType couponType : values) {
             EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(couponType.type);
-            orderStatusResponse.setValue(couponType.name);
+            orderStatusResponse.setType(couponType.getType());
+            orderStatusResponse.setValue(couponType.getName());
             couponTypeResponses.add(orderStatusResponse);
         }
         return new Response<>(couponTypeResponses);
@@ -64,8 +67,8 @@ public class CommonEnumService {
 
         for (Constants.GoodsType goodsType : values) {
             EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(goodsType.type);
-            orderStatusResponse.setValue(goodsType.name);
+            orderStatusResponse.setType(goodsType.getType());
+            orderStatusResponse.setValue(goodsType.getName());
             goodsTypeResponses.add(orderStatusResponse);
         }
         return new Response<>(goodsTypeResponses);
@@ -82,8 +85,8 @@ public class CommonEnumService {
 
         for (Constants.OrderType orderType : values) {
             EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(orderType.type);
-            orderStatusResponse.setValue(orderType.name);
+            orderStatusResponse.setType(orderType.getType());
+            orderStatusResponse.setValue(orderType.getName());
             orderTypeResponses.add(orderStatusResponse);
         }
         return new Response<>(orderTypeResponses);
@@ -99,8 +102,8 @@ public class CommonEnumService {
 
         for (Constants.OrderStatus orderStatus : values) {
             EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setKey(orderStatus.status);
-            orderStatusResponse.setValue(orderStatus.name);
+            orderStatusResponse.setKey(orderStatus.getStatus());
+            orderStatusResponse.setValue(orderStatus.getName());
             orderStatusResponses.add(orderStatusResponse);
         }
         return new Response<>(orderStatusResponses);

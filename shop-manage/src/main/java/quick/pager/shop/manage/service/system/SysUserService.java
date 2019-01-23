@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
@@ -40,7 +41,7 @@ public class SysUserService implements IService {
 
         SysUserDTO sysUserDTO = (SysUserDTO) dto;
 
-        Response response = new Response();
+        Response response;
         switch (sysUserDTO.getEvent()) {
             case Constants.Event.ADD:
             case Constants.Event.MODIFY:
@@ -49,6 +50,8 @@ public class SysUserService implements IService {
             case Constants.Event.LIST:
                 response = querySysUser(sysUserDTO);
                 break;
+            default:
+                response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
 
         }
         return response;

@@ -26,6 +26,10 @@ public class Goods extends Model {
     private BigDecimal goodsDiscountAmount;
 
     private String description;
+    // 产地
+    private String placeOrigin;
+    // 储存
+    private String storage;
 
     private Integer integral;
 

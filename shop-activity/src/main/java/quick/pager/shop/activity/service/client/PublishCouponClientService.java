@@ -95,50 +95,51 @@ public class PublishCouponClientService implements IService {
 
                 List<DiscountCoupon> discountCoupons = Lists.newArrayList();
 
-                // 当前补发优惠券的人数大于1000，则采用线程方式发送
-                if (!CollectionUtils.isEmpty(exists) && exists.size() >= 1000) {
-                    // 多线程执行后返回正常的插入的手机号
-                    List<String> list = new ForkJoinPool(2).invoke(new SendCouponTask(exists, template, discountCouponMapper));
+                if (!CollectionUtils.isEmpty(exists)) {
+                    // 当前补发优惠券的人数大于1000，则采用线程方式发送
+                    if (exists.size() >= 1000) {
+                        // 多线程执行后返回正常的插入的手机号
+                        List<String> list = new ForkJoinPool(2).invoke(new SendCouponTask(exists, template, discountCouponMapper));
 
-                    phones.removeAll(list);
+                        phones.removeAll(list);
 
-                } else {
+                    } else {
 
-                    exists.forEach(v -> {
+                        exists.forEach(v -> {
 
-                        normalPhones.add(v.getPhone());
+                            normalPhones.add(v.getPhone());
 
-                        DiscountCoupon discountCoupon = new DiscountCoupon();
-                        discountCoupon.setCouponName(template.getTemplateName());
-                        discountCoupon.setPhone(v.getPhone());
-                        discountCoupon.setBeginTime(new Date());
-                        discountCoupon.setEndTime(DateUtil.offsetDay(new Date(), 3));
-                        discountCoupon.setCouponAmount(template.getCouponAmount());
-                        discountCoupon.setOrderAmount(template.getOrderAmount());
-                        discountCoupon.setDiscountType(template.getTemplateType());
-                        discountCoupon.setDiscountStrength(template.getDiscountStrength());
-                        discountCoupon.setUserId(v.getId());
-                        discountCoupon.setCreateTime(new Date());
-                        discountCoupon.setDeleteStatus(false);
-                        discountCoupon.setDescription(template.getDescription());
-                        discountCoupon.setTemplateId(template.getId());
+                            DiscountCoupon discountCoupon = new DiscountCoupon();
+                            discountCoupon.setCouponName(template.getTemplateName());
+                            discountCoupon.setPhone(v.getPhone());
+                            discountCoupon.setBeginTime(new Date());
+                            discountCoupon.setEndTime(DateUtil.offsetDay(new Date(), 3));
+                            discountCoupon.setCouponAmount(template.getCouponAmount());
+                            discountCoupon.setOrderAmount(template.getOrderAmount());
+                            discountCoupon.setDiscountType(template.getTemplateType());
+                            discountCoupon.setDiscountStrength(template.getDiscountStrength());
+                            discountCoupon.setUserId(v.getId());
+                            discountCoupon.setCreateTime(new Date());
+                            discountCoupon.setDeleteStatus(false);
+                            discountCoupon.setDescription(template.getDescription());
+                            discountCoupon.setTemplateId(template.getId());
 
-                        discountCoupons.add(discountCoupon);
+                            discountCoupons.add(discountCoupon);
 
-                    });
+                        });
 
-                    discountCouponMapper.batchInsertSelective(discountCoupons);
+                        discountCouponMapper.batchInsertSelective(discountCoupons);
 
+                    }
+
+                    // 取出非正常的手机号
+                    phones.removeAll(normalPhones);
+
+                    // 最后得到的phones 存在的值必然是错误用户的手机号,这里的错误信息只提供参考，不打算存储在数据库中，放入redis中时效性1个月
+                    if (!CollectionUtils.isEmpty(phones)) {
+                        redisService.set(RedisKeys.ManageKeys.SEND_COUPON_LIST + DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN), JSON.toJSONString(phones), 30 * 60 * 60 * 24);
+                    }
                 }
-
-                // 取出非正常的手机号
-                phones.removeAll(normalPhones);
-
-                // 最后得到的phones 存在的值必然是错误用户的手机号,这里的错误信息只提供参考，不打算存储在数据库中，放入redis中时效性1个月
-                if (!CollectionUtils.isEmpty(phones)) {
-                    redisService.set(RedisKeys.ManageKeys.SEND_COUPON_LIST + DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN), JSON.toJSONString(phones), 30 * 60 * 60 * 24);
-                }
-
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {

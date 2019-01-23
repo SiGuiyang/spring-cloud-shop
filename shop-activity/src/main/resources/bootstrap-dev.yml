@@ -63,9 +63,4 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-    name: shop-server
-#    name: 192.168.199.113
-    port: 8761
+      defaultZone: http://172.16.11.118:8761/eureka/

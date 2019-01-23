@@ -2,7 +2,6 @@ package quick.pager.shop.manage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,12 +12,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import quick.pager.common.constants.SysConfigKeys;
 import quick.pager.common.utils.SysConfigMap;
-import quick.pager.shop.manage.mapper.PermissionMapper;
 
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.manage"})
+@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.manage", "com.codingapi.txlcn.logger"})
 @MapperScan(basePackages = "quick.pager.shop.manage.mapper")
 @EnableEurekaClient
 @EnableFeignClients
@@ -36,8 +34,6 @@ public class ManageApplication implements CommandLineRunner, WebMvcConfigurer {
     private String qiniuSecretKey;
     @Value("${qiniu.bucket}")
     private String qiniuBucket;
-    @Autowired
-    private PermissionMapper permissionMapper;
 
 
     @Override

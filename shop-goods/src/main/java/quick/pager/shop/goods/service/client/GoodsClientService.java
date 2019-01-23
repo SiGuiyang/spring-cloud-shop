@@ -68,11 +68,13 @@ public class GoodsClientService {
             // 保存商品
             goods.setGoodsCode(DateUtil.current(false) + RandomUtil.randomString(5));
             goods.setCreateTime(new Date());
+            goods.setDeleteStatus(false);
             goodsMapper.insertSelective(goods);
 
             // 保存商品详情
             goodsDetail.setGoodsId(goods.getId());
             goodsDetail.setCreateTime(new Date());
+            goodsDetail.setDeleteStatus(false);
             goodsDetailMapper.insertSelective(goodsDetail);
 
         } else { // 修改

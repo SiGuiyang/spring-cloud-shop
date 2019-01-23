@@ -65,13 +65,13 @@ public class OrderListService implements IService<List<OrderResponse>> {
             case Constants.Common.ONE:
                 return null;
             case Constants.Common.TWO:
-                return Collections.singletonList(Constants.OrderStatus.BS001.status);
+                return Collections.singletonList(Constants.OrderStatus.BS001.getStatus());
             case Constants.Common.THREE:
-                return Arrays.asList(Constants.OrderStatus.BS002.status, Constants.OrderStatus.BS003.status, Constants.OrderStatus.BS003.status);
+                return Arrays.asList(Constants.OrderStatus.BS002.getStatus(), Constants.OrderStatus.BS003.getStatus(), Constants.OrderStatus.BS003.getStatus());
             case Constants.Common.FOUR:
-                return Collections.singletonList(Constants.OrderStatus.BS007.status);
+                return Collections.singletonList(Constants.OrderStatus.BS007.getStatus());
             case Constants.Common.FIVE:
-                return Collections.singletonList(Constants.OrderStatus.BS006.status);
+                return Collections.singletonList(Constants.OrderStatus.BS006.getStatus());
         }
         return null;
     }

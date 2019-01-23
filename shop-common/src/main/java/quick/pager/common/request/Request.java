@@ -16,7 +16,7 @@ public class Request implements Serializable {
     /**
      * 主键Id
      */
-    private long id;
+    private Long id;
     /**
      * 手机号
      */

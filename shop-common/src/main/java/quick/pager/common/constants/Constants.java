@@ -1,5 +1,7 @@
 package quick.pager.common.constants;
 
+import lombok.Data;
+
 /**
  * 常量 + 枚举
  *
@@ -35,6 +37,7 @@ public interface Constants {
         String MODIFY = "modify";
         String ADD = "add";
         String DELETE = "delete";
+        String INFO = "info";
     }
 
     /**
@@ -53,12 +56,20 @@ public interface Constants {
         COUPON(1, "优惠券"),
         DISCOUNT(2, "折扣券");
 
-        public int type;
-        public String name;
+        private int type;
+        private String name;
 
         CouponType(int type, String name) {
             this.type = type;
             this.name = name;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
@@ -117,13 +128,22 @@ public interface Constants {
         SECOND_KILL(4, "秒杀商品");
 
 
-        public int type;
-        public String name;
+        private int type;
+        private String name;
 
         GoodsType(int type, String name) {
             this.type = type;
             this.name = name;
         }
+
+        public int getType() {
+            return type;
+        }
+
+        public String getName() {
+            return name;
+        }
+
     }
 
     /**
@@ -135,13 +155,21 @@ public interface Constants {
         SELF(3, "自提订单"),
         SEC_KILL(4, "秒杀订单");
 
-        public int type;
+        private int type;
 
-        public String name;
+        private String name;
 
         OrderType(int type, String name) {
             this.type = type;
             this.name = name;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
@@ -177,13 +205,22 @@ public interface Constants {
         BS011("BS011", "已退款"),
         BS012("BS012", "退货中"),
         BS013("BS013", "已关闭");
-        public String status;
 
-        public String name;
+        private String status;
+
+        private String name;
 
         OrderStatus(String status, String name) {
             this.status = status;
             this.name = name;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public String getName() {
+            return name;
         }
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
@@ -51,6 +52,9 @@ public class RoleService implements IService {
                 break;
             case "rolePermission": // 查看某个角色的权限
                 response = getRolePermission(roleDTO);
+                break;
+            default:
+                response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         return response;
     }

@@ -70,3 +70,18 @@ qiniu:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+
+tx-lcn:
+  client:
+    manager-address: 172.16.11.118:8070 # manager服务地址(rpc端口),可填写多个负载
+  aspect:
+    log:
+      file-path: ${user.dir}/.txlcn/${spring.application.name} # 切面日志信息(h2数据库地址)
+    # 日志数据库存储jdbc配置
+  logger:
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://127.0.0.1:3306/tx-logger?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root

@@ -37,7 +37,7 @@ public class GoodsClassController {
         return goodsClassService.doService(dto);
     }
 
-    @RequestMapping(value = "/class/modify", method = RequestMethod.POST)
+    @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
     public Response modifyGoodsClass(@RequestBody GoodsRequest request) {
         ClassificationDTO dto = new ClassificationDTO();
         dto.setId(request.getId());

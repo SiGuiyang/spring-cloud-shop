@@ -22,8 +22,6 @@ public class VerifyCodeUtils {
     private int height = 40;
     // 验证码字符个数
     private int codeCount = 4;
-    // 验证码干扰线数
-    private int lineCount = 50;
     // 验证码
     private String code = null;
     // 验证码图片Buffer
@@ -52,13 +50,11 @@ public class VerifyCodeUtils {
      * @param width     图片宽
      * @param height    图片高
      * @param codeCount 字符个数
-     * @param lineCount 干扰线条数
      */
-    public VerifyCodeUtils(int width, int height, int codeCount, int lineCount) {
+    public VerifyCodeUtils(int width, int height, int codeCount) {
         this.width = width;
         this.height = height;
         this.codeCount = codeCount;
-        this.lineCount = lineCount;
         this.createCode();
     }
 
@@ -114,11 +110,11 @@ public class VerifyCodeUtils {
     public void write(String path) throws IOException {
         OutputStream sos = new FileOutputStream(path);
         this.write(sos);
+        sos.close();
     }
 
     public void write(OutputStream sos) throws IOException {
         ImageIO.write(buffImg, "png", sos);
-        sos.close();
     }
 
     public BufferedImage getBuffImg() {
@@ -132,7 +128,7 @@ public class VerifyCodeUtils {
     /**
      * 字体样式类
      */
-    class ImgFontByte {
+    static class ImgFontByte {
 
         public Font getFont(int fontHeight) {
 

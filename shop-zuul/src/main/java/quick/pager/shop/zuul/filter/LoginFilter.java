@@ -6,6 +6,7 @@ import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import java.util.LinkedHashMap;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.filters.Route;
@@ -23,7 +24,6 @@ import org.springframework.web.util.UrlPathHelper;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.RedisService;
-import quick.pager.common.utils.PermissionMap;
 import quick.pager.shop.zuul.properties.PermissionProperties;
 
 /**
@@ -68,26 +68,13 @@ public class LoginFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext context = RequestContext.getCurrentContext();
         HttpServletRequest request = context.getRequest();
-
-        String token = request.getParameter("token");
-        String sysCode = request.getParameter("sysCode");
-        String userId = request.getParameter("userId");
-
-        // 如果请求域中没有userId入参，则检测restful 风控中是否存在userId
-        if (StringUtils.isEmpty(userId)) {
-            NativeWebRequest webRequest = new ServletWebRequest(request);
-            LinkedHashMap map = (LinkedHashMap) webRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
-            if (!CollectionUtils.isEmpty(map)) {
-                userId = (String) map.get("userId");
-            }
-        }
-
-//        Optional<Route> optional = routeLocator.getRoutes().stream().filter(route -> "shop-manage".equals(route.getLocation())).findFirst();
+        // 根据请求的资源，获取转发的路由服务
         String requestURI = urlPathHelper.getPathWithinApplication(request);
         Route requestRoute = routeLocator.getMatchingRoute(requestURI);
-
+        // 管理后台
         if ("shop-manage".equals(requestRoute.getLocation())) {
             log.info("进入管理后台系统路由");
+            String sysCode = request.getParameter("sysCode");
 
             // 不在白名单，并且登陆状态，没有访问权限资源进入
             if (!permission.getPermissions().containsValue(requestURI)
@@ -99,10 +86,23 @@ public class LoginFilter extends ZuulFilter {
             return null;
         }
 
+        // 非管理后台以下逻辑
+        String token = request.getParameter("token");
+        String userId = request.getParameter("userId");
+
+        // 如果请求域中没有userId入参，则检测restful 风控中是否存在userId
+        if (StringUtils.isEmpty(userId)) {
+            NativeWebRequest webRequest = new ServletWebRequest(request);
+            LinkedHashMap map = (LinkedHashMap) webRequest.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
+            if (!CollectionUtils.isEmpty(map)) {
+                userId = (String) map.get("userId");
+            }
+        }
+
         String tokenFromRedis = String.valueOf(redisService.getValueOps(userId));
         // redis 中没有用户登陆的token ，则未登陆
         if (StringUtils.isEmpty(token) || StringUtils.isEmpty(tokenFromRedis)) {
-
+            log.info("");
             writeResponse(context, ResponseStatus.Code.LOGIN_EXPIRE, ResponseStatus.LOGIN_EXPIRE);
             return null;
         }
@@ -115,12 +115,13 @@ public class LoginFilter extends ZuulFilter {
         return null;
     }
 
-
     /**
      * 返回客户端结果
      */
     private void writeResponse(RequestContext context, int code, String responseMsg) {
 
+        HttpServletResponse response = context.getResponse();
+        response.setCharacterEncoding("UTF-8"); // 解决过滤器拒绝返回乱码问题
         context.setSendZuulResponse(false);
         context.setResponseStatusCode(HttpStatus.OK.value());
         Response<String> noPermission = new Response<>();

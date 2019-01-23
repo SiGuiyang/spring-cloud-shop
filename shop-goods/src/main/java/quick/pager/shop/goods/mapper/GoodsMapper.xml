@@ -12,6 +12,8 @@
         <result column="goods_amount" jdbcType="DECIMAL" property="goodsAmount"/>
         <result column="goods_discount_amount" jdbcType="DECIMAL" property="goodsDiscountAmount"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="place_origin" jdbcType="VARCHAR" property="placeOrigin"/>
+        <result column="storage" jdbcType="VARCHAR" property="storage"/>
         <result column="integral" jdbcType="INTEGER" property="integral"/>
         <result column="goods_inventory" jdbcType="INTEGER" property="goodsInventory"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -21,7 +23,7 @@
 
     <sql id="Base_Column_List">
         id, gcs_id, goods_name, goods_code, goods_status, goods_type, goods_amount, goods_discount_amount,
-        description, integral, goods_inventory, create_time, update_time, delete_status
+        description, place_origin, storage, integral, goods_inventory, create_time, update_time, delete_status
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -60,6 +62,12 @@
             </if>
             <if test="description != null">
                 description,
+            </if>
+            <if test="placeOrigin != null">
+                place_origin,
+            </if>
+            <if test="storage != null">
+                storage,
             </if>
             <if test="integral != null">
                 integral,
@@ -105,6 +113,12 @@
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
             </if>
+            <if test="placeOrigin != null">
+                #{placeOrigin,jdbcType=VARCHAR},
+            </if>
+            <if test="storage != null">
+                #{storage,jdbcType=VARCHAR},
+            </if>
             <if test="integral != null">
                 #{integral,jdbcType=INTEGER},
             </if>
@@ -148,6 +162,12 @@
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="placeOrigin != null">
+                place_origin = #{placeOrigin,jdbcType=VARCHAR},
+            </if>
+            <if test="storage != null">
+                storage = #{storage,jdbcType=VARCHAR},
             </if>
             <if test="integral != null">
                 integral = #{integral,jdbcType=INTEGER},

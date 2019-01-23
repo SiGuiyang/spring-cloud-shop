@@ -1,8 +1,10 @@
 package quick.pager.shop.order.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import quick.pager.common.dto.DTO;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OrderDTO extends DTO {
     private static final long serialVersionUID = -2565429601495542035L;

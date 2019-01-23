@@ -14,7 +14,7 @@ public class OrderApplicationTests {
     private UserOrderMapper userOrderMapper;
 
     @Test
-    public void testOrder(){
+    public void testOrder() {
         userOrderMapper.selectByPrimaryKey(1L);
     }
 }

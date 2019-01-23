@@ -9,6 +9,7 @@ import quick.pager.shop.manage.client.ActivityClient;
 import quick.pager.shop.model.feign.request.BannerRequest;
 import quick.pager.shop.model.feign.request.CouponRequest;
 import quick.pager.shop.model.feign.request.CouponTemplateRequest;
+import quick.pager.shop.model.feign.request.FightGroupRequest;
 
 /**
  * 活动模块熔断工厂
@@ -56,6 +57,46 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             public Response coupons(CouponRequest request) {
                 log.error("进入熔断措施 ActivityClient.coupons");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            }
+
+            @Override
+            public Response fightGroup(FightGroupRequest request) {
+                return null;
+            }
+
+            @Override
+            public Response modify(FightGroupRequest request) {
+                return null;
+            }
+
+            @Override
+            public Response rule(Long groupId) {
+                return null;
+            }
+
+            @Override
+            public Response modifyRule(FightGroupRequest request) {
+                return null;
+            }
+
+            @Override
+            public Response goodsInfo(Long id) {
+                return null;
+            }
+
+            @Override
+            public Response goodsModify(FightGroupRequest request) {
+                return null;
+            }
+
+            @Override
+            public Response records(FightGroupRequest request) {
+                return null;
+            }
+
+            @Override
+            public Response members(FightGroupRequest request) {
+                return null;
             }
         };
     }

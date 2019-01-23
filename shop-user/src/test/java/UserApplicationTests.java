@@ -3,7 +3,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,14 +10,12 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.dto.SMSDTO;
+import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.common.SmsTemplate;
 import quick.pager.shop.model.user.User;
 import quick.pager.shop.user.UserApplication;
 import quick.pager.shop.user.mapper.SmsTemplateMapper;
 import quick.pager.shop.user.mq.MqService;
-import quick.pager.shop.user.redis.RedisService;
-
-import java.io.Serializable;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserApplication.class)

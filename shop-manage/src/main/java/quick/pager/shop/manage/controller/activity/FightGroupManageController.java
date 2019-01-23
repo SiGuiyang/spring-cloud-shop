@@ -1,10 +1,13 @@
 package quick.pager.shop.manage.controller.activity;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
+import quick.pager.shop.manage.client.ActivityClient;
+import quick.pager.shop.model.feign.request.FightGroupRequest;
 
 /**
  * 拼团管理
@@ -15,13 +18,54 @@ import quick.pager.common.response.Response;
 @RequestMapping(Constants.Module.MANAGE)
 public class FightGroupManageController {
 
-    @PostMapping("/activity/fightGroup/rule")
-    public Response rule() {
-        return null;
+    @Autowired
+    private ActivityClient activityClient;
+
+    /**
+     * 活动列表
+     */
+    @PostMapping("/activity/fightGroup/list")
+    public Response list(FightGroupRequest request) {
+        return activityClient.fightGroup(request);
     }
 
-    @PostMapping("/activity/fightGroup/goods")
-    public Response goods() {
-        return null;
+    /**
+     * 新增修改
+     */
+    @PostMapping("/activity/fightGroup/modify")
+    public Response modify(FightGroupRequest request) {
+        return activityClient.modify(request);
+    }
+
+    /**
+     * 活动规则详情
+     */
+    @PostMapping("/activity/fightGroup/rule/info")
+    public Response ruleInfo(FightGroupRequest request) {
+        return activityClient.rule(request.getId());
+    }
+
+    /**
+     * 活动规则
+     */
+    @PostMapping("/activity/fightGroup/rule/modify")
+    public Response rule(FightGroupRequest request) {
+        return activityClient.modifyRule(request);
+    }
+
+    /**
+     * 活动商品详情
+     */
+    @PostMapping("/activity/fightGroup/goods/info")
+    public Response goodsInfo(FightGroupRequest request) {
+        return activityClient.goodsInfo(request.getId());
+    }
+
+    /**
+     * 活动商品
+     */
+    @PostMapping("/activity/fightGroup/goods/modify")
+    public Response goods(FightGroupRequest request) {
+        return activityClient.goodsModify(request);
     }
 }

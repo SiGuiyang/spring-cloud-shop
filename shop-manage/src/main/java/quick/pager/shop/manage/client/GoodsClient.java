@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.manage.fallback.GoodsClientFallbackFactory;
 import quick.pager.shop.manage.request.ClassificationRequest;
@@ -19,19 +20,19 @@ import quick.pager.shop.model.goods.Goods;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-goods", fallbackFactory = GoodsClientFallbackFactory.class)
+@FeignClient(value = "shop-goods", path = Constants.Module.GOODS, fallbackFactory = GoodsClientFallbackFactory.class)
 public interface GoodsClient {
 
     /**
      * 商品列表
      */
-    @RequestMapping(value = "/goods/queryGoodsList", method = RequestMethod.POST)
+    @RequestMapping(value = "/queryGoodsList", method = RequestMethod.POST)
     Response<List<Goods>> queryGoodsList(@RequestBody GoodsRequest request);
 
     /**
      * 商品修改
      */
-    @RequestMapping(value = "/goods/modifyGoods", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyGoods", method = RequestMethod.POST)
     Response<String> modifyGoods(@RequestBody GoodsRequest request);
 
     /**
@@ -39,7 +40,7 @@ public interface GoodsClient {
      *
      * @param goodsId 商品Id
      */
-    @RequestMapping(value = "/goods/goodsInfo/{goodsId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/goodsInfo/{goodsId}", method = RequestMethod.POST)
     Response<GoodsResponse> goodsInfo(@PathVariable("goodsId") Long goodsId);
 
     /**
@@ -47,12 +48,12 @@ public interface GoodsClient {
      *
      * @param className 分类名称
      */
-    @RequestMapping(value = "/goods/class/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/classification/list", method = RequestMethod.POST)
     Response goodsClassList(@RequestParam("className") String className);
 
     /**
      * 商品分类修改
      */
-    @RequestMapping(value = "/goods/class/modify", method = RequestMethod.POST)
+    @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
     Response modifyGoodsClass(@RequestBody ClassificationRequest request);
 }
