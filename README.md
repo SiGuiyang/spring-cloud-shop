@@ -24,5 +24,5 @@
 ## 项目功能点介绍
 ![Pager分布式电商项目](http://pk6b0a7n8.bkt.clouddn.com/Pager_Shop.png "Pager分布式电商项目")
 
-#### 注意：第二个阶段将加入分布式事务解决方案采用 [tx-lcn spring cloud 版本](https://github.com/codingapi/tx-lcn.git)
+#### 注意：第二个阶段将加入分布式事务解决方案采用 Rabbitmq 实现，消息最终一致性解决方案
 #### 如有疑问，欢迎参与，如有更好的方案，可以邮件联系我本人**siguiyang1992@outlook.com**，谢谢！
