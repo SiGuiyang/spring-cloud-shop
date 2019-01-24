@@ -1,15 +1,15 @@
 import cn.hutool.core.util.RandomUtil;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import quick.pager.common.constants.Constants;
-import quick.pager.common.dto.SMSDTO;
+import quick.pager.common.dto.SmsDTO;
 import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.common.SmsTemplate;
 import quick.pager.shop.model.user.User;
@@ -32,9 +32,6 @@ public class UserApplicationTests {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     @Test
     public void testPub() {
         stringRedisTemplate.convertAndSend("hello", "I am come from redis message!");
@@ -54,15 +51,16 @@ public class UserApplicationTests {
     }
 
     @Test
-    public void testMq() {
+    public void testMq() throws IOException {
 
-        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule(Constants.Module.USER, Constants.SMS.INITIAL_CIPHER_SMS);
+        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule("user", Constants.SMS.INITIAL_CIPHER_SMS);
         SmsTemplate smsTemplate = smsTemplates.get(0);
         String content = MessageFormat.format(smsTemplate.getSmsTemplateContent(), "13818471341", "22343");
-        SMSDTO smsdto = new SMSDTO();
+        SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone("13818471341");
         smsdto.setContent(content);
         mqService.sender(Constants.RabbitQueue.SEND_SMS, smsdto);
+        System.in.read();
     }
 
 }

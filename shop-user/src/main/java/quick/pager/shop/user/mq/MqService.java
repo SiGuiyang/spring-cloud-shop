@@ -1,17 +1,29 @@
 package quick.pager.shop.user.mq;
 
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.hutool.core.util.RandomUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.stereotype.Component;
 
 /**
  * Mq 发送服务
+ *
+ * @author siguiyang
  */
 @Component
-public class MqService {
+@Slf4j
+public class MqService implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback {
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
+    private RabbitTemplate rabbitTemplate;
+
+    public MqService(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+        rabbitTemplate.setConfirmCallback(this);
+        rabbitTemplate.setReturnCallback(this);
+        rabbitTemplate.setMandatory(true);
+    }
 
     /**
      * 发送MQ服务
@@ -20,6 +32,24 @@ public class MqService {
      * @param data      数据源
      */
     public void sender(String queueName, Object data) {
-        amqpTemplate.convertAndSend(queueName, data);
+        CorrelationData correlationData = new CorrelationData(RandomUtil.randomUUID());
+        log.info("CorrelationData = {} ", correlationData.getId());
+        rabbitTemplate.convertAndSend(queueName, data, correlationData);
+    }
+
+
+    @Override
+    public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+
+        if (ack) {
+            log.info("消息发送成功 CorrelationData = {}", correlationData.getId());
+        } else {
+            log.info("消息发送失败 CorrelationData = {}", correlationData.getId());
+        }
+    }
+
+    @Override
+    public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+        log.info("消息异常回调 replyCode = {}, replyText = {}, exchange = {}, routingKey = {}", replyCode, replyText, exchange, routingKey);
     }
 }

@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SMSDTO extends DTO {
+public class SmsDTO extends DTO {
     private static final long serialVersionUID = 6004420887746924633L;
 
     private String phone;

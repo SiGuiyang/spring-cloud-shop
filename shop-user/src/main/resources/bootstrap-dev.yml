@@ -64,11 +64,13 @@ spring:
         login-username: admin
         # 登录密码
         login-password: 123456
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    publisher-returns: true
   redis:
     host: localhost
     port: 6379
@@ -76,10 +78,4 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-#    name: shop-server
-    name: localhost
-    port: 8761
-
+      defaultZone: http://localhost:8761/eureka/

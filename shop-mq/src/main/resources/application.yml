@@ -3,3 +3,9 @@ spring:
     active: dev
   application:
     name: shop-mq
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:quick/pager/shop/mq/mapper/*.xml
+  type-aliases-package: quick.pager.shop.model

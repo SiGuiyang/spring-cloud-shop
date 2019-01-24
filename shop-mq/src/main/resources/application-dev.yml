@@ -1,4 +1,11 @@
 spring:
+  cloud:
+    consul:
+      host: 172.16.11.118
+      port: 8500
+      discovery:
+        tags: author=pager
+        healthCheckInterval: 15s
   datasource:
     url: jdbc:mysql://localhost:3306/pager_shop?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
@@ -10,12 +17,15 @@ spring:
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 1
+        retry:
+          enabled: true
 
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-    name: localhost
-    port: 8761
+      defaultZone: http://localhost:8761/eureka/

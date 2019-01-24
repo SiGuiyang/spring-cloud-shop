@@ -13,7 +13,6 @@ public class SMSUtil {
      * @param phone      手机号
      * @param smsContent 发送短信的内容
      */
-    public static String send(String phone, String smsContent) {
-        return "";
+    public static void send(String phone, String smsContent) {
     }
 }

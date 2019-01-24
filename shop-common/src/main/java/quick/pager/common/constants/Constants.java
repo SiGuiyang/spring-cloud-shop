@@ -14,6 +14,10 @@ public interface Constants {
     Byte NORMAL = 2;
     // 删除
     Byte DELETE = 3;
+    // 成功
+    String SUCCESS = "SUCCESS";
+    // 失败
+    String FAILURE = "FAILURE";
 
     /**
      * 项目模块

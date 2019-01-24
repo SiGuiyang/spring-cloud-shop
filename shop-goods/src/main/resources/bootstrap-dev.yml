@@ -60,6 +60,13 @@ spring:
         login-username: admin
         # 登录密码
         login-password: 123456
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirms: true
+    publisher-returns: true
   redis:
     host: localhost
     port: 6379

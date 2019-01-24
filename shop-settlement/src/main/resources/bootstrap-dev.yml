@@ -66,10 +66,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-  node1:
-    name: shop-server
-    port: 8761
+      defaultZone: http://localhost:8761/eureka/
 
 mybatis:
   configuration:
