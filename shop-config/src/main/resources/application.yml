@@ -1,11 +1,18 @@
 spring:
+  profiles:
+    active: jdbc
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/SiGuiyang/cloud-config
-          search-paths: shop
+        jdbc:
+          sql: select app_key, app_value from t_config where service_id = ? and profile = ? and label = ?
   application:
     name: shop-config
 server:
   port: 8889
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info

@@ -148,6 +148,11 @@
         and tr.id = tsr.role_id
         and tsr.sys_user_id = tsu.id
         and tsu.id = #{sysUserId,jdbcType=BIGINT}
+        and tp.delete_status = false
+        and trp.delete_status = false
+        and tsr.delete_status = false
+        and tr.delete_status = false
+        and tsu.delete_status = false
     </select>
 
 

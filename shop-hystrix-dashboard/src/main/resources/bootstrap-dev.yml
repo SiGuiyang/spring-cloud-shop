@@ -1,19 +1,17 @@
 
 spring:
-  application:
-    name: shop-hystrix-dashboard
-  profiles:
-    active: dev
+  cloud:
+    consul:
+      host: 192.168.199.183
+      port: 8500
+      discovery:
+        tags: author=pager
+        healthCheckInterval: 15s
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-#    name: localhost
-    name: 192.168.199.113
-    port: 8761
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka/
 
 turbine:
   combine-host-port: true

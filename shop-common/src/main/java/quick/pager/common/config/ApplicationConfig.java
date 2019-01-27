@@ -7,18 +7,20 @@ import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServl
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 
 @Configuration
 public class ApplicationConfig {
 
     @Bean
+    @ConditionalOnClass(FastJsonHttpMessageConverter.class)
     public HttpMessageConverters fastJsonConfigure() {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
@@ -53,6 +55,7 @@ public class ApplicationConfig {
 
 
     @Bean
+    @ConditionalOnClass({HystrixMetricsStreamServlet.class})
     public ServletRegistrationBean registrationBean() {
         HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
         ServletRegistrationBean<HystrixMetricsStreamServlet> registrationBean = new ServletRegistrationBean<>(streamServlet);
@@ -64,7 +67,7 @@ public class ApplicationConfig {
 
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnClass({RedisTemplate.class, RedisConnectionFactory.class})
     public ShopRedisTemplate shopRedisTemplate(
             RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
         ShopRedisTemplate template = new ShopRedisTemplate();

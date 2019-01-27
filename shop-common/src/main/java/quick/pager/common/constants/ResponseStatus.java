@@ -55,5 +55,7 @@ public interface ResponseStatus {
 
     String GOODS_EXPIRE = "商品已失效";
 
+    String SERVICE_NOT_FOUND = "未找到服务地址";
+
 
 }

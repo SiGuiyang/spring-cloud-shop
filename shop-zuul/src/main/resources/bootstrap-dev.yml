@@ -1,21 +1,12 @@
 spring:
-  application:
-    name: shop-zuul
-  profiles:
-    active: dev
-  redis:
-    host: localhost
-    port: 6379
   cloud:
+    config:
+      uri: http://localhost:8889/
+      label: master
+      profile: dev
     consul:
-      host: 172.16.11.118
+      host: 192.168.199.183
       port: 8500
       discovery:
         tags: author=pager
         healthCheckInterval: 15s
-
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://172.16.11.118:8761/eureka/

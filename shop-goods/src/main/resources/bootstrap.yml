@@ -2,8 +2,6 @@ server:
   port: 8093
 
 spring:
-  profiles:
-    active: dev
   application:
     name: shop-goods
 
@@ -15,7 +13,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info
+        include: refresh,health,info,hystrix.stream
 mybatis:
   configuration:
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

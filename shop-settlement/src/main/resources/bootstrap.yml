@@ -14,7 +14,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info
+        include: refresh,health,info,hystrix.stream
 
 mybatis:
   type-aliases-package: quick.pager.shop.model

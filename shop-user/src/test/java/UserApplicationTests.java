@@ -1,7 +1,12 @@
 import cn.hutool.core.util.RandomUtil;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +22,8 @@ import quick.pager.shop.user.UserApplication;
 import quick.pager.shop.user.mapper.SmsTemplateMapper;
 import quick.pager.shop.user.mq.MqService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = UserApplication.class)
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = UserApplication.class)
 public class UserApplicationTests {
 
     @Autowired
@@ -61,6 +66,43 @@ public class UserApplicationTests {
         smsdto.setContent(content);
         mqService.sender(Constants.RabbitQueue.SEND_SMS, smsdto);
         System.in.read();
+    }
+
+
+    private Properties pro;
+
+    @Before
+    public void before() throws IOException {
+        InputStream resource = this.getClass().getResourceAsStream("test.properties");
+        pro = new Properties();
+        pro.load(resource);
+    }
+    @Test
+    public void testProperties() {
+        test("shop-zuul");
+//        test("shop-activity");
+//        test("shop-goods");
+//        test("shop-manage");
+//        test("shop-order");
+//        test("shop-settlement");
+    }
+
+
+    private void test(String serviceId) {
+        for (Map.Entry<Object, Object> me: pro.entrySet()) {
+            StringBuilder builder = new StringBuilder("insert into `pager_config`.`t_config` (`label`, `profile`, `service_id`, `app_key`, `app_value`) values ('master', 'dev',");
+            builder.append("'");
+            builder.append(serviceId);
+            builder.append("'").append(",");
+            builder.append("'");
+            builder.append(me.getKey());
+            builder.append("'");
+            builder.append(",");
+            builder.append("'");
+            builder.append(me.getValue());
+            builder.append("');");
+            System.out.println(builder.toString());
+        }
     }
 
 }

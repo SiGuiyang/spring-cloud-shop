@@ -1,16 +1,7 @@
 
 spring:
-  profiles:
-    active: prod
-  application:
-    name: shop-order
-  cloud:
-    config:
-      uri: http://localhost:8889/
-      label: master
-      profile: prod
   datasource:
-    url: jdbc:mysql://192.168.199.113:3306/pager_order?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/pager_config?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -56,12 +47,3 @@ spring:
         login-username: admin
         # 登录密码
         login-password: 123456
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://${eureka.node1.name}:${eureka.node1.port}/eureka/
-
-  node1:
-    name: shop-server
-    port: 8761

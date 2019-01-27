@@ -2,8 +2,6 @@ server:
   port: 8091
 
 spring:
-  profiles:
-    active: dev
   application:
     name: shop-activity
 
@@ -22,7 +20,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info
+        include: refresh,health,info,hystrix.stream
 ribbon:
   MaxAutoRetriesNextServer: 0
   ReadTimeout: 4000

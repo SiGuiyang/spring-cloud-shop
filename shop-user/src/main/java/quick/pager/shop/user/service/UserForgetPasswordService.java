@@ -12,7 +12,7 @@ import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
-import quick.pager.common.dto.SMSDTO;
+import quick.pager.common.dto.SmsDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.model.common.SmsTemplate;
@@ -58,7 +58,7 @@ public class UserForgetPasswordService implements IService {
         List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule(Constants.Module.USER, Constants.SMS.FORGET_SMS);
         SmsTemplate smsTemplate = smsTemplates.get(0);
         String content = MessageFormat.format(smsTemplate.getSmsTemplateContent(), user.getPhone(), newPassword);
-        SMSDTO smsdto = new SMSDTO();
+        SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone(user.getPhone());
         smsdto.setContent(content);
         mqService.sender(Constants.RabbitQueue.SEND_SMS, smsdto);

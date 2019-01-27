@@ -2,8 +2,6 @@ server:
   port: 8094
 
 spring:
-  profiles:
-    active: dev
   application:
     name: shop-manage
 
@@ -19,4 +17,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info
+        include: refresh,health,info,hystrix.stream

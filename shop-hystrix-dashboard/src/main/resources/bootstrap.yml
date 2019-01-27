@@ -6,3 +6,9 @@ spring:
     name: shop-hystrix-dashboard
   profiles:
     active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,hystrix.stream

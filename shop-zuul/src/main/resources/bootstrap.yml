@@ -1,8 +1,8 @@
 server:
   port: 8099
 spring:
-  profiles:
-    active: dev
+  application:
+    name: shop-zuul
 ribbon:
   ReadTimeout: 100000  # 单位毫秒数
   SocketTimeout: 100000
