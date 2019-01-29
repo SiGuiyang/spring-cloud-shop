@@ -5,14 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.response.Response;
+import quick.pager.shop.feign.client.ActivityClient;
+import quick.pager.shop.feign.client.GoodsClient;
+import quick.pager.shop.feign.client.UserClient;
+import quick.pager.shop.feign.response.GoodsResponse;
+import quick.pager.shop.feign.response.OrderResponse;
 import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.common.Address;
-import quick.pager.shop.model.feign.response.GoodsResponse;
-import quick.pager.shop.model.feign.response.OrderResponse;
 import quick.pager.shop.model.order.UserOrder;
-import quick.pager.shop.order.client.ActivityClient;
-import quick.pager.shop.order.client.GoodsClient;
-import quick.pager.shop.order.client.UserClient;
 
 @Service
 @Slf4j

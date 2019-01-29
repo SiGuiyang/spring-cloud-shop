@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import quick.pager.common.response.Response;
-import quick.pager.shop.activity.client.UserClient;
+import quick.pager.shop.feign.client.UserClient;
+import quick.pager.shop.feign.dto.UserInfoDTO;
+import quick.pager.shop.feign.response.CouponResponse;
 import quick.pager.shop.model.activity.DiscountCoupon;
-import quick.pager.shop.model.feign.dto.UserInfoDTO;
-import quick.pager.shop.model.feign.response.CouponResponse;
 
 /**
  * 优惠券通用服务

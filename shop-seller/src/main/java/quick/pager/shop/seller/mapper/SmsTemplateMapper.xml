@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.seller.mapper.SmsTemplateMapper">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.common.SmsTemplate">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="module" jdbcType="VARCHAR" property="module"/>
+        <result column="sms_template_code" jdbcType="VARCHAR" property="smsTemplateCode"/>
+        <result column="sms_template_content" jdbcType="VARCHAR" property="smsTemplateContent"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, module, sms_template_code, sms_template_content, create_time, update_time, delete_status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sms_template
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.common.SmsTemplate">
+        insert into t_sms_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="module != null">
+                module,
+            </if>
+            <if test="smsTemplateCode != null">
+                sms_template_code,
+            </if>
+            <if test="smsTemplateContent != null">
+                sms_template_content,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="module != null">
+                #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="smsTemplateCode != null">
+                #{smsTemplateCode,jdbcType=VARCHAR},
+            </if>
+            <if test="smsTemplateContent != null">
+                #{smsTemplateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.common.SmsTemplate">
+        update t_sms_template
+        <set>
+            <if test="module != null">
+                module = #{module,jdbcType=VARCHAR},
+            </if>
+            <if test="smsTemplateCode != null">
+                sms_template_code = #{smsTemplateCode,jdbcType=VARCHAR},
+            </if>
+            <if test="smsTemplateContent != null">
+                sms_template_content = #{smsTemplateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectByModule" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sms_template
+        <where>
+            delete_status = 0
+            <if test="module != null">
+                and module = #{module,jdbcType=VARCHAR}
+            </if>
+            <if test="smsTemplateCode != null">
+                and sms_template_code = #{smsTemplateCode,jdbcType=VARCHAR}
+            </if>
+        </where>
+
+    </select>
+
+
+</mapper>

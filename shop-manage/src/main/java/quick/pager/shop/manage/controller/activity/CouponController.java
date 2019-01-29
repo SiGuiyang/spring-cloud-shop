@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.client.ActivityClient;
-import quick.pager.shop.model.feign.request.CouponRequest;
-import quick.pager.shop.model.feign.request.CouponTemplateRequest;
+import quick.pager.shop.feign.client.ActivityClient;
+import quick.pager.shop.feign.request.CouponRequest;
+import quick.pager.shop.feign.request.CouponTemplateRequest;
 
 @Api(description = "优惠券")
 @RestController

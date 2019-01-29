@@ -6,7 +6,7 @@ spring:
       label: master
       profile: dev
     consul:
-      host: 192.168.199.183
+      host: 172.16.11.118
       port: 8500
       discovery:
         tags: author=pager

@@ -23,7 +23,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/pager_activity"
+                        connectionURL="jdbc:mysql://localhost:3306/pager_activity?useSSL=false"
                         userId="root"
                         password="root">
         </jdbcConnection>

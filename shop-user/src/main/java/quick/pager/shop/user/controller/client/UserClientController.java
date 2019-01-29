@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.request.ManageRequest;
 import quick.pager.common.response.Response;
+import quick.pager.shop.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.common.Address;
-import quick.pager.shop.model.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.user.StationLetter;
 import quick.pager.shop.user.service.client.UserClientService;
 

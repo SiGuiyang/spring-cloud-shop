@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
+import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.goods.service.client.GoodsClientService;
-import quick.pager.shop.model.feign.request.GoodsRequest;
-import quick.pager.shop.model.feign.response.GoodsResponse;
 import quick.pager.shop.model.goods.Goods;
 
 /**

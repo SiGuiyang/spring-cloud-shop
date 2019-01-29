@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.concurrent.RecursiveTask;
 import lombok.extern.slf4j.Slf4j;
 import quick.pager.shop.activity.mapper.DiscountCouponMapper;
+import quick.pager.shop.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.activity.DiscountCouponTemplate;
-import quick.pager.shop.model.feign.dto.UserInfoDTO;
 
 @Slf4j
 public class SendCouponTask extends RecursiveTask<List<String>> {

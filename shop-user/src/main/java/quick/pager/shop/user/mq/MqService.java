@@ -3,8 +3,9 @@ package quick.pager.shop.user.mq;
 import cn.hutool.core.util.RandomUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.CorrelationData;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,14 +34,11 @@ public class MqService implements RabbitTemplate.ConfirmCallback, RabbitTemplate
      */
     public void sender(String queueName, Object data) {
         CorrelationData correlationData = new CorrelationData(RandomUtil.randomUUID());
-        log.info("CorrelationData = {} ", correlationData.getId());
-        rabbitTemplate.convertAndSend(queueName, data, correlationData);
+        rabbitTemplate.convertAndSend("", queueName, data, correlationData);
     }
 
-
     @Override
-    public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-
+    public void confirm(@Nullable CorrelationData correlationData, boolean ack, @Nullable String cause) {
         if (ack) {
             log.info("消息发送成功 CorrelationData = {}", correlationData.getId());
         } else {

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.activity.service.client.FightGroupClientService;
-import quick.pager.shop.model.feign.request.FightGroupRequest;
+import quick.pager.shop.feign.request.FightGroupRequest;
 
 /**
  * 对外暴露的feign

@@ -1,0 +1,20 @@
+server:
+  port: 8098
+
+spring:
+  application:
+    name: shop-user
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,hystrix.stream
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:quick/pager/shop/seller/mapper/*.xml
+  type-aliases-package: quick.pager.shop.model

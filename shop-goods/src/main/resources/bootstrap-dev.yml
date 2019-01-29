@@ -2,7 +2,7 @@
 spring:
   cloud:
     config:
-      uri: http://172.16.11.118:8889/
+      uri: http://localhost:8889/
       label: master
       profile: dev
     consul:

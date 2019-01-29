@@ -11,10 +11,10 @@ import quick.pager.common.constants.Constants;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
-import quick.pager.shop.model.feign.response.GoodsResponse;
-import quick.pager.shop.model.feign.response.OrderResponse;
+import quick.pager.shop.feign.client.GoodsClient;
+import quick.pager.shop.feign.response.GoodsResponse;
+import quick.pager.shop.feign.response.OrderResponse;
 import quick.pager.shop.model.order.UserOrder;
-import quick.pager.shop.order.client.GoodsClient;
 import quick.pager.shop.order.dto.OrderDTO;
 import quick.pager.shop.order.mapper.UserOrderMapper;
 

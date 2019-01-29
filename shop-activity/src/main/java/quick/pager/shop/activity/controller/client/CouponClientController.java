@@ -13,15 +13,14 @@ import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.activity.service.client.CouponClientService;
 import quick.pager.shop.activity.service.client.CouponTemplateClientService;
-//import quick.pager.shop.activity.service.client.PublishCouponClientService;
 import quick.pager.shop.activity.service.client.PublishCouponClientService;
 import quick.pager.shop.activity.service.client.SingleCouponService;
+import quick.pager.shop.feign.dto.CouponDTO;
+import quick.pager.shop.feign.dto.CouponTemplateDTO;
+import quick.pager.shop.feign.dto.PublishCouponDTO;
+import quick.pager.shop.feign.request.CouponRequest;
+import quick.pager.shop.feign.request.CouponTemplateRequest;
 import quick.pager.shop.model.activity.DiscountCoupon;
-import quick.pager.shop.model.feign.dto.CouponDTO;
-import quick.pager.shop.model.feign.dto.CouponTemplateDTO;
-import quick.pager.shop.model.feign.dto.PublishCouponDTO;
-import quick.pager.shop.model.feign.request.CouponRequest;
-import quick.pager.shop.model.feign.request.CouponTemplateRequest;
 
 @Api(description = "优惠券")
 @RestController

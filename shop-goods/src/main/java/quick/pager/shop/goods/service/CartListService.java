@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.goods.dto.CartDTO;
 import quick.pager.shop.goods.mapper.GoodsCartMapper;
 import quick.pager.shop.goods.service.common.CommonGoodsService;
-import quick.pager.shop.model.feign.response.GoodsResponse;
 import quick.pager.shop.model.goods.GoodsCart;
 
 /**

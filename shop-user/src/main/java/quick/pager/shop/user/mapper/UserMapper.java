@@ -2,8 +2,8 @@ package quick.pager.shop.user.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import quick.pager.shop.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.user.User;
-import quick.pager.shop.model.feign.dto.UserInfoDTO;
 
 public interface UserMapper {
 

@@ -12,7 +12,7 @@ import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.activity.mapper.DiscountCouponMapper;
-import quick.pager.shop.model.feign.dto.CouponDTO;
+import quick.pager.shop.feign.dto.CouponDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**

@@ -2,7 +2,7 @@ package quick.pager.shop.activity.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.model.feign.dto.CouponDTO;
+import quick.pager.shop.feign.dto.CouponDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 
 public interface DiscountCouponMapper {

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.client.OrderClient;
-import quick.pager.shop.model.feign.request.OrderRequest;
+import quick.pager.shop.feign.client.OrderClient;
+import quick.pager.shop.feign.request.OrderRequest;
 
 /**
  * 用户订单管理

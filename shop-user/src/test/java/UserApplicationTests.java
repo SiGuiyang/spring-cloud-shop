@@ -79,12 +79,13 @@ public class UserApplicationTests {
     }
     @Test
     public void testProperties() {
-        test("shop-zuul");
-//        test("shop-activity");
-//        test("shop-goods");
-//        test("shop-manage");
-//        test("shop-order");
-//        test("shop-settlement");
+        test("shop-user");
+        test("shop-seller");
+        test("shop-activity");
+        test("shop-goods");
+        test("shop-manage");
+        test("shop-order");
+        test("shop-settlement");
     }
 
 

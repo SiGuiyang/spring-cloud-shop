@@ -230,7 +230,7 @@
         </foreach>
     </insert>
 
-    <select id="selectCoupons" resultMap="BaseResultMap" parameterType="quick.pager.shop.model.feign.dto.CouponDTO">
+    <select id="selectCoupons" resultMap="BaseResultMap" parameterType="quick.pager.shop.feign.dto.CouponDTO">
         select
         <include refid="Base_Column_List"/>
         from t_discount_coupon

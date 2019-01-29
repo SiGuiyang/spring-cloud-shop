@@ -94,7 +94,7 @@
     </select>
 
 
-    <select id="selectInfoByPhone" resultType="quick.pager.shop.model.feign.dto.UserInfoDTO">
+    <select id="selectInfoByPhone" resultType="quick.pager.shop.feign.dto.UserInfoDTO">
         select
         t.id,
         t.phone,
@@ -109,7 +109,7 @@
         where t.phone = #{phone,jdbcType=VARCHAR} and t.delete_status = 0
     </select>
 
-    <select id="selectByBatchPrimaryKey" resultType="quick.pager.shop.model.feign.dto.UserInfoDTO">
+    <select id="selectByBatchPrimaryKey" resultType="quick.pager.shop.feign.dto.UserInfoDTO">
         select
         t.id,
         t.phone,

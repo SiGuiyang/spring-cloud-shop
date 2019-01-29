@@ -7,9 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.goods.mapper.GoodsDetailMapper;
 import quick.pager.shop.goods.mapper.GoodsMapper;
-import quick.pager.shop.model.feign.response.GoodsResponse;
 import quick.pager.shop.model.goods.Goods;
 import quick.pager.shop.model.goods.GoodsCart;
 

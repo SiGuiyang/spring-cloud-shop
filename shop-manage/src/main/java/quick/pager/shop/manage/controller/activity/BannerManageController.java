@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.client.ActivityClient;
-import quick.pager.shop.model.feign.request.BannerRequest;
+import quick.pager.shop.feign.client.ActivityClient;
+import quick.pager.shop.feign.request.BannerRequest;
 
 /**
  * banner 管理

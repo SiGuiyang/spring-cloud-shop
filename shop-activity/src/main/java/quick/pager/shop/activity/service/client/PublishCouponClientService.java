@@ -22,14 +22,14 @@ import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.common.service.RedisService;
 import quick.pager.common.utils.FileUtil;
-import quick.pager.shop.activity.client.UserClient;
 import quick.pager.shop.activity.mapper.DiscountCouponMapper;
 import quick.pager.shop.activity.mapper.DiscountCouponTemplateMapper;
 import quick.pager.shop.activity.task.SendCouponTask;
-import quick.pager.shop.model.feign.dto.PublishCouponDTO;
+import quick.pager.shop.feign.client.UserClient;
+import quick.pager.shop.feign.dto.PublishCouponDTO;
+import quick.pager.shop.feign.dto.UserInfoDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.activity.DiscountCouponTemplate;
-import quick.pager.shop.model.feign.dto.UserInfoDTO;
 
 /**
  * 发送优惠券

@@ -3,17 +3,16 @@ package quick.pager.shop.manage.controller.goods;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.manage.client.GoodsClient;
-import quick.pager.shop.manage.request.ClassificationRequest;
-import quick.pager.shop.model.feign.request.GoodsRequest;
-import quick.pager.shop.model.feign.response.GoodsResponse;
+import quick.pager.shop.feign.client.GoodsClient;
+import quick.pager.shop.feign.request.ClassificationRequest;
+import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.response.GoodsResponse;
 
 @Api(description = "商品管理")
 @RestController

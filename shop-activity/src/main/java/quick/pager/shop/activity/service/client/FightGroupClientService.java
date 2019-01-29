@@ -14,22 +14,22 @@ import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
-import quick.pager.shop.activity.client.UserClient;
 import quick.pager.shop.activity.mapper.FightGroupGoodsMapper;
 import quick.pager.shop.activity.mapper.FightGroupMapper;
 import quick.pager.shop.activity.mapper.FightGroupMemberMapper;
 import quick.pager.shop.activity.mapper.FightGroupRecordMapper;
 import quick.pager.shop.activity.mapper.FightGroupRuleMapper;
+import quick.pager.shop.feign.client.UserClient;
+import quick.pager.shop.feign.dto.UserInfoDTO;
+import quick.pager.shop.feign.request.FightGroupRequest;
+import quick.pager.shop.feign.response.FightGroupMemberResponse;
+import quick.pager.shop.feign.response.FightGroupRecordResponse;
+import quick.pager.shop.feign.response.FightGroupResponse;
 import quick.pager.shop.model.activity.FightGroup;
 import quick.pager.shop.model.activity.FightGroupGoods;
 import quick.pager.shop.model.activity.FightGroupMember;
 import quick.pager.shop.model.activity.FightGroupRecord;
 import quick.pager.shop.model.activity.FightGroupRule;
-import quick.pager.shop.model.feign.dto.UserInfoDTO;
-import quick.pager.shop.model.feign.request.FightGroupRequest;
-import quick.pager.shop.model.feign.response.FightGroupMemberResponse;
-import quick.pager.shop.model.feign.response.FightGroupRecordResponse;
-import quick.pager.shop.model.feign.response.FightGroupResponse;
 
 /**
  * @author siguiyang

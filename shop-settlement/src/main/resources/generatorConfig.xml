@@ -18,7 +18,7 @@
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.199.102:3306/pager_shop"
+                        connectionURL="jdbc:mysql://192.168.199.102:3306/pager_shop?useSSL=false"
                         userId="root"
                         password="root">
         </jdbcConnection>

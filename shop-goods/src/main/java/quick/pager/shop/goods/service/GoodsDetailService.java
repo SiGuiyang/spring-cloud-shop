@@ -7,9 +7,9 @@ import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.DTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
+import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.goods.mapper.GoodsDetailMapper;
 import quick.pager.shop.goods.mapper.GoodsMapper;
-import quick.pager.shop.model.feign.response.GoodsResponse;
 import quick.pager.shop.model.goods.Goods;
 import quick.pager.shop.model.goods.GoodsDetail;
 
