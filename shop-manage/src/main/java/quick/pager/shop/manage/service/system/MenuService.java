@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.manage.mapper.PermissionMapper;
@@ -26,7 +26,7 @@ public class MenuService implements IService {
     private PermissionMapper permissionMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
 
 
         List<Permission> topMenu = permissionMapper.selectTopMenu();

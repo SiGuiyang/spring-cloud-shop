@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.shop.order", "quick.pager.common"})
+@SpringBootApplication(scanBasePackages = {"quick.pager.shop.order", "quick.pager.common","quick.pager.shop.feign.fallback"})
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients("quick.pager.shop.feign")
 @EnableCircuitBreaker
 @MapperScan("quick.pager.shop.order.mapper")
 public class OrderApplication {

@@ -21,7 +21,7 @@ import quick.pager.shop.activity.mapper.FightGroupRecordMapper;
 import quick.pager.shop.activity.mapper.FightGroupRuleMapper;
 import quick.pager.shop.feign.client.UserClient;
 import quick.pager.shop.feign.dto.UserInfoDTO;
-import quick.pager.shop.feign.request.FightGroupRequest;
+import quick.pager.shop.feign.dto.FightGroupDTO;
 import quick.pager.shop.feign.response.FightGroupMemberResponse;
 import quick.pager.shop.feign.response.FightGroupRecordResponse;
 import quick.pager.shop.feign.response.FightGroupResponse;
@@ -97,7 +97,7 @@ public class FightGroupClientService {
     /**
      * 拼团规则
      */
-    public Response rule(FightGroupRequest request) {
+    public Response rule(FightGroupDTO request) {
 
         FightGroupRule rule = fightGroupRuleMapper.selectByPrimaryKey(request.getId());
         // 不存在则新增
@@ -144,7 +144,7 @@ public class FightGroupClientService {
     /**
      * 拼团商品
      */
-    public Response goodsModify(FightGroupRequest request) {
+    public Response goodsModify(FightGroupDTO request) {
 
         FightGroupGoods groupGoods = fightGroupGoodsMapper.selectFightGroupGoods(request.getId());
         // 没有则新增
@@ -175,7 +175,7 @@ public class FightGroupClientService {
     /**
      * 新增修改
      */
-    private Response modifyFightGroupGoods(FightGroupRequest request) {
+    private Response modifyFightGroupGoods(FightGroupDTO request) {
         FightGroupGoods goods = new FightGroupGoods();
         goods.setGoodsId(request.getGoodsId());
         goods.setGroupId(request.getGroupId());
@@ -256,7 +256,7 @@ public class FightGroupClientService {
     /**
      * 新增修改
      */
-    public Response modify(FightGroupRequest request) {
+    public Response modify(FightGroupDTO request) {
 
         Response response = new Response();
 

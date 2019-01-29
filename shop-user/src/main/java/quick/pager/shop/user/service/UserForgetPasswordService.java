@@ -2,7 +2,6 @@ package quick.pager.shop.user.service;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
-import com.alibaba.fastjson.JSON;
 import java.text.MessageFormat;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.dto.SmsDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
@@ -38,7 +37,7 @@ public class UserForgetPasswordService implements IService {
     private MqService mqService;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
 
         ForgetPasswordDTO forgetPasswordDTO = (ForgetPasswordDTO) dto;
 

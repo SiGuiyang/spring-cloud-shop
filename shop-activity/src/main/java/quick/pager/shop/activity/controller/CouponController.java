@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.AppDTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
-import quick.pager.shop.activity.request.GiftCouponRequest;
 import quick.pager.shop.activity.service.CouponService;
 import quick.pager.shop.activity.service.GiftCouponService;
 
@@ -41,7 +41,7 @@ public class CouponController {
             @ApiImplicitParam(name = "page", value = "页码", required = true, dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "pageSize", value = "页数", required = true, dataType = "Integer", paramType = "query")})
     public Response coupons(@PathVariable("userId") Long userId, @RequestParam("page") Integer page, @RequestParam("pageSize") Integer pageSize) {
-        DTO dto = new DTO();
+        BaseDTO dto = new BaseDTO();
         dto.setId(userId);
         dto.setPage(page);
         dto.setPageSize(pageSize);
@@ -51,7 +51,7 @@ public class CouponController {
     @ApiOperation("赠送优惠券")
     @RequestMapping(value = "/coupons/gift/{userId}", method = RequestMethod.POST)
     public Response giftCoupon(@PathVariable("userId") Long userId) {
-        return giftCouponService.doService(new DTO(userId));
+        return giftCouponService.doService(new AppDTO(userId));
     }
 
 }

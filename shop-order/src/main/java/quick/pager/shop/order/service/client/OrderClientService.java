@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.response.Response;
-import quick.pager.shop.feign.request.OrderRequest;
+import quick.pager.shop.feign.dto.OrderDTO;
 import quick.pager.shop.feign.response.OrderResponse;
 import quick.pager.shop.model.order.UserOrder;
 import quick.pager.shop.order.mapper.UserOrderMapper;
@@ -25,7 +25,7 @@ public class OrderClientService {
     @Autowired
     private CommonOrderService commonOrderService;
 
-    public Response<List<UserOrder>> userOrder(OrderRequest request) {
+    public Response<List<UserOrder>> userOrder(OrderDTO request) {
 
         PageHelper.startPage(request.getPage(), request.getPageSize());
 

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.GoodsClient;
-import quick.pager.shop.feign.request.ClassificationRequest;
-import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.dto.ClassificationDTO;
+import quick.pager.shop.feign.dto.GoodsDTO;
 import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.model.goods.Goods;
 
@@ -25,13 +25,13 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
         log.error("GoodsClient 进入熔断错误异常信息 msg = {}", cause.getMessage());
         return new GoodsClient() {
             @Override
-            public Response<List<Goods>> queryGoodsList(GoodsRequest request) {
+            public Response<List<Goods>> queryGoodsList(GoodsDTO request) {
                 log.error("进入熔断措施 GoodsClient.queryGoodsList");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response<String> modifyGoods(GoodsRequest request) {
+            public Response<String> modifyGoods(GoodsDTO request) {
                 log.error("进入熔断措施 GoodsClient.modifyGoods");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
@@ -49,7 +49,7 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
             }
 
             @Override
-            public Response modifyGoodsClass(ClassificationRequest request) {
+            public Response modifyGoodsClass(ClassificationDTO dto) {
                 log.error("进入熔断措施 GoodsClient.modifyGoodsClass");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }

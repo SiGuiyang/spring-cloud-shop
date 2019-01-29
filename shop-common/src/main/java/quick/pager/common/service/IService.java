@@ -1,7 +1,7 @@
 package quick.pager.common.service;
 
 
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 
 /**
@@ -13,5 +13,5 @@ import quick.pager.common.response.Response;
  */
 public interface IService<T> {
 
-    Response<T> doService(DTO dto);
+    Response<T> doService(BaseDTO dto);
 }

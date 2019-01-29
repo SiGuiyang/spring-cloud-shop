@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.GoodsClient;
-import quick.pager.shop.feign.request.ClassificationRequest;
-import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.dto.ClassificationDTO;
+import quick.pager.shop.feign.dto.GoodsDTO;
 import quick.pager.shop.feign.response.GoodsResponse;
 
 @Api(description = "商品管理")
@@ -23,13 +23,13 @@ public class GoodsController {
     private GoodsClient goodsClient;
 
     @PostMapping("/goods/list")
-    public Response goods(GoodsRequest request) {
+    public Response goods(GoodsDTO request) {
         return goodsClient.queryGoodsList(request);
     }
 
     @ApiOperation("商品新增|修改")
     @PostMapping("/goods/modify")
-    public Response goodsModify(GoodsRequest request) {
+    public Response goodsModify(GoodsDTO request) {
         return goodsClient.modifyGoods(request);
     }
 
@@ -47,7 +47,7 @@ public class GoodsController {
 
     @ApiOperation("商品分类修改")
     @PostMapping("/goods/classification/modify")
-    public Response modifyClassification(@RequestBody ClassificationRequest request) {
-        return goodsClient.modifyGoodsClass(request);
+    public Response modifyClassification(@RequestBody ClassificationDTO dto) {
+        return goodsClient.modifyGoodsClass(dto);
     }
 }

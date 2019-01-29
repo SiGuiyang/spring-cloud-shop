@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.shop.settlement.service.SettlementService;
 
@@ -29,7 +29,9 @@ public class SettlementController {
      */
     @RequestMapping("/{cartId}")
     public Response settlement(@PathVariable("cartId") Long cartId) {
-        return settlementService.doService(new DTO(cartId));
+        BaseDTO dto = new BaseDTO();
+        dto.setId(cartId);
+        return settlementService.doService(dto);
     }
 
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.activity.dto.BannerDTO;
-import quick.pager.shop.activity.request.BannerRequest;
 import quick.pager.shop.activity.service.BannerService;
 
 /**

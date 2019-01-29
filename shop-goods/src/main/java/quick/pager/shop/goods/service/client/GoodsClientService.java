@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.dto.GoodsDTO;
 import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.goods.mapper.GoodsCartMapper;
 import quick.pager.shop.goods.mapper.GoodsDetailMapper;
@@ -39,7 +39,7 @@ public class GoodsClientService {
     /**
      * 查询商品列表 管理后台
      */
-    public Response<List<Goods>> queryGoodsList(GoodsRequest request) {
+    public Response<List<Goods>> queryGoodsList(GoodsDTO request) {
         PageHelper.startPage(request.getPage(), request.getPageSize());
         List<Goods> goods = goodsMapper.queryGoodsList(request.getGoodsName(), request.getGoodsStatus(),
                 request.getGoodsType(), request.getGcsId());
@@ -56,7 +56,7 @@ public class GoodsClientService {
     /**
      * 新增|修改
      */
-    public Response<String> modifyGoods(GoodsRequest request) {
+    public Response<String> modifyGoods(GoodsDTO request) {
         Goods goods = new Goods();
         BeanUtils.copyProperties(request, goods);
 

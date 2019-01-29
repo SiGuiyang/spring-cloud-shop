@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.activity.mapper.DiscountCouponMapper;
@@ -26,7 +26,7 @@ public class CouponClientService implements IService {
     private DiscountCouponMapper discountCouponMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
 
         CouponDTO couponDTO = (CouponDTO) dto;
         Response response = new Response();

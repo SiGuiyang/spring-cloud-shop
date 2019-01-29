@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.model.common.Address;
@@ -29,7 +29,7 @@ public class UserAddressService implements IService {
     private AddressMapper addressMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
         AddressDTO addressDTO = (AddressDTO) dto;
 
         Response response = new Response();

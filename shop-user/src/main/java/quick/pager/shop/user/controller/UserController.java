@@ -21,10 +21,6 @@ import quick.pager.shop.user.dto.ForgetPasswordDTO;
 import quick.pager.shop.user.dto.StationMessageDTO;
 import quick.pager.shop.user.dto.UserLoginDTO;
 import quick.pager.shop.user.dto.UserSubscribeDTO;
-import quick.pager.shop.user.request.ForgetPasswordRequest;
-import quick.pager.shop.user.request.LoginRequest;
-import quick.pager.shop.user.request.SubscribeRequest;
-import quick.pager.shop.user.request.UserInfoRequest;
 import quick.pager.shop.user.response.LoginOrSubscribeResponse;
 import quick.pager.shop.user.service.StationMessageService;
 import quick.pager.shop.user.service.UserForgetPasswordService;
@@ -63,7 +59,7 @@ public class UserController {
      */
     @ApiOperation("登陆")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response<LoginOrSubscribeResponse> login(LoginRequest request) {
+    public Response<LoginOrSubscribeResponse> login(UserLoginDTO request) {
 
         String key = RedisKeys.UserKeys.SHOP_LOGIN + request.getPhone();
 
@@ -107,7 +103,7 @@ public class UserController {
 
     @ApiOperation("修改用户信息")
     @PostMapping("/edit")
-    public Response edit(UserInfoRequest request) {
+    public Response edit(UserInfoDTO request) {
 
         return null;
     }
@@ -117,7 +113,7 @@ public class UserController {
      */
     @ApiOperation("注册")
     @RequestMapping(value = "/user/subscribe", method = RequestMethod.POST)
-    public Response subscribe(SubscribeRequest request) {
+    public Response subscribe(UserSubscribeDTO request) {
         String key = RedisKeys.UserKeys.SHOP_REGISTER + request.getPhone();
 
         if (null != redisService.get(key)) {
@@ -180,7 +176,7 @@ public class UserController {
      */
     @ApiOperation("忘记密码")
     @RequestMapping(value = "/forget/password", method = RequestMethod.POST)
-    public Response forgetPassword(ForgetPasswordRequest request) {
+    public Response forgetPassword(ForgetPasswordDTO request) {
         if (StringUtils.isEmpty(request.getPhone())) {
             return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }

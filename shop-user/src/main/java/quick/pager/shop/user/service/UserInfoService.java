@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.feign.dto.UserInfoDTO;
@@ -30,7 +30,7 @@ public class UserInfoService implements IService<UserInfoResponse> {
     private UserMapper userMapper;
 
     @Override
-    public Response<UserInfoResponse> doService(DTO dto) {
+    public Response<UserInfoResponse> doService(BaseDTO dto) {
 
         UserInfoDTO userInfoDTO = (UserInfoDTO) dto;
 

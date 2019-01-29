@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.request.AppRequest;
 import quick.pager.common.response.Response;
+import quick.pager.shop.feign.dto.GoodsDTO;
 import quick.pager.shop.goods.constants.GoodsConstants;
-import quick.pager.shop.goods.dto.GoodsDTO;
 import quick.pager.shop.goods.dto.GoodsSearchDTO;
-import quick.pager.shop.goods.request.GoodsSearchRequest;
 import quick.pager.shop.goods.service.GoodsDetailService;
 import quick.pager.shop.goods.service.GoodsHomeListService;
 import quick.pager.shop.goods.service.GoodsSearchService;
@@ -49,12 +48,8 @@ public class GoodsController {
 
     @ApiOperation("商品搜索")
     @PostMapping("/search")
-    public Response goodsSearch(GoodsSearchRequest request) {
+    public Response goodsSearch(GoodsSearchDTO dto) {
 
-        GoodsSearchDTO dto = new GoodsSearchDTO();
-        dto.setGoodsName(request.getGoodsName());
-        dto.setPage(request.getPage());
-        dto.setPageSize(request.getPageSize());
         dto.setEvent(GoodsConstants.SEARCH_GOODS_SEARCH_EVENT);
         return goodsSearchService.doService(dto);
     }
@@ -62,8 +57,9 @@ public class GoodsController {
     @ApiOperation("查看商品详情")
     @PostMapping("/goodsInfo/{goodsId}")
     public Response goodsInfo(@PathVariable("goodsId") Long goodsId) {
-
-        return goodsDetailService.doService(new DTO(goodsId));
+        BaseDTO dto = new BaseDTO();
+        dto.setId(goodsId);
+        return goodsDetailService.doService(dto);
 
     }
 

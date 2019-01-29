@@ -4,7 +4,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.feign.response.GoodsResponse;
@@ -27,7 +27,7 @@ public class CartListService implements IService<List<GoodsResponse>> {
     private CommonGoodsService commonGoodsService;
 
     @Override
-    public Response<List<GoodsResponse>> doService(DTO dto) {
+    public Response<List<GoodsResponse>> doService(BaseDTO dto) {
 
         CartDTO cartDTO = (CartDTO) dto;
 

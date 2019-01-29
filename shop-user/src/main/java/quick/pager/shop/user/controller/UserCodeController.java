@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.RedisKeys;
+import quick.pager.common.dto.SmsDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.RedisService;
 import quick.pager.common.utils.VerifyCodeUtils;
-import quick.pager.shop.user.request.SMSRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class UserCodeController {
      */
     @RequestMapping(value = "/code/sendSMS", method = RequestMethod.POST)
     @ApiOperation("发送短信验证码")
-    public Response sendSMS(SMSRequest request) {
+    public Response sendSMS(SmsDTO dto) {
         return null;
     }
 

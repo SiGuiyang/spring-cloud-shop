@@ -2,14 +2,16 @@ package quick.pager.shop.goods.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.request.Request;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GoodsDTO extends DTO {
-    private static final long serialVersionUID = -4450878746485911231L;
+public class GoodsDTO extends Request {
+    private static final long serialVersionUID = -3283409729233338177L;
 
-    private Integer pageSize;
+    private String className;
 
-    private Integer page;
+    private String icon;
+
+    private String createUser;
 }

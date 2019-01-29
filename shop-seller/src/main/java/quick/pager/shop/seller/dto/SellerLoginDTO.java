@@ -9,7 +9,7 @@ import quick.pager.shop.feign.dto.UserInfoDTO;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserLoginDTO extends UserInfoDTO {
+public class SellerLoginDTO extends UserInfoDTO {
     private static final long serialVersionUID = -8483169592580367377L;
 
     /**

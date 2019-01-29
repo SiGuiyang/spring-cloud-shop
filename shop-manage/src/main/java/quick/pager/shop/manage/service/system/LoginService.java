@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.manage.dto.LoginDTO;
@@ -27,7 +27,7 @@ public class LoginService implements IService<LoginResponse> {
     private SysUserMapper sysUserMapper;
 
     @Override
-    public Response<LoginResponse> doService(DTO dto) {
+    public Response<LoginResponse> doService(BaseDTO dto) {
 
         LoginDTO loginDTO = (LoginDTO) dto;
 

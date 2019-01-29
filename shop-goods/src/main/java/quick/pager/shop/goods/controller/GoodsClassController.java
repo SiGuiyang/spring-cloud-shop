@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.goods.dto.ClassificationDTO;
-import quick.pager.shop.goods.request.GoodsRequest;
+import quick.pager.shop.goods.dto.GoodsDTO;
 import quick.pager.shop.goods.service.GoodsClassService;
 import quick.pager.shop.goods.service.GoodsModifyService;
 
@@ -38,7 +38,7 @@ public class GoodsClassController {
     }
 
     @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
-    public Response modifyGoodsClass(@RequestBody GoodsRequest request) {
+    public Response modifyGoodsClass(@RequestBody GoodsDTO request) {
         ClassificationDTO dto = new ClassificationDTO();
         dto.setId(request.getId());
         dto.setClassName(request.getClassName());

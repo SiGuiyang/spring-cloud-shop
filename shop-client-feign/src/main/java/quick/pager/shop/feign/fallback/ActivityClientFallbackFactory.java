@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.ActivityClient;
-import quick.pager.shop.feign.request.BannerRequest;
-import quick.pager.shop.feign.request.CouponRequest;
-import quick.pager.shop.feign.request.CouponTemplateRequest;
-import quick.pager.shop.feign.request.FightGroupRequest;
+import quick.pager.shop.feign.dto.BannerDTO;
+import quick.pager.shop.feign.dto.CouponDTO;
+import quick.pager.shop.feign.dto.CouponTemplateDTO;
+import quick.pager.shop.feign.dto.FightGroupDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
@@ -25,13 +25,13 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
         log.error("ActivityClient 进入熔断错误异常信息 msg = {}", cause.getMessage());
         return new ActivityClient() {
             @Override
-            public Response fetch(BannerRequest request) {
+            public Response fetch(BannerDTO dto) {
                 log.error("进入熔断措施 ActivityClient.fetch");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response modify(BannerRequest request) {
+            public Response modify(BannerDTO dto) {
                 log.error("进入熔断措施 ActivityClient.modify");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
@@ -43,19 +43,19 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             }
 
             @Override
-            public Response template(CouponTemplateRequest request) {
+            public Response template(CouponTemplateDTO dto) {
                 log.error("进入熔断措施 ActivityClient.template");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response modifyTemplate(CouponTemplateRequest request) {
+            public Response modifyTemplate(CouponTemplateDTO dto) {
                 log.error("进入熔断措施 ActivityClient.modifyTemplate");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response coupons(CouponRequest request) {
+            public Response coupons(CouponDTO dto) {
                 log.error("进入熔断措施 ActivityClient.coupons");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
@@ -67,12 +67,12 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             }
 
             @Override
-            public Response fightGroup(FightGroupRequest request) {
+            public Response fightGroup(FightGroupDTO dto) {
                 return null;
             }
 
             @Override
-            public Response modify(FightGroupRequest request) {
+            public Response modify(FightGroupDTO dto) {
                 return null;
             }
 
@@ -82,7 +82,7 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             }
 
             @Override
-            public Response modifyRule(FightGroupRequest request) {
+            public Response modifyRule(FightGroupDTO dto) {
                 return null;
             }
 
@@ -92,12 +92,12 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             }
 
             @Override
-            public Response goodsModify(FightGroupRequest request) {
+            public Response goodsModify(FightGroupDTO dto) {
                 return null;
             }
 
             @Override
-            public Response records(FightGroupRequest request) {
+            public Response records(FightGroupDTO dto) {
                 return null;
             }
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.activity.service.client.FightGroupClientService;
-import quick.pager.shop.feign.request.FightGroupRequest;
+import quick.pager.shop.feign.dto.FightGroupDTO;
 
 /**
  * 对外暴露的feign
@@ -27,13 +27,13 @@ public class FightGroupClientController {
 
     @ApiOperation("拼团活动列表")
     @RequestMapping(value = "/fightGroup/list", method = RequestMethod.POST)
-    public Response fightGroup(@RequestBody FightGroupRequest request) {
+    public Response fightGroup(@RequestBody FightGroupDTO request) {
         return fightGroupClientService.fightGroup(request.getActivityName(), request.getBeginTime(), request.getEndTime(), request.getPage(), request.getPageSize());
     }
 
     @ApiOperation("新增修改")
     @RequestMapping(value = "/fight/modify", method = RequestMethod.POST)
-    public Response modify(@RequestBody FightGroupRequest request) {
+    public Response modify(@RequestBody FightGroupDTO request) {
         return fightGroupClientService.modify(request);
     }
 
@@ -45,7 +45,7 @@ public class FightGroupClientController {
 
     @ApiOperation("拼团活动规则新增修改")
     @RequestMapping(value = "/fightGroup/rule/modify", method = RequestMethod.POST)
-    public Response modifyRule(@RequestBody FightGroupRequest request) {
+    public Response modifyRule(@RequestBody FightGroupDTO request) {
         return fightGroupClientService.rule(request);
     }
 
@@ -57,13 +57,13 @@ public class FightGroupClientController {
 
     @ApiOperation("拼团规则的商品新增修改")
     @RequestMapping(value = "/fightGroup/goods/modify", method = RequestMethod.POST)
-    public Response goodsModify(@RequestBody FightGroupRequest request) {
+    public Response goodsModify(@RequestBody FightGroupDTO request) {
         return fightGroupClientService.goodsModify(request);
     }
 
     @ApiOperation("成团记录")
     @RequestMapping(value = "/fightGroup/records", method = RequestMethod.POST)
-    public Response records(@RequestBody FightGroupRequest request) {
+    public Response records(@RequestBody FightGroupDTO request) {
         return fightGroupClientService.records(request.getId(), request.getBeginTime(), request.getEndTime(), request.getPage(), request.getPageSize());
     }
 

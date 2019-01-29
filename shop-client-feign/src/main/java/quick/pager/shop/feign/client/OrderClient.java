@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.fallback.OrderClientFallbackFactory;
-import quick.pager.shop.feign.request.OrderRequest;
-import quick.pager.shop.feign.request.SellerOrderRequest;
+import quick.pager.shop.feign.dto.OrderDTO;
+import quick.pager.shop.feign.dto.SellerOrderDTO;
 
 /**
  * 订单模块
@@ -22,7 +22,7 @@ public interface OrderClient {
      * 订单列表
      */
     @RequestMapping(value = "/order/orders", method = RequestMethod.POST)
-    Response orders(@RequestBody OrderRequest request);
+    Response orders(@RequestBody OrderDTO request);
 
     /**
      * 订单详情
@@ -34,7 +34,7 @@ public interface OrderClient {
      * 商户订单列表
      */
     @RequestMapping(value = "/order/sellerOrders", method = RequestMethod.POST)
-    Response sellerOrders(@RequestBody SellerOrderRequest request);
+    Response sellerOrders(@RequestBody SellerOrderDTO request);
 
     /**
      * 商户订单详情

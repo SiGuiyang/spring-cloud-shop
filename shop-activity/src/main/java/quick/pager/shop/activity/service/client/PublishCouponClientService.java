@@ -17,7 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.common.service.RedisService;
@@ -51,7 +51,7 @@ public class PublishCouponClientService implements IService {
 
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
 
         PublishCouponDTO publishCouponDTO = (PublishCouponDTO) dto;
 

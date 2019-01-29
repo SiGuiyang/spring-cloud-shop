@@ -16,9 +16,6 @@ import quick.pager.shop.manage.dto.LoginDTO;
 import quick.pager.shop.manage.dto.RoleDTO;
 import quick.pager.shop.manage.dto.SysUserDTO;
 import quick.pager.shop.manage.dto.SystemConfigDTO;
-import quick.pager.shop.manage.request.ConfigRequest;
-import quick.pager.shop.manage.request.RoleRequest;
-import quick.pager.shop.manage.request.SysUserRequest;
 import quick.pager.shop.manage.service.system.LoginService;
 import quick.pager.shop.manage.service.system.MenuService;
 import quick.pager.shop.manage.service.system.PermissionService;
@@ -83,12 +80,7 @@ public class SystemController {
 
     @ApiOperation("系统用户列表")
     @PostMapping("/system/user")
-    public Response systemUser(SysUserRequest request) {
-        SysUserDTO dto = new SysUserDTO();
-        dto.setSysName(request.getSysName());
-        dto.setCreateUser(request.getCreateUser());
-        dto.setPage(request.getPage());
-        dto.setPageSize(request.getPageSize());
+    public Response systemUser(SysUserDTO dto) {
         dto.setEvent(Constants.Event.LIST);
 
         return sysUserService.doService(dto);
@@ -96,17 +88,7 @@ public class SystemController {
 
     @ApiOperation("修改系统用户")
     @PostMapping("system/user/modify")
-    public Response modifySystemUser(SysUserRequest request) {
-        SysUserDTO dto = new SysUserDTO();
-        dto.setId(request.getId());
-        dto.setSysName(request.getSysName());
-        dto.setSysCode(request.getLoginCode());
-        dto.setAvatar(request.getAvatar());
-        dto.setPassword(request.getPassword());
-        dto.setRoleIds(request.getRoleIds());
-        dto.setCreateUser(request.getCreateUser());
-        dto.setDeleteStatus(request.getDeleteStatus());
-        dto.setEvent(request.getEvent());
+    public Response modifySystemUser(SysUserDTO dto) {
 
         return sysUserService.doService(dto);
     }
@@ -128,24 +110,14 @@ public class SystemController {
 
     @ApiOperation("获取系统角色")
     @PostMapping("/system/role")
-    public Response systemRole(RoleRequest request) {
-        RoleDTO dto = new RoleDTO();
-        dto.setRoleName(request.getRoleName());
+    public Response systemRole(RoleDTO dto) {
         dto.setEvent(Constants.Event.LIST);
-        dto.setPage(request.getPage());
-        dto.setPageSize(request.getPageSize());
         return roleService.doService(dto);
     }
 
     @ApiOperation("修改系统角色")
     @PostMapping("/system/role/modify")
-    public Response modifySystemRole(RoleRequest request) {
-        RoleDTO dto = new RoleDTO();
-        dto.setRoleName(request.getRoleName());
-        dto.setRoleCode(request.getRoleCode());
-        dto.setCreateUser(request.getCreateUser());
-        dto.setDeleteStatus(request.getDeleteStatus());
-        dto.setEvent(request.getEvent());
+    public Response modifySystemRole(RoleDTO dto) {
         return roleService.doService(dto);
     }
 
@@ -173,29 +145,14 @@ public class SystemController {
 
     @ApiOperation("系统配置列表")
     @PostMapping("/system/config")
-    public Response systemUser(ConfigRequest request) {
-        SystemConfigDTO dto = new SystemConfigDTO();
-        dto.setConfigName(request.getConfigName());
-        dto.setModule(request.getModule());
-        dto.setPage(request.getPage());
-        dto.setPageSize(request.getPageSize());
+    public Response systemUser(SystemConfigDTO dto) {
         dto.setEvent(Constants.Event.LIST);
         return systemConfigService.doService(dto);
     }
 
     @ApiOperation("修改系统配置")
     @PostMapping("system/config/modify")
-    public Response modifySystemUser(ConfigRequest request) {
-        SystemConfigDTO dto = new SystemConfigDTO();
-        dto.setConfigName(request.getConfigName());
-        dto.setConfigValue(request.getConfigValue());
-        dto.setModule(request.getModule());
-        dto.setDescription(request.getDescription());
-        dto.setDeleteStatus(request.getDeleteStatus());
-        dto.setId(request.getId());
-        dto.setEvent(request.getEvent());
-        dto.setPage(request.getPage());
-        dto.setPageSize(request.getPageSize());
+    public Response modifySystemUser(SystemConfigDTO dto) {
         return systemConfigService.doService(dto);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.dto.GoodsDTO;
 import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.goods.service.client.GoodsClientService;
 import quick.pager.shop.model.goods.Goods;
@@ -27,7 +27,7 @@ public class GoodsClientController {
     private GoodsClientService goodsClientService;
 
     @RequestMapping(value = "/queryGoodsList", method = RequestMethod.POST)
-    public Response<List<Goods>> queryGoodsList(@RequestBody GoodsRequest request) {
+    public Response<List<Goods>> queryGoodsList(@RequestBody GoodsDTO request) {
         return goodsClientService.queryGoodsList(request);
     }
 
@@ -35,7 +35,7 @@ public class GoodsClientController {
      * 商品修改
      */
     @RequestMapping(value = "/modifyGoods", method = RequestMethod.POST)
-    public Response<String> modifyGoods(@RequestBody GoodsRequest request) {
+    public Response<String> modifyGoods(@RequestBody GoodsDTO request) {
         return goodsClientService.modifyGoods(request);
     }
 

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
+import quick.pager.shop.feign.dto.ClassificationDTO;
 import quick.pager.shop.feign.fallback.GoodsClientFallbackFactory;
-import quick.pager.shop.feign.request.ClassificationRequest;
-import quick.pager.shop.feign.request.GoodsRequest;
+import quick.pager.shop.feign.dto.GoodsDTO;
 import quick.pager.shop.feign.response.GoodsResponse;
 import quick.pager.shop.model.goods.Goods;
 
@@ -27,13 +27,13 @@ public interface GoodsClient {
      * 商品列表
      */
     @RequestMapping(value = "/queryGoodsList", method = RequestMethod.POST)
-    Response<List<Goods>> queryGoodsList(@RequestBody GoodsRequest request);
+    Response<List<Goods>> queryGoodsList(@RequestBody GoodsDTO request);
 
     /**
      * 商品修改
      */
     @RequestMapping(value = "/modifyGoods", method = RequestMethod.POST)
-    Response<String> modifyGoods(@RequestBody GoodsRequest request);
+    Response<String> modifyGoods(@RequestBody GoodsDTO request);
 
     /**
      * 查看单个商品详情
@@ -55,7 +55,7 @@ public interface GoodsClient {
      * 商品分类修改
      */
     @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
-    Response modifyGoodsClass(@RequestBody ClassificationRequest request);
+    Response modifyGoodsClass(@RequestBody ClassificationDTO dto);
 
     @RequestMapping(value = "/goods/queryBuyerOrderGoods/{buyerOrderCartId}", method = RequestMethod.POST)
     Response<List<GoodsResponse>> queryBuyerOrderGoods(@PathVariable("buyerOrderCartId") Long buyerOrderCartId);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.dto.SmsDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
@@ -44,7 +44,7 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
     private MqService mqService;
 
     @Override
-    public Response<LoginOrSubscribeResponse> doService(DTO dto) {
+    public Response<LoginOrSubscribeResponse> doService(BaseDTO dto) {
 
         UserSubscribeDTO subscribeDTO = (UserSubscribeDTO) dto;
 

@@ -2,11 +2,11 @@ package quick.pager.shop.manage.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.ManageDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SystemConfigDTO extends DTO {
+public class SystemConfigDTO extends ManageDTO {
     private static final long serialVersionUID = -5469712897215941464L;
 
 

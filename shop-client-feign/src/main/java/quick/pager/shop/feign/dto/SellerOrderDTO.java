@@ -1,11 +1,11 @@
-package quick.pager.shop.feign.request;
+package quick.pager.shop.feign.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.request.ManageRequest;
+import quick.pager.common.dto.ManageDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SellerOrderRequest extends ManageRequest {
+public class SellerOrderDTO extends ManageDTO {
     private static final long serialVersionUID = 2370158929485767003L;
 }

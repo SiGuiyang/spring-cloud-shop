@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.activity.mapper.BannerMapper;
@@ -26,7 +26,7 @@ public class BannerClientService implements IService {
     private BannerMapper bannerMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
 
         BannerDTO bannerDTO = (BannerDTO) dto;
         Response response = new Response();

@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.manage.dto.AuthorizationDTO;
@@ -26,7 +26,7 @@ public class PermissionService implements IService {
     private RolePermissionMapper rolePermissionMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
 
         AuthorizationDTO authorizationDTO = (AuthorizationDTO) dto;
 

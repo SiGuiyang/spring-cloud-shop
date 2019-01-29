@@ -2,7 +2,7 @@
 spring:
   cloud:
     consul:
-      host: 192.168.199.183
+      host: 172.16.11.118
       port: 8500
       discovery:
         tags: author=pager
@@ -15,6 +15,6 @@ spring:
 
 turbine:
   combine-host-port: true
-  app-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user
+  app-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user,shop-seller
   aggregator:
-    cluster-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user
+    cluster-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user,shop-seller

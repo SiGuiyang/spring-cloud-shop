@@ -11,7 +11,6 @@ import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.user.dto.AddressDTO;
 import quick.pager.shop.user.response.AreaResponse;
-import quick.pager.shop.user.request.AddressRequest;
 import quick.pager.shop.user.service.AreaService;
 import quick.pager.shop.user.service.UserAddressService;
 
@@ -41,17 +40,7 @@ public class UserAddressController {
 
     @ApiOperation("地址修改")
     @PostMapping("/modify/address")
-    public Response modifyAddress(AddressRequest request) {
-        AddressDTO dto = new AddressDTO();
-        dto.setEvent(request.getEvent());
-
-        dto.setUserId(request.getUserId());
-        dto.setArea(request.getArea());
-        dto.setDefaultAddress(request.getDefaultAddress());
-        dto.setDetailAddress(request.getDetailAddress());
-        dto.setPhone(request.getPhone());
-        dto.setLabel(request.getLabel());
-        dto.setUsername(request.getUsername());
+    public Response modifyAddress(AddressDTO dto) {
 
         return userAddressService.doService(dto);
     }

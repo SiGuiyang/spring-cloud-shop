@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.activity"})
+@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.activity", "quick.pager.shop.feign.fallback"})
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"quick.pager.shop.feign"})
 @EnableCircuitBreaker
 @MapperScan(basePackages = "quick.pager.shop.activity.mapper")
 public class ActivityApplication {

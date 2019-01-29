@@ -1,27 +1,14 @@
 package quick.pager.shop.user.dto;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.AppDTO;
+import quick.pager.common.dto.BaseDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AddressDTO extends DTO {
+public class AddressDTO extends AppDTO {
     private static final long serialVersionUID = -7357193842467214331L;
-
-    private Long userId;
-    /**
-     * list : 地址列表<br />
-     * modify : 修改地址<br />
-     * 如果为空，则接口默认查询是列表
-     */
-    private String event;
-
-    /**
-     * 用户手机号码
-     */
-    private String phone;
     /**
      * 收货人姓名
      */

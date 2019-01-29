@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.feign.request.OrderRequest;
-import quick.pager.shop.feign.request.SellerOrderRequest;
+import quick.pager.shop.feign.dto.OrderDTO;
+import quick.pager.shop.feign.dto.SellerOrderDTO;
 import quick.pager.shop.order.service.client.OrderClientService;
 
 /**
@@ -28,9 +28,9 @@ public class OrderClientController {
      * 订单列表
      */
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public Response orders(@RequestBody OrderRequest request) {
+    public Response orders(@RequestBody OrderDTO dto) {
 
-        return orderClientService.userOrder(request);
+        return orderClientService.userOrder(dto);
     }
 
 
@@ -46,7 +46,7 @@ public class OrderClientController {
      * 商户订单列表
      */
     @RequestMapping(value = "/sellerOrders", method = RequestMethod.POST)
-    public Response sellerOrders(@RequestBody SellerOrderRequest request) {
+    public Response sellerOrders(@RequestBody SellerOrderDTO dto) {
         return null;
     }
 

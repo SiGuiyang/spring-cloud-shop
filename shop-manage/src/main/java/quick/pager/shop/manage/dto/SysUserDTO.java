@@ -3,11 +3,11 @@ package quick.pager.shop.manage.dto;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.ManageDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysUserDTO extends DTO {
+public class SysUserDTO extends ManageDTO {
     private static final long serialVersionUID = 2802879969759895845L;
 
     private String sysName;
@@ -19,5 +19,7 @@ public class SysUserDTO extends DTO {
     private List<Long> roleIds;
 
     private String avatar;
+
+    private String loginCode;
 
 }

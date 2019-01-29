@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.OrderClient;
-import quick.pager.shop.feign.request.OrderRequest;
-import quick.pager.shop.feign.request.SellerOrderRequest;
+import quick.pager.shop.feign.dto.OrderDTO;
+import quick.pager.shop.feign.dto.SellerOrderDTO;
 
 @Slf4j
 @Component
@@ -17,7 +17,7 @@ public class OrderClientFallbackFactory implements FallbackFactory<OrderClient> 
         log.error("OrderClient 进入熔断错误异常信息 msg = {}", cause.getMessage());
         return new OrderClient() {
             @Override
-            public Response orders(OrderRequest request) {
+            public Response orders(OrderDTO request) {
                 log.error("进入熔断措施 OrderClient.orders");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
@@ -29,7 +29,7 @@ public class OrderClientFallbackFactory implements FallbackFactory<OrderClient> 
             }
 
             @Override
-            public Response sellerOrders(SellerOrderRequest request) {
+            public Response sellerOrders(SellerOrderDTO request) {
                 log.error("进入熔断措施 OrderClient.sellerOrders");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }

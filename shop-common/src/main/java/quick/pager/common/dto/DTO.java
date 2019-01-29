@@ -5,18 +5,23 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class DTO implements Serializable {
+class DTO implements Serializable {
 
     private static final long serialVersionUID = -1027750679708024114L;
 
+    /**
+     * 服务主键Id
+     */
     private Long id;
 
+    /**
+     * 操作类型事件
+     */
     private String event;
 
-    private Integer pageSize;
-
-    private Integer page;
-
+    /**
+     * 启用标志
+     */
     private Boolean deleteStatus;
     /**
      * 操作人

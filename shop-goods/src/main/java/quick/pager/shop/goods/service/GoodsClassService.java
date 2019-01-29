@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.RedisKeys;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.common.service.RedisService;
@@ -28,7 +28,7 @@ public class GoodsClassService implements IService<List<GoodsClass>> {
     private RedisService redisService;
 
     @Override
-    public Response<List<GoodsClass>> doService(DTO dto) {
+    public Response<List<GoodsClass>> doService(BaseDTO dto) {
 
         ClassificationDTO classificationDTO = (ClassificationDTO) dto;
 

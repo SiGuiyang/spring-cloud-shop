@@ -4,11 +4,11 @@ package quick.pager.shop.feign.dto;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserInfoDTO extends DTO {
+public class UserInfoDTO extends BaseDTO {
     private static final long serialVersionUID = -2189550686183346833L;
 
     /**

@@ -1,5 +1,6 @@
 package quick.pager.common.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,9 +9,9 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SmsDTO extends DTO {
+public class SmsDTO extends BaseDTO {
     private static final long serialVersionUID = 6004420887746924633L;
-
+    @ApiModelProperty(value = "手机号码", required = true)
     private String phone;
 
     private String content;

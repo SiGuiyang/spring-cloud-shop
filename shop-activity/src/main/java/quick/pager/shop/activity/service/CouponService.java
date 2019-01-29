@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.activity.mapper.DiscountCouponMapper;
@@ -26,7 +26,7 @@ public class CouponService implements IService<List<CouponResponse>> {
     private DiscountCouponMapper discountCouponMapper;
 
     @Override
-    public Response<List<CouponResponse>> doService(DTO dto) {
+    public Response<List<CouponResponse>> doService(BaseDTO dto) {
 
 
         Integer page = (dto.getPage() - 1) * dto.getPageSize();

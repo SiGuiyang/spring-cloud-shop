@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.OrderClient;
-import quick.pager.shop.feign.request.OrderRequest;
+import quick.pager.shop.feign.dto.OrderDTO;
 
 /**
  * 用户订单管理
@@ -27,7 +27,7 @@ public class UserOrderManageController {
 
     @ApiOperation("用户订单列表")
     @PostMapping("/order/user")
-    public Response order(OrderRequest request) {
+    public Response order(OrderDTO request) {
         return orderClient.orders(request);
     }
 

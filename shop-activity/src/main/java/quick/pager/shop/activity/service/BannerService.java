@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.RedisKeys;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.common.service.RedisService;
@@ -26,7 +26,7 @@ public class BannerService implements IService<List<Banner>> {
     private RedisService redisService;
 
     @Override
-    public Response<List<Banner>> doService(DTO dto) {
+    public Response<List<Banner>> doService(BaseDTO dto) {
 
         BannerDTO bannerDTO = (BannerDTO) dto;
         String key = RedisKeys.ActivityKeys.SHOP_BANNER_LIST;

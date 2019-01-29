@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.ActivityClient;
-import quick.pager.shop.feign.request.CouponRequest;
-import quick.pager.shop.feign.request.CouponTemplateRequest;
+import quick.pager.shop.feign.dto.CouponDTO;
+import quick.pager.shop.feign.dto.CouponTemplateDTO;
 
 @Api(description = "优惠券")
 @RestController
@@ -31,20 +31,20 @@ public class CouponController {
     @HystrixCommand
     @ApiOperation("优惠券模板列表")
     @PostMapping("/activity/coupon/template")
-    public Response template(CouponTemplateRequest request) {
-        return activityClient.template(request);
+    public Response template(CouponTemplateDTO dto) {
+        return activityClient.template(dto);
     }
 
     @ApiOperation("优惠券模板新增或删除")
     @PostMapping("/activity/coupon/template/modify")
-    public Response modifyTemplate(CouponTemplateRequest request) {
-        return activityClient.modifyTemplate(request);
+    public Response modifyTemplate(CouponTemplateDTO dto) {
+        return activityClient.modifyTemplate(dto);
     }
 
     @HystrixCommand
     @ApiOperation("用户优惠券列表")
     @PostMapping("/activity/coupon/list")
-    public Response coupons(CouponRequest request) {
-        return activityClient.coupons(request);
+    public Response coupons(CouponDTO dto) {
+        return activityClient.coupons(dto);
     }
 }

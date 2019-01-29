@@ -11,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.constants.ResponseStatus;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.manage.dto.RoleDTO;
 import quick.pager.shop.manage.mapper.RoleMapper;
 import quick.pager.shop.manage.mapper.RolePermissionMapper;
-import quick.pager.shop.model.manage.Permission;
 import quick.pager.shop.model.manage.Role;
 import quick.pager.shop.model.manage.RolePermission;
 
@@ -36,7 +35,7 @@ public class RoleService implements IService {
     private RolePermissionMapper rolePermissionMapper;
 
     @Override
-    public Response doService(DTO dto) {
+    public Response doService(BaseDTO dto) {
         RoleDTO roleDTO = (RoleDTO) dto;
         Response response = null;
         switch (roleDTO.getEvent()) {

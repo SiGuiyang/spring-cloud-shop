@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.feign.client.ActivityClient;
-import quick.pager.shop.feign.request.BannerRequest;
+import quick.pager.shop.feign.dto.BannerDTO;
 
 /**
  * banner 管理
@@ -26,14 +26,14 @@ public class BannerManageController {
     @HystrixCommand
     @ApiOperation("banner 列表")
     @PostMapping("/activity/banner/list")
-    public Response list(BannerRequest request) {
-        return activityClient.fetch(request);
+    public Response list(BannerDTO dto) {
+        return activityClient.fetch(dto);
     }
 
     @ApiOperation("banner 新增|修改|")
     @PostMapping("/activity/banner/modify")
-    public Response modify(BannerRequest request) {
-        return activityClient.modify(request);
+    public Response modify(BannerDTO dto) {
+        return activityClient.modify(dto);
     }
 
 }

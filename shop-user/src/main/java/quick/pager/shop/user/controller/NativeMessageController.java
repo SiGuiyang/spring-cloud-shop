@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
-import quick.pager.shop.user.request.MessageRequest;
+import quick.pager.shop.user.dto.StationMessageDTO;
 
 /**
  * 站内消息
@@ -30,7 +30,7 @@ public class NativeMessageController {
 
     @PostMapping("/message/modify")
     @ApiOperation("站内消息操作 删除 已读")
-    public Response modifyMessage(MessageRequest request) {
+    public Response modifyMessage(StationMessageDTO dto) {
         return null;
     }
 }

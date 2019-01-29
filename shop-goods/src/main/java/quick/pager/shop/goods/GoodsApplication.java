@@ -8,13 +8,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.goods"})
+@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.goods","quick.pager.shop.feign.fallback"})
 @EnableDiscoveryClient
+@EnableFeignClients("quick.pager.shop.feign")
 @EnableCircuitBreaker
 @MapperScan(basePackages = "quick.pager.shop.goods.mapper")
 public class GoodsApplication {

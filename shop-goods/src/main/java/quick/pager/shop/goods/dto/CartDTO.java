@@ -3,16 +3,12 @@ package quick.pager.shop.goods.dto;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.dto.AppDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CartDTO extends DTO {
+public class CartDTO extends AppDTO {
     private static final long serialVersionUID = -6591856362210499785L;
-    /**
-     * 用户Id
-     */
-    private Long userId;
 
     /**
      * 商品id集合

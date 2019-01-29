@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.common.constants.Constants;
 import quick.pager.common.response.Response;
 import quick.pager.shop.goods.dto.CartDTO;
-import quick.pager.shop.goods.request.CartRequest;
 import quick.pager.shop.goods.service.CartListService;
 import quick.pager.shop.goods.service.CartModifyService;
 
@@ -49,11 +47,7 @@ public class CartController {
      */
     @ApiOperation("购物车商品的添加与删除")
     @RequestMapping(value = "/cart/modify", method = RequestMethod.POST)
-    public Response addCart(CartRequest request) {
-        CartDTO dto = new CartDTO();
-        dto.setUserId(request.getUserId());
-        dto.setGoodsIds(request.getGoodsIds());
-        dto.setEvent(request.getEvent());
+    public Response addCart(CartDTO dto) {
 
         return cartModifyService.doService(dto);
     }

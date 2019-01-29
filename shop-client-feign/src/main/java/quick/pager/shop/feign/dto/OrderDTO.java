@@ -2,12 +2,12 @@ package quick.pager.shop.feign.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.common.dto.DTO;
+import quick.pager.common.request.ManageRequest;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class OrderDTO extends DTO {
-    private static final long serialVersionUID = 4066990868093397317L;
+public class OrderDTO extends ManageRequest {
+    private static final long serialVersionUID = 3403409533500804139L;
 
     private String phone;
 
@@ -17,7 +17,4 @@ public class OrderDTO extends DTO {
 
     private Integer orderType;
 
-    private String beginTime;
-
-    private String endTime;
 }
