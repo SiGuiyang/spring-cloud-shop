@@ -1,0 +1,21 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: shop-risk
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,hystrix.stream
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:quick/pager/shop/risk/mapper/*.xml
+  type-aliases-package: quick.pager.shop.model
+

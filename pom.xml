@@ -146,6 +146,7 @@
         <module>shop-manage</module>
         <module>shop-model</module>
         <module>shop-order</module>
+        <module>shop-risk</module>
         <module>shop-server</module>
         <module>shop-seller</module>
         <module>shop-settlement</module>
