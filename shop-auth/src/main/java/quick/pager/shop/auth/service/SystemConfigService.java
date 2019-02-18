@@ -1,4 +1,4 @@
-package quick.pager.shop.auth.service.system;
+package quick.pager.shop.auth.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

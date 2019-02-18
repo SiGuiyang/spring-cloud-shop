@@ -1,4 +1,4 @@
-package quick.pager.shop.auth.service.system;
+package quick.pager.shop.auth.service;
 
 import java.util.List;
 import java.util.Map;

@@ -3,6 +3,7 @@ package quick.pager.shop.auth;
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import quick.pager.common.constants.SysConfigKeys;
 import quick.pager.common.utils.SysConfigMap;
+import quick.pager.shop.auth.service.WhiteListService;
 
 /**
  * @author siguiyang
@@ -39,6 +41,9 @@ public class AuthApplication implements CommandLineRunner, WebMvcConfigurer {
     @Value("${qiniu.bucket}")
     private String qiniuBucket;
 
+    @Autowired
+    private WhiteListService whiteListService;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -47,6 +52,8 @@ public class AuthApplication implements CommandLineRunner, WebMvcConfigurer {
         SysConfigMap.put(SysConfigKeys.QINIU_ACCESS_KEY, qiniuAccessKey);
         SysConfigMap.put(SysConfigKeys.QINIU_SECRET_KEY, qiniuSecretKey);
         SysConfigMap.put(SysConfigKeys.QINIU_BUCKET, qiniuBucket);
+
+        whiteListService.init();
 
         log.info("加载JVM缓存结束。。。");
     }

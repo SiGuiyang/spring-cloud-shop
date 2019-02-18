@@ -1,4 +1,4 @@
-package quick.pager.shop.auth.service.system;
+package quick.pager.shop.auth.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.google.common.collect.Lists;

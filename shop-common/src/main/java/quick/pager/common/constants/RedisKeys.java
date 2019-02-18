@@ -46,5 +46,11 @@ public interface RedisKeys {
         String SHOP_GOODS_CLASS = "pager_goods_class";
     }
 
+    // 通用模块
+    interface CommonKeys {
+        // 接口访问白名单地址
+        String REQUEST_URL_WHITE_LIST = "request_url_white_list:";
+    }
+
 
 }

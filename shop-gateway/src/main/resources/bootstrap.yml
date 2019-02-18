@@ -17,18 +17,3 @@ management:
     web:
       exposure:
         include: refresh,health,info
-
-# 白名单访问资源地址
-white:
-  request-url:
-    permissions:
-      user-login: /user/login
-      user-logout: /user/logout
-      seller-login: /seller/login
-      seller-logout: /seller/logout
-      admin-login: /admin/login
-      admin-info: /admin/system/adminInfo
-      admin-logout: /admin/logout
-      activity-banners: /activity/banner/list
-      goods-home: /goods/home
-      goods-classification: /goods/classification/list

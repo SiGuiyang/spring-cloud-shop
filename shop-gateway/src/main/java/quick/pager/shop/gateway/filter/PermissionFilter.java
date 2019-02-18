@@ -1,5 +1,7 @@
 package quick.pager.shop.gateway.filter;
 
+import com.alibaba.fastjson.JSON;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -11,9 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
+import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.service.RedisService;
-import quick.pager.shop.gateway.properties.PermissionProperties;
 import quick.pager.shop.gateway.utils.ResponseUtils;
 import reactor.core.publisher.Mono;
 
@@ -31,9 +33,6 @@ public class PermissionFilter implements GatewayFilter, Ordered {
     @Autowired
     private RedisService redisService;
 
-    @Autowired
-    private PermissionProperties permission;
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
@@ -45,9 +44,11 @@ public class PermissionFilter implements GatewayFilter, Ordered {
 
         String sysCode = params.getFirst("sysCode");
 
+        List<String> whiteLists = JSON.parseArray(redisService.get(RedisKeys.CommonKeys.REQUEST_URL_WHITE_LIST), String.class);
+
         // 校验URL是否有权限
         // 不在白名单，并且登陆状态，没有访问权限资源进入
-        if (!permission.getPermissions().containsValue(requestURI)
+        if (!whiteLists.contains(requestURI)
                 && !StringUtils.isEmpty(sysCode)
                 && !redisService.contains(sysCode, requestURI)) {
             log.info("您没有权限操作此功能。。。");

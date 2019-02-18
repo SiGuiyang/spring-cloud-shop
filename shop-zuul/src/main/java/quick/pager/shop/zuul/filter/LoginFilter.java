@@ -5,6 +5,7 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,10 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.util.UrlPathHelper;
+import quick.pager.common.constants.RedisKeys;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.RedisService;
-import quick.pager.shop.zuul.properties.PermissionProperties;
 
 /**
  * 登陆验证filter实现
@@ -35,8 +36,6 @@ import quick.pager.shop.zuul.properties.PermissionProperties;
 @Slf4j
 public class LoginFilter extends ZuulFilter {
 
-    @Autowired
-    private PermissionProperties permission;
     @Autowired
     private RedisService redisService;
 
@@ -60,8 +59,9 @@ public class LoginFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
         String requestURI = request.getRequestURI();
+
         // 如果请求的资源路径在白名单内，则不走登陆的过滤器
-        return !permission.getPermissions().containsValue(requestURI);
+        return !isPermission(requestURI);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class LoginFilter extends ZuulFilter {
             String sysCode = request.getParameter("sysCode");
 
             // 不在白名单，并且登陆状态，没有访问权限资源进入
-            if (!permission.getPermissions().containsValue(requestURI)
+            if (!isPermission(requestURI)
                     && !StringUtils.isEmpty(sysCode)
                     && !redisService.contains(sysCode, requestURI)) {
                 log.info("您没有权限操作此功能。。。");
@@ -128,5 +128,10 @@ public class LoginFilter extends ZuulFilter {
         noPermission.setCode(code);
         noPermission.setMsg(responseMsg);
         context.setResponseBody(JSON.toJSONString(noPermission));
+    }
+
+    private boolean isPermission(String requestURI) {
+        List<String> whiteLists = JSON.parseArray(redisService.get(RedisKeys.CommonKeys.REQUEST_URL_WHITE_LIST), String.class);
+        return whiteLists.contains(requestURI);
     }
 }

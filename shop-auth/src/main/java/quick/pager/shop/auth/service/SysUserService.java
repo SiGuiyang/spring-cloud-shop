@@ -1,4 +1,4 @@
-package quick.pager.shop.auth.service.system;
+package quick.pager.shop.auth.service;
 
 import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSON;
