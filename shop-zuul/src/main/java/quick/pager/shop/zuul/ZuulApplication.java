@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.zuul"})
+@SpringBootApplication(scanBasePackages = {"quick.pager"})
 @EnableZuulProxy
 @EnableDiscoveryClient
 public class ZuulApplication {

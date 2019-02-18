@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.auth.mapper.PermissionMapper">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.manage.Permission">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <id column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="permission" jdbcType="VARCHAR" property="permission"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="permission_type" jdbcType="INTEGER" property="permissionType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, parent_id, permission, name, permission_type, create_time, create_user, update_time, delete_status
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.manage.Permission">
+        insert into t_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="permission != null">
+                permission,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="permissionType != null">
+                permission_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deleteStatus != null">
+                delete_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="permission != null">
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionType != null">
+                #{permissionType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                #{deleteStatus,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.manage.Permission">
+        update t_permission
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="permission != null">
+                permission = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionType != null">
+                permission_type = #{permissionType,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteStatus != null">
+                delete_status = #{deleteStatus,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectTopMenu" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        where parent_id is null
+    </select>
+
+    <select id="selectSubMenu" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        where parent_id = #{parentId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectPermissions" resultMap="BaseResultMap">
+        select
+        tp.id,
+        tp.permission,
+        tp.name,
+        tp.permission_type,
+        tp.create_user
+        from
+        t_permission tp,
+        t_role_permission trp,
+        t_sys_role tsr,
+        t_role tr,
+        t_sys_user tsu
+        where
+        tp.id = trp.permission_id
+        and trp.role_id = tr.id
+        and tr.id = tsr.role_id
+        and tsr.sys_user_id = tsu.id
+        and tsu.id = #{sysUserId,jdbcType=BIGINT}
+        and tp.delete_status = false
+        and trp.delete_status = false
+        and tsr.delete_status = false
+        and tr.delete_status = false
+        and tsu.delete_status = false
+    </select>
+
+
+</mapper>

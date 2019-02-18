@@ -44,20 +44,29 @@ public class SystemConfigService implements IService {
                 modifySystemConfig(systemConfigDTO);
                 break;
             case Constants.Event.LIST:
-
-                PageHelper.startPage(systemConfigDTO.getPage(), systemConfigDTO.getPageSize());
-
-                List<SystemConfig> systemConfigs = systemConfigMapper.selectSystemConfig(systemConfigDTO.getConfigName(),
-                        systemConfigDTO.getModule());
-                PageInfo<SystemConfig> pageInfo = new PageInfo<>(systemConfigs);
-
-                response.setData(pageInfo.getList());
-                response.setTotal(pageInfo.getTotal());
-
+                response = getSystemConfigList(systemConfigDTO);
                 break;
             default:
                 response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
+
+        return response;
+    }
+
+    /**
+     * 配置项列表
+     */
+    private Response getSystemConfigList(SystemConfigDTO systemConfigDTO) {
+
+        PageHelper.startPage(systemConfigDTO.getPage(), systemConfigDTO.getPageSize());
+
+        List<SystemConfig> systemConfigs = systemConfigMapper.selectSystemConfig(systemConfigDTO.getConfigName(),
+                systemConfigDTO.getModule());
+        PageInfo<SystemConfig> pageInfo = new PageInfo<>(systemConfigs);
+
+        Response<List<SystemConfig>> response = new Response<>();
+        response.setData(pageInfo.getList());
+        response.setTotal(pageInfo.getTotal());
 
         return response;
     }

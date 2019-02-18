@@ -14,16 +14,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.SmsDTO;
+import quick.pager.common.handler.AbstractHandler;
+import quick.pager.common.response.Response;
 import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.common.SmsTemplate;
 import quick.pager.shop.model.user.User;
 import quick.pager.shop.user.UserApplication;
+import quick.pager.shop.user.handler.TestHandler01;
+import quick.pager.shop.user.handler.TestHandler02;
 import quick.pager.shop.user.mapper.SmsTemplateMapper;
 import quick.pager.shop.user.mq.MqService;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(classes = UserApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = UserApplication.class)
 public class UserApplicationTests {
 
     @Autowired
@@ -103,6 +108,18 @@ public class UserApplicationTests {
             builder.append(me.getValue());
             builder.append("');");
             System.out.println(builder.toString());
+        }
+    }
+
+    @Test
+    public void testHandler() {
+        AbstractHandler instance = AbstractHandler.getInstance(TestHandler01.class);
+        instance.doHandler("01");
+
+        AbstractHandler instance02 = AbstractHandler.getInstance(TestHandler02.class);
+        Response response = instance02.doHandler("02");
+        if (response.getCode() == ResponseStatus.Code.SUCCESS) {
+            System.out.println(1);
         }
     }
 

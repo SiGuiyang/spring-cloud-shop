@@ -137,6 +137,7 @@
     </build>
     <modules>
         <module>shop-activity</module>
+        <module>shop-auth</module>
         <module>shop-client-feign</module>
         <module>shop-common</module>
         <module>shop-config</module>

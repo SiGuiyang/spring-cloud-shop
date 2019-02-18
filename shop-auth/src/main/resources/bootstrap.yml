@@ -1,0 +1,20 @@
+server:
+  port: 8094
+
+spring:
+  application:
+    name: shop-manage
+
+feign:
+  hystrix:
+    enabled: true
+
+mybatis:
+  mapper-locations: classpath*:quick/pager/shop/manage/mapper/*.xml
+  type-aliases-package: quick.pager.shop.model
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,hystrix.stream

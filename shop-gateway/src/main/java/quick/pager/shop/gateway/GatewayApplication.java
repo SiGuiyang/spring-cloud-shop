@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import quick.pager.shop.gateway.filter.LoginFilter;
 import quick.pager.shop.gateway.filter.PermissionFilter;
 
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.gateway"})
+@SpringBootApplication(scanBasePackages = {"quick.pager"})
 @EnableDiscoveryClient
 public class GatewayApplication {
 

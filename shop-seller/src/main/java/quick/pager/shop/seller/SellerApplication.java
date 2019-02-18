@@ -14,7 +14,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.seller"})
+@SpringBootApplication(scanBasePackages = {"quick.pager"})
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableAspectJAutoProxy(proxyTargetClass = true)

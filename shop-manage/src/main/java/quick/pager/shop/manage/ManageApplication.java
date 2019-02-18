@@ -20,10 +20,10 @@ import quick.pager.common.utils.SysConfigMap;
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.manage","quick.pager.shop.feign.fallback"})
+@SpringBootApplication(scanBasePackages = {"quick.pager"})
 @MapperScan(basePackages = "quick.pager.shop.manage.mapper")
 @EnableDiscoveryClient
-@EnableFeignClients({"quick.pager.shop.feign"})
+@EnableFeignClients
 @EnableCircuitBreaker
 @Slf4j
 public class ManageApplication implements CommandLineRunner, WebMvcConfigurer {

@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author siguiyang
  */
-@SpringBootApplication(scanBasePackages = {"quick.pager.common", "quick.pager.shop.settlement","quick.pager.shop.feign.fallback"})
+@SpringBootApplication(scanBasePackages = {"quick.pager"})
 @EnableDiscoveryClient
-@EnableFeignClients("quick.pager.shop.feign")
+@EnableFeignClients
 @EnableCircuitBreaker
 public class SettlementApplication {
 

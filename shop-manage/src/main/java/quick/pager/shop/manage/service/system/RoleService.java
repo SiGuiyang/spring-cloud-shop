@@ -94,8 +94,8 @@ public class RoleService implements IService {
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);
         if (Constants.Event.ADD.equals(dto.getEvent())) { // 新增
-            role.setCreateTime(new Date());
             role.setDeleteStatus(false);
+            role.setCreateTime(new Date());
             roleMapper.insertSelective(role);
         } else {
             roleMapper.updateByPrimaryKeySelective(role);
