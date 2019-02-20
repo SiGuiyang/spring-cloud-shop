@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .forCodeGeneration(true)
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("quick.pager.shop.manage.controller"))
+                .apis(RequestHandlerSelectors.basePackage("quick.pager.shop.auth.controller"))
                 .paths(any())
                 .build()
                 .apiInfo(apiInfo());

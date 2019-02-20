@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.RabbitMqKeys;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.BaseDTO;
 import quick.pager.common.dto.SmsDTO;
+import quick.pager.common.mq.MqMessage;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.IService;
 import quick.pager.shop.model.common.SmsTemplate;
@@ -60,7 +62,7 @@ public class UserForgetPasswordService implements IService {
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone(user.getPhone());
         smsdto.setContent(content);
-        mqService.sender(Constants.RabbitQueue.SEND_SMS, smsdto);
+        mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
 
         return new Response<>();
     }

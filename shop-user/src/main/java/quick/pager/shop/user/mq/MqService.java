@@ -7,6 +7,8 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import quick.pager.common.mq.MqMessage;
+import quick.pager.common.utils.DateUtils;
 
 /**
  * Mq 发送服务
@@ -28,13 +30,15 @@ public class MqService implements RabbitTemplate.ConfirmCallback, RabbitTemplate
 
     /**
      * 发送MQ服务
-     *
-     * @param queueName 队列名称
-     * @param data      数据源
      */
-    public void sender(String queueName, Object data) {
+    public void sender(MqMessage mqMessage) {
         CorrelationData correlationData = new CorrelationData(RandomUtil.randomUUID());
-        rabbitTemplate.convertAndSend("", queueName, data, correlationData);
+        rabbitTemplate.convertAndSend(mqMessage.getExchange(), mqMessage.getQueueName(), mqMessage.getPayLoad(), message -> {
+            message.getMessageProperties().setTimestamp(DateUtils.now());
+            message.getMessageProperties().setMessageId(RandomUtil.randomUUID());
+            message.getMessageProperties().setCorrelationId(correlationData.getId());
+            return message;
+        }, correlationData);
     }
 
     @Override
@@ -47,7 +51,7 @@ public class MqService implements RabbitTemplate.ConfirmCallback, RabbitTemplate
     }
 
     @Override
-    public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
+    public void returnedMessage(@Nullable Message message, int replyCode, @Nullable String replyText, @Nullable String exchange, @Nullable String routingKey) {
         log.info("消息异常回调 replyCode = {}, replyText = {}, exchange = {}, routingKey = {}", replyCode, replyText, exchange, routingKey);
     }
 }

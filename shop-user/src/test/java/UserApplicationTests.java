@@ -14,9 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import quick.pager.common.constants.Constants;
+import quick.pager.common.constants.RabbitMqKeys;
 import quick.pager.common.constants.ResponseStatus;
 import quick.pager.common.dto.SmsDTO;
 import quick.pager.common.handler.AbstractHandler;
+import quick.pager.common.mq.MqMessage;
 import quick.pager.common.response.Response;
 import quick.pager.common.service.RedisService;
 import quick.pager.shop.model.common.SmsTemplate;
@@ -69,7 +71,9 @@ public class UserApplicationTests {
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone("13818471341");
         smsdto.setContent(content);
-        mqService.sender(Constants.RabbitQueue.SEND_SMS, smsdto);
+        mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
+
+        mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.TOPIC_TEST).payLoad("Test.Error").build());
         System.in.read();
     }
 
@@ -82,6 +86,7 @@ public class UserApplicationTests {
         pro = new Properties();
         pro.load(resource);
     }
+
     @Test
     public void testProperties() {
         test("shop-user");
@@ -95,7 +100,7 @@ public class UserApplicationTests {
 
 
     private void test(String serviceId) {
-        for (Map.Entry<Object, Object> me: pro.entrySet()) {
+        for (Map.Entry<Object, Object> me : pro.entrySet()) {
             StringBuilder builder = new StringBuilder("insert into `pager_config`.`t_config` (`label`, `profile`, `service_id`, `app_key`, `app_value`) values ('master', 'dev',");
             builder.append("'");
             builder.append(serviceId);

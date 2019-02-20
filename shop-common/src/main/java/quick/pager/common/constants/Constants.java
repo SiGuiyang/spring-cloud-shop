@@ -45,14 +45,6 @@ public interface Constants {
     }
 
     /**
-     * RabbitMq 队列的key
-     */
-    interface RabbitQueue {
-        // 短信发送队列
-        String SEND_SMS = "sendSMS";
-    }
-
-    /**
      * 优惠券类型
      */
     enum CouponType {
