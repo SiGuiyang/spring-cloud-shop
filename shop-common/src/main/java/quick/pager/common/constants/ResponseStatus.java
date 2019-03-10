@@ -57,5 +57,7 @@ public interface ResponseStatus {
 
     String SERVICE_NOT_FOUND = "未找到服务地址";
 
+    String PUBLISH_COUPON_PHONE_IS_BLANK = "发送优惠券手机号码为空";
+
 
 }

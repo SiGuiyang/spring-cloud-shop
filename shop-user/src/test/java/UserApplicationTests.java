@@ -128,4 +128,9 @@ public class UserApplicationTests {
         }
     }
 
+    @Test
+    public void testBean(){
+
+    }
+
 }

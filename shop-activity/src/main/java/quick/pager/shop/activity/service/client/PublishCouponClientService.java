@@ -78,7 +78,9 @@ public class PublishCouponClientService implements IService {
                 reader.read(inputStream, 0);
 
                 if (CollectionUtils.isEmpty(phones)) {
-
+                    response.setCode(ResponseStatus.Code.FAIL_CODE);
+                    response.setMsg(ResponseStatus.PUBLISH_COUPON_PHONE_IS_BLANK);
+                    return response;
                 }
                 String[] phonesParam = new String[phones.size()];
                 // 取出正常的用户

@@ -8,11 +8,6 @@ spring:
         tags: author=pager
         healthCheckInterval: 15s
 
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
-
 turbine:
   combine-host-port: true
   app-config: shop-activity,shop-goods,shop-manage,shop-order,shop-settlement,shop-user,shop-seller

@@ -1,9 +1,0 @@
-server:
-  port: 8761
-
-spring:
-  profiles:
-    active: dev
-  application:
-    name: shop-server
-
