@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
+import quick.pager.common.service.RedisService;
 
 @Configuration
 public class ApplicationConfig {
@@ -58,6 +59,11 @@ public class ApplicationConfig {
         ShopRedisTemplate template = new ShopRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         return template;
+    }
+
+    @Bean
+    public RedisService redisService(ShopRedisTemplate shopRedisTemplate) {
+        return new RedisService(shopRedisTemplate);
     }
 
 

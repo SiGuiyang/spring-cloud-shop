@@ -3,13 +3,11 @@ package quick.pager.shop.gateway.filter;
 import com.alibaba.fastjson.JSON;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -26,15 +24,14 @@ import reactor.core.publisher.Mono;
  * @author siguiyang
  */
 @Slf4j
-@Component
 public class PermissionFilter implements GatewayFilter, Ordered {
 
 
-    @Autowired
-    private RedisService redisService;
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+        RedisService redisService = exchange.getApplicationContext().getBean(RedisService.class);
+
         ServerHttpRequest request = exchange.getRequest();
         String methodValue = request.getMethodValue();
         String requestURI = request.getPath().value();

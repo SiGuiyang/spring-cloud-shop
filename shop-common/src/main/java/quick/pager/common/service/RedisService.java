@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 import org.springframework.util.CollectionUtils;
@@ -15,11 +14,13 @@ import quick.pager.common.config.ShopRedisTemplate;
  *
  * @author siguiyang
  */
-@Component
 public class RedisService {
 
-    @Autowired
     private ShopRedisTemplate shopRedisTemplate;
+
+    public RedisService(ShopRedisTemplate shopRedisTemplate) {
+        this.shopRedisTemplate = shopRedisTemplate;
+    }
 
     /**
      * set

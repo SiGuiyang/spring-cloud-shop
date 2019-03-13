@@ -1,6 +1,5 @@
 package quick.pager.shop.gateway;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -19,16 +18,12 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
-
-    @Autowired
-    private PermissionFilter permissionFilter;
-
     @Bean
     public RouteLocator route(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("shop-activity", p -> p.path("/activity/**").uri("lb://shop-activity"))
                 .route("shop-goods", p -> p.path("/goods/**").uri("lb://shop-goods"))
-                .route("shop-manage", p -> p.path("/admin/**").uri("lb://shop-manage").filters(permissionFilter))
+                .route("shop-manage", p -> p.path("/admin/**").uri("lb://shop-manage").filters(new PermissionFilter()))
                 .route("shop-auth", p -> p.path("/auth/**").uri("lb://shop-auth"))
                 .route("shop-order", p -> p.path("/order/**").uri("lb://shop-order"))
                 .route("shop-settlement", p -> p.path("/settlement/**").uri("lb://shop-settlement"))
