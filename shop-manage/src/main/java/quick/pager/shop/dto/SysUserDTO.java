@@ -11,7 +11,7 @@ public class SysUserDTO extends ManageDTO {
 
     private String sysName;
 
-    private String sysCode;
+    private String username;
 
     private String password;
 

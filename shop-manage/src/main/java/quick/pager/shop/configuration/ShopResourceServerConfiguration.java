@@ -5,6 +5,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -13,6 +14,7 @@ import quick.pager.shop.response.Response;
 
 @Configuration
 @EnableResourceServer
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class ShopResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
@@ -44,7 +46,7 @@ public class ShopResourceServerConfiguration extends ResourceServerConfigurerAda
                     out.close();
                 })
                 .and()
-                .authorizeRequests().mvcMatchers("/actuator/**","/admin/system/**").permitAll()
+                .authorizeRequests().mvcMatchers("/actuator/**", "/admin/permit/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()

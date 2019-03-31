@@ -11,7 +11,7 @@ public class ManageDTO extends BaseDTO {
     /**
      * 系统登陆名
      */
-    private String sysCode;
+    private String username;
     /**
      * 系统操作人
      */

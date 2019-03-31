@@ -1,5 +1,7 @@
 package quick.pager.shop.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,5 +16,7 @@ public class SysUser extends BaseUser {
     private String avatar;
 
     private String createUser;
+
+    private List<String> roleNameLists = new ArrayList<>();
 
 }

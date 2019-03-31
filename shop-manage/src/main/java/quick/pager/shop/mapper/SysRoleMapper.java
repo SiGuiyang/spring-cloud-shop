@@ -1,5 +1,6 @@
 package quick.pager.shop.mapper;
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.SysRole;
 
@@ -18,5 +19,10 @@ public interface SysRoleMapper {
      * @param sysUserId t_sys_role id
      */
     SysRole selectSysRole(@Param("roleId") Long roleId, @Param("sysUserId") Long sysUserId);
+
+    /**
+     * 根据用户id查询角色
+     */
+    List<SysRole> selectBySysUserId( @Param("sysUserId") Long sysUserId);
 
 }

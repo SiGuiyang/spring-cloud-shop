@@ -8,7 +8,7 @@ import java.io.InputStream;
  */
 public class QiniuUpload {
 
-    private static final String URL = "http://pk6b0a7n8.bkt.clouddn.com/";
+    private static final String URL = "http://pp7x7b2mm.bkt.clouddn.com/";
 
     /**
      * 上传文件

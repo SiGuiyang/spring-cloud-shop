@@ -1,6 +1,5 @@
 package quick.pager.shop.service.system;
 
-import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import java.util.Date;
@@ -8,11 +7,14 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
+import quick.pager.shop.mapper.RoleMapper;
+import quick.pager.shop.model.Role;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
 import quick.pager.shop.dto.SysUserDTO;
@@ -20,6 +22,7 @@ import quick.pager.shop.mapper.SysRoleMapper;
 import quick.pager.shop.mapper.SysUserMapper;
 import quick.pager.shop.model.SysRole;
 import quick.pager.shop.model.SysUser;
+import quick.pager.shop.utils.PrincipalUtils;
 
 /**
  * 系统用户服务
@@ -34,6 +37,8 @@ public class SysUserService implements IService {
     private SysUserMapper sysUserMapper;
     @Autowired
     private SysRoleMapper sysRoleMapper;
+    @Autowired
+    private RoleMapper roleMapper;
 
     @Override
     public Response doService(BaseDTO dto) {
@@ -68,6 +73,16 @@ public class SysUserService implements IService {
 
         Response<List<SysUser>> response = new Response<>();
 
+        pageInfo.getList().forEach(sysUser -> {
+            List<SysRole> sysRoles = sysRoleMapper.selectBySysUserId(sysUser.getId());
+            sysRoles.forEach(sysRole -> {
+                Role role = roleMapper.selectByPrimaryKey(sysRole.getRoleId());
+                if (!ObjectUtils.isEmpty(role)) {
+                    sysUser.getRoleNameLists().add(role.getRoleName());
+                }
+            });
+        });
+
         response.setData(pageInfo.getList());
         response.setTotal(pageInfo.getTotal());
 
@@ -85,7 +100,8 @@ public class SysUserService implements IService {
         if (Constants.Event.MODIFY.equals(sysUserDTO.getEvent())) {
             sysUserMapper.updateByPrimaryKeySelective(sysUser);
         } else {
-            sysUser.setPassword(SecureUtil.md5(sysUser.getPassword()));
+            sysUser.setCreateUser(PrincipalUtils.getPrincipal().getName());
+            sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
             sysUser.setCreateTime(new Date());
             sysUserMapper.insertSelective(sysUser);
         }

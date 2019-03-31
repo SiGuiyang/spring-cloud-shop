@@ -2,36 +2,27 @@ package quick.pager.shop.controller.system;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.security.Principal;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.model.Role;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.AuthorizationDTO;
 import quick.pager.shop.dto.LoginDTO;
 import quick.pager.shop.dto.RoleDTO;
 import quick.pager.shop.dto.SysUserDTO;
 import quick.pager.shop.dto.SystemConfigDTO;
-import quick.pager.shop.service.system.LoginService;
 import quick.pager.shop.service.system.MenuService;
 import quick.pager.shop.service.system.PermissionService;
 import quick.pager.shop.service.system.RoleService;
-import quick.pager.shop.service.system.SysUserClientService;
 import quick.pager.shop.service.system.SysUserInfoService;
 import quick.pager.shop.service.system.SysUserService;
 import quick.pager.shop.service.system.SystemConfigService;
-import quick.pager.shop.model.SysUser;
 import quick.pager.shop.utils.PrincipalUtils;
 
 /**
@@ -45,8 +36,6 @@ import quick.pager.shop.utils.PrincipalUtils;
 public class SystemController {
 
     @Autowired
-    private LoginService loginService;
-    @Autowired
     private SysUserInfoService sysUserInfoService;
     @Autowired
     private SysUserService sysUserService;
@@ -58,19 +47,6 @@ public class SystemController {
     private MenuService menuService;
     @Autowired
     private PermissionService permissionService;
-    @Autowired
-    private SysUserClientService sysUserClientService;
-
-    @ApiOperation("登陆")
-    @PostMapping("/login")
-    public Response login(@RequestParam String username, @RequestParam String password) {
-
-        LoginDTO dto = new LoginDTO();
-        dto.setUsername(username);
-        dto.setPassword(password);
-
-        return loginService.doService(dto);
-    }
 
     @ApiOperation("系统登陆用户吧信息")
     @PostMapping("/system/adminInfo")
@@ -81,27 +57,15 @@ public class SystemController {
         return sysUserInfoService.doService(dto);
     }
 
-
-    @ApiOperation("获取系统用户")
-    @PostMapping("/system/sysUser")
-    public Response<SysUser> getSysUser(@RequestParam("username")String username) {
-        return sysUserClientService.querySysUserByUsername(username);
-    }
-
-
-    @PostMapping("/system/role/{sysUserId}")
-    public Response<List<Role>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId ) {
-        return sysUserClientService.getRolesBySysUserId(sysUserId);
-    }
-     /**
+    /**
      * 退出
      */
     @PostMapping("/logout")
     public Response logout() {
-        return null;
+        return new Response();
     }
 
-
+    @Secured("ROLE_ADMIN")
     @ApiOperation("系统用户列表")
     @PostMapping("/system/user")
     public Response systemUser(SysUserDTO dto) {

@@ -92,4 +92,11 @@
         false
     </select>
 
+    <select id="selectBySysUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_role
+        where sys_user_id = #{sysUserId,jdbcType=BIGINT} and delete_status = false
+    </select>
+
 </mapper>

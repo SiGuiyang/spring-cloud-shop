@@ -19,7 +19,7 @@ public interface AuthClient {
      *
      * @param username 用户名
      */
-    @RequestMapping(value = "/system/sysUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/permit/sysUser", method = RequestMethod.POST)
     Response<UserDTO> getSysUser(@RequestParam("username") String username);
 
     /**
@@ -27,7 +27,7 @@ public interface AuthClient {
      *
      * @param sysUserId 系统用户Id
      */
-    @RequestMapping(value = "/system/role/{sysUserId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/permit/role/{sysUserId}", method = RequestMethod.POST)
     Response<List<RoleDTO>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId);
 
     /**
