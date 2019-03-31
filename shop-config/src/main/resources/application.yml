@@ -7,7 +7,7 @@ spring:
         jdbc:
           sql: select app_key, app_value from t_config where service_id = ? and profile = ? and label = ?
   application:
-    name: shop-config
+    name: shop-configuration
 server:
   port: 8889
 

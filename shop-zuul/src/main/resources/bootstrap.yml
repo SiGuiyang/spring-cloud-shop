@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: shop-zuul
+  profiles:
+    active: dev
 ribbon:
   ReadTimeout: 100000  # 单位毫秒数
   SocketTimeout: 100000
@@ -13,6 +15,11 @@ zuul:
       path: /activity/**
       serviceId: shop-activity
       stripPrefix: false
+    shop-auth:
+      path: /oauth/**
+      serviceId: shop-auth
+      stripPrefix: false
+      sensitiveHeaders: "*"
     shop-goods:
       path: /goods/**
       serviceId: shop-goods
@@ -21,9 +28,18 @@ zuul:
       path: /admin/**
       serviceId: shop-manage
       stripPrefix: false
+      sensitiveHeaders: "*"
     shop-order:
       path: /order/**
       serviceId: shop-order
+      stripPrefix: false
+    shop-risk:
+      path: /risk/**
+      serviceId: shop-risk
+      stripPrefix: false
+    shop-seller:
+      path: /seller/**
+      serviceId: shop-seller
       stripPrefix: false
     shop-settlement:
       path: /settlement/**
@@ -31,10 +47,6 @@ zuul:
       stripPrefix: false
     shop-user:
       path: /user/**
-      serviceId: shop-user
-      stripPrefix: false
-    shop-user-seller:
-      path: /seller/**
       serviceId: shop-user
       stripPrefix: false
   host:

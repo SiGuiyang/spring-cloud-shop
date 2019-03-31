@@ -10,11 +10,11 @@ feign:
     enabled: true
 
 mybatis:
-  mapper-locations: classpath*:quick/pager/shop/manage/mapper/*.xml
+  mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model
 
 management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info,hystrix.stream
+        include: refresh,health,info

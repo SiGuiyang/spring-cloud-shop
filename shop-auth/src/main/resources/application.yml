@@ -1,0 +1,23 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: shop-auth
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      discovery:
+        instance-id: shop-auth
+        ip-address: 127.0.0.1
+        prefer-ip-address: true
+      host: 127.0.0.1
+      port: 8500
+  freemarker:
+    template-loader-path: classpath:/templates/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info

@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import quick.pager.shop.auth.AuthApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import quick.pager.shop.dto.UserDTO;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest(classes = AuthApplication.class)
@@ -32,6 +30,12 @@ public class ManageApplicationTests {
         appleList.add(apple3);
 
         System.out.println(appleList.stream().map(Apple::getName).collect(Collectors.toList()));
+    }
+
+
+    @Test
+    public void testPassword(){
+        System.out.println(new BCryptPasswordEncoder().encode("123456"));
     }
 }
 

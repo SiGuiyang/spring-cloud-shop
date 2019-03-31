@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pager 分布式电商系统</title>
+    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="css/toast.css"/>
+</head>
+
+<body>
+<div class="lowin">
+    <div class="lowin-brand">
+        <img src="images/kodinger.jpg" alt="logo">
+    </div>
+    <div class="lowin-wrapper">
+        <div class="lowin-box lowin-login">
+            <div class="lowin-box-inner">
+                <div>
+                    <p>今天天气不错哦！</p>
+                    <div class="lowin-group">
+                        <label>用户名：</label>
+                        <label>
+                            <input type="text" id="username" autocomplete="new-username" name="username"
+                                   class="lowin-input"/>
+                        </label>
+                    </div>
+                    <div class="lowin-group password-group">
+                        <label>密码：</label>
+                        <label>
+                            <input type="password" id="password" name="password" autocomplete="new-password"
+                                   class="lowin-input">
+                        </label>
+                    </div>
+                    <button id="login" class="lowin-btn login-btn">
+                        登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;陆
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/toast.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#login').click(function () {
+            const params = {}
+            params.username = $('#username').val();
+            params.password = $('#password').val();
+
+            $.ajax({
+                url: '/oauth/login',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify(params),
+                success: function (data) {
+                    console.log(data)
+                    window.location.href='https://www.baidu.com/'
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
