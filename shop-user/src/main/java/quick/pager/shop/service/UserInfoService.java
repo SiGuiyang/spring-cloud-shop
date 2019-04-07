@@ -4,13 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import quick.pager.shop.User;
+import quick.pager.shop.model.User;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.response.UserInfoResponse;
 import quick.pager.shop.dto.UserInfoDTO;
-import quick.pager.shop.UserInfo;
+import quick.pager.shop.model.UserInfo;
 import quick.pager.shop.mapper.UserInfoMapper;
 import quick.pager.shop.mapper.UserMapper;
 

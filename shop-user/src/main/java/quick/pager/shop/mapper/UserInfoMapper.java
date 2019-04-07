@@ -1,6 +1,6 @@
 package quick.pager.shop.mapper;
 
-import quick.pager.shop.UserInfo;
+import quick.pager.shop.model.UserInfo;
 
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Long id);

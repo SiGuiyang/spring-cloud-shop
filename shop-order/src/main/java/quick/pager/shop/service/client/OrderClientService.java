@@ -10,7 +10,7 @@ import quick.pager.shop.mapper.UserOrderMapper;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.OrderDTO;
 import quick.pager.shop.response.OrderResponse;
-import quick.pager.shop.UserOrder;
+import quick.pager.shop.model.UserOrder;
 import quick.pager.shop.service.common.CommonOrderService;
 
 /**

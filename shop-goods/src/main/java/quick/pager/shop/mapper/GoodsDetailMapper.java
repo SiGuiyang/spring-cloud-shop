@@ -1,7 +1,7 @@
 package quick.pager.shop.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.goods.GoodsDetail;
+import quick.pager.shop.model.GoodsDetail;
 
 public interface GoodsDetailMapper {
 

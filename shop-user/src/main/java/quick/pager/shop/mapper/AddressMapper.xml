@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.AddressMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.common.Address">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.Address">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
@@ -27,7 +27,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.common.Address">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.Address">
         insert into t_address
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -113,7 +113,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.common.Address">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.Address">
         update t_address
         <set>
             <if test="userId != null">

@@ -10,8 +10,8 @@ import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.common.Address;
-import quick.pager.shop.ShippingAddress;
+import quick.pager.shop.model.Address;
+import quick.pager.shop.model.ShippingAddress;
 import quick.pager.shop.dto.AddressDTO;
 import quick.pager.shop.mapper.AddressMapper;
 

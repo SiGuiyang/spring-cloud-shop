@@ -15,7 +15,7 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.client.GoodsClient;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.OrderResponse;
-import quick.pager.shop.UserOrder;
+import quick.pager.shop.model.UserOrder;
 
 /**
  * 订单列表

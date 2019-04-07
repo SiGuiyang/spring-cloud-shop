@@ -2,7 +2,7 @@ package quick.pager.shop.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.goods.GoodsCart;
+import quick.pager.shop.model.GoodsCart;
 
 public interface GoodsCartMapper {
 

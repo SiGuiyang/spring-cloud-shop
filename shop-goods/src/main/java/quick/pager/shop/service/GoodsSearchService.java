@@ -9,7 +9,7 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.constants.GoodsConstants;
 import quick.pager.shop.dto.GoodsSearchDTO;
 import quick.pager.shop.mapper.GoodsMapper;
-import quick.pager.shop.goods.Goods;
+import quick.pager.shop.model.Goods;
 
 /**
  * 商品搜索服务

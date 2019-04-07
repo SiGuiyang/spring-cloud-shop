@@ -1,7 +1,7 @@
 package quick.pager.shop.mapper;
 
 
-import quick.pager.shop.SellerOrder;
+import quick.pager.shop.model.SellerOrder;
 
 public interface SellerOrderMapper {
 

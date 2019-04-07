@@ -9,8 +9,8 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.mapper.GoodsDetailMapper;
 import quick.pager.shop.mapper.GoodsMapper;
-import quick.pager.shop.goods.Goods;
-import quick.pager.shop.goods.GoodsDetail;
+import quick.pager.shop.model.Goods;
+import quick.pager.shop.model.GoodsDetail;
 
 /**
  * 商品详情服务

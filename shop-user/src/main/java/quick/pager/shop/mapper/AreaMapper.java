@@ -1,7 +1,7 @@
 package quick.pager.shop.mapper;
 
 import java.util.List;
-import quick.pager.shop.Area;
+import quick.pager.shop.model.Area;
 
 public interface AreaMapper {
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.SmsTemplateMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.common.SmsTemplate">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.SmsTemplate">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="module" jdbcType="VARCHAR" property="module"/>
         <result column="sms_template_code" jdbcType="VARCHAR" property="smsTemplateCode"/>
@@ -20,7 +20,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.common.SmsTemplate">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.SmsTemplate">
         insert into t_sms_template
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -69,7 +69,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.common.SmsTemplate">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.SmsTemplate">
         update t_sms_template
         <set>
             <if test="module != null">

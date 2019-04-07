@@ -12,7 +12,7 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.GoodsDTO;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.service.client.GoodsClientService;
-import quick.pager.shop.goods.Goods;
+import quick.pager.shop.model.Goods;
 
 /**
  * 暴露feign的服务

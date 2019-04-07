@@ -3,9 +3,9 @@ package quick.pager.shop.response;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
-import quick.pager.shop.Province;
-import quick.pager.shop.Area;
-import quick.pager.shop.City;
+import quick.pager.shop.model.Province;
+import quick.pager.shop.model.Area;
+import quick.pager.shop.model.City;
 
 @Data
 public class AreaResponse implements Serializable {

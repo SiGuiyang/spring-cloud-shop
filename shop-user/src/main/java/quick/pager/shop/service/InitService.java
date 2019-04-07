@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RedisKeys;
-import quick.pager.shop.common.SmsTemplate;
-import quick.pager.shop.common.SystemConfig;
+import quick.pager.shop.model.SmsTemplate;
+import quick.pager.shop.model.SystemConfig;
 import quick.pager.shop.mapper.SmsTemplateMapper;
 import quick.pager.shop.mapper.SystemConfigMapper;
 

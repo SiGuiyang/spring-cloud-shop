@@ -18,9 +18,9 @@ import quick.pager.shop.mapper.GoodsCartMapper;
 import quick.pager.shop.mapper.GoodsDetailMapper;
 import quick.pager.shop.mapper.GoodsMapper;
 import quick.pager.shop.service.common.CommonGoodsService;
-import quick.pager.shop.goods.Goods;
-import quick.pager.shop.goods.GoodsCart;
-import quick.pager.shop.goods.GoodsDetail;
+import quick.pager.shop.model.Goods;
+import quick.pager.shop.model.GoodsCart;
+import quick.pager.shop.model.GoodsDetail;
 
 @Service
 @Slf4j

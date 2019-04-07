@@ -74,6 +74,7 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("修改系统用户")
     @PostMapping("system/user/modify")
     public Response modifySystemUser(SysUserDTO dto) {
@@ -81,12 +82,14 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("系统权限列表")
     @PostMapping("/system/menu")
     public Response systemMenuList() {
         return menuService.doService(null);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("查看某个系统角色的权限列表")
     @PostMapping("/system/menu/role")
     public Response querySysUserPermission(@RequestParam Long roleId) {
@@ -96,6 +99,7 @@ public class SystemController {
         return roleService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("获取系统角色")
     @PostMapping("/system/role")
     public Response systemRole(RoleDTO dto) {
@@ -103,12 +107,14 @@ public class SystemController {
         return roleService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("修改系统角色")
     @PostMapping("/system/role/modify")
     public Response modifySystemRole(RoleDTO dto) {
         return roleService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("角色分类")
     @PostMapping("/system/role/classification")
     public Response roleClassification() {
@@ -117,6 +123,7 @@ public class SystemController {
         return roleService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("菜单授权")
     @PostMapping("/system/permission")
     public Response permission(String permissions, Long roleId) {
@@ -131,6 +138,7 @@ public class SystemController {
         return permissionService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("系统配置列表")
     @PostMapping("/system/config")
     public Response systemUser(SystemConfigDTO dto) {
@@ -138,6 +146,7 @@ public class SystemController {
         return systemConfigService.doService(dto);
     }
 
+    @Secured("ROLE_ADMIN")
     @ApiOperation("修改系统配置")
     @PostMapping("system/config/modify")
     public Response modifySystemUser(SystemConfigDTO dto) {

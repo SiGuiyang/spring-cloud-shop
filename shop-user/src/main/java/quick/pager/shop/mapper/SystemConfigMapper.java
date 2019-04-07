@@ -1,7 +1,7 @@
 package quick.pager.shop.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.common.SystemConfig;
+import quick.pager.shop.model.SystemConfig;
 
 import java.util.List;
 

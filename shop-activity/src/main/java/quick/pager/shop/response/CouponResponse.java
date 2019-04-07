@@ -14,6 +14,10 @@ public class CouponResponse implements Serializable {
      */
     private Long id;
 
+    private Long userId;
+
+    private String username;
+
     private String couponName;
 
     private String phone;

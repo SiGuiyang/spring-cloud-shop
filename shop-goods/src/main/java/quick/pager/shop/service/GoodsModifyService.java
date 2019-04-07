@@ -10,7 +10,7 @@ import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.ClassificationDTO;
 import quick.pager.shop.mapper.GoodsClassMapper;
-import quick.pager.shop.goods.GoodsClass;
+import quick.pager.shop.model.GoodsClass;
 
 @Service
 @Slf4j

@@ -1,6 +1,6 @@
 package quick.pager.shop.mapper;
 
-import quick.pager.shop.SellerInfo;
+import quick.pager.shop.model.SellerInfo;
 
 public interface SellerInfoMapper {
 

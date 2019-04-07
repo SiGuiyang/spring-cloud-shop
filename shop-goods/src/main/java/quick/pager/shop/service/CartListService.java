@@ -10,7 +10,7 @@ import quick.pager.shop.dto.CartDTO;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.mapper.GoodsCartMapper;
 import quick.pager.shop.service.common.CommonGoodsService;
-import quick.pager.shop.goods.GoodsCart;
+import quick.pager.shop.model.GoodsCart;
 
 /**
  * 购物车列表服务

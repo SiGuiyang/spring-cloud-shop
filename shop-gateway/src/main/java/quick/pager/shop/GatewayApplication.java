@@ -7,7 +7,6 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import quick.pager.shop.filter.LoginFilter;
-import quick.pager.shop.filter.PermissionFilter;
 
 @SpringCloudApplication
 public class GatewayApplication {
@@ -23,7 +22,7 @@ public class GatewayApplication {
         return builder.routes()
                 .route("shop-activity", p -> p.path("/activity/**").uri("lb://shop-activity"))
                 .route("shop-goods", p -> p.path("/goods/**").uri("lb://shop-goods"))
-                .route("shop-manage", p -> p.path("/admin/**").uri("lb://shop-manage").filters(new PermissionFilter()))
+                .route("shop-manage", p -> p.path("/admin/**").uri("lb://shop-manage"))
                 .route("shop-auth", p -> p.path("/oauth/**").uri("lb://shop-auth"))
                 .route("shop-order", p -> p.path("/order/**").uri("lb://shop-order"))
                 .route("shop-settlement", p -> p.path("/settlement/**").uri("lb://shop-settlement"))

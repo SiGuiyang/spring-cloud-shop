@@ -13,4 +13,14 @@ public class OrderDTO extends AppDTO {
      * 所有订单 1, 待付款 2, 待收货 3, 待自提 4, 待评价 5
      */
     private String order;
+
+    private Integer orderType;
+
+    private String orderCode;
+
+    private String orderStatus;
+
+    private String beginTime;
+
+    private String endTime;
 }

@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import quick.pager.shop.StationLetter;
+import quick.pager.shop.model.StationLetter;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.request.ManageRequest;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.UserInfoDTO;
-import quick.pager.shop.common.Address;
+import quick.pager.shop.model.Address;
 import quick.pager.shop.service.client.UserClientService;
 
 /**
