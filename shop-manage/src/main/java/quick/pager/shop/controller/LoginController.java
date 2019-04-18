@@ -47,8 +47,8 @@ public class LoginController {
         return sysUserClientService.querySysUserByUsername(username);
     }
 
-    @PostMapping("/permit/role/{sysUserId}")
-    public Response<List<Role>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
+    @PostMapping("/permit/permission/{sysUserId}")
+    public Response<List<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
         return sysUserClientService.getRolesBySysUserId(sysUserId);
     }
 

@@ -1,7 +1,6 @@
 package quick.pager.shop.service.system;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -38,19 +37,31 @@ public class SystemConfigService implements IService {
 
         switch (systemConfigDTO.getEvent()) {
             case Constants.Event.ADD:
-                modifySystemConfig(systemConfigDTO);
-                break;
             case Constants.Event.MODIFY:
                 modifySystemConfig(systemConfigDTO);
                 break;
             case Constants.Event.LIST:
                 response = getSystemConfigList(systemConfigDTO);
                 break;
+            case Constants.Event.DELETE:
+                response = deleteSystemConfig(systemConfigDTO.getId());
+                break;
             default:
                 response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
 
         return response;
+    }
+
+    /**
+     * 删除
+     */
+    private Response deleteSystemConfig(Long id) {
+        SystemConfig config = new SystemConfig();
+        config.setId(id);
+        config.setDeleteStatus(Boolean.TRUE);
+        systemConfigMapper.updateByPrimaryKeySelective(config);
+        return new Response();
     }
 
     /**
@@ -62,13 +73,7 @@ public class SystemConfigService implements IService {
 
         List<SystemConfig> systemConfigs = systemConfigMapper.selectSystemConfig(systemConfigDTO.getConfigName(),
                 systemConfigDTO.getModule());
-        PageInfo<SystemConfig> pageInfo = new PageInfo<>(systemConfigs);
-
-        Response<List<SystemConfig>> response = new Response<>();
-        response.setData(pageInfo.getList());
-        response.setTotal(pageInfo.getTotal());
-
-        return response;
+        return Response.toResponse(systemConfigs);
     }
 
     /**

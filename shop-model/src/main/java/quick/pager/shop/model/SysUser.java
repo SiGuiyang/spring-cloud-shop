@@ -17,6 +17,8 @@ public class SysUser extends BaseUser {
 
     private String createUser;
 
-    private List<String> roleNameLists = new ArrayList<>();
+    private List<Role> roles = new ArrayList<>();
+
+    private List<Long> roleIds = new ArrayList<>();
 
 }

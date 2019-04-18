@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : utf-8
 
- Date: 01/16/2019 11:02:16 AM
+ Date: 04/18/2019 21:46:41 PM
 */
 
 SET NAMES utf8;
@@ -85,6 +85,28 @@ INSERT INTO `t_city` VALUES ('1', '110100', '市辖区', '110000'), ('2', '11020
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `t_generator_config`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_generator_config`;
+CREATE TABLE `t_generator_config` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `backend_path` varchar(127) NOT NULL,
+  `front_path` varchar(127) NOT NULL,
+  `server_status` bit(1) NOT NULL,
+  `package_path` varchar(127) NOT NULL,
+  `author` varchar(63) NOT NULL,
+  `module` varchar(63) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+--  Records of `t_generator_config`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_generator_config` VALUES ('1', '/Users/siguiyang/IdeaProjects/spring-cloud-shop/backend', '/Users/siguiyang/IdeaProjects/spring-cloud-shop/api', b'0', 'quick.pager.shop', 'siguiyang', 'test-module');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `t_integral_log`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_integral_log`;
@@ -132,27 +154,30 @@ CREATE TABLE `t_invite_reward_record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
---  Table structure for `t_permission`
+--  Table structure for `t_menu`
 -- ----------------------------
-DROP TABLE IF EXISTS `t_permission`;
-CREATE TABLE `t_permission` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `parent_id` bigint(20) DEFAULT NULL COMMENT '父级id',
-  `permission` varchar(127) DEFAULT NULL COMMENT '权限路径',
-  `name` varchar(127) NOT NULL COMMENT '权限名称',
-  `permission_type` int(11) NOT NULL COMMENT '类型 1 目录 2 菜单 3 按钮',
-  `create_time` timestamp NULL DEFAULT NULL,
-  `create_user` varchar(31) DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `delete_status` bit(1) DEFAULT NULL,
+DROP TABLE IF EXISTS `t_menu`;
+CREATE TABLE `t_menu` (
+  `id` bigint(19) NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(19) DEFAULT NULL,
+  `name` varchar(63) DEFAULT NULL,
+  `permission` varchar(127) DEFAULT NULL COMMENT '权限',
+  `permission_name` varchar(127) DEFAULT NULL COMMENT '权限名称',
+  `menu_type` int(4) DEFAULT NULL COMMENT '菜单类型 1 菜单 2 按钮',
+  `sequence` int(10) DEFAULT NULL,
+  `path` varchar(63) DEFAULT NULL,
+  `hidden` bit(1) DEFAULT NULL,
+  `component` varchar(31) DEFAULT NULL,
+  `redirect` varchar(31) DEFAULT NULL,
+  `icon` varchar(31) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
 -- ----------------------------
---  Records of `t_permission`
+--  Records of `t_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_permission` VALUES ('1', null, '/admin/home', '首页', '1', '2019-01-01 13:32:49', 'admin', '2018-12-31 21:32:44', b'0'), ('2', null, '/admin/goods/list', '商品管理', '1', '2019-01-01 13:34:17', 'admin', '2019-01-01 13:34:20', b'0'), ('3', null, '/admin/order/user', '订单管理', '1', '2019-01-01 13:34:48', 'admin', '2019-01-01 13:34:51', b'0'), ('4', null, '/admin/activity/coupon/list', '活动管理', '1', '2019-01-01 13:35:12', 'admin', '2019-01-01 13:35:15', b'0'), ('5', null, '/admin/document/list', '文章管理', '1', '2019-01-01 13:35:38', 'admin', '2018-12-31 21:35:34', b'0'), ('6', null, '/admin/statistics/coupon', '统计管理', '1', '2019-01-01 13:36:04', 'admin', '2019-01-01 13:36:07', b'0'), ('7', null, '/admin/finance/fund', '财务管理', '1', '2019-01-01 13:36:31', 'admin', '2018-12-31 21:36:27', b'0'), ('8', null, '/admin/system/user', '系统管理', '1', '2019-01-01 13:37:08', 'admin', '2019-01-01 13:37:10', b'0'), ('9', '2', '/admin/goods/list', '商品管理', '2', '2019-01-01 15:10:07', 'admin', '2019-01-01 15:10:10', b'0'), ('10', '2', '/admin/goods/classification', '商品分类', '2', '2019-01-01 15:10:45', 'admin', '2019-01-01 15:10:47', b'0'), ('11', '3', '/admin/order/user', '用户订单', '2', '2019-01-01 15:55:04', 'admin', '2018-12-31 23:55:04', b'0'), ('12', '3', '/admin/order/after/sale', '售后订单', '2', '2019-01-01 15:55:36', 'admin', '2019-01-01 15:55:40', b'0'), ('13', '3', '/admin/order/seller', '商户订单', '2', '2019-01-01 15:56:15', 'admin', '2019-01-01 15:56:18', b'0'), ('14', '4', '/admin/activity/coupon/template', '优惠券模版管理', '2', '2019-01-01 15:57:31', 'admin', '2019-01-01 15:57:33', b'0'), ('15', '4', '/admin/activity/coupon/list', '优惠券管理', '2', '2019-01-01 15:58:08', 'admin', '2019-01-01 15:58:11', b'0'), ('16', '4', '/admin/activity/fightGroup/rule', '拼团规则管理', '2', '2019-01-01 15:58:50', 'admin', '2019-01-01 15:58:53', b'0'), ('17', '4', '/admin/activity/fightGroup/goods', '拼团商品管理', '2', '2019-01-01 15:59:30', 'admin', '2019-01-01 15:59:33', b'0'), ('18', '4', '/admin/activity/banner/list', 'Banner 管理', '2', '2019-01-01 16:00:04', 'admin', '2019-01-01 16:00:06', b'0'), ('19', '4', '/admin/activity/station/list', '站内信管理', '2', '2019-01-01 16:00:37', 'admin', '2019-01-01 16:00:40', b'0'), ('20', '5', '/admin/document/modify', '创建修改文章', '2', '2019-01-01 16:01:46', 'admin', '2019-01-01 16:01:48', b'0'), ('21', '5', '/admin/document/list', '文章列表', '2', '2019-01-01 16:02:25', 'admin', '2019-01-01 16:02:28', b'0'), ('22', '6', '/admin/statistics/coupon', '优惠券统计', '2', '2019-01-01 16:03:11', 'admin', '2019-01-01 16:03:14', b'0'), ('23', '6', '/admin/statistics/fightGroup', '拼团统计', '2', '2019-01-01 16:03:45', 'admin', '2019-01-01 16:03:48', b'0'), ('24', '6', '/admin/statistics/integral', '积分统计', '2', '2019-01-01 16:04:13', 'admin', '2019-01-01 16:04:17', b'0'), ('25', '7', '/admin/finance/fund', '资金管理', '2', '2019-01-01 16:05:09', 'admin', '2019-01-01 16:05:12', b'0'), ('26', '7', '/admin/finance/trade', '交易管理', '2', '2019-01-01 16:05:41', 'admin', '2019-01-01 16:05:44', b'0'), ('27', '8', '/admin/system/user', '用户管理', '2', '2019-01-01 16:06:30', 'admin', '2019-01-01 16:06:34', b'0'), ('28', '8', '/admin/system/menu', '菜单管理', '2', '2019-01-01 16:07:04', 'admin', '2019-01-01 00:07:04', b'0'), ('29', '8', '/admin/system/role', '角色管理', '2', '2019-01-01 16:07:34', 'admin', '2019-01-01 00:07:37', b'0'), ('30', '8', '/admin/system/configuration', '系统配置管理', '2', '2019-01-01 16:08:12', 'admin', '2019-01-01 00:08:16', b'0'), ('31', '30', '/admin/system/configuration/modify', '系统配置新增或修改', '3', '2019-01-02 14:12:19', 'admin', '2019-01-02 14:12:25', b'0'), ('32', '29', '/admin/system/role/modify', '角色新增或修改', '3', '2019-01-02 16:01:35', 'admin', '2019-01-02 16:01:40', b'0'), ('33', '18', '/admin/activity/banner/modify', 'banner 新增或者修改', '3', '2019-01-04 10:47:54', 'admin', '2019-01-04 10:47:58', b'0'), ('34', '14', '/admin/activity/coupon/template/modify', '优惠券模板新增或者删除', '3', '2019-01-04 14:35:45', 'admin', '2019-01-04 14:35:56', b'0'), ('35', '15', '/admin/activity/coupon/modify', '优惠券新增或修改', '3', '2019-01-04 15:46:45', 'admin', '2019-01-04 15:46:51', b'0'), ('36', '14', '/admin/publish/coupon', '补发优惠券', '3', '2019-01-07 11:01:59', 'admin', '2019-01-07 11:02:06', b'0'), ('37', '10', '/admin/goods/classification/modify', '商品分类修改', '3', '2019-01-08 17:34:33', 'admin', '2019-01-08 17:34:37', b'0'), ('38', '9', '/admin/goods/modify', '商品新增|修改', '3', '2019-01-11 17:10:00', 'admin', '2019-01-11 17:10:06', b'0'), ('39', '9', '/admin/goods/info', '商品详情', '3', '2019-01-11 17:59:03', 'admin', '2019-01-11 17:59:09', b'0'), ('40', '29', '/admin/system/menu/role', '查看角色权限', '3', '2019-01-13 19:21:05', 'admin', '2019-01-13 19:21:14', b'0'), ('41', '29', '/admin/system/permission', '角色授权', '3', '2019-01-14 09:44:06', 'admin', '2019-01-14 09:44:13', b'0'), ('42', '27', '/admin/system/user/modify', '系统用户新增与修改', '3', '2019-01-14 10:23:59', 'admin', '2019-01-14 10:24:06', b'0'), ('43', '11', '/admin/order/user/info', '查看订单详情', '3', '2019-01-14 15:49:02', 'admin', '2019-01-14 15:49:09', b'0'), ('44', '1', '/admin/shop/enumInfo', '查看通用枚举服务', '3', '2019-01-15 10:46:30', 'admin', '2019-01-15 10:46:36', b'0');
+INSERT INTO `t_menu` VALUES ('1', null, '首页', 'ROLE_ADMIN', '首页', '1', '0', '/dashboard', b'0', 'dashboard/index', null, 'dashboard'), ('2', null, '活动管理', 'ROLE_ADMIN', '活动管理', '1', '1', '/activity', b'0', null, '/activity/coupon/template', 'table'), ('3', null, '商品管理', 'ROLE_ADMIN', '商品管理', '1', '2', '/goods', b'0', null, '/goods/goods', 'nested'), ('4', null, '订单管理', 'ROLE_ADMIN', '订单管理', '1', '3', '/order', b'0', null, 'noredirect', 'component'), ('5', null, '财务管理', 'ROLE_ADMIN', '财务管理', '1', '4', '/finance', b'0', null, 'noredirect', 'money'), ('6', null, '统计管理', 'ROLE_ADMIN', '统计管理', '1', '6', '/statistics', b'0', null, 'noredirect', 'chart'), ('7', null, '风控管理', 'ROLE_ADMIN', '风控管理', '1', '7', '/risk', b'0', null, '/risk/rule', 'table'), ('8', null, '监控管理', 'ROLE_ADMIN', '监控管理', '1', '5', '/monitor', b'0', null, '/monitor/hystrix', 'table'), ('9', null, '系统管理', 'ROLE_ADMIN', '系统管理', '1', '8', '/system', b'0', null, '/system/user', 'component'), ('10', null, '代码管理', 'ROLE_ADMIN', '代码管理', '1', '9', '/generator', b'0', 'generator/index', 'noredirect', 'money'), ('11', '2', '优惠券管理', 'ROLE_ADMIN', '优惠券管理', '1', '1', 'coupon', b'0', 'activity/coupon/index', '/activity/coupon/template', null), ('12', '11', '优惠券模板管理', 'ROLE_ADMIN', '优惠券模板管理', '1', '3', 'template', b'0', 'activity/coupon/template/index', null, null), ('13', '11', '用户优惠券', 'ROLE_ADMIN', '用户优惠券', '1', '4', 'user', b'0', 'activity/coupon/user/index', null, null), ('14', '2', '满赠换购', 'ROLE_ADMIN', '满赠换购', '1', '2', 'exchange', b'0', 'activity/exchange/index', null, null), ('15', '2', '拼团管理', 'ROLE_ADMIN', '拼团管理', '1', '5', 'assembly', b'0', 'activity/assembly/index', null, null), ('16', '2', '拼团规则', 'ROLE_ADMIN', '拼团规则', '1', '6', 'assembly/rule/:id(\\d+)', b'1', 'activity/assembly/rule', null, null), ('17', '2', '成团记录', 'ROLE_ADMIN', '成团记录', '1', '7', 'assembly/record/:id(\\d+)', b'1', 'activity/assembly/record', null, null), ('18', '2', 'Banner 管理', 'ROLE_ADMIN', 'Banner 管理', '1', '8', 'banner', b'0', 'activity/banner/index', null, null), ('19', '2', '站内信管理', 'ROLE_ADMIN', '站内信管理', '1', '9', 'station', b'0', 'activity/station/index', null, null), ('20', '3', '商品分类', 'ROLE_ADMIN', '商品分类', '1', '2', 'classification', b'0', 'goods/classification/index', null, null), ('21', '4', '用户订单', 'ROLE_ADMIN', '用户订单', '1', '1', 'user', b'0', 'order/user/index', null, null), ('22', '4', '售后订单', 'ROLE_ADMIN', '售后订单', '1', '2', 'sale', b'0', 'order/sale/index', null, null), ('23', '4', '商户订单', 'ROLE_ADMIN', '商户订单', '1', '3', 'seller', b'0', 'order/seller/index', null, null), ('24', '5', '资金管理', 'ROLE_ADMIN', '资金管理', '1', '1', 'fund', b'0', 'finance/fund/index', null, null), ('25', '5', '交易管理', 'ROLE_ADMIN', '交易管理', '1', '2', 'trade', b'0', 'finance/trade/index', null, null), ('26', '6', '优惠券统计', 'ROLE_ADMIN', '优惠券统计', '1', '1', 'coupon', b'0', 'statistics/coupon/index', null, null), ('27', '6', '拼团统计', 'ROLE_ADMIN', '拼团统计', '1', '2', 'group', b'0', 'statistics/group/index', null, null), ('28', '6', '积分统计', 'ROLE_ADMIN', '积分统计', '1', '3', 'integral', b'0', 'statistics/integral/index', null, null), ('29', '7', '规则配置', 'ROLE_ADMIN', '规则配置', '1', '1', 'rule', b'0', 'risk/rule', null, null), ('30', '7', '黑名单管理', 'ROLE_ADMIN', '黑名单管理', '1', '2', 'blackList', b'0', 'risk/blackList', null, null), ('31', '8', 'Hystrix监控', 'ROLE_ADMIN', 'Hystrix监控', '1', '1', 'hystrix', b'0', 'monitor/hystrix', null, null), ('32', '8', '接口Swagger', 'ROLE_ADMIN', '接口Swagger', '1', '0', 'interface', b'0', 'monitor/interface/index', null, ''), ('33', '8', '数据库监控', 'ROLE_ADMIN', '数据库监控', '1', '3', 'database', b'0', 'monitor/database/index', '/monitor/database/admin', null), ('34', '33', '活动数据中心', 'ROLE_ADMIN', '活动数据中心', '1', '1', 'activity', b'0', 'monitor/database/activity', null, null), ('35', '33', '管理数据中心', 'ROLE_ADMIN', '管理数据中心', '1', '2', 'manage', b'0', 'monitor/database/admin', null, null), ('36', '33', '商品数据中心', 'ROLE_ADMIN', '商品数据中心', '1', '3', 'goods', b'0', 'monitor/database/goods', null, null), ('37', '33', '订单数据中心', 'ROLE_ADMIN', '订单数据中心', '1', '4', 'order', b'0', 'monitor/database/order', null, null), ('38', '9', '用户管理', 'ROLE_ADMIN', '用户管理', '1', '1', 'user', b'0', 'system/user/index', null, null), ('39', '9', '菜单管理', 'ROLE_ADMIN', '菜单管理', '1', '3', 'menu', b'0', 'system/menu/index', null, null), ('40', '9', '角色管理', 'ROLE_ADMIN', '角色管理', '1', '2', 'role', b'0', 'system/role/index', null, null), ('41', '9', '配置管理', 'ROLE_ADMIN', '配置管理', '1', '4', 'config', b'0', 'system/config/index', null, null), ('42', '3', '商品配置', 'ROLE_ADMIN', '商品配置', '1', '1', 'goods', b'0', 'goods/goods/index', null, null), ('43', '38', '用户创建', 'ROLE_USER_CREATE', '用户创建', '2', '1', null, b'0', null, null, null), ('65', '32', '用户中心', null, null, '1', '0', 'user', b'0', 'monitor/interface/user', null, null), ('66', '32', '订单中心', null, null, '1', '1', 'order', b'0', 'monitor/interface/order', null, null), ('67', '32', '活动中心', null, null, '1', '2', 'activity', b'0', 'monitor/interface/activity', null, null), ('68', '32', '商品中心', null, null, '1', '3', 'goods', b'0', 'monitor/interface/goods', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -192,7 +217,23 @@ CREATE TABLE `t_role` (
 --  Records of `t_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_role` VALUES ('1', '超级管理员', 'super_admin', 'root', '2019-01-01 13:37:51', '2019-01-01 13:37:54', b'0'), ('2', 'ffff', 'fewwe', 'roo', '2019-01-02 16:07:30', '2019-01-02 16:07:32', b'0'), ('3', 'eefdd', 'sswwddd', 'admin', '2019-01-02 16:08:50', '2019-01-02 16:08:50', b'0'), ('4', 'fsdfsf', 'fsfsdfs33', 'admin', '2019-01-02 16:09:55', '2019-01-02 16:09:55', b'1'), ('5', '运营经理', 'operations_manager', 'admin', '2019-01-14 09:40:17', '2019-01-14 09:40:16', b'0');
+INSERT INTO `t_role` VALUES ('1', '超级管理员', 'ROLE_ADMIN', 'root', '2019-01-01 13:37:51', '2019-01-01 13:37:54', b'0'), ('2', 'ffff', 'fewwe', 'roo', '2019-01-02 16:07:30', '2019-01-02 16:07:32', b'1'), ('3', 'eefdd', 'sswwddd534534535', 'admin', '2019-01-02 16:08:50', '2019-01-02 16:08:50', b'0'), ('4', 'fsdfsf', 'fsfsdfs33', 'admin', '2019-01-02 16:09:55', '2019-01-02 16:09:55', b'0'), ('5', '运营经理', 'ROlE_OPERATION_MANAGE', 'admin', '2019-01-14 09:40:17', '2019-01-14 09:40:16', b'0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `t_role_menu`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_role_menu`;
+CREATE TABLE `t_role_menu` (
+  `role_id` bigint(20) DEFAULT NULL COMMENT 't_role Id',
+  `menu_id` bigint(19) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与权限关联关系表';
+
+-- ----------------------------
+--  Records of `t_role_menu`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '10'), ('1', '11'), ('1', '12'), ('1', '13'), ('1', '14'), ('1', '15'), ('1', '16'), ('1', '17'), ('1', '18'), ('1', '19'), ('1', '20'), ('1', '21'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '25'), ('1', '26'), ('1', '27'), ('1', '28'), ('1', '29'), ('1', '30'), ('1', '31'), ('1', '32'), ('1', '33'), ('1', '34'), ('1', '35'), ('1', '36'), ('1', '37'), ('1', '38'), ('1', '39'), ('1', '40'), ('1', '41'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '46'), ('1', '47'), ('1', '48'), ('1', '49'), ('1', '50'), ('1', '51'), ('1', '52'), ('1', '53'), ('1', '63'), ('5', '33'), ('5', '37'), ('5', '34'), ('5', '36'), ('5', '38'), ('5', '43'), ('5', '8'), ('5', '9'), ('5', '25'), ('5', '5'), ('5', '32');
 COMMIT;
 
 -- ----------------------------
@@ -200,21 +241,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role_permission`;
 CREATE TABLE `t_role_permission` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `role_id` bigint(20) DEFAULT NULL COMMENT 't_role Id',
-  `permission_id` bigint(20) DEFAULT NULL COMMENT 't_permission Id',
+  `role_id` bigint(19) NOT NULL AUTO_INCREMENT COMMENT '角色Id',
+  `permission_id` bigint(20) DEFAULT NULL COMMENT '权限Id',
   `create_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COMMENT='角色与权限关联关系表';
-
--- ----------------------------
---  Records of `t_role_permission`
--- ----------------------------
-BEGIN;
-INSERT INTO `t_role_permission` VALUES ('1', '1', '1', '2019-01-01 13:39:55', '2019-01-01 13:39:57', b'0'), ('2', '1', '2', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('3', '1', '3', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('4', '1', '4', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('5', '1', '5', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('6', '1', '6', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('7', '1', '7', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('8', '1', '8', '2019-01-01 13:40:43', '2019-01-01 13:40:45', b'0'), ('9', '1', '9', '2019-01-01 15:11:39', '2019-01-01 15:11:41', b'0'), ('10', '1', '10', '2019-01-01 15:11:59', '2019-01-01 15:12:01', b'0'), ('11', '1', '11', '2019-01-01 16:14:01', '2019-01-01 16:14:04', b'0'), ('12', '1', '12', '2019-01-01 16:15:06', '2019-01-01 16:14:37', b'0'), ('13', '1', '13', '2019-01-01 16:15:10', '2019-01-01 16:14:41', b'0'), ('14', '1', '14', '2019-01-01 16:15:14', '2019-01-01 16:14:43', b'0'), ('15', '1', '15', '2019-01-01 16:15:17', '2019-01-01 16:14:46', b'0'), ('16', '1', '16', '2019-01-01 16:15:35', '2019-01-01 16:14:50', b'0'), ('17', '1', '17', '2019-01-01 16:15:30', '2019-01-01 16:14:53', b'0'), ('18', '1', '18', '2019-01-01 16:15:21', '2019-01-01 16:14:56', b'0'), ('19', '1', '19', '2019-01-01 16:15:27', '2019-01-01 16:14:59', b'0'), ('20', '1', '20', '2019-01-01 16:15:24', '2019-01-01 16:15:02', b'0'), ('21', '1', '21', '2019-01-01 16:18:52', '2019-01-01 16:18:55', b'0'), ('22', '1', '22', '2019-01-01 16:19:50', '2019-01-01 16:19:17', b'0'), ('23', '1', '23', '2019-01-01 16:19:54', '2019-01-01 16:19:22', b'0'), ('24', '1', '24', '2019-01-01 16:19:58', '2019-01-01 16:19:26', b'0'), ('25', '1', '25', '2019-01-01 16:20:01', '2019-01-01 16:19:30', b'0'), ('26', '1', '26', '2019-01-01 16:20:04', '2019-01-01 16:19:33', b'0'), ('27', '1', '27', '2019-01-01 16:20:07', '2019-01-01 16:19:37', b'0'), ('28', '1', '28', '2019-01-01 16:20:11', '2019-01-01 16:19:40', b'0'), ('29', '1', '29', '2019-01-01 16:20:14', '2019-01-01 16:19:43', b'0'), ('30', '1', '30', '2019-01-01 16:20:17', '2019-01-01 16:19:47', b'0'), ('31', '1', '31', '2019-01-02 14:12:53', '2019-01-02 14:12:56', b'0'), ('32', '1', '32', '2019-01-02 16:06:25', '2019-01-02 16:06:28', b'0'), ('33', '1', '33', '2019-01-04 10:50:02', '2019-01-04 10:50:09', b'0'), ('34', '1', '34', '2019-01-04 14:36:14', '2019-01-04 14:36:17', b'0'), ('35', '1', '35', '2019-01-04 15:47:34', '2019-01-04 15:47:40', b'0'), ('36', '1', '36', '2019-01-07 11:02:39', '2019-01-07 11:02:47', b'0'), ('37', '1', '37', '2019-01-08 17:36:44', '2019-01-08 17:36:42', b'0'), ('38', '1', '38', '2019-01-12 15:07:14', '2019-01-11 17:10:26', b'0'), ('39', '1', '39', '2019-01-12 15:07:10', '2019-01-12 15:07:13', b'0'), ('40', '1', '40', '2019-01-13 19:24:23', '2019-01-13 19:24:26', b'0'), ('41', '1', '41', '2019-01-14 09:44:42', '2019-01-14 09:44:45', b'0'), ('42', '1', '42', '2019-01-14 10:24:32', '2019-01-14 10:24:35', b'0'), ('43', '1', '43', '2019-01-14 15:50:08', '2019-01-14 15:50:13', b'0'), ('44', '1', '44', '2019-01-15 10:48:36', '2019-01-15 10:48:38', b'0'), ('49', '5', '1', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0'), ('50', '5', '2', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0'), ('51', '5', '9', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0'), ('52', '5', '38', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0'), ('53', '5', '39', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0'), ('54', '5', '10', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0'), ('55', '5', '37', '2019-01-14 09:50:07', '2019-01-14 09:50:06', b'0');
-COMMIT;
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与权限关联表';
 
 -- ----------------------------
 --  Table structure for `t_seller`
@@ -305,13 +338,13 @@ CREATE TABLE `t_sys_role` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户与角色表关联关系表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户与角色表关联关系表';
 
 -- ----------------------------
 --  Records of `t_sys_role`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_sys_role` VALUES ('1', '1', '1', '2019-01-01 13:39:33', '2019-01-01 13:39:35', b'0'), ('2', '5', '10', '2019-01-14 11:19:02', '2019-01-14 11:19:47', b'0'), ('3', '1', '11', '2019-01-14 13:08:55', '2019-01-14 13:08:55', b'0'), ('4', '2', '11', '2019-01-14 13:08:55', '2019-01-14 13:08:55', b'0'), ('5', '3', '11', '2019-01-14 13:08:55', '2019-01-14 13:08:55', b'0');
+INSERT INTO `t_sys_role` VALUES ('1', '1', '1', '2019-01-01 13:39:33', '2019-01-01 13:39:35', b'0'), ('2', '5', '10', '2019-01-14 11:19:02', '2019-01-14 11:19:47', b'0'), ('3', '1', '11', '2019-01-14 13:08:55', '2019-01-14 13:08:55', b'0'), ('4', '2', '11', '2019-01-14 13:08:55', '2019-01-14 13:08:55', b'0'), ('5', '3', '11', '2019-01-14 13:08:55', '2019-01-14 13:08:55', b'0'), ('6', '5', '12', '2019-03-31 14:55:16', '2019-03-31 14:55:16', b'0'), ('7', '2', '13', '2019-04-09 09:34:49', '2019-04-09 09:34:49', b'0'), ('8', '3', '13', '2019-04-09 09:34:49', '2019-04-09 09:34:49', b'0'), ('9', '5', '13', '2019-04-09 09:34:49', '2019-04-09 09:34:49', b'0'), ('10', '3', '12', '2019-04-12 09:43:52', '2019-04-12 09:43:51', b'0'), ('11', '5', '11', '2019-04-12 09:44:11', '2019-04-12 09:44:10', b'0'), ('12', '3', '14', '2019-04-13 20:39:43', '2019-04-13 20:39:42', b'0'), ('13', '1', '15', '2019-04-13 20:56:53', '2019-04-13 20:56:52', b'0'), ('14', '2', '15', '2019-04-13 20:56:53', '2019-04-13 20:56:52', b'0'), ('15', '2', '14', '2019-04-13 20:58:06', '2019-04-13 20:58:05', b'0'), ('16', '1', '14', '2019-04-13 20:58:06', '2019-04-13 20:58:05', b'0'), ('17', '5', '15', '2019-04-13 20:58:50', '2019-04-13 20:58:50', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -321,22 +354,21 @@ DROP TABLE IF EXISTS `t_sys_user`;
 CREATE TABLE `t_sys_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `sys_name` varchar(63) DEFAULT NULL,
-  `sys_code` varchar(63) DEFAULT NULL,
-  `password` varchar(127) DEFAULT NULL,
-  `role_ids` varchar(63) DEFAULT NULL,
+  `username` varchar(63) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
   `create_time` timestamp NULL DEFAULT NULL,
   `create_user` varchar(31) DEFAULT NULL COMMENT '创建人',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户表';
 
 -- ----------------------------
 --  Records of `t_sys_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_sys_user` VALUES ('1', '小司', 'admin', '96e79218965eb72c92a549dd5a330112', '[1]', 'http://pk6b0a7n8.bkt.clouddn.com/858ba9b8b33145c288477c2b0f2d790e.jpg', '2019-01-01 13:39:09', 'root', '2019-01-01 13:39:11', b'0'), ('10', '王五', 'coding', '96e79218965eb72c92a549dd5a330112', '[5]', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190114/6b29b9a0c79c4a53aaf4e562afdce191.jpg', '2019-01-14 11:19:02', 'admin', '2019-01-14 11:19:02', b'0'), ('11', 'trstt', 'dasddd', '7fa8282ad93047a4d6fe6111c93b308a', '[1,2,3]', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190114/20a950c5384e4e42acf24733f85d43f3.jpg', '2019-01-14 13:08:55', 'admin', '2019-01-14 13:08:55', b'0');
+INSERT INTO `t_sys_user` VALUES ('1', '小司', 'admin', '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'http://pk6b0a7n8.bkt.clouddn.com/858ba9b8b33145c288477c2b0f2d790e.jpg', '2019-01-01 13:39:09', 'root', '2019-01-01 13:39:11', b'0'), ('10', '王五', 'coding', '96e79218965eb72c92a549dd5a330112', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190114/6b29b9a0c79c4a53aaf4e562afdce191.jpg', '2019-01-14 11:19:02', 'admin', '2019-01-14 11:19:02', b'0'), ('11', 'trstt7878787', 'dasddd', '7fa8282ad93047a4d6fe6111c93b308a', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190114/20a950c5384e4e42acf24733f85d43f3.jpg', '2019-01-14 13:08:55', 'admin', '2019-01-14 13:08:55', b'0'), ('12', 'ceshi', 'test', '$2a$10$0Bn2nURWggqZgBNeWfgtm.c7WhvXkYKHIL/v.1BZuku3swkBoLkIC', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190331/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', '2019-03-31 14:55:16', 'admin', '2019-03-31 14:55:16', b'0'), ('13', '1226112332', '2126433234', '$2a$10$eVlJXgQQBUbwyZCCnkaGVukzuGF3j19ogVRd3dXJCaZVybSrzo1s2', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190409/20a950c5384e4e42acf24733f85d43f3.jpg', '2019-04-09 09:34:49', 'admin', '2019-04-09 09:34:49', b'0'), ('14', 'yyy', '8888', '$2a$10$bZY.exnMf1dA0NVy4Xg8me9KBsJiH/CbA2y8fU8/46Rafn7yeyYN6', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190413/8cca633b0b884faea8d6a56a3c7eeb75.jpg', '2019-04-13 20:39:43', 'admin', '2019-04-13 20:39:42', b'1'), ('15', '11', '11', '$2a$10$IEFFAyY1ai4i8.t6krzbMecTh1S1jZ9d9gGlnuvs5MvKqgVQZqHom', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190413/8cca633b0b884faea8d6a56a3c7eeb75.jpg', '2019-04-13 20:56:53', 'admin', '2019-04-13 20:56:52', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -359,7 +391,7 @@ CREATE TABLE `t_system_config` (
 --  Records of `t_system_config`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_system_config` VALUES ('1', 'test', '1', 'admin', '测试', '2019-01-02 12:56:44', '2019-01-02 12:56:47', b'0'), ('1056', 'ttt', 'rrr', 'seller', 'dddd', '2019-01-02 14:19:11', null, b'1'), ('1081', 'rrv', '22556666', 'goods', '88888888', '2019-01-02 14:17:20', null, b'1'), ('1082', 'tt', 't', 'goods', 'ttt', '2019-01-02 14:22:28', null, b'1'), ('1083', 'iio', 'u', 'settlement', 'hjjjkkkkkk', '2019-01-02 14:24:31', null, b'0');
+INSERT INTO `t_system_config` VALUES ('1', 'test', '1', 'admin', '测试', '2019-01-02 12:56:44', '2019-01-02 12:56:47', b'0'), ('1056', 'ttt', 'rrr', 'seller', 'dddd', '2019-01-02 14:19:11', null, b'0'), ('1081', 'rrv', '22556666', 'goods', '88888888', '2019-01-02 14:17:20', null, b'1'), ('1082', 'tt', 't', 'goods', 'ttt', '2019-01-02 14:22:28', null, b'1'), ('1083', 'iio', 'u', 'settlement', 'hjjjkkkkkk', '2019-01-02 14:24:31', null, b'0');
 COMMIT;
 
 -- ----------------------------
@@ -374,13 +406,13 @@ CREATE TABLE `t_user` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 --  Records of `t_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_user` VALUES ('1', '13818471341', '2b1e9477ca3889bac89027b358f94b09', '2018-10-28 19:20:21', '2018-12-16 19:24:12', b'0');
+INSERT INTO `t_user` VALUES ('1', '13818471341', '2b1e9477ca3889bac89027b358f94b09', '2018-10-28 19:20:21', '2018-12-16 19:24:12', b'0'), ('2', '13818471343', null, '2019-01-23 16:57:27', '2019-01-23 16:57:30', b'0'), ('3', '13818471342', null, '2019-01-23 16:57:24', '2019-01-23 16:57:26', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -401,13 +433,65 @@ CREATE TABLE `t_user_info` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 --  Records of `t_user_info`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_user_info` VALUES ('1', '1', '白天不懂夜的黑', '1', '18', 'siguiyang1992@outlook.com', '2018-12-16 19:29:24', null, '1000', '2018-12-16 19:29:32', '2018-12-16 19:29:34', b'0');
+INSERT INTO `t_user_info` VALUES ('1', '1', '白天不懂夜的黑', '1', '18', 'siguiyang1992@outlook.com', '2018-12-16 19:29:24', null, '1000', '2018-12-16 19:29:32', '2018-12-16 19:29:34', b'0'), ('2', '2', '白天不懂夜的黑2', '1', null, null, null, null, null, null, '2019-01-23 16:56:58', null), ('3', '3', '白天不懂夜的黑3', '1', null, null, null, null, null, null, '2019-01-23 16:57:01', null);
 COMMIT;
+
+-- ----------------------------
+--  Table structure for `t_white_list`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_white_list`;
+CREATE TABLE `t_white_list` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `white_url` varchar(255) DEFAULT NULL COMMENT '白名单访问地址',
+  `description` varchar(255) DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `delete_status` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+--  Records of `t_white_list`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_white_list` VALUES ('1', '/user/login', '用户登陆', '2019-02-18 15:45:26', '2019-02-18 15:45:18', b'0'), ('2', '/user/logout', '用户退出', '2019-02-18 15:45:56', '2019-02-18 15:45:58', b'0'), ('3', '/seller/login', '商户登陆', '2019-02-18 15:48:57', '2019-02-18 15:48:59', b'0'), ('4', '/seller/logout', '商户退出', '2019-02-18 15:49:22', '2019-02-18 15:49:26', b'0'), ('5', '/admin/login', '系统登陆', '2019-02-18 15:49:55', '2019-02-18 15:49:49', b'0'), ('6', '/admin/system/adminInfo', '系统用户信息', '2019-02-18 15:50:23', '2019-02-18 15:50:26', b'0'), ('7', '/admin/logout', '系统用户退出', '2019-02-18 15:50:47', '2019-02-18 15:50:45', b'0'), ('8', '/activity/banner/list', '活动banner列表', '2019-02-18 15:51:11', '2019-02-18 15:51:09', b'0'), ('9', '/goods/home', 'APP首页商品列表', '2019-02-18 15:51:53', '2019-02-18 15:51:55', b'0'), ('10', '/goods/classification/list', '商品分类列表', '2019-02-18 15:52:16', '2019-02-18 15:52:19', b'0');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `txc_lock`
+-- ----------------------------
+DROP TABLE IF EXISTS `txc_lock`;
+CREATE TABLE `txc_lock` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `table_name` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
+  `key_value` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL,
+  `group_id` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL,
+  `unit_id` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL,
+  `x_lock` int(11) DEFAULT NULL,
+  `s_lock` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `table_name` (`table_name`,`key_value`,`x_lock`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+-- ----------------------------
+--  Table structure for `txc_undo_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `txc_undo_log`;
+CREATE TABLE `txc_undo_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` bigint(20) DEFAULT NULL,
+  `gmt_modified` bigint(20) DEFAULT NULL,
+  `group_id` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL,
+  `unit_id` varchar(32) COLLATE utf8mb4_bin DEFAULT NULL,
+  `rollback_info` longblob,
+  `status` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 SET FOREIGN_KEY_CHECKS = 1;

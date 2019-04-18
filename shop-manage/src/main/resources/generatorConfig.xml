@@ -23,7 +23,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.199.113:3306/pager_shop?useSSL=false"
+                        connectionURL="jdbc:mysql://localhost:3306/pager_shop?useSSL=false"
                         userId="root"
                         password="root">
         </jdbcConnection>
@@ -81,8 +81,8 @@
         15，delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
      -->
-        <table tableName="t_permission"
-               domainObjectName="Permission"
+        <table tableName="t_role_menu"
+               domainObjectName="RoleMenu"
                enableDeleteByExample="false"
                enableCountByExample="false"
                enableUpdateByExample="false"

@@ -1,5 +1,7 @@
 package quick.pager.shop.response;
 
+import com.github.pagehelper.PageInfo;
+import java.util.List;
 import lombok.Data;
 import quick.pager.shop.constants.ResponseStatus;
 
@@ -45,6 +47,14 @@ public class Response<T> implements Serializable {
 
     public Response(T data) {
         this.data = data;
+    }
+
+    public static <T> Response<List<T>> toResponse(List<T> data) {
+        PageInfo<T> pageInfo = new PageInfo<>(data);
+        Response<List<T>> response = new Response<>();
+        response.setTotal(pageInfo.getTotal());
+        response.setData(pageInfo.getList());
+        return response;
     }
 
 }

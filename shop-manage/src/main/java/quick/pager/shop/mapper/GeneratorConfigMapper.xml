@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.mapper.GeneratorConfigMapper">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.GeneratorConfig">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="backend_path" jdbcType="VARCHAR" property="backendPath"/>
+        <result column="front_path" jdbcType="VARCHAR" property="frontPath"/>
+        <result column="server_status" jdbcType="BIT" property="serverStatus"/>
+        <result column="package_path" jdbcType="VARCHAR" property="packagePath"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="module" jdbcType="VARCHAR" property="module"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, backend_path, front_path, server_status, package_path, author, module
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_generator_config
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_generator_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.GeneratorConfig">
+        insert into t_generator_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="backendPath != null">
+                backend_path,
+            </if>
+            <if test="frontPath != null">
+                front_path,
+            </if>
+            <if test="serverStatus != null">
+                server_status,
+            </if>
+            <if test="packagePath != null">
+                package_path,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="module != null">
+                module,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="backendPath != null">
+                #{backendPath,jdbcType=VARCHAR},
+            </if>
+            <if test="frontPath != null">
+                #{frontPath,jdbcType=VARCHAR},
+            </if>
+            <if test="serverStatus != null">
+                #{serverStatus,jdbcType=BIT},
+            </if>
+            <if test="packagePath != null">
+                #{packagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="module != null">
+                #{module,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.GeneratorConfig">
+        update t_generator_config
+        <set>
+            <if test="backendPath != null">
+                backend_path = #{backendPath,jdbcType=VARCHAR},
+            </if>
+            <if test="frontPath != null">
+                front_path = #{frontPath,jdbcType=VARCHAR},
+            </if>
+            <if test="serverStatus != null">
+                server_status = #{serverStatus,jdbcType=BIT},
+            </if>
+            <if test="packagePath != null">
+                package_path = #{packagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="module != null">
+                module = #{module,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectGeneratorConfig" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_generator_config
+        where server_status = 0
+    </select>
+
+</mapper>

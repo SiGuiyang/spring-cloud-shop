@@ -3,26 +3,18 @@ package quick.pager.shop.controller.system;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.util.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.dto.AuthorizationDTO;
 import quick.pager.shop.dto.LoginDTO;
-import quick.pager.shop.dto.RoleDTO;
 import quick.pager.shop.dto.SysUserDTO;
-import quick.pager.shop.dto.SystemConfigDTO;
-import quick.pager.shop.service.system.MenuService;
-import quick.pager.shop.service.system.PermissionService;
-import quick.pager.shop.service.system.RoleService;
 import quick.pager.shop.service.system.SysUserInfoService;
 import quick.pager.shop.service.system.SysUserService;
-import quick.pager.shop.service.system.SystemConfigService;
 import quick.pager.shop.utils.PrincipalUtils;
 
 /**
@@ -39,14 +31,6 @@ public class SystemController {
     private SysUserInfoService sysUserInfoService;
     @Autowired
     private SysUserService sysUserService;
-    @Autowired
-    private SystemConfigService systemConfigService;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private MenuService menuService;
-    @Autowired
-    private PermissionService permissionService;
 
     @ApiOperation("系统登陆用户吧信息")
     @PostMapping("/system/adminInfo")
@@ -65,7 +49,7 @@ public class SystemController {
         return new Response();
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ApiOperation("系统用户列表")
     @PostMapping("/system/user")
     public Response systemUser(SysUserDTO dto) {
@@ -74,7 +58,7 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @ApiOperation("修改系统用户")
     @PostMapping("system/user/modify")
     public Response modifySystemUser(SysUserDTO dto) {
@@ -82,74 +66,13 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("系统权限列表")
-    @PostMapping("/system/menu")
-    public Response systemMenuList() {
-        return menuService.doService(null);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("查看某个系统角色的权限列表")
-    @PostMapping("/system/menu/role")
-    public Response querySysUserPermission(@RequestParam Long roleId) {
-        RoleDTO dto = new RoleDTO();
-        dto.setId(roleId);
-        dto.setEvent("rolePermission");
-        return roleService.doService(dto);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("获取系统角色")
-    @PostMapping("/system/role")
-    public Response systemRole(RoleDTO dto) {
-        dto.setEvent(Constants.Event.LIST);
-        return roleService.doService(dto);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("修改系统角色")
-    @PostMapping("/system/role/modify")
-    public Response modifySystemRole(RoleDTO dto) {
-        return roleService.doService(dto);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("角色分类")
-    @PostMapping("/system/role/classification")
-    public Response roleClassification() {
-        RoleDTO dto = new RoleDTO();
-        dto.setEvent("classification");
-        return roleService.doService(dto);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("菜单授权")
-    @PostMapping("/system/permission")
-    public Response permission(String permissions, Long roleId) {
-
-        if (StringUtils.isEmpty(permissions)) {
-            return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
-        AuthorizationDTO dto = new AuthorizationDTO();
-        dto.setId(roleId);
-        dto.setPermissions(permissions);
-
-        return permissionService.doService(dto);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("系统配置列表")
-    @PostMapping("/system/config")
-    public Response systemUser(SystemConfigDTO dto) {
-        dto.setEvent(Constants.Event.LIST);
-        return systemConfigService.doService(dto);
-    }
-
-    @Secured("ROLE_ADMIN")
-    @ApiOperation("修改系统配置")
-    @PostMapping("system/config/modify")
-    public Response modifySystemUser(SystemConfigDTO dto) {
-        return systemConfigService.doService(dto);
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation("删除系统用户")
+    @DeleteMapping("system/user/{id}")
+    public Response delSystemUser(@PathVariable Long id) {
+        SysUserDTO dto = new SysUserDTO();
+        dto.setId(id);
+        dto.setEvent(Constants.Event.DELETE);
+        return sysUserService.doService(dto);
     }
 }

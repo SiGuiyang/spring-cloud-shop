@@ -28,6 +28,8 @@ class DTO implements Serializable {
      */
     private String createUser;
 
+    private String access_token;
+
     public DTO() {
     }
 

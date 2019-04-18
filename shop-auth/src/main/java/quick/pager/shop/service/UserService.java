@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.client.AuthClient;
 import quick.pager.shop.resp.Response;
-import quick.pager.shop.dto.RoleDTO;
 import quick.pager.shop.dto.UserDTO;
 
 
@@ -32,9 +31,9 @@ public class UserService implements UserDetailsService {
         UserDTO sysUser = sysUserResponse.getData();
 
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-        Response<List<RoleDTO>> roleResponse = authClient.getRolesBySysUserId(sysUser.getId());
-        List<RoleDTO> roles = roleResponse.getData();
-        roles.forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleCode())));
+        Response<List<String>> roleResponse = authClient.getRolesBySysUserId(sysUser.getId());
+        List<String> permissions = roleResponse.getData();
+        permissions.forEach(permission -> grantedAuthorities.add(new SimpleGrantedAuthority(permission)));
 
         return new User(username, sysUser.getPassword(), grantedAuthorities);
     }

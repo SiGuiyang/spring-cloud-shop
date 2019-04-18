@@ -1,9 +1,12 @@
 package quick.pager.shop.response;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 import lombok.Data;
+import quick.pager.shop.model.Menu;
 
 @Data
 public class SysUserResponse implements Serializable {
@@ -15,5 +18,8 @@ public class SysUserResponse implements Serializable {
 
     private String avatar;
 
-    private List<String> permission = Lists.newArrayList();
+    private List<Menu> routers = Lists.newArrayList();
+
+    private Set<String> permissions = Sets.newHashSet();
+
 }

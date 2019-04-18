@@ -6,15 +6,12 @@ import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
-import quick.pager.shop.filter.LoginFilter;
 
 @SpringCloudApplication
 public class GatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(GatewayApplication.class);
-        springApplication.run(args);
-        System.out.println(springApplication.getWebApplicationType().name());
+        SpringApplication.run(GatewayApplication.class,args);
     }
 
     @Bean
@@ -26,7 +23,7 @@ public class GatewayApplication {
                 .route("shop-auth", p -> p.path("/oauth/**").uri("lb://shop-auth"))
                 .route("shop-order", p -> p.path("/order/**").uri("lb://shop-order"))
                 .route("shop-settlement", p -> p.path("/settlement/**").uri("lb://shop-settlement"))
-                .route("shop-user", p -> p.path("/user/**").uri("lb://shop-user").filter(new LoginFilter()))
+                .route("shop-user", p -> p.path("/user/**").uri("lb://shop-user"))
                 .route("shop-seller", p -> p.path("/seller/**").uri("lb://shop-seller"))
 
                 .build();

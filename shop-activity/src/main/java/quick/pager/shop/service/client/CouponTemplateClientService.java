@@ -58,13 +58,7 @@ public class CouponTemplateClientService implements IService {
         PageHelper.startPage(couponTemplateDTO.getPage(), couponTemplateDTO.getPageSize());
         List<DiscountCouponTemplate> discountCouponTemplates = discountCouponTemplateMapper.selectTemplates(couponTemplateDTO.getTemplateName(),
                 couponTemplateDTO.getTemplateType());
-        PageInfo<DiscountCouponTemplate> pageInfo = new PageInfo<>(discountCouponTemplates);
-        Response<List<DiscountCouponTemplate>> response = new Response<>();
-
-        response.setTotal(pageInfo.getTotal());
-        response.setData(pageInfo.getList());
-
-        return response;
+        return Response.toResponse(discountCouponTemplates);
     }
 
     /**

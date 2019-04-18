@@ -245,12 +245,7 @@ public class FightGroupClientService {
             fightGroupMemberResponseList.add(fightGroupMemberResponse);
         });
 
-        PageInfo<FightGroupMemberResponse> pageInfo = new PageInfo<>(fightGroupMemberResponseList);
-        Response<List<FightGroupMemberResponse>> response = new Response<>();
-        response.setTotal(pageInfo.getTotal());
-        response.setData(pageInfo.getList());
-
-        return response;
+        return Response.toResponse(fightGroupMemberResponseList);
     }
 
     /**

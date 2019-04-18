@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.mapper.TablesMapper">
+  <resultMap id="BaseResultMap" type="quick.pager.shop.model.Tables">
+    <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema" />
+    <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+    <result column="TABLE_COMMENT" jdbcType="VARCHAR" property="tableComment" />
+  </resultMap>
+
+  <sql id="Blob_Column_List">
+    TABLE_SCHEMA, TABLE_NAME, TABLE_COMMENT
+  </sql>
+
+  <select id="selectTables" resultMap="BaseResultMap">
+
+    select <include refid="Blob_Column_List" />
+    from information_schema.TABLES
+    <where>
+      <choose>
+        <when test="database != null and database != ''">
+          TABLE_SCHEMA = #{database, jdbcType=VARCHAR}
+        </when>
+        <otherwise>
+          TABLE_SCHEMA = (select database())
+        </otherwise>
+      </choose>
+      <if test="tableName != null and tableName != ''">
+        and TABLE_NAME = #{tableName, jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+</mapper>

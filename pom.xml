@@ -27,6 +27,7 @@
         <lombok.version>1.18.4</lombok.version>
         <weixin.version>3.1.0</weixin.version>
         <redis.version>2.9.0</redis.version>
+        <pagehelper.version>1.2.10</pagehelper.version>
     </properties>
 
     <dependencyManagement>
@@ -123,6 +124,13 @@
                 <version>${happy.version}</version>
                 <scope>compile</scope>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import quick.pager.shop.constants.SysConfigKeys;
 import quick.pager.shop.utils.SysConfigMap;
@@ -16,6 +17,7 @@ import quick.pager.shop.utils.SysConfigMap;
  */
 @SpringCloudApplication
 @EnableFeignClients
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @MapperScan(basePackages = "quick.pager.shop.mapper")
 @Slf4j
 public class ManageApplication implements CommandLineRunner, WebMvcConfigurer {

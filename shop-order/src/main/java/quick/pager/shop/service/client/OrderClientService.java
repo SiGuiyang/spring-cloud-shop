@@ -1,7 +1,6 @@
 package quick.pager.shop.service.client;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +31,7 @@ public class OrderClientService {
         List<UserOrder> userOrders = userOrderMapper.selectUserOrders(request.getPhone(), request.getOrderCode(), request.getOrderStatus(),
                 request.getOrderType(), request.getBeginTime(), request.getEndTime());
 
-        PageInfo<UserOrder> pageInfo = new PageInfo<>(userOrders);
-
-        Response<List<UserOrder>> response = new Response<>();
-
-        response.setTotal(pageInfo.getTotal());
-
-        response.setData(pageInfo.getList());
-
-        return response;
+        return Response.toResponse(userOrders);
     }
 
     /**

@@ -14,7 +14,7 @@ import quick.pager.shop.response.Response;
 
 @Configuration
 @EnableResourceServer
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ShopResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
@@ -46,7 +46,7 @@ public class ShopResourceServerConfiguration extends ResourceServerConfigurerAda
                     out.close();
                 })
                 .and()
-                .authorizeRequests().mvcMatchers("/actuator/**", "/admin/permit/**").permitAll()
+                .authorizeRequests().mvcMatchers("/actuator/**","/druid/**", "/css/**","/admin/permit/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()

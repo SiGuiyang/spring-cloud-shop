@@ -54,11 +54,23 @@ public class SysUserService implements IService {
             case Constants.Event.LIST:
                 response = querySysUser(sysUserDTO);
                 break;
+            case Constants.Event.DELETE:
+                response = delSysUser(sysUserDTO.getId());
+                break;
             default:
                 response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
 
         }
         return response;
+    }
+
+    private Response delSysUser(Long id) {
+
+        SysUser sysUser = new SysUser();
+        sysUser.setId(id);
+        sysUser.setDeleteStatus(true);
+        sysUserMapper.updateByPrimaryKeySelective(sysUser);
+        return new Response();
     }
 
     /**
@@ -77,9 +89,8 @@ public class SysUserService implements IService {
             List<SysRole> sysRoles = sysRoleMapper.selectBySysUserId(sysUser.getId());
             sysRoles.forEach(sysRole -> {
                 Role role = roleMapper.selectByPrimaryKey(sysRole.getRoleId());
-                if (!ObjectUtils.isEmpty(role)) {
-                    sysUser.getRoleNameLists().add(role.getRoleName());
-                }
+                sysUser.getRoles().add(role);
+                sysUser.getRoleIds().add(role.getId());
             });
         });
 
@@ -103,6 +114,7 @@ public class SysUserService implements IService {
             sysUser.setCreateUser(PrincipalUtils.getPrincipal().getName());
             sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
             sysUser.setCreateTime(new Date());
+            sysUser.setDeleteStatus(false);
             sysUserMapper.insertSelective(sysUser);
         }
 
