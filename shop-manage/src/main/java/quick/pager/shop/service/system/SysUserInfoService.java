@@ -97,7 +97,7 @@ public class SysUserInfoService implements IService<SysUserResponse> {
                 k.setComponent("Layout");
             }
             // 筛选出此用户所拥有的菜单的子菜单
-            List<Menu> child = menuList.stream().filter(s -> k.getId().compareTo(s.getParentId()) == 0 && 1 == k.getMenuType()).collect(Collectors.toList());
+            List<Menu> child = menuList.stream().filter(s -> k.getId().compareTo(s.getParentId()) == 0 && 1 == k.getMenuType() && 1 == s.getMenuType()).collect(Collectors.toList());
             List<Menu> list = recursivePermission(Lists.newArrayList(), child, menuList, permissions);
             k.setChildren(list);
             result.add(k);
