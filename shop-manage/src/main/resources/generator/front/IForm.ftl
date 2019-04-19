@@ -4,9 +4,11 @@
 <#if columns??>
   <#list columns as column>
   <#if column.changeColumnName != 'id'>
+  <#if column.columnShow>
       <el-form-item label="<#if column.columnComment != ''>${column.columnComment}<#else>${column.changeColumnName}</#if>">
-        <el-input v-model="form.${column.changeColumnName}" style="width: 370px;"/>
+        <el-input v-model="formData.${column.changeColumnName}" style="width: 370px;"/>
       </el-form-item>
+  </#if>
   </#if>
   </#list>
 </#if>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-import { modify, add } from '@/api/{changeClassName}'
+import { modify, add } from '@/api/${changeClassName}'
 
 export default {
   name: 'Form',
@@ -47,13 +49,13 @@ export default {
         if (valid) {
           this.formData.createUser = this.$store.state.user.username
           add(this.formData).then(() => {
-            this.dialogFormVisible = false
             this.$notify({
               title: '成功',
               message: '创建成功',
               type: 'success',
               duration: 2000
             })
+            this.dialogFormVisible = false
             this.$parent.getList()
           })
         }
@@ -64,13 +66,13 @@ export default {
         if (valid) {
           const formDataData = Object.assign({}, this.formData)
           modify(formDataData).then(() => {
-            this.dialogFormVisible = false
             this.$notify({
               title: '成功',
               message: '更新成功',
               type: 'success',
               duration: 2000
             })
+            this.dialogFormVisible = false
             this.$parent.getList()
           })
         }

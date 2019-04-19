@@ -80,6 +80,13 @@ public class GeneratorUtil {
             } else {
                 listMap.putIfAbsent("pkColumnType", "common");
             }
+            if (column.getDataType().equalsIgnoreCase("timestamp")
+                    || column.getDataType().equalsIgnoreCase("date")
+                    || column.getDataType().equalsIgnoreCase("datetime")) {
+                listMap.putIfAbsent("hasDate", true);
+            } else {
+                listMap.putIfAbsent("hasDate", false);
+            }
             listMap.put("dataType", column.getDataType().toUpperCase());
             listMap.put("columnType", colType);
             listMap.put("columnName", column.getColumnName());
@@ -142,25 +149,25 @@ public class GeneratorUtil {
                 result = packagePath + "controller" + File.separator + module + "Controller.java";
                 break;
             case "Service":
-                result = packagePath + File.separator + module + "Service.java";
+                result = packagePath + "service" + File.separator + module + "Service.java";
                 break;
             case "DTO":
-                result = packagePath + File.separator + "dto" + File.separator + module + "DTO.java";
+                result = packagePath + "dto" + File.separator + module + "DTO.java";
                 break;
             case "Mapper":
-                result = packagePath + File.separator + "mapper" + File.separator + module + "Mapper.java";
+                result = packagePath + "mapper" + File.separator + module + "Mapper.java";
                 break;
             case "Xml":
-                result = packagePath + File.separator + "mapper" + File.separator + module + "Mapper.xml";
+                result = packagePath + "mapper" + File.separator + module + "Mapper.xml";
                 break;
             case "api":
-                result = config.getFrontPath() + File.separator + module + ".js";
+                result = config.getFrontPath() + File.separator + "api" + File.separator + module + ".js";
                 break;
             case "index":
-                result = config.getFrontPath() + File.separator + "index.vue";
+                result = config.getFrontPath() + File.separator + "views" + File.separator + "temp" + File.separator + "index.vue";
                 break;
             case "IForm":
-                result = config.getFrontPath() + File.separator + "form.vue";
+                result = config.getFrontPath() + File.separator + "views" + File.separator + "temp" + File.separator + "form.vue";
                 break;
         }
         return result;

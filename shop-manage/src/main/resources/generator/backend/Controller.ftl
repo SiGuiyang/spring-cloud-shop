@@ -51,7 +51,7 @@ public class ${className}Controller {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public Response modify${className}s(${className}DTO dto){
         dto.setEvent(Constants.Event.MODIFY);
-        return ${changeClassName}Service.doService();
+        return ${changeClassName}Service.doService(dto);
     }
     /**
     * 删除

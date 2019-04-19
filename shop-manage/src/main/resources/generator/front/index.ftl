@@ -63,7 +63,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        pageSize: 20,
+        pageSize: 20<#if hasQuery>,</#if>
 <#if hasQuery>
   <#if queryColumns??>
     <#list queryColumns as column>

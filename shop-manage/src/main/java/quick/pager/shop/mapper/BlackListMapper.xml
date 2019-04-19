@@ -1,48 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="quick.pager.shop.mapper.InviteCodeMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.InviteCode">
+<mapper namespace="quick.pager.shop.mapper.BlackListMapper">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.BlackList">
     <id column="id" jdbcType="BIGINT" property="id"/>
-    <result column="user_id" jdbcType="BIGINT" property="userId"/>
-    <result column="template_id" jdbcType="BIGINT" property="templateId"/>
-    <result column="code" jdbcType="VARCHAR" property="code"/>
+    <result column="phone" jdbcType="VARCHAR" property="phone"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
-    <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
     <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
     </resultMap>
     <sql id="Base_Column_List">
         id,
-        user_id,
-        template_id,
-        code,
+        phone,
         create_time,
         update_time,
-        create_user,
-        delete_status
+        delete_status,
+        create_user
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_invite_code
+        from t_black_list
         where id = #{id, jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.InviteCode">
-        insert into t_invite_code
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.BlackList">
+        insert into t_black_list
         <trim prefix="(" suffix=")" suffixOverrides=",">
 
         <if test="id != null">
             id,
         </if>
-        <if test="userId != null">
-            user_id,
-        </if>
-        <if test="templateId != null">
-            template_id,
-        </if>
-        <if test="code != null">
-            code,
+        <if test="phone != null">
+            phone,
         </if>
         <if test="createTime != null">
             create_time,
@@ -50,25 +40,19 @@
         <if test="updateTime != null">
             update_time,
         </if>
-        <if test="createUser != null">
-            create_user,
-        </if>
         <if test="deleteStatus != null">
             delete_status,
+        </if>
+        <if test="createUser != null">
+            create_user,
         </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         <if test="id != null">
             #{id, jdbcType=BIGINT},
         </if>
-        <if test="userId != null">
-            #{userId, jdbcType=BIGINT},
-        </if>
-        <if test="templateId != null">
-            #{templateId, jdbcType=BIGINT},
-        </if>
-        <if test="code != null">
-            #{code, jdbcType=VARCHAR},
+        <if test="phone != null">
+            #{phone, jdbcType=VARCHAR},
         </if>
         <if test="createTime != null">
             #{createTime, jdbcType=TIMESTAMP},
@@ -76,26 +60,20 @@
         <if test="updateTime != null">
             #{updateTime, jdbcType=TIMESTAMP},
         </if>
-        <if test="createUser != null">
-            #{createUser, jdbcType=VARCHAR},
-        </if>
         <if test="deleteStatus != null">
             #{deleteStatus, jdbcType=BIT},
+        </if>
+        <if test="createUser != null">
+            #{createUser, jdbcType=VARCHAR},
         </if>
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.InviteCode">
-        update t_invite_code
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.BlackList">
+        update t_black_list
         <set>
-            <if test="userId != null">
-                user_id = #{userId, jdbcType=BIGINT},
-            </if>
-            <if test="templateId != null">
-                template_id = #{templateId, jdbcType=BIGINT},
-            </if>
-            <if test="code != null">
-                code = #{code, jdbcType=VARCHAR},
+            <if test="phone != null">
+                phone = #{phone, jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -103,32 +81,26 @@
             <if test="updateTime != null">
                 update_time = #{updateTime, jdbcType=TIMESTAMP},
             </if>
-            <if test="createUser != null">
-                create_user = #{createUser, jdbcType=VARCHAR},
-            </if>
             <if test="deleteStatus != null">
                 delete_status = #{deleteStatus, jdbcType=BIT},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser, jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id, jdbcType=BIGINT}
     </update>
 
-    <select id="select" parameterType="quick.pager.shop.model.InviteCode" resultMap="BaseResultMap">
+    <select id="select" parameterType="quick.pager.shop.model.BlackList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_invite_code
+        from t_black_list
         <where>
             <if test="id != null">
                 id = #{id, jdbcType=BIGINT},
             </if>
-            <if test="userId != null">
-                and user_id = #{userId, jdbcType=BIGINT},
-            </if>
-            <if test="templateId != null">
-                and template_id = #{templateId, jdbcType=BIGINT},
-            </if>
-            <if test="code != null">
-                and code = #{code, jdbcType=VARCHAR},
+            <if test="phone != null">
+                and phone = #{phone, jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 and create_time = #{createTime, jdbcType=TIMESTAMP},
@@ -136,11 +108,11 @@
             <if test="updateTime != null">
                 and update_time = #{updateTime, jdbcType=TIMESTAMP},
             </if>
-            <if test="createUser != null">
-                and create_user = #{createUser, jdbcType=VARCHAR},
-            </if>
             <if test="deleteStatus != null">
                 and delete_status = #{deleteStatus, jdbcType=BIT},
+            </if>
+            <if test="createUser != null">
+                and create_user = #{createUser, jdbcType=VARCHAR},
             </if>
         </where>
     </select>

@@ -9,8 +9,6 @@ public class GeneratorConfig extends Model {
     private static final long serialVersionUID = 6767700338460801118L;
     private Long id;
 
-    private String backendPath;
-
     private String frontPath;
 
     private Boolean serverStatus;

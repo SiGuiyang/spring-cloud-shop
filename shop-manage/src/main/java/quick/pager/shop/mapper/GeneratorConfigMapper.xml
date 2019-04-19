@@ -3,7 +3,6 @@
 <mapper namespace="quick.pager.shop.mapper.GeneratorConfigMapper">
     <resultMap id="BaseResultMap" type="quick.pager.shop.model.GeneratorConfig">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="backend_path" jdbcType="VARCHAR" property="backendPath"/>
         <result column="front_path" jdbcType="VARCHAR" property="frontPath"/>
         <result column="server_status" jdbcType="BIT" property="serverStatus"/>
         <result column="package_path" jdbcType="VARCHAR" property="packagePath"/>
@@ -11,7 +10,7 @@
         <result column="module" jdbcType="VARCHAR" property="module"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, backend_path, front_path, server_status, package_path, author, module
+    id, front_path, server_status, package_path, author, module
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -29,9 +28,6 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
-            </if>
-            <if test="backendPath != null">
-                backend_path,
             </if>
             <if test="frontPath != null">
                 front_path,
@@ -53,9 +49,6 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="backendPath != null">
-                #{backendPath,jdbcType=VARCHAR},
-            </if>
             <if test="frontPath != null">
                 #{frontPath,jdbcType=VARCHAR},
             </if>
@@ -76,9 +69,6 @@
     <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.GeneratorConfig">
         update t_generator_config
         <set>
-            <if test="backendPath != null">
-                backend_path = #{backendPath,jdbcType=VARCHAR},
-            </if>
             <if test="frontPath != null">
                 front_path = #{frontPath,jdbcType=VARCHAR},
             </if>

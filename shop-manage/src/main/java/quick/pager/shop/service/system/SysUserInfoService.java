@@ -17,7 +17,6 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.mapper.MenuMapper;
 import quick.pager.shop.model.Menu;
-import quick.pager.shop.model.SystemConfig;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
 import quick.pager.shop.dto.LoginDTO;

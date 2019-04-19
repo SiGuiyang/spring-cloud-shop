@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.dto.InviteCodeDTO;
-import quick.pager.shop.service.InviteCodeService;
+import quick.pager.shop.dto.BlackListDTO;
+import quick.pager.shop.service.risk.BlackListService;
 import quick.pager.shop.response.Response;
 
 
@@ -21,47 +20,47 @@ import quick.pager.shop.response.Response;
 */
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
-public class InviteCodeController {
+public class BlackListController {
 
     @Autowired
-    private InviteCodeService inviteCodeService;
+    private BlackListService blackListService;
 
     /**
      * 列表
      */
-    @PostMapping(value = "/inviteCode/list")
+    @PostMapping(value = "/blackList/list")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Response getInviteCodes(InviteCodeDTO dto){
+    public Response getBlackLists(BlackListDTO dto){
         dto.setEvent(Constants.Event.LIST);
-        return inviteCodeService.doService(dto);
+        return blackListService.doService(dto);
     }
     /**
     * 新增
     */
-    @PostMapping(value = "/inviteCode")
+    @PostMapping(value = "/blackList")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Response addInviteCodes(InviteCodeDTO dto){
+    public Response addBlackLists(BlackListDTO dto){
         dto.setEvent(Constants.Event.ADD);
-        return inviteCodeService.doService(dto);
+        return blackListService.doService(dto);
     }
     /**
     * 修改
     */
-    @PutMapping(value = "/inviteCode")
+    @PutMapping(value = "/blackList")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Response modifyInviteCodes(InviteCodeDTO dto){
+    public Response modifyBlackLists(BlackListDTO dto){
         dto.setEvent(Constants.Event.MODIFY);
-        return inviteCodeService.doService();
+        return blackListService.doService(dto);
     }
     /**
     * 删除
     */
-    @DeleteMapping(value = "/inviteCode/{id}")
+    @DeleteMapping(value = "/blackList/{id}")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Response delInviteCodes(@PathVariable("id") Long id){
-        InviteCodeDTO dto = new InviteCodeDTO();
+    public Response delBlackLists(@PathVariable("id") Long id){
+        BlackListDTO dto = new BlackListDTO();
         dto.setEvent(Constants.Event.DELETE);
         dto.setId(id);
-        return inviteCodeService.doService(dto);
+        return blackListService.doService(dto);
     }
 }

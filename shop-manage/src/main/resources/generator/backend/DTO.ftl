@@ -3,7 +3,7 @@ package ${package}.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.dto.ManageDTO;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
 * @author ${author}
@@ -18,6 +18,9 @@ public class ${className}DTO extends ManageDTO {
     /**
      * ${column.columnComment}
      */
+    </#if>
+    <#if column.hasDate>
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     </#if>
     private ${column.columnType} ${column.changeColumnName};
     </#if>

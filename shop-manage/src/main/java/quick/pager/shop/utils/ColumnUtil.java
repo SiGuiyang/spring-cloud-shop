@@ -22,6 +22,8 @@ public class ColumnUtil {
         COLUMN_MAP.putIfAbsent("BIT", "Boolean");
         COLUMN_MAP.putIfAbsent("BOOLEAN", "Boolean");
         COLUMN_MAP.putIfAbsent("TINYINT", "Integer");
+        COLUMN_MAP.putIfAbsent("int", "Integer");
+        COLUMN_MAP.putIfAbsent("Integer", "Integer");
         COLUMN_MAP.putIfAbsent("SMALLINT", "Integer");
         COLUMN_MAP.putIfAbsent("INTEGER", "Integer");
         COLUMN_MAP.putIfAbsent("BIGINT", "Long");
