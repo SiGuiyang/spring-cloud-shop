@@ -1,7 +1,7 @@
 package quick.pager.shop.controller;
 
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.LoginDTO;
-import quick.pager.shop.model.Role;
 import quick.pager.shop.model.SysUser;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.system.LoginService;
@@ -48,7 +47,7 @@ public class LoginController {
     }
 
     @PostMapping("/permit/permission/{sysUserId}")
-    public Response<List<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
+    public Response<Set<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
         return sysUserClientService.getRolesBySysUserId(sysUserId);
     }
 

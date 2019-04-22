@@ -1,13 +1,12 @@
 package quick.pager.shop.client;
 
 import feign.hystrix.FallbackFactory;
-import java.util.List;
+import java.util.Set;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import quick.pager.shop.dto.RoleDTO;
 import quick.pager.shop.dto.UserDTO;
 import quick.pager.shop.resp.Response;
 
@@ -28,7 +27,7 @@ public interface AuthClient {
      * @param sysUserId 系统用户Id
      */
     @RequestMapping(value = "/permit/permission/{sysUserId}", method = RequestMethod.POST)
-    Response<List<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId);
+    Response<Set<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId);
 
     /**
      * 熔断工厂

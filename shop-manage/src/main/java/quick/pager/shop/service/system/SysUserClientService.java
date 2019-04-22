@@ -3,9 +3,11 @@ package quick.pager.shop.service.system;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import quick.pager.shop.mapper.MenuMapper;
 import quick.pager.shop.model.Menu;
 import quick.pager.shop.response.Response;
@@ -24,11 +26,11 @@ public class SysUserClientService {
         return new Response<>(sysUserMapper.selectSysUserByUsername(username));
     }
 
-    public Response<List<String>> getRolesBySysUserId(Long sysUserId) {
+    public Response<Set<String>> getRolesBySysUserId(Long sysUserId) {
 
         // 所有访问菜单的路由
         List<Menu> menus = menuMapper.selectMenuBySysUserId(sysUserId);
-        List<String> list = Optional.of(menus).orElse(Collections.emptyList()).stream().map(Menu::getPermission).collect(Collectors.toList());
+        Set<String> list = Optional.of(menus).orElse(Collections.emptyList()).stream().filter(menu -> !StringUtils.isEmpty(menu.getPermission())).map(Menu::getPermission).collect(Collectors.toSet());
         return new Response<>(list);
     }
 }

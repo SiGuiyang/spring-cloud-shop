@@ -2,6 +2,7 @@ package quick.pager.shop.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -31,8 +32,8 @@ public class UserService implements UserDetailsService {
         UserDTO sysUser = sysUserResponse.getData();
 
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-        Response<List<String>> roleResponse = authClient.getRolesBySysUserId(sysUser.getId());
-        List<String> permissions = roleResponse.getData();
+        Response<Set<String>> roleResponse = authClient.getRolesBySysUserId(sysUser.getId());
+        Set<String> permissions = roleResponse.getData();
         permissions.forEach(permission -> grantedAuthorities.add(new SimpleGrantedAuthority(permission)));
 
         return new User(username, sysUser.getPassword(), grantedAuthorities);

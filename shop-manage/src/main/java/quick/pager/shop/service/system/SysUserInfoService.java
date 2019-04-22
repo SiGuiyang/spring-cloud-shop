@@ -63,9 +63,9 @@ public class SysUserInfoService implements IService<SysUserResponse> {
         // 所有访问菜单的路由
         List<Menu> menus = menuMapper.selectMenuBySysUserId(sysUser.getId());
         // 父级菜单
-        List<Menu> topMenu = Optional.of(menus).orElse(Collections.emptyList()).stream().filter(menu -> null == menu.getParentId()).collect(Collectors.toList());
+        List<Menu> topMenu = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream().filter(menu -> null == menu.getParentId()).collect(Collectors.toList());
         // 这种写法是查出所有的菜单，移除顶级菜单，剩余的菜单就不是顶级菜单也就是parentId 都是不为null
-        menus.removeAll(topMenu);
+        Optional.ofNullable(menus).orElse(Collections.emptyList()).removeAll(topMenu);
         // 整合成父子结构
         List<Menu> routers = recursivePermission(Lists.newArrayList(), topMenu, menus, permissions);
 

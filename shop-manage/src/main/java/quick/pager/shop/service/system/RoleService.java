@@ -88,7 +88,7 @@ public class RoleService implements IService {
         // 所有用户访问菜单的路由
         List<Menu> allMenus = menuMapper.selectMenuByRoleId(roleDTO.getId());
 
-        Set<Long> hadPermissionIds = Optional.of(allMenus).orElse(Collections.emptyList()).stream().map(Menu::getId).collect(Collectors.toSet());
+        Set<Long> hadPermissionIds = Optional.ofNullable(allMenus).orElse(Collections.emptyList()).stream().map(Menu::getId).collect(Collectors.toSet());
         /*
          * 这种做法是帮助页面显示的<br />
          * 原因 v-tree 父节点只要被选中，则它的所有子节点会选中<br />

@@ -25,7 +25,6 @@
         <mybatis-generator.version>1.3.6</mybatis-generator.version>
         <swagger2.version>2.8.0</swagger2.version>
         <lombok.version>1.18.4</lombok.version>
-        <weixin.version>3.1.0</weixin.version>
         <redis.version>2.9.0</redis.version>
         <pagehelper.version>1.2.10</pagehelper.version>
     </properties>
