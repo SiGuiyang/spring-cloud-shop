@@ -147,7 +147,8 @@ public interface Constants {
         SPECIAL(1, "专区订单"),
         NORMAL(2, "普通订单"),
         SELF(3, "自提订单"),
-        SEC_KILL(4, "秒杀订单");
+        SEC_KILL(4, "秒杀订单"),
+        INTEGRAL(5, "积分订单");
 
         private int type;
 

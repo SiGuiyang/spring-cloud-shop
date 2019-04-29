@@ -10,7 +10,7 @@ public class FightGroupRule extends Model {
 
     private String activityName;
 
-    private Long groupId;
+    private Long activityId;
 
     private Integer purchaseLimit;
 

@@ -33,5 +33,7 @@ public class Goods extends Model {
     private Integer integral;
 
     private Integer goodsInventory;
+    // 模型对应，无数据库映射
+    private boolean join;
 
 }

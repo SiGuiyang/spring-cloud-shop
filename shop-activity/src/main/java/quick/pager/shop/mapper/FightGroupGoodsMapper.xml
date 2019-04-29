@@ -4,24 +4,24 @@
   <resultMap id="BaseResultMap" type="quick.pager.shop.model.FightGroupGoods">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
     <result column="rule_id" jdbcType="BIGINT" property="ruleId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_id, group_id, rule_id, create_time, update_time, delete_status
+    id, goods_id, activity_id, rule_id, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from t_fight_group_goods
+    from t_fight_group_activity_goods
     where id = #{id,jdbcType=BIGINT}
   </select>
 
   <insert id="insertSelective" parameterType="quick.pager.shop.model.FightGroupGoods">
-    insert into t_fight_group_goods
+    insert into t_fight_group_activity_goods
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -29,8 +29,8 @@
       <if test="goodsId != null">
         goods_id,
       </if>
-      <if test="groupId != null">
-        group_id,
+      <if test="activityId != null">
+        activity_id,
       </if>
       <if test="ruleId != null">
         rule_id,
@@ -52,8 +52,8 @@
       <if test="goodsId != null">
         #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=BIGINT},
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
       </if>
       <if test="ruleId != null">
         #{ruleId,jdbcType=BIGINT},
@@ -70,13 +70,13 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.FightGroupGoods">
-    update t_fight_group_goods
+    update t_fight_group_activity_goods
     <set>
       <if test="goodsId != null">
         goods_id = #{goodsId,jdbcType=BIGINT},
       </if>
-      <if test="groupId != null">
-        group_id = #{groupId,jdbcType=BIGINT},
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=BIGINT},
       </if>
       <if test="ruleId != null">
         rule_id = #{ruleId,jdbcType=BIGINT},
@@ -96,8 +96,13 @@
 
   <select id="selectFightGroupGoods" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
-    from t_fight_group_goods
-    where group_id = #{groupId,jdbcType=BIGINT} and delete_status = false
+    from t_fight_group_activity_goods
+    where activity_id = #{activityId,jdbcType=BIGINT} and delete_status = false
+  </select>
+
+  <select id="selectCountByActivityIdAndGoodsId" resultType="int">
+    select count(id) from t_fight_group_activity_goods
+    where activity_id = #{activityId,jdbcType=BIGINT} and goods_id = #{goodsId,jdbcType=BIGINT} and delete_status = false
   </select>
 
 </mapper>

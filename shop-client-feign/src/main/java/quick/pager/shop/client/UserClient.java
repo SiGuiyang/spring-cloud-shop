@@ -51,6 +51,6 @@ public interface UserClient {
     /**
      * 批量获取用户信息
      */
-    @RequestMapping(value = "/user/queryAddress/{addressId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/address/{addressId}", method = RequestMethod.POST)
     Response<Address> queryAddress(@RequestParam("addressId") Long addressId);
 }

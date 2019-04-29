@@ -1,9 +1,9 @@
 server:
-  port: 8098
+  port: 8078
 
 spring:
   application:
-    name: shop-user
+    name: shop-seller
   profiles:
     active: dev
 
@@ -16,5 +16,5 @@ management:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapper-locations: classpath*:quick/pager/shop/seller/mapper/*.xml
+  mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model

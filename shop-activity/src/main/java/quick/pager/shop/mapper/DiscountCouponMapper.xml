@@ -235,12 +235,11 @@
         <include refid="Base_Column_List"/>
         from t_discount_coupon
         where
-        DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[<=]]> create_time
-
-        <if test="couponName != null">
+          DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[<=]]> create_time
+        <if test="couponName != null and couponName != ''">
             and coupon_name like concat(#{couponName}, '%')
         </if>
-        <if test="phone != null">
+        <if test="phone != null and phone != ''">
             and phone = #{phone,jdbcType=VARCHAR}
         </if>
         <if test="discountType != null and discountType != ''">

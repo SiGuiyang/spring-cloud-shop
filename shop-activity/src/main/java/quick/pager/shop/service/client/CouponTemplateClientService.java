@@ -34,7 +34,7 @@ public class CouponTemplateClientService implements IService {
     public Response doService(BaseDTO dto) {
 
         CouponTemplateDTO couponTemplateDTO = (CouponTemplateDTO) dto;
-        Response response = new Response();
+        Response response;
         switch (couponTemplateDTO.getEvent()) {
             case Constants.Event.ADD:
             case Constants.Event.MODIFY:
@@ -68,19 +68,21 @@ public class CouponTemplateClientService implements IService {
         DiscountCouponTemplate template = new DiscountCouponTemplate();
         BeanUtils.copyProperties(couponTemplateDTO, template);
 
-        // 如果是折扣券
-        if (Constants.CouponType.DISCOUNT.getType() == template.getTemplateType()) {
-            BigDecimal hundred = new BigDecimal("100");
+        if (null != template.getTemplateType() && null != template.getDiscountStrength()) {
+            // 如果是折扣券
+            if (Constants.CouponType.DISCOUNT.getType() == template.getTemplateType()) {
+                BigDecimal hundred = new BigDecimal("100");
 
-            if (hundred.compareTo(template.getDiscountStrength()) <= 0) {
-                return new Response(ResponseStatus.Code.FAIL_CODE, "折扣力度不能必须小于100");
-            } else if (BigDecimal.ZERO.compareTo(template.getDiscountStrength()) >= 0) {
-                return new Response(ResponseStatus.Code.FAIL_CODE, "折扣力度必须是整数");
+                if (hundred.compareTo(template.getDiscountStrength()) <= 0) {
+                    return new Response(ResponseStatus.Code.FAIL_CODE, "折扣力度不能必须小于100");
+                } else if (BigDecimal.ZERO.compareTo(template.getDiscountStrength()) >= 0) {
+                    return new Response(ResponseStatus.Code.FAIL_CODE, "折扣力度必须是整数");
+                }
+
+                template.setDiscountStrength(template.getDiscountStrength().divide(new BigDecimal("100")));
             }
 
-            template.setDiscountStrength(template.getDiscountStrength().divide(new BigDecimal("100")));
         }
-
         if (Constants.Event.ADD.equals(couponTemplateDTO.getEvent())) {
             template.setCreateTime(new Date());
             discountCouponTemplateMapper.insertSelective(template);

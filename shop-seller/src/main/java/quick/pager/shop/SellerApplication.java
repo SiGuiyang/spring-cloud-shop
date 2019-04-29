@@ -13,7 +13,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @SpringCloudApplication
 @EnableFeignClients
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@MapperScan(basePackages = "quick.pager.shop")
+@MapperScan("quick.pager.shop.mapper")
 public class SellerApplication {
 
     public static void main(String[] args) {

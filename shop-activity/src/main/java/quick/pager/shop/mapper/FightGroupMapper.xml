@@ -18,14 +18,14 @@
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from t_fight_group
+    from t_fight_group_activity
     where id = #{id,jdbcType=BIGINT}
   </select>
 
   <insert id="insertSelective" parameterType="quick.pager.shop.model.FightGroup">
-    insert into t_fight_group
+    insert into t_fight_group_activity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -86,7 +86,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.FightGroup">
-    update t_fight_group
+    update t_fight_group_activity
     <set>
       <if test="activityName != null">
         activity_name = #{activityName,jdbcType=VARCHAR},
@@ -118,16 +118,16 @@
 
   <select id="selectFightGroup" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
-    from t_fight_group
+    from t_fight_group_activity
     <where>
       <if test="activityName != null and activityName != ''">
         activity_name = #{activityName,jdbcType=VARCHAR}
       </if>
       <if test="beginTime != null and beginTime != ''">
-        and begin_time <![CDATA[>=]]> #{beginTime,jdbcType=TIMESTAMP}
+        and date_format(begin_time,'%Y-%m-%d') <![CDATA[>=]]> #{beginTime,jdbcType=TIMESTAMP}
       </if>
       <if test="endTime != null and endTime != ''">
-        and end_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+        and date_format(end_time,'%Y-%m-%d') <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
       </if>
     </where>
     order by id desc

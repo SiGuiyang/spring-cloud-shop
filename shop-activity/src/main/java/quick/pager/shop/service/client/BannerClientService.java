@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
@@ -70,10 +71,16 @@ public class BannerClientService implements IService {
     private void modifyBanner(BannerDTO dto) {
         Banner banner = new Banner();
         BeanUtils.copyProperties(dto, banner);
-        banner.setShareChannel(JSON.toJSONString(dto.getShareChannel()));
+        if (!StringUtils.isEmpty(dto.getShareChannel())) {
+            banner.setShareChannel(JSON.toJSONString(dto.getShareChannel()));
+        }
+        if ("[]".equals(dto.getShareChannel())){
+            banner.setShareChannel(null);
+        }
 
         if (Constants.Event.ADD.equals(dto.getEvent())) {
             banner.setCreateTime(new Date());
+            banner.setDeleteStatus(false);
             bannerMapper.insertSelective(banner);
         } else {
             bannerMapper.updateByPrimaryKeySelective(banner);

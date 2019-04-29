@@ -78,16 +78,15 @@ public class PublishCouponClientService implements IService {
                 reader.read(inputStream, 0);
 
                 if (CollectionUtils.isEmpty(phones)) {
-                    response.setCode(ResponseStatus.Code.FAIL_CODE);
-                    response.setMsg(ResponseStatus.PUBLISH_COUPON_PHONE_IS_BLANK);
-                    return response;
+                    log.info("excel 文件中没有用户手机号");
+                    return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PUBLISH_COUPON_PHONE_IS_BLANK);
                 }
                 String[] phonesParam = new String[phones.size()];
                 // 取出正常的用户
                 Response<List<UserInfoDTO>> existsResponse = userClient.isExists(phones.toArray(phonesParam));
 
                 List<UserInfoDTO> exists = null;
-                if (null != existsResponse.getData()) {
+                if (ResponseStatus.Code.SUCCESS == existsResponse.getCode() && null != existsResponse.getData()) {
                     exists = existsResponse.getData();
                 }
 
@@ -98,11 +97,13 @@ public class PublishCouponClientService implements IService {
                 List<DiscountCoupon> discountCoupons = Lists.newArrayList();
 
                 if (!CollectionUtils.isEmpty(exists)) {
+                    log.info("查询到用户");
                     // 当前补发优惠券的人数大于1000，则采用线程方式发送
                     if (exists.size() >= 1000) {
                         // 多线程执行后返回正常的插入的手机号
                         List<String> list = new ForkJoinPool(2).invoke(new SendCouponTask(exists, template, discountCouponMapper));
 
+                        // 移除发送正常的手机号码
                         phones.removeAll(list);
 
                     } else {
@@ -134,13 +135,16 @@ public class PublishCouponClientService implements IService {
 
                     }
 
-                    // 取出非正常的手机号
+                    // 移除正常的手机号
                     phones.removeAll(normalPhones);
 
-                    // 最后得到的phones 存在的值必然是错误用户的手机号,这里的错误信息只提供参考，不打算存储在数据库中，放入redis中时效性1个月
+                    // 最后得到的phones 存在的值必然是错误用户的手机号,这里的错误信息只提供参考，不打算存储在数据库中，放入redis中时效性7d
                     if (!CollectionUtils.isEmpty(phones)) {
-                        redisService.set(RedisKeys.ManageKeys.SEND_COUPON_LIST + DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN), JSON.toJSONString(phones), 30 * 60 * 60 * 24);
+                        log.info("存在错误的用户手机号，存在redis中，用于给运营展示");
+                        redisService.set(RedisKeys.ManageKeys.SEND_COUPON_LIST + DateUtil.format(new Date(), DatePattern.PURE_DATETIME_PATTERN), JSON.toJSONString(phones), 7 * 60 * 60 * 24);
                     }
+                } else {
+                    log.info("未查到用户");
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : utf-8
 
- Date: 04/18/2019 21:46:41 PM
+ Date: 04/29/2019 15:51:50 PM
 */
 
 SET NAMES utf8;
@@ -66,6 +66,27 @@ INSERT INTO `t_area` VALUES ('1794', '429021', '神农架林区', '429000'), ('1
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `t_black_list`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_black_list`;
+CREATE TABLE `t_black_list` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `phone` varchar(11) DEFAULT NULL COMMENT '手机号',
+  `create_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `delete_status` bit(1) DEFAULT NULL,
+  `create_user` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='黑名单';
+
+-- ----------------------------
+--  Records of `t_black_list`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_black_list` VALUES ('1', '13818578899', '2019-04-19 14:57:18', '2019-04-19 14:57:21', b'1', 'admin'), ('2', '3242423424', '2019-04-19 15:19:33', '2019-04-19 15:19:32', b'0', null), ('3', 'yghjhbjh', '2019-04-19 15:20:35', '2019-04-19 15:20:34', b'1', null), ('4', 'fdfsfsdfdsf', '2019-04-19 15:22:31', '2019-04-19 15:22:30', b'0', null), ('5', '3242343', '2019-04-19 15:26:11', '2019-04-19 15:26:10', b'0', 'admin'), ('6', null, '2019-04-19 15:28:25', '2019-04-19 15:28:25', b'0', 'admin'), ('7', null, '2019-04-19 15:29:21', '2019-04-19 15:29:21', b'0', 'admin'), ('8', null, '2019-04-19 15:29:53', '2019-04-19 15:29:52', b'0', 'admin'), ('9', null, '2019-04-19 15:30:32', '2019-04-19 15:30:31', b'0', 'admin');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `t_city`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_city`;
@@ -90,7 +111,6 @@ COMMIT;
 DROP TABLE IF EXISTS `t_generator_config`;
 CREATE TABLE `t_generator_config` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `backend_path` varchar(127) NOT NULL,
   `front_path` varchar(127) NOT NULL,
   `server_status` bit(1) NOT NULL,
   `package_path` varchar(127) NOT NULL,
@@ -103,7 +123,7 @@ CREATE TABLE `t_generator_config` (
 --  Records of `t_generator_config`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_generator_config` VALUES ('1', '/Users/siguiyang/IdeaProjects/spring-cloud-shop/backend', '/Users/siguiyang/IdeaProjects/spring-cloud-shop/api', b'0', 'quick.pager.shop', 'siguiyang', 'test-module');
+INSERT INTO `t_generator_config` VALUES ('1', '/Users/siguiyang/IdeaProjects/vue-shop-admin/temp', b'0', 'quick.pager.shop', 'siguiyang', 'shop-activity2');
 COMMIT;
 
 -- ----------------------------
@@ -171,13 +191,13 @@ CREATE TABLE `t_menu` (
   `redirect` varchar(31) DEFAULT NULL,
   `icon` varchar(31) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
 -- ----------------------------
 --  Records of `t_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_menu` VALUES ('1', null, '首页', 'ROLE_ADMIN', '首页', '1', '0', '/dashboard', b'0', 'dashboard/index', null, 'dashboard'), ('2', null, '活动管理', 'ROLE_ADMIN', '活动管理', '1', '1', '/activity', b'0', null, '/activity/coupon/template', 'table'), ('3', null, '商品管理', 'ROLE_ADMIN', '商品管理', '1', '2', '/goods', b'0', null, '/goods/goods', 'nested'), ('4', null, '订单管理', 'ROLE_ADMIN', '订单管理', '1', '3', '/order', b'0', null, 'noredirect', 'component'), ('5', null, '财务管理', 'ROLE_ADMIN', '财务管理', '1', '4', '/finance', b'0', null, 'noredirect', 'money'), ('6', null, '统计管理', 'ROLE_ADMIN', '统计管理', '1', '6', '/statistics', b'0', null, 'noredirect', 'chart'), ('7', null, '风控管理', 'ROLE_ADMIN', '风控管理', '1', '7', '/risk', b'0', null, '/risk/rule', 'table'), ('8', null, '监控管理', 'ROLE_ADMIN', '监控管理', '1', '5', '/monitor', b'0', null, '/monitor/hystrix', 'table'), ('9', null, '系统管理', 'ROLE_ADMIN', '系统管理', '1', '8', '/system', b'0', null, '/system/user', 'component'), ('10', null, '代码管理', 'ROLE_ADMIN', '代码管理', '1', '9', '/generator', b'0', 'generator/index', 'noredirect', 'money'), ('11', '2', '优惠券管理', 'ROLE_ADMIN', '优惠券管理', '1', '1', 'coupon', b'0', 'activity/coupon/index', '/activity/coupon/template', null), ('12', '11', '优惠券模板管理', 'ROLE_ADMIN', '优惠券模板管理', '1', '3', 'template', b'0', 'activity/coupon/template/index', null, null), ('13', '11', '用户优惠券', 'ROLE_ADMIN', '用户优惠券', '1', '4', 'user', b'0', 'activity/coupon/user/index', null, null), ('14', '2', '满赠换购', 'ROLE_ADMIN', '满赠换购', '1', '2', 'exchange', b'0', 'activity/exchange/index', null, null), ('15', '2', '拼团管理', 'ROLE_ADMIN', '拼团管理', '1', '5', 'assembly', b'0', 'activity/assembly/index', null, null), ('16', '2', '拼团规则', 'ROLE_ADMIN', '拼团规则', '1', '6', 'assembly/rule/:id(\\d+)', b'1', 'activity/assembly/rule', null, null), ('17', '2', '成团记录', 'ROLE_ADMIN', '成团记录', '1', '7', 'assembly/record/:id(\\d+)', b'1', 'activity/assembly/record', null, null), ('18', '2', 'Banner 管理', 'ROLE_ADMIN', 'Banner 管理', '1', '8', 'banner', b'0', 'activity/banner/index', null, null), ('19', '2', '站内信管理', 'ROLE_ADMIN', '站内信管理', '1', '9', 'station', b'0', 'activity/station/index', null, null), ('20', '3', '商品分类', 'ROLE_ADMIN', '商品分类', '1', '2', 'classification', b'0', 'goods/classification/index', null, null), ('21', '4', '用户订单', 'ROLE_ADMIN', '用户订单', '1', '1', 'user', b'0', 'order/user/index', null, null), ('22', '4', '售后订单', 'ROLE_ADMIN', '售后订单', '1', '2', 'sale', b'0', 'order/sale/index', null, null), ('23', '4', '商户订单', 'ROLE_ADMIN', '商户订单', '1', '3', 'seller', b'0', 'order/seller/index', null, null), ('24', '5', '资金管理', 'ROLE_ADMIN', '资金管理', '1', '1', 'fund', b'0', 'finance/fund/index', null, null), ('25', '5', '交易管理', 'ROLE_ADMIN', '交易管理', '1', '2', 'trade', b'0', 'finance/trade/index', null, null), ('26', '6', '优惠券统计', 'ROLE_ADMIN', '优惠券统计', '1', '1', 'coupon', b'0', 'statistics/coupon/index', null, null), ('27', '6', '拼团统计', 'ROLE_ADMIN', '拼团统计', '1', '2', 'group', b'0', 'statistics/group/index', null, null), ('28', '6', '积分统计', 'ROLE_ADMIN', '积分统计', '1', '3', 'integral', b'0', 'statistics/integral/index', null, null), ('29', '7', '规则配置', 'ROLE_ADMIN', '规则配置', '1', '1', 'rule', b'0', 'risk/rule', null, null), ('30', '7', '黑名单管理', 'ROLE_ADMIN', '黑名单管理', '1', '2', 'blackList', b'0', 'risk/blackList', null, null), ('31', '8', 'Hystrix监控', 'ROLE_ADMIN', 'Hystrix监控', '1', '1', 'hystrix', b'0', 'monitor/hystrix', null, null), ('32', '8', '接口Swagger', 'ROLE_ADMIN', '接口Swagger', '1', '0', 'interface', b'0', 'monitor/interface/index', null, ''), ('33', '8', '数据库监控', 'ROLE_ADMIN', '数据库监控', '1', '3', 'database', b'0', 'monitor/database/index', '/monitor/database/admin', null), ('34', '33', '活动数据中心', 'ROLE_ADMIN', '活动数据中心', '1', '1', 'activity', b'0', 'monitor/database/activity', null, null), ('35', '33', '管理数据中心', 'ROLE_ADMIN', '管理数据中心', '1', '2', 'manage', b'0', 'monitor/database/admin', null, null), ('36', '33', '商品数据中心', 'ROLE_ADMIN', '商品数据中心', '1', '3', 'goods', b'0', 'monitor/database/goods', null, null), ('37', '33', '订单数据中心', 'ROLE_ADMIN', '订单数据中心', '1', '4', 'order', b'0', 'monitor/database/order', null, null), ('38', '9', '用户管理', 'ROLE_ADMIN', '用户管理', '1', '1', 'user', b'0', 'system/user/index', null, null), ('39', '9', '菜单管理', 'ROLE_ADMIN', '菜单管理', '1', '3', 'menu', b'0', 'system/menu/index', null, null), ('40', '9', '角色管理', 'ROLE_ADMIN', '角色管理', '1', '2', 'role', b'0', 'system/role/index', null, null), ('41', '9', '配置管理', 'ROLE_ADMIN', '配置管理', '1', '4', 'config', b'0', 'system/config/index', null, null), ('42', '3', '商品配置', 'ROLE_ADMIN', '商品配置', '1', '1', 'goods', b'0', 'goods/goods/index', null, null), ('43', '38', '用户创建', 'ROLE_USER_CREATE', '用户创建', '2', '1', null, b'0', null, null, null), ('65', '32', '用户中心', null, null, '1', '0', 'user', b'0', 'monitor/interface/user', null, null), ('66', '32', '订单中心', null, null, '1', '1', 'order', b'0', 'monitor/interface/order', null, null), ('67', '32', '活动中心', null, null, '1', '2', 'activity', b'0', 'monitor/interface/activity', null, null), ('68', '32', '商品中心', null, null, '1', '3', 'goods', b'0', 'monitor/interface/goods', null, null);
+INSERT INTO `t_menu` VALUES ('1', null, '首页', 'ROLE_ADMIN', '首页', '1', '0', '/dashboard', b'0', 'dashboard/index', null, 'dashboard'), ('2', null, '活动管理', 'ROLE_ADMIN', '活动管理', '1', '1', '/activity', b'0', null, '/activity/coupon/template', 'table'), ('3', null, '商品管理', 'ROLE_ADMIN', '商品管理', '1', '2', '/goods', b'0', null, '/goods/goods', 'nested'), ('4', null, '订单管理', 'ROLE_ADMIN', '订单管理', '1', '3', '/order', b'0', null, 'noredirect', 'component'), ('5', null, '财务管理', 'ROLE_ADMIN', '财务管理', '1', '4', '/finance', b'0', null, 'noredirect', 'money'), ('6', null, '统计管理', 'ROLE_ADMIN', '统计管理', '1', '6', '/statistics', b'0', null, 'noredirect', 'chart'), ('7', null, '风控管理', 'ROLE_ADMIN', '风控管理', '1', '7', '/risk', b'0', null, '/risk/rule', 'table'), ('8', null, '监控管理', 'ROLE_ADMIN', '监控管理', '1', '5', '/monitor', b'0', null, '/monitor/hystrix', 'table'), ('9', null, '系统管理', 'ROLE_ADMIN', '系统管理', '1', '8', '/system', b'0', null, '/system/user', 'component'), ('10', null, '代码管理', 'ROLE_ADMIN', '代码管理', '1', '9', '/generator', b'0', null, '/generator/code', 'money'), ('11', '2', '优惠券管理', 'ROLE_ADMIN', '优惠券管理', '1', '1', 'coupon', b'0', 'activity/coupon/index', '/activity/coupon/template', null), ('12', '11', '优惠券模板管理', 'ROLE_ADMIN', '优惠券模板管理', '1', '3', 'template', b'0', 'activity/coupon/template/index', null, null), ('13', '11', '用户优惠券', 'ROLE_ADMIN', '用户优惠券', '1', '4', 'user', b'0', 'activity/coupon/user/index', null, null), ('14', '2', '满赠换购', 'ROLE_ADMIN', '满赠换购', '1', '2', 'exchange', b'0', 'activity/exchange/index', null, null), ('15', '2', '拼团管理', 'ROLE_ADMIN', '拼团管理', '1', '5', 'assembly', b'0', 'activity/assembly/index', null, null), ('16', '2', '拼团规则', 'ROLE_ADMIN', '拼团规则', '1', '6', 'assembly/rule/:id(\\d+)', b'1', 'activity/assembly/rule', null, null), ('17', '2', '成团记录', 'ROLE_ADMIN', '成团记录', '1', '7', 'assembly/record/:id(\\d+)', b'1', 'activity/assembly/record', null, null), ('18', '2', 'Banner 管理', 'ROLE_ADMIN', 'Banner 管理', '1', '8', 'banner', b'0', 'activity/banner/index', null, null), ('20', '3', '商品分类', 'ROLE_ADMIN', '商品分类', '1', '2', 'classification', b'0', 'goods/classification/index', null, null), ('21', '4', '用户订单', 'ROLE_ADMIN', '用户订单', '1', '1', 'user', b'0', 'order/user/index', null, null), ('22', '4', '售后订单', 'ROLE_ADMIN', '售后订单', '1', '2', 'sale', b'0', 'order/sale/index', null, null), ('23', '4', '商户订单', 'ROLE_ADMIN', '商户订单', '1', '3', 'seller', b'0', 'order/seller/index', null, null), ('24', '5', '资金管理', 'ROLE_ADMIN', '资金管理', '1', '1', 'fund', b'0', 'finance/fund/index', null, null), ('25', '5', '交易管理', 'ROLE_ADMIN', '交易管理', '1', '2', 'trade', b'0', 'finance/trade/index', null, null), ('26', '6', '优惠券统计', 'ROLE_ADMIN', '优惠券统计', '1', '1', 'coupon', b'0', 'statistics/coupon/index', null, null), ('27', '6', '拼团统计', 'ROLE_ADMIN', '拼团统计', '1', '2', 'group', b'0', 'statistics/group/index', null, null), ('28', '6', '积分统计', 'ROLE_ADMIN', '积分统计', '1', '3', 'integral', b'0', 'statistics/integral/index', null, null), ('29', '7', '规则配置', 'ROLE_ADMIN', '规则配置', '1', '0', 'rule', b'0', 'risk/rule/index', null, ''), ('30', '7', '黑名单管理', 'ROLE_ADMIN', '黑名单管理', '1', '0', 'blackList', b'0', 'risk/blackList/index', null, ''), ('31', '8', 'Hystrix监控', 'ROLE_ADMIN', 'Hystrix监控', '1', '1', 'hystrix', b'0', 'monitor/hystrix', null, null), ('32', '8', '接口Swagger', 'ROLE_ADMIN', '接口Swagger', '1', '0', 'interface', b'0', 'monitor/interface/index', null, ''), ('33', '8', '数据库监控', 'ROLE_ADMIN', '数据库监控', '1', '3', 'database', b'0', 'monitor/database/index', '/monitor/database/admin', null), ('34', '33', '活动数据中心', 'ROLE_ADMIN', '活动数据中心', '1', '1', 'activity', b'0', 'monitor/database/activity', null, null), ('35', '33', '管理数据中心', 'ROLE_ADMIN', '管理数据中心', '1', '2', 'manage', b'0', 'monitor/database/admin', null, null), ('36', '33', '商品数据中心', 'ROLE_ADMIN', '商品数据中心', '1', '3', 'goods', b'0', 'monitor/database/goods', null, null), ('37', '33', '订单数据中心', 'ROLE_ADMIN', '订单数据中心', '1', '4', 'order', b'0', 'monitor/database/order', null, null), ('38', '9', '用户管理', 'ROLE_ADMIN', '用户管理', '1', '1', 'user', b'0', 'system/user/index', null, null), ('39', '9', '菜单管理', 'ROLE_ADMIN', '菜单管理', '1', '3', 'menu', b'0', 'system/menu/index', null, null), ('40', '9', '角色管理', 'ROLE_ADMIN', '角色管理', '1', '2', 'role', b'0', 'system/role/index', null, null), ('41', '9', '配置管理', 'ROLE_ADMIN', '配置管理', '1', '4', 'config', b'0', 'system/config/index', null, null), ('42', '3', '商品配置', 'ROLE_ADMIN', '商品配置', '1', '1', 'goods', b'0', 'goods/goods/index', null, null), ('43', '38', '用户创建', 'ROLE_USER_CREATE', '用户创建', '2', '1', null, b'0', null, null, null), ('44', '10', '自动生成代码', null, null, '1', '0', 'code', b'0', 'generator/index', null, null), ('65', '32', '用户中心', null, null, '1', '0', 'user', b'0', 'monitor/interface/user', null, null), ('66', '32', '订单中心', null, null, '1', '1', 'order', b'0', 'monitor/interface/order', null, null), ('67', '32', '活动中心', null, null, '1', '2', 'activity', b'0', 'monitor/interface/activity', null, null), ('68', '32', '商品中心', null, null, '1', '3', 'goods', b'0', 'monitor/interface/goods', null, null), ('69', '3', '商品编辑', 'ROLE_ADMIN', '商品编辑', '1', '3', 'goods/edit/:id/:event/:operationType', b'1', 'goods/goods/edit', null, null), ('70', '2', '拼团商品', 'ROLE_ADMIN', '拼团商品', '1', '5', 'assembly/goods/:id(\\d+)', b'1', 'activity/assembly/goods', null, null), ('71', '2', '满赠规则', 'ROLE_ADMIN', '满赠规则', '1', '6', 'exchange/rule/:id', b'1', 'activity/exchange/rule', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -233,7 +253,7 @@ CREATE TABLE `t_role_menu` (
 --  Records of `t_role_menu`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '10'), ('1', '11'), ('1', '12'), ('1', '13'), ('1', '14'), ('1', '15'), ('1', '16'), ('1', '17'), ('1', '18'), ('1', '19'), ('1', '20'), ('1', '21'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '25'), ('1', '26'), ('1', '27'), ('1', '28'), ('1', '29'), ('1', '30'), ('1', '31'), ('1', '32'), ('1', '33'), ('1', '34'), ('1', '35'), ('1', '36'), ('1', '37'), ('1', '38'), ('1', '39'), ('1', '40'), ('1', '41'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '46'), ('1', '47'), ('1', '48'), ('1', '49'), ('1', '50'), ('1', '51'), ('1', '52'), ('1', '53'), ('1', '63'), ('5', '33'), ('5', '37'), ('5', '34'), ('5', '36'), ('5', '38'), ('5', '43'), ('5', '8'), ('5', '9'), ('5', '25'), ('5', '5'), ('5', '32');
+INSERT INTO `t_role_menu` VALUES ('1', '1'), ('1', '2'), ('1', '3'), ('1', '4'), ('1', '5'), ('1', '6'), ('1', '7'), ('1', '8'), ('1', '9'), ('1', '10'), ('1', '11'), ('1', '12'), ('1', '13'), ('1', '14'), ('1', '15'), ('1', '16'), ('1', '17'), ('1', '18'), ('1', '19'), ('1', '20'), ('1', '21'), ('1', '22'), ('1', '23'), ('1', '24'), ('1', '25'), ('1', '26'), ('1', '27'), ('1', '28'), ('1', '29'), ('1', '30'), ('1', '31'), ('1', '33'), ('1', '34'), ('1', '35'), ('1', '36'), ('1', '37'), ('1', '38'), ('1', '39'), ('1', '40'), ('1', '41'), ('1', '42'), ('1', '43'), ('1', '44'), ('1', '45'), ('1', '46'), ('1', '47'), ('1', '48'), ('1', '49'), ('1', '50'), ('1', '51'), ('1', '52'), ('1', '53'), ('1', '63'), ('5', '33'), ('5', '37'), ('5', '34'), ('5', '36'), ('5', '38'), ('5', '43'), ('5', '8'), ('5', '9'), ('5', '25'), ('5', '5'), ('5', '32'), ('1', '69'), ('1', '70'), ('1', '71');
 COMMIT;
 
 -- ----------------------------

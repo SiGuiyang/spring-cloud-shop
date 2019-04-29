@@ -10,9 +10,13 @@ public class FightGroupMemberResponse implements Serializable{
 
     private Long id;
 
-    private Long groupId;
+    private Long activityId;
 
     private Long recordId;
+
+    private Integer openFightStatus;
+
+    private String activityName;
 
     private String phone;
 
@@ -20,5 +24,11 @@ public class FightGroupMemberResponse implements Serializable{
 
     private Boolean master;
 
+    private Boolean deleteStatus;
+
     private Date createTime;
+
+    private Date openGroupTime;
+
+    private Date groupTime;
 }

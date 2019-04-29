@@ -2,10 +2,10 @@ package quick.pager.shop.controller.common;
 
 import io.swagger.annotations.Api;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.response.Response;
@@ -21,7 +21,7 @@ public class CommonEnumController {
     private CommonEnumService commonEnumService;
 
     @PostMapping("/common/enumInfo")
-    public Response<List<EnumResponse>> commonEnumInfo(@RequestParam String type) {
-        return commonEnumService.getCommonEnumInfo(type);
+    public Response<Map<String, List<EnumResponse>>> commonEnumInfo() {
+        return commonEnumService.getCommonEnumInfo();
     }
 }

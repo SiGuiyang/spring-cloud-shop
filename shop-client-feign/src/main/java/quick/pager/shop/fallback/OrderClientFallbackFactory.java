@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.OrderDTO;
 import quick.pager.shop.dto.SellerOrderDTO;
+import quick.pager.shop.model.UserOrder;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.client.OrderClient;
 
@@ -37,6 +38,12 @@ public class OrderClientFallbackFactory implements FallbackFactory<OrderClient> 
             @Override
             public Response sellerOrderInfo(Long sellerOrderId) {
                 log.error("进入熔断措施 OrderClient.sellerOrderInfo");
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            }
+
+            @Override
+            public Response orderCreate(UserOrder userOrder) {
+                log.error("进入熔断措施 OrderClient.orderCreate");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
         };

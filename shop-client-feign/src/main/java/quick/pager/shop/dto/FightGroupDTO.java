@@ -17,7 +17,7 @@ public class FightGroupDTO extends ManageDTO {
 
     private Long goodsId;
 
-    private Long groupId;
+    private Long activityId;
 
     private Long ruleId;
 

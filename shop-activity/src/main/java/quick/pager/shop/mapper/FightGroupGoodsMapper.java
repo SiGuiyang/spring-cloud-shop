@@ -11,5 +11,14 @@ public interface FightGroupGoodsMapper {
 
     int updateByPrimaryKeySelective(FightGroupGoods record);
 
-    FightGroupGoods selectFightGroupGoods(@Param("groupId") Long groupId);
+    FightGroupGoods selectFightGroupGoods(@Param("activityId") Long activityId);
+
+    /**
+     * 根据活动ID 与商品ID 查询当前活动是否存在参与的商品
+     *
+     * @param activityId 活动ID
+     * @param goodsId    商品ID
+     */
+    int selectCountByActivityIdAndGoodsId(@Param("activityId") Long activityId, @Param("goodsId") Long goodsId);
+
 }

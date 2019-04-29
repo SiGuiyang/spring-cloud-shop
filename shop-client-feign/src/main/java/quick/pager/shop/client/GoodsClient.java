@@ -30,9 +30,15 @@ public interface GoodsClient {
     Response<List<Goods>> queryGoodsList(@RequestBody GoodsDTO request);
 
     /**
+     * 商品新增
+     */
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    Response<String> addGoods(@RequestBody GoodsDTO request);
+
+    /**
      * 商品修改
      */
-    @RequestMapping(value = "/modifyGoods", method = RequestMethod.POST)
+    @RequestMapping(value = "/modify", method = RequestMethod.PUT)
     Response<String> modifyGoods(@RequestBody GoodsDTO request);
 
     /**
@@ -49,14 +55,14 @@ public interface GoodsClient {
      * @param className 分类名称
      */
     @RequestMapping(value = "/classification/list", method = RequestMethod.POST)
-    Response goodsClassList(@RequestParam("className") String className);
+    Response classificationList(@RequestParam("className") String className);
 
     /**
      * 商品分类修改
      */
-    @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
-    Response modifyGoodsClass(@RequestBody ClassificationDTO dto);
+    @RequestMapping(value = "/classification/modify", method = RequestMethod.PUT)
+    Response modifyClassification(@RequestBody ClassificationDTO dto);
 
-    @RequestMapping(value = "/goods/queryBuyerOrderGoods/{buyerOrderCartId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/goods/buyer/order/{buyerOrderCartId}", method = RequestMethod.POST)
     Response<List<GoodsResponse>> queryBuyerOrderGoods(@PathVariable("buyerOrderCartId") Long buyerOrderCartId);
 }

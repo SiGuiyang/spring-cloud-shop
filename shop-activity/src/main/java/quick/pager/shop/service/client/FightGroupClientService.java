@@ -2,34 +2,28 @@ package quick.pager.shop.service.client;
 
 import cn.hutool.core.date.DateUtil;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.google.common.collect.Lists;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+import quick.pager.shop.client.GoodsClient;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.mapper.FightGroupMapper;
-import quick.pager.shop.mapper.FightGroupRecordMapper;
+import quick.pager.shop.response.FightGroupMemberResponse;
+import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.mapper.FightGroupGoodsMapper;
 import quick.pager.shop.mapper.FightGroupMemberMapper;
 import quick.pager.shop.mapper.FightGroupRuleMapper;
-import quick.pager.shop.client.UserClient;
 import quick.pager.shop.dto.FightGroupDTO;
-import quick.pager.shop.dto.UserInfoDTO;
-import quick.pager.shop.response.FightGroupMemberResponse;
-import quick.pager.shop.response.FightGroupRecordResponse;
-import quick.pager.shop.response.FightGroupResponse;
 import quick.pager.shop.model.FightGroup;
 import quick.pager.shop.model.FightGroupGoods;
-import quick.pager.shop.model.FightGroupMember;
-import quick.pager.shop.model.FightGroupRecord;
 import quick.pager.shop.model.FightGroupRule;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * @author siguiyang
@@ -45,11 +39,9 @@ public class FightGroupClientService {
     @Autowired
     private FightGroupGoodsMapper fightGroupGoodsMapper;
     @Autowired
-    private FightGroupRecordMapper fightGroupRecordMapper;
-    @Autowired
     private FightGroupMemberMapper fightGroupMemberMapper;
     @Autowired
-    private UserClient userClient;
+    private GoodsClient goodsClient;
 
     /**
      * 拼团活动列表
@@ -65,33 +57,7 @@ public class FightGroupClientService {
         PageHelper.startPage(page, pageSize);
 
         List<FightGroup> fightGroupList = fightGroupMapper.selectFightGroup(activityName, beginTime, endTime);
-
-        List<FightGroupResponse> fightGroupResponseList = Lists.newArrayList();
-
-        fightGroupList.forEach(fightGroup -> {
-
-            FightGroupResponse fightGroupResponse = new FightGroupResponse();
-            BeanUtils.copyProperties(fightGroup, fightGroupResponse);
-            FightGroupRule rule = fightGroupRuleMapper.selectFightGroupRule(fightGroup.getId());
-            FightGroupGoods goods = fightGroupGoodsMapper.selectFightGroupGoods(fightGroup.getId());
-
-            if (!ObjectUtils.isEmpty(rule)) {
-                fightGroupResponse.setRuleId(rule.getId());
-            }
-            if (!ObjectUtils.isEmpty(goods)) {
-                fightGroupResponse.setGoodsId(goods.getGoodsId());
-            }
-
-            fightGroupResponseList.add(fightGroupResponse);
-
-        });
-
-        Response<List<FightGroupResponse>> response = new Response<>();
-        PageInfo<FightGroupResponse> pageInfo = new PageInfo<>(fightGroupResponseList);
-
-        response.setTotal(pageInfo.getTotal());
-        response.setData(pageInfo.getList());
-        return response;
+        return Response.toResponse(fightGroupList);
     }
 
     /**
@@ -99,14 +65,14 @@ public class FightGroupClientService {
      */
     public Response rule(FightGroupDTO request) {
 
-        FightGroupRule rule = fightGroupRuleMapper.selectByPrimaryKey(request.getId());
+        FightGroupRule rule = fightGroupRuleMapper.selectFightGroupRule(request.getActivityId());
         // 不存在则新增
         if (ObjectUtils.isEmpty(rule)) {
             rule = new FightGroupRule();
             rule.setDescription(request.getDescription());
             rule.setFightCount(request.getFightCount());
             rule.setPurchaseLimit(request.getPurchaseLimit());
-            rule.setGroupId(request.getGroupId());
+            rule.setActivityId(request.getActivityId());
             rule.setDeleteStatus(false);
             rule.setCreateTime(new Date());
             fightGroupRuleMapper.insertSelective(rule);
@@ -117,7 +83,7 @@ public class FightGroupClientService {
             updateFightGroupRule.setDescription(request.getDescription());
             updateFightGroupRule.setFightCount(request.getFightCount());
             updateFightGroupRule.setPurchaseLimit(request.getPurchaseLimit());
-            updateFightGroupRule.setGroupId(request.getGroupId());
+            updateFightGroupRule.setActivityId(request.getActivityId());
             updateFightGroupRule.setDeleteStatus(request.getDeleteStatus());
             fightGroupRuleMapper.updateByPrimaryKeySelective(updateFightGroupRule);
         }
@@ -136,7 +102,7 @@ public class FightGroupClientService {
         if (ObjectUtils.isEmpty(rule)) {
             rule = new FightGroupRule();
         }
-        rule.setGroupId(group.getId());
+        rule.setActivityId(group.getId());
         rule.setActivityName(group.getActivityName());
         return new Response<>(rule);
     }
@@ -150,7 +116,7 @@ public class FightGroupClientService {
         // 没有则新增
         if (ObjectUtils.isEmpty(groupGoods)) {
             groupGoods.setGoodsId(request.getGoodsId());
-            groupGoods.setGroupId(request.getId());
+            groupGoods.setActivityId(request.getId());
             groupGoods.setDeleteStatus(false);
             groupGoods.setCreateTime(new Date());
             fightGroupGoodsMapper.insertSelective(groupGoods);
@@ -165,20 +131,12 @@ public class FightGroupClientService {
     }
 
     /**
-     * 商品详情
-     * fixme 暂定
-     */
-    public Response goodsInfo(Long id) {
-        return new Response<>(fightGroupGoodsMapper.selectFightGroupGoods(id));
-    }
-
-    /**
      * 新增修改
      */
     private Response modifyFightGroupGoods(FightGroupDTO request) {
         FightGroupGoods goods = new FightGroupGoods();
         goods.setGoodsId(request.getGoodsId());
-        goods.setGroupId(request.getGroupId());
+        goods.setActivityId(request.getActivityId());
         goods.setDeleteStatus(request.getDeleteStatus());
         if (Constants.Event.ADD.equals(request.getEvent())) {
             goods.setDeleteStatus(false);
@@ -194,58 +152,12 @@ public class FightGroupClientService {
     /**
      * 成团记录列表
      */
-    public Response records(Long groupId, String beginTime, String endTime, Integer page, Integer pageSize) {
+    public Response fightGroupMembers(Long activityId, String phone, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
 
-        List<FightGroupRecord> fightGroupRecords = fightGroupRecordMapper.selectFightGroupRecord(groupId, beginTime, endTime);
+        List<FightGroupMemberResponse> responses = fightGroupMemberMapper.selectFightGroupRecord(activityId, phone);
 
-        List<FightGroupRecordResponse> recordResponseList = Lists.newArrayList();
-        fightGroupRecords.forEach(fightGroupRecord -> {
-
-            FightGroupRecordResponse recordResponse = new FightGroupRecordResponse();
-            BeanUtils.copyProperties(fightGroupRecord, recordResponse);
-            FightGroup group = fightGroupMapper.selectByPrimaryKey(fightGroupRecord.getGroupId());
-
-            if (!ObjectUtils.isEmpty(group)) {
-                recordResponse.setActivityName(group.getActivityName());
-            }
-
-            recordResponseList.add(recordResponse);
-        });
-
-        PageInfo<FightGroupRecordResponse> pageInfo = new PageInfo<>(recordResponseList);
-
-        Response<List<FightGroupRecordResponse>> response = new Response<>();
-        response.setData(pageInfo.getList());
-        response.setTotal(pageInfo.getTotal());
-
-        return response;
-    }
-
-    /**
-     * 拼团成员
-     */
-    public Response members(Long recordId, Integer page, Integer pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<FightGroupMember> fightGroupMembers = fightGroupMemberMapper.selectFightGroupMember(recordId);
-
-        List<FightGroupMemberResponse> fightGroupMemberResponseList = Lists.newArrayList();
-
-        fightGroupMembers.forEach(fightGroupMember -> {
-            FightGroupMemberResponse fightGroupMemberResponse = new FightGroupMemberResponse();
-            BeanUtils.copyProperties(fightGroupMember, fightGroupMemberResponse);
-            Response<UserInfoDTO> user = userClient.getUser(fightGroupMember.getUserId());
-            UserInfoDTO userInfoDTO = user.getData();
-
-            if (!ObjectUtils.isEmpty(userInfoDTO)) {
-                fightGroupMemberResponse.setPhone(userInfoDTO.getPhone());
-                fightGroupMemberResponse.setUsername(userInfoDTO.getUsername());
-            }
-
-            fightGroupMemberResponseList.add(fightGroupMemberResponse);
-        });
-
-        return Response.toResponse(fightGroupMemberResponseList);
+        return Response.toResponse(responses);
     }
 
     /**
@@ -256,10 +168,19 @@ public class FightGroupClientService {
         Response response = new Response();
 
         FightGroup group = new FightGroup();
-        group.setActivityImg(request.getActivityImg());
-        group.setActivityName(request.getActivityName());
-        group.setEndTime(DateUtil.parse(request.getEndTime()));
-        group.setBeginTime(DateUtil.parse(request.getBeginTime()));
+        if (!StringUtils.isEmpty(request.getActivityImg())) {
+            group.setActivityImg(request.getActivityImg());
+        }
+        if (!StringUtils.isEmpty(request.getActivityName())) {
+
+            group.setActivityName(request.getActivityName());
+        }
+        if (!StringUtils.isEmpty(request.getEndTime())) {
+            group.setEndTime(DateUtil.parse(request.getEndTime()));
+        }
+        if (!StringUtils.isEmpty(request.getBeginTime())) {
+            group.setBeginTime(DateUtil.parse(request.getBeginTime()));
+        }
         group.setDeleteStatus(request.getDeleteStatus());
 
         switch (request.getEvent()) {
@@ -277,5 +198,73 @@ public class FightGroupClientService {
                 response = new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         return response;
+    }
+
+    public Response fightGroupGoodsInfo(Long activityId) {
+        FightGroup fightGroup = fightGroupMapper.selectByPrimaryKey(activityId);
+        if (ObjectUtils.isEmpty(fightGroup)) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, "未知拼团活动");
+        }
+
+        FightGroupGoods fightGroupGoods = fightGroupGoodsMapper.selectFightGroupGoods(activityId);
+        if (ObjectUtils.isEmpty(fightGroupGoods)) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, "此活动未设置参与拼团的商品，请先设置拼团商品");
+        }
+
+        Response<GoodsResponse> goodsResponse = goodsClient.goodsInfo(fightGroupGoods.getGoodsId());
+        // 查询成功
+        if (ResponseStatus.Code.SUCCESS == goodsResponse.getCode()) {
+            return new Response<>(goodsResponse.getData());
+        }
+
+        return new Response(goodsResponse.getCode(), goodsResponse.getMsg());
+    }
+
+    public Response setFightGroupGoods(Long activityId, Long goodsId) {
+
+        // 检查活动
+        FightGroup fightGroup = fightGroupMapper.selectByPrimaryKey(activityId);
+
+        if (ObjectUtils.isEmpty(fightGroup)) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, "未知拼团活动");
+        }
+
+        // 检查规则
+        FightGroupRule fightGroupRule = fightGroupRuleMapper.selectFightGroupRule(activityId);
+
+        if (ObjectUtils.isEmpty(fightGroupRule)) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, "此活动未配置规则，请先配置规则");
+        }
+
+        int count = fightGroupGoodsMapper.selectCountByActivityIdAndGoodsId(activityId, goodsId);
+
+        // 当前活动已配置了此商品则，返回提示
+        if (count > 0) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, "此商品已在当前活动中");
+        }
+
+        FightGroupGoods fightGroupGoods = fightGroupGoodsMapper.selectFightGroupGoods(activityId);
+        // 删除当前活动存在的商品，添加新的商品
+        if (!ObjectUtils.isEmpty(fightGroupGoods)) {
+            fightGroupGoods.setDeleteStatus(true);
+            fightGroupGoodsMapper.updateByPrimaryKeySelective(fightGroupGoods);
+        }
+
+        // 新增拼团活动商品
+        fightGroupGoods = new FightGroupGoods();
+
+        fightGroupGoods.setDeleteStatus(false);
+        fightGroupGoods.setActivityId(activityId);
+        fightGroupGoods.setGoodsId(goodsId);
+        fightGroupGoods.setRuleId(fightGroupRule.getId());
+        fightGroupGoods.setCreateTime(DateUtils.now());
+        fightGroupGoodsMapper.insertSelective(fightGroupGoods);
+
+        return new Response();
+    }
+
+    public Response queryFightGroupGoods(Long activityId, Long goodsId) {
+        int count = fightGroupGoodsMapper.selectCountByActivityIdAndGoodsId(activityId, goodsId);
+        return count > 0 ? new Response() : new Response(ResponseStatus.Code.FAIL_CODE, "未参与此活动");
     }
 }

@@ -11,6 +11,8 @@ public class GoodsDTO extends ManageDTO {
     private static final long serialVersionUID = 675509028031796700L;
 
     private Long goodsDetailId;
+    // 活动的Id
+    private Long activityId;
 
     private Long gcsId;
 

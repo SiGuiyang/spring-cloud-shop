@@ -42,6 +42,8 @@ public class UserApplicationTests {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private DemoService demoService;
 
     @Test
     public void testPub() {
@@ -128,8 +130,8 @@ public class UserApplicationTests {
     }
 
     @Test
-    public void testBean(){
-
+    public void testBean() {
+        demoService.testTransaction();
     }
 
 }

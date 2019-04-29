@@ -11,7 +11,7 @@ public class FightGroupGoods extends Model {
 
     private Long goodsId;
 
-    private Long groupId;
+    private Long activityId;
 
     private Long ruleId;
 

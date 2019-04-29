@@ -3,6 +3,7 @@ package quick.pager.shop.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
@@ -29,15 +30,15 @@ public class GoodsDetailService implements IService<GoodsResponse> {
     @Override
     public Response<GoodsResponse> doService(BaseDTO dto) {
 
-        Response<GoodsResponse> response = new Response<>();
-
         GoodsResponse goodsResponse = new GoodsResponse();
 
         Goods goods = goodsMapper.selectByPrimaryKey(dto.getId());
+        if (ObjectUtils.isEmpty(goods)) {
+            return new Response<>(goodsResponse);
+        }
 
         if (goods.getDeleteStatus()) {
-            response.setCode(ResponseStatus.Code.FAIL_CODE);
-            response.setMsg(ResponseStatus.GOODS_EXPIRE);
+            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.GOODS_EXPIRE);
         }
 
         GoodsDetail goodsDetail = goodsDetailMapper.selectByGoodsId(goods.getId());
@@ -45,8 +46,6 @@ public class GoodsDetailService implements IService<GoodsResponse> {
         goodsResponse.setGoods(goods);
         goodsResponse.setGoodsDetail(goodsDetail);
 
-        response.setData(goodsResponse);
-
-        return response;
+        return new Response<>(goodsResponse);
     }
 }

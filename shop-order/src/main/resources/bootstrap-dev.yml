@@ -10,8 +10,8 @@ spring:
       port: 8500
       discovery:
         tags: author=pager
-        healthCheckPath:  /health
         healthCheckInterval: 15s
+        instance-id: shop-order
 
 mybatis:
   configuration:

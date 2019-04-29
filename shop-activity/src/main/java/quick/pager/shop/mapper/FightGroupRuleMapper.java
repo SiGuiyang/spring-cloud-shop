@@ -14,6 +14,6 @@ public interface FightGroupRuleMapper {
     /**
      * 根据活动Id 查询规则
      */
-    FightGroupRule selectFightGroupRule(@Param("groupId") Long groupId);
+    FightGroupRule selectFightGroupRule(@Param("activityId") Long activityId);
 
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8095
+  port: 8079
 
 spring:
   profiles:
@@ -20,4 +20,4 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: quick.pager.shop.model
-  mapper-locations: classpath:quick/pager/shop/order/mapper/*.xml
+  mapper-locations: classpath:quick/pager/shop/mapper/*.xml

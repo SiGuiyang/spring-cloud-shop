@@ -27,7 +27,9 @@ class DTO implements Serializable {
      * 操作人
      */
     private String createUser;
-
+    /**
+     * 访问token
+     */
     private String access_token;
 
     public DTO() {

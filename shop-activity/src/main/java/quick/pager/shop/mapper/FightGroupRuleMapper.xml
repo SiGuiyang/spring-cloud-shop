@@ -3,7 +3,7 @@
 <mapper namespace="quick.pager.shop.mapper.FightGroupRuleMapper">
   <resultMap id="BaseResultMap" type="quick.pager.shop.model.FightGroupRule">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
     <result column="purchase_limit" jdbcType="INTEGER" property="purchaseLimit" />
     <result column="fight_count" jdbcType="INTEGER" property="fightCount" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -12,24 +12,24 @@
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, group_id, purchase_limit, fight_count, description, create_time, update_time,
+    id, activity_id, purchase_limit, fight_count, description, create_time, update_time,
     delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from t_fight_group_rule
+    from t_fight_group_activity_rule
     where id = #{id,jdbcType=BIGINT}
   </select>
 
   <insert id="insertSelective" parameterType="quick.pager.shop.model.FightGroupRule">
-    insert into t_fight_group_rule
+    insert into t_fight_group_activity_rule
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="groupId != null">
-        group_id,
+      <if test="activityId != null">
+        activity_id,
       </if>
       <if test="purchaseLimit != null">
         purchase_limit,
@@ -54,8 +54,8 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=BIGINT},
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
       </if>
       <if test="purchaseLimit != null">
         #{purchaseLimit,jdbcType=INTEGER},
@@ -78,10 +78,10 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.FightGroupRule">
-    update t_fight_group_rule
+    update t_fight_group_activity_rule
     <set>
-      <if test="groupId != null">
-        group_id = #{groupId,jdbcType=BIGINT},
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=BIGINT},
       </if>
       <if test="purchaseLimit != null">
         purchase_limit = #{purchaseLimit,jdbcType=INTEGER},
@@ -107,7 +107,7 @@
 
   <select id="selectFightGroupRule" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
-    from t_fight_group_rule
-    where group_id = #{groupId,jdbcType=BIGINT} and delete_status = false
+    from t_fight_group_activity_rule
+    where activity_id = #{activityId,jdbcType=BIGINT} and delete_status = false
   </select>
 </mapper>

@@ -2,22 +2,28 @@ package quick.pager.shop.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.BaseDTO;
+import quick.pager.shop.dto.GoodsDTO;
+import quick.pager.shop.model.Goods;
 import quick.pager.shop.request.AppRequest;
+import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.GoodsSearchDTO;
-import quick.pager.shop.dto.GoodsDTO;
 import quick.pager.shop.constants.GoodsConstants;
 import quick.pager.shop.service.GoodsDetailService;
 import quick.pager.shop.service.GoodsHomeListService;
 import quick.pager.shop.service.GoodsSearchService;
+import quick.pager.shop.service.GoodsClientService;
 
 /**
  * APP展示商品
@@ -35,6 +41,8 @@ public class GoodsController {
     private GoodsDetailService goodsDetailService;
     @Autowired
     private GoodsSearchService goodsSearchService;
+    @Autowired
+    private GoodsClientService goodsClientService;
 
 
     @ApiOperation("首页商品列表")
@@ -75,4 +83,41 @@ public class GoodsController {
         dto.setEvent(GoodsConstants.SEARCH_CLASSIFICATION_EVENT);
         return goodsSearchService.doService(dto);
     }
+
+    @ApiOperation("管理后台 商品列表")
+    @RequestMapping(value = "/queryGoodsList", method = RequestMethod.POST)
+    public Response<List<Goods>> queryGoodsList(@RequestBody GoodsDTO request) {
+        request.setEvent(Constants.Event.LIST);
+        return goodsClientService.queryGoodsList(request);
+    }
+
+    /**
+     * 商品修改
+     */
+    @ApiOperation("管理后台 商品新增")
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    public Response<String> addGoods(@RequestBody GoodsDTO request) {
+        request.setEvent(Constants.Event.ADD);
+        return goodsClientService.modifyGoods(request);
+    }
+
+    /**
+     * 商品修改
+     */
+    @ApiOperation("管理后台 商品修改")
+    @RequestMapping(value = "/modify", method = RequestMethod.PUT)
+    public Response<String> modifyGoods(@RequestBody GoodsDTO request) {
+        request.setEvent(Constants.Event.MODIFY);
+        return goodsClientService.modifyGoods(request);
+    }
+
+    /**
+     * 获取商品详细
+     */
+    @RequestMapping(value = "/buyer/order/{buyerOrderCartId}", method = RequestMethod.POST)
+    public Response<List<GoodsResponse>> queryBuyerOrderGoods(@PathVariable("buyerOrderCartId") Long buyerOrderCartId) {
+
+        return goodsClientService.queryBuyerOrderGoods(buyerOrderCartId);
+    }
+
 }

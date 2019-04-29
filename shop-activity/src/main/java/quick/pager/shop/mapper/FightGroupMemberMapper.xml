@@ -3,38 +3,46 @@
 <mapper namespace="quick.pager.shop.mapper.FightGroupMemberMapper">
   <resultMap id="BaseResultMap" type="quick.pager.shop.model.FightGroupMember">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="activity_id" jdbcType="BIGINT" property="activityId" />
     <result column="record_id" jdbcType="BIGINT" property="recordId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="master" jdbcType="BIT" property="master" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_status" jdbcType="BIT" property="deleteStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, group_id, record_id, user_id, master, create_time, update_time, delete_status
+    id, activity_id, record_id, user_id, phone, username, master, create_time, update_time, delete_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
-    from t_fight_group_member
+    from t_fight_group_activity_member
     where id = #{id,jdbcType=BIGINT}
   </select>
 
   <insert id="insertSelective" parameterType="quick.pager.shop.model.FightGroupMember">
-    insert into t_fight_group_member
+    insert into t_fight_group_activity_member
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="groupId != null">
-        group_id,
+      <if test="activityId != null">
+        activity_id,
       </if>
       <if test="recordId != null">
         record_id,
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="username != null">
+        username,
       </if>
       <if test="master != null">
         master,
@@ -53,14 +61,20 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=BIGINT},
+      <if test="activityId != null">
+        #{activityId,jdbcType=BIGINT},
       </if>
       <if test="recordId != null">
         #{recordId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
       <if test="master != null">
         #{master,jdbcType=BIT},
@@ -77,16 +91,22 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.FightGroupMember">
-    update t_fight_group_member
+    update t_fight_group_activity_member
     <set>
-      <if test="groupId != null">
-        group_id = #{groupId,jdbcType=BIGINT},
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=BIGINT},
       </if>
       <if test="recordId != null">
         record_id = #{recordId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="master != null">
         master = #{master,jdbcType=BIT},
@@ -106,8 +126,35 @@
 
   <select id="selectFightGroupMember" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
-    from t_fight_group_member
+    from t_fight_group_activity_member
     where record_id = #{recordId,jdbcType=BIGINT} order by id
+  </select>
+
+  <select id="selectFightGroupRecord" resultType="quick.pager.shop.response.FightGroupMemberResponse">
+    select
+    m.id,
+    m.activity_id as activityId,
+    m.record_id as recordId,
+    m.user_id as userId,
+    m.phone as phone,
+    m.username as username,
+    m.master as master,
+    m.create_time as createTime,
+    m.delete_status as deleteStatus,
+    r.`status` as openFightStatus,
+    r.create_time as 'openGroupTime',
+    r.group_time as groupTime,
+    a.activity_name as activityName
+    from t_fight_group_activity_member m,t_fight_group_activity_record r,t_fight_group_activity a
+    where
+    m.activity_id = r.activity_id
+    and m.activity_id = a.id
+    and m.record_id = r.id
+    and m.activity_id = #{activityId,jdbcType=BIGINT}
+    <if test="phone != null and phone != ''">
+      and m.phone = #{phone,jdbcType=VARCHAR}
+    </if>
+    order by m.id desc
   </select>
 
 </mapper>

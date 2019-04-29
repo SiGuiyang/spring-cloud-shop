@@ -67,91 +67,91 @@ public class DateUtils {
     /**
      * 加 年
      */
-    public Date plusYears(LocalDateTime dateTime, long years) {
+    public static Date plusYears(LocalDateTime dateTime, long years) {
         return Date.from(dateTime.plusYears(years).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 加 月
      */
-    public Date plusMonths(LocalDateTime dateTime, long months) {
+    public static Date plusMonths(LocalDateTime dateTime, long months) {
         return Date.from(dateTime.plusMonths(months).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 加 周
      */
-    public Date plusWeeks(LocalDateTime dateTime, long weeks) {
+    public static Date plusWeeks(LocalDateTime dateTime, long weeks) {
         return Date.from(dateTime.plusWeeks(weeks).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 加 天
      */
-    public Date plusDays(LocalDateTime dateTime, long days) {
+    public static Date plusDays(LocalDateTime dateTime, long days) {
         return Date.from(dateTime.plusDays(days).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 加 秒
      */
-    public Date plusSeconds(LocalDateTime dateTime, long seconds) {
+    public static Date plusSeconds(LocalDateTime dateTime, long seconds) {
         return Date.from(dateTime.plusSeconds(seconds).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 加 分
      */
-    public Date plusMinutes(LocalDateTime dateTime, long minutes) {
+    public static Date plusMinutes(LocalDateTime dateTime, long minutes) {
         return Date.from(dateTime.plusMinutes(minutes).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 年
      */
-    public Date minusYears(LocalDateTime dateTime, long years) {
+    public static Date minusYears(LocalDateTime dateTime, long years) {
         return Date.from(dateTime.minusYears(years).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 月
      */
-    public Date minusMonths(LocalDateTime dateTime, long months) {
+    public static Date minusMonths(LocalDateTime dateTime, long months) {
         return Date.from(dateTime.minusMonths(months).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 周
      */
-    public Date minusWeeks(LocalDateTime dateTime, long weeks) {
+    public static Date minusWeeks(LocalDateTime dateTime, long weeks) {
         return Date.from(dateTime.minusWeeks(weeks).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 天
      */
-    public Date minusDays(LocalDateTime dateTime, long days) {
+    public static Date minusDays(LocalDateTime dateTime, long days) {
         return Date.from(dateTime.minusDays(days).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 时
      */
-    public Date minusHours(LocalDateTime dateTime, long hours) {
+    public static Date minusHours(LocalDateTime dateTime, long hours) {
         return Date.from(dateTime.minusHours(hours).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 分
      */
-    public Date minusMinutes(LocalDateTime dateTime, long minutes) {
+    public static Date minusMinutes(LocalDateTime dateTime, long minutes) {
         return Date.from(dateTime.minusMinutes(minutes).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
      * 减 秒
      */
-    public Date minusSeconds(LocalDateTime dateTime, long seconds) {
+    public static Date minusSeconds(LocalDateTime dateTime, long seconds) {
         return Date.from(dateTime.minusSeconds(seconds).atZone(ZoneId.systemDefault()).toInstant());
     }
 

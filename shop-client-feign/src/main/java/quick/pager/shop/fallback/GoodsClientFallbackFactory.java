@@ -31,6 +31,12 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
             }
 
             @Override
+            public Response<String> addGoods(GoodsDTO request) {
+                log.error("进入熔断措施 GoodsClient.addGoods");
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            }
+
+            @Override
             public Response<String> modifyGoods(GoodsDTO request) {
                 log.error("进入熔断措施 GoodsClient.modifyGoods");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
@@ -43,13 +49,13 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
             }
 
             @Override
-            public Response goodsClassList(String className) {
+            public Response classificationList(String className) {
                 log.error("进入熔断措施 GoodsClient.goodsClassList");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response modifyGoodsClass(ClassificationDTO dto) {
+            public Response modifyClassification(ClassificationDTO dto) {
                 log.error("进入熔断措施 GoodsClient.modifyGoodsClass");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }

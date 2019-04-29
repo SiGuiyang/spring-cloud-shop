@@ -213,31 +213,21 @@
         select
         <include refid="Base_Column_List"/>
         from t_user_order
-        where delete_status = false
-        and user_id = #{userId,jdbcType=BIGINT}
-        <if test="order != null">
-            and order_status in
-            <foreach collection="orderStatusList" item="item" index="index" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-        order by id desc
-        limit #{page},#{pageSize}
-    </select>
-
-    <select id="selectUserOrders" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_user_order
         <where>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
             <if test="phone != null and phone !=''">
                 phone = #{phone,jdbcType=VARCHAR}
             </if>
             <if test="orderCode != null and orderCode != ''">
                 and order_code = #{orderCode,jdbcType=VARCHAR}
             </if>
-            <if test="orderStatus != null and orderStatus != ''">
-                and order_status = #{orderStatus,jdbcType=VARCHAR}
+            <if test="orderStatusList != null">
+                and order_status in
+                <foreach collection="orderStatusList" item="item" index="index" open="(" separator="," close=")">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
             </if>
             <if test="orderType !=null and orderType != ''">
                 and order_type = #{orderType,jdbcType=INTEGER}
@@ -246,10 +236,43 @@
                 and date_format(create_time, '%Y-%m-%d') <![CDATA[>=]]> date_format(#{beginTime}, '%Y-%m-%d')
             </if>
             <if test="endTime != null and endTime != ''">
-                and date_format(create_time, '%Y-%m-%d') <![CDATA[<=]]> date_format(#{endTime, '%Y-%m-%d')
+                and date_format(create_time, '%Y-%m-%d') <![CDATA[<=]]> date_format(#{endTime}, '%Y-%m-%d')
             </if>
         </where>
-        order by id desc
+        order by create_time desc
+    </select>
+
+    <select id="selectCountOrders" resultType="long">
+        select
+        count(1)
+        from t_user_order
+        <where>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="phone != null and phone !=''">
+                phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="orderCode != null and orderCode != ''">
+                and order_code = #{orderCode,jdbcType=VARCHAR}
+            </if>
+            <if test="orderStatusList != null">
+                and order_status in
+                <foreach collection="orderStatusList" item="item" index="index" open="(" separator="," close=")">
+                    #{item,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="orderType !=null and orderType != ''">
+                and order_type = #{orderType,jdbcType=INTEGER}
+            </if>
+            <if test="beginTime !=null and beginTime != ''">
+                and date_format(create_time, '%Y-%m-%d') <![CDATA[>=]]> date_format(#{beginTime}, '%Y-%m-%d')
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and date_format(create_time, '%Y-%m-%d') <![CDATA[<=]]> date_format(#{endTime}, '%Y-%m-%d')
+            </if>
+        </where>
+        limit #{page},#{pageSize}
     </select>
 
 </mapper>

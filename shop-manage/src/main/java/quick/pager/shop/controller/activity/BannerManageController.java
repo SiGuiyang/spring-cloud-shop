@@ -4,12 +4,13 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.client.ActivityClient;
 import quick.pager.shop.dto.BannerDTO;
+import quick.pager.shop.service.activity.BannerService;
 
 /**
  * banner 管理
@@ -21,19 +22,25 @@ import quick.pager.shop.dto.BannerDTO;
 public class BannerManageController {
 
     @Autowired
-    private ActivityClient activityClient;
+    private BannerService bannerService;
 
     @HystrixCommand
     @ApiOperation("banner 列表")
     @PostMapping("/activity/banner/list")
     public Response list(BannerDTO dto) {
-        return activityClient.fetch(dto);
+        return bannerService.fetch(dto);
     }
 
-    @ApiOperation("banner 新增|修改|")
+    @ApiOperation("banner 修改")
+    @PutMapping("/activity/banner/modify")
+    public Response addBanner(BannerDTO dto) {
+        return bannerService.addBanner(dto);
+    }
+
+    @ApiOperation("banner 新增")
     @PostMapping("/activity/banner/modify")
-    public Response modify(BannerDTO dto) {
-        return activityClient.modify(dto);
+    public Response modifyBanner(BannerDTO dto) {
+        return bannerService.modifyBanner(dto);
     }
 
 }

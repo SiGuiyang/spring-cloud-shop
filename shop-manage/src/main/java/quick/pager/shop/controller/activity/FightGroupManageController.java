@@ -1,13 +1,16 @@
 package quick.pager.shop.controller.activity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.client.ActivityClient;
 import quick.pager.shop.dto.FightGroupDTO;
+import quick.pager.shop.service.activity.FightGroupService;
 
 /**
  * 拼团管理
@@ -19,30 +22,38 @@ import quick.pager.shop.dto.FightGroupDTO;
 public class FightGroupManageController {
 
     @Autowired
-    private ActivityClient activityClient;
+    private FightGroupService fightGroupService;
 
     /**
      * 活动列表
      */
     @PostMapping("/activity/fightGroup/list")
     public Response list(FightGroupDTO request) {
-        return activityClient.fightGroup(request);
+        return fightGroupService.fightGroupActivityList(request);
     }
 
     /**
-     * 新增修改
+     * 拼团活动新增
      */
     @PostMapping("/activity/fightGroup/modify")
-    public Response modify(FightGroupDTO request) {
-        return activityClient.modify(request);
+    public Response addFightGroupActivity(FightGroupDTO request) {
+        return fightGroupService.addFightGroupActivity(request);
+    }
+
+    /**
+     * 拼团活动修改
+     */
+    @PutMapping("/activity/fightGroup/modify")
+    public Response modifyFightGroupActivity(FightGroupDTO request) {
+        return fightGroupService.modifyFightGroupActivity(request);
     }
 
     /**
      * 活动规则详情
      */
-    @PostMapping("/activity/fightGroup/rule/info")
-    public Response ruleInfo(FightGroupDTO request) {
-        return activityClient.rule(request.getId());
+    @PostMapping("/activity/fightGroup/rule/{activityId}")
+    public Response ruleInfo(@PathVariable("activityId") Long activityId) {
+        return fightGroupService.fightGroupActivityRuleInfo(activityId);
     }
 
     /**
@@ -50,35 +61,30 @@ public class FightGroupManageController {
      */
     @PostMapping("/activity/fightGroup/rule/modify")
     public Response rule(FightGroupDTO request) {
-        return activityClient.modifyRule(request);
+        return fightGroupService.modifyFightGroupRule(request);
     }
 
     /**
      * 活动商品详情
      */
-    @PostMapping("/activity/fightGroup/goods/info")
-    public Response goodsInfo(FightGroupDTO request) {
-        return activityClient.goodsInfo(request.getId());
+    @PostMapping("/activity/fightGroup/goods/{activityId}")
+    public Response fightGroupGoodsInfo(@PathVariable("activityId") Long activityId) {
+        return fightGroupService.fightGroupGoodsInfo(activityId);
     }
 
     /**
-     * 活动商品
+     * 设置活动商品
      */
-    @PostMapping("/activity/fightGroup/goods/modify")
-    public Response goods(FightGroupDTO request) {
-        return activityClient.goodsModify(request);
+    @PutMapping("/activity/fightGroup/goods/modify")
+    public Response setFightGroupGoods(FightGroupDTO request) {
+        return fightGroupService.setFightGroupGoods(request);
     }
 
     /**
-     * 活动成团记录
+     * 活动成团记录成员
      */
-    @PostMapping("/activity/fightGroup/record")
-    public Response record(FightGroupDTO request) {
-        return activityClient.records(request);
-    }
-
     @PostMapping("/activity/fightGroup/members")
-    public Response members(Long recordId, Integer page, Integer pageSize) {
-        return activityClient.members(recordId, page, pageSize);
+    public Response fightGroupRecord(FightGroupDTO request) {
+        return fightGroupService.fightGroupRecord(request);
     }
 }

@@ -9,7 +9,7 @@ public class FightGroupRecord extends Model {
 
     private static final long serialVersionUID = -626383581837906008L;
 
-    private Long groupId;
+    private Long activityId;
 
     private Integer status;
 }

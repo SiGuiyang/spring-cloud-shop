@@ -1,7 +1,6 @@
 package quick.pager.shop.service.client;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,12 @@ public class CouponClientService implements IService {
     public Response doService(BaseDTO dto) {
 
         CouponDTO couponDTO = (CouponDTO) dto;
-        Response response = new Response();
+        Response response;
 
-        switch (couponDTO.getEvent()) {
-            case Constants.Event.MODIFY:
-                break;
-            case Constants.Event.LIST:
-                response = queryCoupons(couponDTO);
-                break;
-            default:
-                response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+        if (Constants.Event.LIST.equals(couponDTO.getEvent())) {
+            response = queryCoupons(couponDTO);
+        } else {
+            response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
 
         return response;
@@ -52,12 +47,6 @@ public class CouponClientService implements IService {
         PageHelper.startPage(couponDTO.getPage(), couponDTO.getPageSize());
         List<DiscountCoupon> discountCoupons = discountCouponMapper.selectCoupons(couponDTO);
 
-        PageInfo<DiscountCoupon> pageInfo = new PageInfo<>(discountCoupons);
-
-        Response<List<DiscountCoupon>> listResponse = new Response<>();
-        listResponse.setData(pageInfo.getList());
-        listResponse.setTotal(pageInfo.getTotal());
-
-        return listResponse;
+        return Response.toResponse(discountCoupons);
     }
 }

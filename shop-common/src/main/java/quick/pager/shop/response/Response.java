@@ -57,4 +57,11 @@ public class Response<T> implements Serializable {
         return response;
     }
 
+    public static <T> Response<List<T>> toResponse(List<T> data, long total) {
+        Response<List<T>> response = new Response<>();
+        response.setTotal(total);
+        response.setData(data);
+        return response;
+    }
+
 }

@@ -1,7 +1,9 @@
 package quick.pager.shop.service;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import java.util.List;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
@@ -17,33 +19,21 @@ import quick.pager.shop.response.EnumResponse;
 @Service
 @Slf4j
 public class CommonEnumService {
-    public Response<List<EnumResponse>> getCommonEnumInfo(String type) {
+    public Response<Map<String, List<EnumResponse>>> getCommonEnumInfo() {
 
-        Response<List<EnumResponse>> response = new Response<>();
+        Map<String, List<EnumResponse>> result = Maps.newConcurrentMap();
+        result.putIfAbsent(Constants.Type.COUPON_TYPE, getCouponType());
+        result.putIfAbsent(Constants.Type.GOODS_TYPE, getGoodsType());
+        result.putIfAbsent(Constants.Type.ORDER_TYPE, getOrderType());
+        result.putIfAbsent(Constants.Type.ORDER_STATUS, getOrderStatus());
 
-        switch (type) {
-            case Constants.Type.ORDER_STATUS:
-                response = getOrderStatus();
-                break;
-            case Constants.Type.ORDER_TYPE:
-                response = getOrderType();
-                break;
-            case Constants.Type.GOODS_TYPE:
-                response = getGoodsType();
-                break;
-            case Constants.Type.COUPON_TYPE:
-                response = getCouponType();
-                break;
-            default:
-                response = new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
-        return response;
+        return new Response<>(result);
     }
 
     /**
      * 优惠券
      */
-    private Response<List<EnumResponse>> getCouponType() {
+    private List<EnumResponse> getCouponType() {
         Constants.CouponType[] values = Constants.CouponType.values();
 
         List<EnumResponse> couponTypeResponses = Lists.newArrayList();
@@ -54,13 +44,13 @@ public class CommonEnumService {
             orderStatusResponse.setValue(couponType.getName());
             couponTypeResponses.add(orderStatusResponse);
         }
-        return new Response<>(couponTypeResponses);
+        return couponTypeResponses;
     }
 
     /**
      * 商品类型
      */
-    private Response<List<EnumResponse>> getGoodsType() {
+    private List<EnumResponse> getGoodsType() {
         Constants.GoodsType[] values = Constants.GoodsType.values();
 
         List<EnumResponse> goodsTypeResponses = Lists.newArrayList();
@@ -71,14 +61,14 @@ public class CommonEnumService {
             orderStatusResponse.setValue(goodsType.getName());
             goodsTypeResponses.add(orderStatusResponse);
         }
-        return new Response<>(goodsTypeResponses);
+        return goodsTypeResponses;
     }
 
 
     /**
      * 订单类型
      */
-    private Response<List<EnumResponse>> getOrderType() {
+    private List<EnumResponse> getOrderType() {
         Constants.OrderType[] values = Constants.OrderType.values();
 
         List<EnumResponse> orderTypeResponses = Lists.newArrayList();
@@ -89,13 +79,13 @@ public class CommonEnumService {
             orderStatusResponse.setValue(orderType.getName());
             orderTypeResponses.add(orderStatusResponse);
         }
-        return new Response<>(orderTypeResponses);
+        return orderTypeResponses;
     }
 
     /**
      * 订单状态
      */
-    private Response<List<EnumResponse>> getOrderStatus() {
+    private List<EnumResponse> getOrderStatus() {
         Constants.OrderStatus[] values = Constants.OrderStatus.values();
 
         List<EnumResponse> orderStatusResponses = Lists.newArrayList();
@@ -106,6 +96,6 @@ public class CommonEnumService {
             orderStatusResponse.setValue(orderStatus.getName());
             orderStatusResponses.add(orderStatusResponse);
         }
-        return new Response<>(orderStatusResponses);
+        return orderStatusResponses;
     }
 }

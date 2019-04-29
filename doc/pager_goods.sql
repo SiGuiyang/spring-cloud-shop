@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : utf-8
 
- Date: 01/16/2019 11:01:49 AM
+ Date: 04/29/2019 15:51:34 PM
 */
 
 SET NAMES utf8;
@@ -31,19 +31,21 @@ CREATE TABLE `t_goods` (
   `goods_amount` decimal(4,2) DEFAULT NULL COMMENT '商品价格',
   `goods_discount_amount` decimal(4,2) DEFAULT NULL COMMENT '商品折扣价格',
   `description` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '商品描述',
+  `place_origin` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产地',
+  `storage` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '存储',
   `integral` int(11) DEFAULT NULL COMMENT '赠送的积分',
   `goods_inventory` int(11) DEFAULT NULL COMMENT '商品库存',
   `create_time` timestamp NULL DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `t_goods`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_goods` VALUES ('1', '1', 'ddd', '1547198358588zgpwy', '1', '1', '3.00', '3.00', 'd', '3', '3', '2019-01-11 17:19:19', '2019-01-11 17:19:18', b'0'), ('2', '3', '发大发大发', '1547199040001q7tw0', '2', '2', '44.00', '4.00', '发大丰收的', '3', '323', '2019-01-11 17:30:40', '2019-01-11 17:30:40', b'0');
+INSERT INTO `t_goods` VALUES ('1', '1', 'ddd', '1547198358588zgpwy', '1', '3', '3.00', '3.00', 'd', null, null, '3', '3', '2019-01-11 17:19:19', '2019-01-11 17:19:18', b'0'), ('2', '3', '发大发大发', '1547199040001q7tw0', '2', '2', '44.00', '4.00', '发大丰收的', null, null, '3', '323', '2019-01-11 17:30:40', '2019-01-11 17:30:40', b'0'), ('3', '2', '442424', '1548147966226b4sw8', '1', '3', '44.00', '44.00', '434', '嗯嗯', '我为', '444', '42424', '2019-01-22 17:06:06', '2019-01-22 17:06:06', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -88,7 +90,7 @@ CREATE TABLE `t_goods_class` (
 --  Records of `t_goods_class`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_goods_class` VALUES ('1', '超值特惠', 'http://pk6b0a7n8.bkt.clouddn.com/chaozhitehui.png', 'admin', '2018-12-23 17:47:48', '2019-01-08 16:40:13', b'0'), ('2', '新品上市', 'http://pk6b0a7n8.bkt.clouddn.com/xianfenxinpin.png', 'admin', '2018-12-23 17:48:09', '2019-01-08 16:40:15', b'0'), ('3', '店长推荐', 'http://pk6b0a7n8.bkt.clouddn.com/dianzhangtuijian.png', 'admin', '2018-12-23 17:48:27', '2019-01-08 16:40:18', b'0'), ('4', '国产精品', 'http://pk6b0a7n8.bkt.clouddn.com/guochanjingpin.png', 'admin', '2018-12-23 17:48:44', '2019-01-08 16:40:17', b'0'), ('5', '礼盒专区', 'http://pk6b0a7n8.bkt.clouddn.com/lihezhuanqu.png', 'admin', '2018-12-23 17:49:01', '2019-01-08 16:40:19', b'0'), ('6', '漂洋过海', 'http://pk6b0a7n8.bkt.clouddn.com/piaoyangguohai.png', 'admin', '2018-12-23 17:49:18', '2019-01-08 16:40:21', b'0'), ('7', '特色乳品', 'http://pk6b0a7n8.bkt.clouddn.com/teserupin.png', 'admin', '2018-12-23 17:49:42', '2019-01-08 16:40:20', b'0'), ('8', '休闲零食', 'http://pk6b0a7n8.bkt.clouddn.com/xiuxianlingshi.png', 'admin', '2018-12-23 17:50:05', '2019-01-08 16:40:22', b'0'), ('9', '轻食果切', 'http://pk6b0a7n8.bkt.clouddn.com/qinshiguoqie.png', 'admin', '2018-12-23 17:50:39', '2019-01-08 16:40:25', b'0');
+INSERT INTO `t_goods_class` VALUES ('1', '超值特惠', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190425/95fd799cfadb47bda7b60ca11e5dae16.jpg', 'admin', '2018-12-23 17:47:48', '2019-04-25 13:43:39', b'0'), ('2', '新品上市', 'http://pk6b0a7n8.bkt.clouddn.com/xianfenxinpin.png', 'admin', '2018-12-23 17:48:09', '2019-01-08 16:40:15', b'0'), ('3', '店长推荐', 'http://pk6b0a7n8.bkt.clouddn.com/dianzhangtuijian.png', 'admin', '2018-12-23 17:48:27', '2019-01-08 16:40:18', b'0'), ('4', '国产精品', 'http://pk6b0a7n8.bkt.clouddn.com/guochanjingpin.png', 'admin', '2018-12-23 17:48:44', '2019-01-08 16:40:17', b'0'), ('5', '礼盒专区', 'http://pk6b0a7n8.bkt.clouddn.com/lihezhuanqu.png', 'admin', '2018-12-23 17:49:01', '2019-01-08 16:40:19', b'0'), ('6', '漂洋过海', 'http://pk6b0a7n8.bkt.clouddn.com/piaoyangguohai.png', 'admin', '2018-12-23 17:49:18', '2019-01-08 16:40:21', b'0'), ('7', '特色乳品', 'http://pk6b0a7n8.bkt.clouddn.com/teserupin.png', 'admin', '2018-12-23 17:49:42', '2019-01-08 16:40:20', b'0'), ('8', '休闲零食', 'http://pk6b0a7n8.bkt.clouddn.com/xiuxianlingshi.png', 'admin', '2018-12-23 17:50:05', '2019-01-08 16:40:22', b'0'), ('9', '轻食果切', 'http://pk6b0a7n8.bkt.clouddn.com/qinshiguoqie.png', 'admin', '2018-12-23 17:50:39', '2019-01-08 16:40:25', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -111,13 +113,13 @@ CREATE TABLE `t_goods_detail` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `t_goods_detail`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_goods_detail` VALUES ('1', '1', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', '', '', '', '', '', '', '', '', '2019-01-11 17:19:19', '2019-01-14 16:44:48', b'0'), ('2', '2', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/5fbc5073f7114074b071d6c56fb61a86.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190113/25aa537d3745416b832634a22df57307.jpg', '', '', '', '', '', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/2bc73a752af1401aa83d7f1f337d28b9.jpg', '2019-01-11 17:30:40', '2019-01-13 11:31:21', b'0');
+INSERT INTO `t_goods_detail` VALUES ('1', '1', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', '', '', '', '', '', '', '', '', '2019-01-11 17:19:19', '2019-01-14 16:44:48', b'0'), ('2', '2', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/5fbc5073f7114074b071d6c56fb61a86.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190113/25aa537d3745416b832634a22df57307.jpg', '', '', '', '', '', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/2bc73a752af1401aa83d7f1f337d28b9.jpg', '2019-01-11 17:30:40', '2019-01-13 11:31:21', b'0'), ('3', '3', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190122/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190122/0331a2f8be34477e88681a2c6d8ca6c9.jpg', null, null, null, null, null, null, null, '2019-01-22 17:06:06', '2019-01-22 17:09:03', b'0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

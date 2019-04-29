@@ -12,5 +12,4 @@ public interface FightGroupRecordMapper {
 
     int updateByPrimaryKeySelective(FightGroupRecord record);
 
-    List<FightGroupRecord> selectFightGroupRecord(@Param("groupId") Long groupId, @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 }

@@ -211,7 +211,7 @@
         select
         <include refid="Base_Column_List"/>
         from t_goods
-        where goods_name = concat(#{goodsName,jdbcType=VARCHAR},'%')
+        where goods_name like concat(#{goodsName,jdbcType=VARCHAR},'%')
     </select>
 
     <select id="queryGoodsList" resultMap="BaseResultMap">
@@ -220,7 +220,7 @@
         from t_goods
         <where>
             <if test="goodsName != null and goodsName !=''">
-                goods_name = concat('%',#{goodsName,jdbcType=VARCHAR},'%')
+                goods_name like concat(#{goodsName,jdbcType=VARCHAR},'%')
             </if>
             <if test="goodsStatus != null and goodsStatus != ''">
                 and goods_status = #{goodsStatus,jdbcType=TINYINT}

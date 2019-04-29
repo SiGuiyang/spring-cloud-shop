@@ -30,18 +30,28 @@ public class UserAddressController {
     @Autowired
     private AreaService areaService;
 
+    @ApiOperation("查询地址")
+    @PostMapping("/address/{addressId}")
+    public Response address(@PathVariable("addressId") Long addressId) {
+        AddressDTO dto = new AddressDTO();
+        dto.setEvent(Constants.Event.INFO);
+        dto.setId(addressId);
+        return userAddressService.doService(dto);
+    }
+
     @ApiOperation("地址列表")
-    @PostMapping("/address/{userId}")
-    public Response address(@PathVariable("userId") Long userId) {
+    @PostMapping("/address/list/{userId}")
+    public Response addressList(@PathVariable("userId") Long userId) {
         AddressDTO dto = new AddressDTO();
         dto.setUserId(userId);
+        dto.setEvent(Constants.Event.LIST);
         return userAddressService.doService(dto);
     }
 
     @ApiOperation("地址修改")
     @PostMapping("/modify/address")
     public Response modifyAddress(AddressDTO dto) {
-
+        dto.setEvent(Constants.Event.MODIFY);
         return userAddressService.doService(dto);
     }
 

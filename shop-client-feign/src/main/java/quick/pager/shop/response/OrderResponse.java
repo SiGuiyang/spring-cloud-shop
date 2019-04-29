@@ -1,5 +1,6 @@
 package quick.pager.shop.response;
 
+import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
@@ -14,9 +15,9 @@ public class OrderResponse implements Serializable {
     // 订单信息
     private UserOrder userOrder;
     // 购买的商品信息
-    private List<GoodsResponse> buyerGoods;
+    private List<GoodsResponse> buyerGoods = Lists.newArrayList();
     // 优惠券信息
-    private DiscountCoupon discountCoupon;
+    private DiscountCoupon discountCoupon = new DiscountCoupon();
     // 配送地址
     private Address address;
     // 商家信息

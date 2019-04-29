@@ -102,31 +102,31 @@
     <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.DiscountCouponTemplate">
         update t_discount_coupon_template
         <set>
-            <if test="orderAmount != null">
+            <if test="orderAmount != null and orderAmount != ''">
                 order_amount = #{orderAmount,jdbcType=DECIMAL},
             </if>
-            <if test="couponAmount != null">
+            <if test="couponAmount != null and couponAmount != ''">
                 coupon_amount = #{couponAmount,jdbcType=DECIMAL},
             </if>
-            <if test="discountStrength != null">
+            <if test="discountStrength != null and discountStrength != ''">
                 discount_strength = #{discountStrength,jdbcType=VARCHAR},
             </if>
-            <if test="templateType != null">
+            <if test="templateType != null and templateType != ''">
                 template_type = #{templateType,jdbcType=INTEGER},
             </if>
-            <if test="templateName != null">
+            <if test="templateName != null and templateName != ''">
                 template_name = #{templateName,jdbcType=VARCHAR},
             </if>
-            <if test="description != null">
+            <if test="description != null and description != ''">
                 description = #{description,jdbcType=VARCHAR},
             </if>
-            <if test="createUser != null">
+            <if test="createUser != null and createUser != ''">
                 create_user = #{createUser,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null">
+            <if test="createTime != null and createTime != ''">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null">
+            <if test="updateTime != null and updateTime != ''">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
             <if test="deleteStatus != null">
@@ -141,10 +141,10 @@
         <include refid="Base_Column_List"/>
         from t_discount_coupon_template
         <where>
-            <if test="templateName != null">
+            <if test="templateName != null and templateName != ''">
                 template_name = #{templateName,jdbcType=VARCHAR}
             </if>
-            <if test="templateType != null">
+            <if test="templateType != null and templateType != ''">
                 and template_type = #{templateType,jdbcType=INTEGER}
             </if>
         </where>

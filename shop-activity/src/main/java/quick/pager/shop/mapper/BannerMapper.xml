@@ -122,37 +122,37 @@
     <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.Banner">
         update t_banner
         <set>
-            <if test="title != null">
+            <if test="title != null and title !=''">
                 title = #{title,jdbcType=VARCHAR},
             </if>
-            <if test="bannerUrl != null">
+            <if test="bannerUrl != null and bannerUrl != ''">
                 banner_url = #{bannerUrl,jdbcType=VARCHAR},
             </if>
-            <if test="bannerClickUrl != null">
+            <if test="bannerClickUrl != null and bannerClickUrl != ''">
                 banner_click_url = #{bannerClickUrl,jdbcType=VARCHAR},
             </if>
-            <if test="bannerType != null">
+            <if test="bannerType != null and bannerType != ''">
                 banner_type = #{bannerType,jdbcType=VARCHAR},
             </if>
-            <if test="shareUrl != null">
+            <if test="shareUrl != null and shareUrl != ''">
                 share_url = #{shareUrl,jdbcType=VARCHAR},
             </if>
-            <if test="shareTitle != null">
+            <if test="shareTitle != null and shareTitle != ''">
                 share_title = #{shareTitle,jdbcType=VARCHAR},
             </if>
-            <if test="shareSubtitle != null">
+            <if test="shareSubtitle != null and shareSubtitle !=''">
                 share_subtitle = #{shareSubtitle,jdbcType=VARCHAR},
             </if>
-            <if test="shareIcon != null">
+            <if test="shareIcon != null and shareIcon != ''">
                 share_icon = #{shareIcon,jdbcType=VARCHAR},
             </if>
-            <if test="shareChannel != null">
+            <if test="shareChannel != null and shareChannel != ''">
                 share_channel = #{shareChannel,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="createUser != null">
+            <if test="createUser != null and createUser != ''">
                 create_user = #{createUser,jdbcType=VARCHAR},
             </if>
             <if test="updateTime != null">

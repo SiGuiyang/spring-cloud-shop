@@ -26,7 +26,7 @@ public class SellerController {
     }
 
     /**
-     * 注册
+     * 注册申请
      */
     @PostMapping("/subscribe")
     public Response subscribe(SellerSubscribeDTO dto) {
@@ -36,8 +36,8 @@ public class SellerController {
     /**
      * 商家信息
      */
-    @PostMapping("/info")
+    @PostMapping("/info/{sellerId}")
     public Response sellerInfo() {
-        return null;
+        return new Response();
     }
 }
