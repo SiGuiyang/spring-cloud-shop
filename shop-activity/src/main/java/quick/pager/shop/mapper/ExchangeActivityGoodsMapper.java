@@ -1,7 +1,5 @@
 package quick.pager.shop.mapper;
 
-import java.util.List;
-
 import quick.pager.shop.model.ExchangeActivityGoods;
 
 /**
@@ -17,5 +15,5 @@ public interface ExchangeActivityGoodsMapper {
     /**
      * 表格查询
      */
-    List<ExchangeActivityGoods> select(ExchangeActivityGoods record);
+    ExchangeActivityGoods select(ExchangeActivityGoods record);
 }

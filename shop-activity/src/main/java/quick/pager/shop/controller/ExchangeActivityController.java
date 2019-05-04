@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.ExchangeActivityDTO;
@@ -34,6 +36,7 @@ public class ExchangeActivityController {
 
     /**
      * 获取活动
+     *
      * @param activityId 活动Id
      */
     @GetMapping("/exchange/{activityId}")
@@ -99,10 +102,44 @@ public class ExchangeActivityController {
     }
 
     /**
+     * 设置商品规则
+     *
+     * @param activityId 换购活动Id
+     * @param ruleId     规则Id
+     * @param goodsId    商品Id
+     */
+    @RequestMapping(value = "/exchange/goods/rule", method = RequestMethod.PUT)
+    public Response exchangeGoodsRule(@RequestParam("activityId") Long activityId, @RequestParam("ruleId") Long ruleId, @RequestParam("goodsId") Long goodsId) {
+
+        ExchangeActivityDTO dto = new ExchangeActivityDTO();
+        dto.setActivityId(activityId);
+        dto.setRuleId(ruleId);
+        dto.setGoodsId(goodsId);
+        dto.setEvent("exchangeRule");
+
+        return exchangeActivityRuleService.doService(dto);
+    }
+
+    /**
+     * 查看换购商品的规则信息
+     *
+     * @param goodsId 商品Id
+     */
+    @RequestMapping(value = "/exchange/goods/rule/{activityId}/{goodsId}", method = RequestMethod.GET)
+    public Response goodsRuleInfo(@PathVariable("activityId") Long activityId, @PathVariable("goodsId") Long goodsId) {
+        ExchangeActivityDTO dto = new ExchangeActivityDTO();
+        dto.setGoodsId(goodsId);
+        dto.setActivityId(activityId);
+        dto.setEvent("exchangeGoodsRuleInfo");
+
+        return exchangeActivityRuleService.doService(dto);
+    }
+
+    /**
      * 购买记录
      */
     @PostMapping("/exchange/purchase/history")
-    public Response purchaseHistory(@RequestBody ExchangeActivityDTO dto){
+    public Response purchaseHistory(@RequestBody ExchangeActivityDTO dto) {
         return exchangeActivityHistoryService.doService(dto);
     }
 }

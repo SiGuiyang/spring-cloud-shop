@@ -6,6 +6,7 @@
     <result column="activity_id" jdbcType="BIGINT" property="activityId"/>
     <result column="user_id" jdbcType="BIGINT" property="userId"/>
     <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+    <result column="rule_id" jdbcType="BIGINT" property="ruleId"/>
     <result column="phone" jdbcType="VARCHAR" property="phone"/>
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -16,6 +17,7 @@
         activity_id,
         user_id,
         goods_id,
+        rule_id,
         phone,
         update_time,
         create_time,
@@ -44,6 +46,9 @@
         <if test="goodsId != null">
             goods_id,
         </if>
+        <if test="ruleId != null">
+            rule_id,
+        </if>
         <if test="phone != null">
             phone,
         </if>
@@ -69,6 +74,9 @@
         </if>
         <if test="goodsId != null">
             #{goodsId, jdbcType=BIGINT},
+        </if>
+        <if test="ruleId != null">
+            #{rule_id, jdbcType=BIGINT},
         </if>
         <if test="phone != null">
             #{phone, jdbcType=VARCHAR},
@@ -97,6 +105,9 @@
             <if test="goodsId != null">
                 goods_id = #{goodsId, jdbcType=BIGINT},
             </if>
+            <if test="ruleId != null">
+                rule_id = #{rule_id, jdbcType=BIGINT},
+            </if>
             <if test="phone != null">
                 phone = #{phone, jdbcType=VARCHAR},
             </if>
@@ -113,36 +124,31 @@
         where id = #{id, jdbcType=BIGINT}
     </update>
 
-    <select id="select" parameterType="quick.pager.shop.model.ExchangeActivityMembers" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_exchange_activity_members
-        <where>
-            <if test="id != null">
-                id = #{id, jdbcType=BIGINT}
-            </if>
-            <if test="activityId != null">
-                and activity_id = #{activityId, jdbcType=BIGINT}
-            </if>
-            <if test="userId != null">
-                and user_id = #{userId, jdbcType=BIGINT}
-            </if>
-            <if test="goodsId != null">
-                and goods_id = #{goodsId, jdbcType=BIGINT}
-            </if>
-            <if test="phone != null">
-                and phone = #{phone, jdbcType=VARCHAR}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime, jdbcType=TIMESTAMP}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime, jdbcType=TIMESTAMP}
-            </if>
-            <if test="deleteStatus != null">
-                and delete_status = #{deleteStatus, jdbcType=BIT}
-            </if>
-        </where>
+    <select id="select" resultType="quick.pager.shop.response.ExchangeMemberResponse">
+
+        SELECT
+            am.id AS id,
+            am.activity_id AS activityId,
+            am.phone AS phone,
+            am.create_time AS createTime,
+            am.goods_id AS goodsId,
+            am.user_id AS userId,
+            ac.activity_name AS activityName,
+            ar.rule_name AS ruleName,
+            ar.id AS ruleId
+        FROM
+            t_exchange_activity_members am
+        LEFT JOIN t_exchange_activity ac ON am.activity_id = ac.id
+        LEFT JOIN t_exchange_activity_rule ar ON am.rule_id = ar.id
+        where
+          am.activity_id = #{activityId, jdbcType=BIGINT}
+        <if test="phone != null and phone != ''">
+            and am.phone = #{phone, jdbcType=VARCHAR}
+        </if>
+        <if test="ruleId != null">
+            and ar.id = #{ruleId,jdbcType=BIGINT}
+        </if>
+       order by am.id desc
     </select>
 
 </mapper>

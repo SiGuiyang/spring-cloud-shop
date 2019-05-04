@@ -16,9 +16,8 @@
 6. 启动 shop-goods 模块，商品中心服务
 7. 启动 shop-activity 模块，活动中心服务
 8. 启动 shop-order 模块，订单中心服务
-9. 启动 shop-settlement 模块，清结算服务
-10. 启动 shop-manage 模块，[系统管理平台](https://github.com/SiGuiyang/vue-shop-admin.git)
-11. 启动 shop-auth 模块，权限服务中心
+9. 启动 shop-manage 模块，[系统管理平台](https://github.com/SiGuiyang/vue-shop-admin.git)
+10. 启动 shop-auth 模块，权限服务中心
 
 #### 注意：consul 可到官网下载即可； shop-manage 依赖于各个模块，每一个功能可能会依赖多个模块，如果项体验更好，请将所有服务都启动
 ## 前端模块
@@ -28,6 +27,4 @@
 ## 项目功能点介绍
 ![Pager分布式电商项目](http://pk6b0a7n8.bkt.clouddn.com/Pager_Shop.png "Pager分布式电商项目")
 
-#### 安全中心将大改革，目前已有方案，正在构思。。。
-#### 注意：第二个阶段将加入分布式事务解决方案采用 Rabbitmq 实现，消息最终一致性解决方案（延期）
 #### 如有疑问，欢迎参与，如有更好的方案，可以邮件联系我本人**siguiyang1992@outlook.com**，谢谢！

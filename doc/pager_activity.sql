@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : utf-8
 
- Date: 04/29/2019 15:51:14 PM
+ Date: 05/04/2019 21:21:10 PM
 */
 
 SET NAMES utf8;
@@ -132,31 +132,46 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_exchange_activity_goods`;
 CREATE TABLE `t_exchange_activity_goods` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `activity_id` bigint(20) DEFAULT NULL COMMENT 't_exchange_activity id',
   `rule_id` bigint(20) DEFAULT NULL COMMENT 't_exchange_activity_rule id',
   `goods_id` bigint(20) DEFAULT NULL COMMENT 'pager_goods中t_goods 的id',
-  `update_time` timestamp NULL DEFAULT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `create_time` timestamp NULL DEFAULT NULL,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='满赠换购的商品';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='满赠换购的商品';
+
+-- ----------------------------
+--  Records of `t_exchange_activity_goods`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_exchange_activity_goods` VALUES ('3', '1', '1', '4', '2019-05-04 20:35:19', '2019-05-04 20:35:20', b'0');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `t_exchange_activity_members`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_exchange_activity_members`;
 CREATE TABLE `t_exchange_activity_members` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `activity_id` bigint(20) DEFAULT NULL COMMENT 't_exchange_activity id',
   `user_id` bigint(20) DEFAULT NULL COMMENT 'pager_shop中 t_user 的id',
   `goods_id` bigint(20) DEFAULT NULL COMMENT 'pager_goods中t_goods 的id',
+  `rule_id` bigint(20) DEFAULT NULL COMMENT '规则Id',
   `phone` varchar(11) DEFAULT NULL COMMENT '手机号码',
   `update_time` timestamp NULL DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT NULL,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='购买满赠换购的人与商品';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='购买满赠换购的人与商品';
+
+-- ----------------------------
+--  Records of `t_exchange_activity_members`
+-- ----------------------------
+BEGIN;
+INSERT INTO `t_exchange_activity_members` VALUES ('1', '1', '1', '1', '1', '13818471341', '2019-05-03 16:13:38', '2019-05-03 16:13:40', b'0');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `t_exchange_activity_rule`
@@ -177,7 +192,7 @@ CREATE TABLE `t_exchange_activity_rule` (
 --  Records of `t_exchange_activity_rule`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_exchange_activity_rule` VALUES ('1', '1', '满50减30', '50', '2019-04-29 12:55:33', '2019-04-29 12:55:38', b'0'), ('2', '1', null, '100', '2019-04-29 14:51:38', '2019-04-29 14:51:38', b'0'), ('3', '1', '满100减80', '100', '2019-04-29 14:54:51', '2019-04-29 14:54:52', b'0'), ('4', '1', '欢乐购', '79', '2019-04-29 15:34:16', '2019-04-29 15:34:16', b'0');
+INSERT INTO `t_exchange_activity_rule` VALUES ('1', '1', '满50减30', '50', '2019-04-29 12:55:33', '2019-04-29 12:55:38', b'0'), ('2', '1', '满100减49', '100', '2019-04-29 14:51:38', '2019-04-29 14:51:38', b'0'), ('3', '1', '满100减80', '100', '2019-04-29 14:54:51', '2019-04-29 14:54:52', b'0'), ('4', '1', '欢乐购', '79', '2019-04-29 15:34:16', '2019-04-29 15:34:16', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -217,13 +232,13 @@ CREATE TABLE `t_fight_group_activity_goods` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='参与拼团活动的商品';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='参与拼团活动的商品';
 
 -- ----------------------------
 --  Records of `t_fight_group_activity_goods`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_fight_group_activity_goods` VALUES ('1', '3', '2', '1', '2019-04-26 10:16:59', '2019-04-26 10:16:58', b'1'), ('2', '1', '2', '1', '2019-04-26 11:41:55', '2019-04-26 11:41:54', b'1'), ('3', '3', '2', '1', '2019-04-26 11:42:24', '2019-04-26 11:42:24', b'1'), ('4', '1', '2', '1', '2019-04-26 11:42:27', '2019-04-26 11:42:26', b'0');
+INSERT INTO `t_fight_group_activity_goods` VALUES ('1', '3', '2', '1', '2019-04-26 10:16:59', '2019-04-26 10:16:58', b'1'), ('2', '1', '2', '1', '2019-04-26 11:41:55', '2019-04-26 11:41:54', b'1'), ('3', '3', '2', '1', '2019-04-26 11:42:24', '2019-04-26 11:42:24', b'1'), ('4', '1', '2', '1', '2019-04-26 11:42:27', '2019-04-26 11:42:26', b'0'), ('5', '1', '1', '3', '2019-05-04 19:34:15', '2019-05-04 19:34:14', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -287,13 +302,13 @@ CREATE TABLE `t_fight_group_activity_rule` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 --  Records of `t_fight_group_activity_rule`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_fight_group_activity_rule` VALUES ('1', '2', '31322', '233', '2健康健康健康立即离开就离开就离开家', '2019-01-22 15:48:33', '2019-01-22 15:48:33', b'0'), ('2', '1', '122277888', '1212444', '', '2019-04-24 19:07:17', '2019-04-24 19:07:17', b'1');
+INSERT INTO `t_fight_group_activity_rule` VALUES ('1', '2', '31322', '233', '2健康健康健康立即离开就离开就离开家', '2019-01-22 15:48:33', '2019-01-22 15:48:33', b'0'), ('2', '1', '122277888', '1212444', '', '2019-04-24 19:07:17', '2019-04-24 19:07:17', b'1'), ('3', '1', '100', '10000', '111', '2019-05-04 19:34:02', '2019-05-04 19:34:01', b'0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

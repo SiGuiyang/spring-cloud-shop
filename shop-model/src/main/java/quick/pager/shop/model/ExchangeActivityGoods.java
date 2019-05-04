@@ -9,10 +9,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ExchangeActivityGoods extends Model {
+    private static final long serialVersionUID = 4035091690901248350L;
     /**
      * t_exchange_activity id
      */
-    private Long acticityId;
+    private Long activityId;
     /**
      * t_exchange_activity_rule id
      */
@@ -21,7 +22,4 @@ public class ExchangeActivityGoods extends Model {
      * pager_goods中t_goods 的id
      */
     private Long goodsId;
-    private java.util.Date updateTime;
-    private java.util.Date createTime;
-    private Boolean deleteStatus;
 }

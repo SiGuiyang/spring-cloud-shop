@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : utf-8
 
- Date: 04/29/2019 15:51:34 PM
+ Date: 05/04/2019 21:21:30 PM
 */
 
 SET NAMES utf8;
@@ -39,13 +39,13 @@ CREATE TABLE `t_goods` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `t_goods`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_goods` VALUES ('1', '1', 'ddd', '1547198358588zgpwy', '1', '3', '3.00', '3.00', 'd', null, null, '3', '3', '2019-01-11 17:19:19', '2019-01-11 17:19:18', b'0'), ('2', '3', '发大发大发', '1547199040001q7tw0', '2', '2', '44.00', '4.00', '发大丰收的', null, null, '3', '323', '2019-01-11 17:30:40', '2019-01-11 17:30:40', b'0'), ('3', '2', '442424', '1548147966226b4sw8', '1', '3', '44.00', '44.00', '434', '嗯嗯', '我为', '444', '42424', '2019-01-22 17:06:06', '2019-01-22 17:06:06', b'0');
+INSERT INTO `t_goods` VALUES ('1', '1', 'ddd', '1547198358588zgpwy', '1', '3', '3.00', '3.00', 'd', null, null, '3', '3', '2019-01-11 17:19:19', '2019-01-11 17:19:18', b'0'), ('2', '3', '发大发大发', '1547199040001q7tw0', '2', '2', '44.00', '4.00', '发大丰收的', null, null, '3', '323', '2019-01-11 17:30:40', '2019-01-11 17:30:40', b'0'), ('3', '2', '442424拼团', '1548147966226b4sw8', '1', '3', '44.00', '44.00', '434', '嗯嗯哈哈', '我为', '444', '42424', '2019-01-22 17:06:06', '2019-01-22 17:06:06', b'0'), ('4', '2', '满赠换购', '1556969460116hfrrj', '1', '5', '10.00', '8.00', '11dsda', 'dfdf', 'fsdfs', '0', '100', '2019-05-04 19:31:00', '2019-05-04 19:31:00', b'0');
 COMMIT;
 
 -- ----------------------------
@@ -113,13 +113,13 @@ CREATE TABLE `t_goods_detail` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `t_goods_detail`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_goods_detail` VALUES ('1', '1', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', '', '', '', '', '', '', '', '', '2019-01-11 17:19:19', '2019-01-14 16:44:48', b'0'), ('2', '2', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/5fbc5073f7114074b071d6c56fb61a86.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190113/25aa537d3745416b832634a22df57307.jpg', '', '', '', '', '', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/2bc73a752af1401aa83d7f1f337d28b9.jpg', '2019-01-11 17:30:40', '2019-01-13 11:31:21', b'0'), ('3', '3', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190122/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190122/0331a2f8be34477e88681a2c6d8ca6c9.jpg', null, null, null, null, null, null, null, '2019-01-22 17:06:06', '2019-01-22 17:09:03', b'0');
+INSERT INTO `t_goods_detail` VALUES ('1', '1', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', '', '', '', '', '', '', '', '', '2019-01-11 17:19:19', '2019-01-14 16:44:48', b'0'), ('2', '2', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/5fbc5073f7114074b071d6c56fb61a86.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190113/25aa537d3745416b832634a22df57307.jpg', '', '', '', '', '', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190112/2bc73a752af1401aa83d7f1f337d28b9.jpg', '2019-01-11 17:30:40', '2019-01-13 11:31:21', b'0'), ('3', '3', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190122/41f82e8b05744a6fbf20a9c008a9fd6d.jpg', 'http://pk6b0a7n8.bkt.clouddn.com/static/20190122/0331a2f8be34477e88681a2c6d8ca6c9.jpg', null, null, null, null, null, null, null, '2019-01-22 17:06:06', '2019-01-22 17:09:03', b'0'), ('4', '4', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190504/6b29b9a0c79c4a53aaf4e562afdce191.jpg', 'http://pp7x7b2mm.bkt.clouddn.com/static/20190504/8cca633b0b884faea8d6a56a3c7eeb75.jpg', null, null, null, null, null, null, null, '2019-05-04 19:31:00', '2019-05-04 19:31:00', b'0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

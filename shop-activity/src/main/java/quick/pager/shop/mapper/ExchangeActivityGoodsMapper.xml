@@ -12,7 +12,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         id,
-        acticity_id,
+        activity_id,
         rule_id,
         goods_id,
         update_time,
@@ -81,7 +81,7 @@
         update t_exchange_activity_goods
         <set>
             <if test="activityId != null">
-                activity_id = #{acticityId, jdbcType=BIGINT},
+                activity_id = #{activityId, jdbcType=BIGINT},
             </if>
             <if test="ruleId != null">
                 rule_id = #{ruleId, jdbcType=BIGINT},
@@ -106,12 +106,10 @@
         select
         <include refid="Base_Column_List"/>
         from t_exchange_activity_goods
-        <where>
-            <if test="id != null">
-                id = #{id, jdbcType=BIGINT}
-            </if>
+        where
+          delete_status = 0
             <if test="activityId != null">
-                and activity_id = #{acticityId, jdbcType=BIGINT}
+                and activity_id = #{activityId, jdbcType=BIGINT}
             </if>
             <if test="ruleId != null">
                 and rule_id = #{ruleId, jdbcType=BIGINT}
@@ -119,16 +117,6 @@
             <if test="goodsId != null">
                 and goods_id = #{goodsId, jdbcType=BIGINT}
             </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime, jdbcType=TIMESTAMP}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime, jdbcType=TIMESTAMP}
-            </if>
-            <if test="deleteStatus != null">
-                and delete_status = #{deleteStatus, jdbcType=BIT}
-            </if>
-        </where>
     </select>
 
 </mapper>

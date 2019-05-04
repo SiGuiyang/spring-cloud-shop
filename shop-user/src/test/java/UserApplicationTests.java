@@ -42,8 +42,6 @@ public class UserApplicationTests {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    @Autowired
-    private DemoService demoService;
 
     @Test
     public void testPub() {
@@ -127,11 +125,6 @@ public class UserApplicationTests {
         if (response.getCode() == ResponseStatus.Code.SUCCESS) {
             System.out.println(1);
         }
-    }
-
-    @Test
-    public void testBean() {
-        demoService.testTransaction();
     }
 
 }

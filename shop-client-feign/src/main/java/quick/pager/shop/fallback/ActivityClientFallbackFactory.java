@@ -1,6 +1,7 @@
 package quick.pager.shop.fallback;
 
 import feign.hystrix.FallbackFactory;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import quick.pager.shop.constants.ResponseStatus;
@@ -9,6 +10,7 @@ import quick.pager.shop.dto.CouponDTO;
 import quick.pager.shop.dto.CouponTemplateDTO;
 import quick.pager.shop.dto.ExchangeActivityDTO;
 import quick.pager.shop.dto.FightGroupDTO;
+import quick.pager.shop.response.ExchangeMemberResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.client.ActivityClient;
 import quick.pager.shop.model.DiscountCoupon;
@@ -159,7 +161,17 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
             }
 
             @Override
-            public Response purchaseHistory(ExchangeActivityDTO dto) {
+            public Response exchangeGoodsRule(Long activityId, Long ruleId, Long goodsId) {
+                return null;
+            }
+
+            @Override
+            public Response goodsRuleInfo(Long activityId, Long goodsId) {
+                return null;
+            }
+
+            @Override
+            public Response<List<ExchangeMemberResponse>> purchaseHistory(ExchangeActivityDTO dto) {
                 return null;
             }
         };

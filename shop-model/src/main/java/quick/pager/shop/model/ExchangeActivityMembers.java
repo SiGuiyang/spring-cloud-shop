@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ExchangeActivityMembers extends Model {
+    private static final long serialVersionUID = 3892197950124914263L;
     /**
      * t_exchange_activity id
      */
@@ -22,10 +23,11 @@ public class ExchangeActivityMembers extends Model {
      */
     private Long goodsId;
     /**
+     * t_exchange_activity_rule id
+     */
+    private Long ruleId;
+    /**
      * 手机号码
      */
     private String phone;
-    private java.util.Date updateTime;
-    private java.util.Date createTime;
-    private Boolean deleteStatus;
 }

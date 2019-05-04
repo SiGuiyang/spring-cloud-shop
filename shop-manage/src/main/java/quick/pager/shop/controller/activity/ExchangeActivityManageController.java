@@ -29,10 +29,11 @@ public class ExchangeActivityManageController {
 
     /**
      * 获取活动
+     *
      * @param activityId 活动Id
      */
     @GetMapping("/exchange/{activityId}")
-    public Response getExchangeActivity(@PathVariable("activityId") Long activityId){
+    public Response getExchangeActivity(@PathVariable("activityId") Long activityId) {
         return exchangeActivityService.getExchangeActivity(activityId);
     }
 
@@ -69,7 +70,7 @@ public class ExchangeActivityManageController {
      */
     @PostMapping(value = "/exchange/rule/list")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Response getExchangeActivityRules(ExchangeActivityDTO dto){
+    public Response getExchangeActivityRules(ExchangeActivityDTO dto) {
         dto.setEvent(Constants.Event.LIST);
         return exchangeActivityService.getExchangeActivityRules(dto);
     }
@@ -88,10 +89,28 @@ public class ExchangeActivityManageController {
      */
     @PutMapping(value = "/exchange/rule")
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public Response modifyExchangeActivityRules(ExchangeActivityDTO dto){
+    public Response modifyExchangeActivityRules(ExchangeActivityDTO dto) {
         return exchangeActivityService.modifyExchangeActivityRules(dto);
     }
 
+    /**
+     * 设置商品规则
+     */
+    @PutMapping("/exchange/goods/rule")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public Response goodsRule(ExchangeActivityDTO dto) {
+        return exchangeActivityService.goodsRule(dto);
+    }
+
+    /**
+     * 查看换购商品的规则信息
+     *
+     * @param goodsId 商品Id
+     */
+    @GetMapping("/exchange/goods/rule/{activityId}/{goodsId}")
+    public Response goodsRuleInfo(@PathVariable("activityId") Long activityId,@PathVariable("goodsId") Long goodsId) {
+        return exchangeActivityService.goodsRuleInfo(activityId,goodsId);
+    }
 
     /**
      * 购买记录

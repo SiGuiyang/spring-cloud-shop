@@ -42,6 +42,7 @@ public interface ExchangeActivityService {
 
     /**
      * 获取活动
+     *
      * @param activityId 活动Id
      */
     Response getExchangeActivity(Long activityId);
@@ -50,4 +51,17 @@ public interface ExchangeActivityService {
      * 购买记录
      */
     Response purchaseHistory(ExchangeActivityDTO dto);
+
+    /**
+     * 设置商品规则
+     */
+    Response goodsRule(ExchangeActivityDTO dto);
+
+    /**
+     * 查看换购商品的规则信息
+     *
+     * @param activityId 活动Id
+     * @param goodsId    商品Id
+     */
+    Response goodsRuleInfo(Long activityId, Long goodsId);
 }

@@ -2,11 +2,13 @@ package quick.pager.shop.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.ExchangeActivityMembers;
+import quick.pager.shop.response.ExchangeMemberResponse;
 
 /**
-* @author siguiyang
-*/
+ * @author siguiyang
+ */
 public interface ExchangeActivityMembersMapper {
 
     int insertSelective(ExchangeActivityMembers record);
@@ -14,8 +16,9 @@ public interface ExchangeActivityMembersMapper {
     ExchangeActivityMembers selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(ExchangeActivityMembers record);
+
     /**
-     * 表格查询
+     * 换购记录查询
      */
-    List<ExchangeActivityMembers> select(ExchangeActivityMembers record);
+    List<ExchangeMemberResponse> select(@Param("activityId") Long activityId, @Param("phone") String phone, @Param("ruleId") Long ruleId);
 }

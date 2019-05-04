@@ -1,5 +1,7 @@
 package quick.pager.shop.client;
 
+import java.util.List;
+import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,7 @@ import quick.pager.shop.dto.CouponTemplateDTO;
 import quick.pager.shop.dto.ExchangeActivityDTO;
 import quick.pager.shop.dto.FightGroupDTO;
 import quick.pager.shop.fallback.ActivityClientFallbackFactory;
+import quick.pager.shop.response.ExchangeMemberResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.model.DiscountCoupon;
 
@@ -135,6 +138,7 @@ public interface ActivityClient {
 
     /**
      * 获取活动
+     *
      * @param activityId 活动Id
      */
     @GetMapping("/exchange/{activityId}")
@@ -179,5 +183,24 @@ public interface ActivityClient {
     /**
      * 购买记录
      */
-    Response purchaseHistory(ExchangeActivityDTO dto);
+    @RequestMapping(value = "/exchange/purchase/history", method = RequestMethod.POST)
+    Response<List<ExchangeMemberResponse>> purchaseHistory(ExchangeActivityDTO dto);
+
+    /**
+     * 设置商品规则
+     *
+     * @param activityId 换购活动Id
+     * @param ruleId     规则Id
+     * @param goodsId    商品Id
+     */
+    @RequestMapping(value = "/exchange/goods/rule", method = RequestMethod.PUT)
+    Response exchangeGoodsRule(@RequestParam("activityId") Long activityId, @RequestParam("ruleId") Long ruleId, @RequestParam("goodsId") Long goodsId);
+
+    /**
+     * 查看换购商品的规则信息
+     *
+     * @param goodsId 商品Id
+     */
+    @RequestMapping(value = "/exchange/goods/rule/{activityId}/{goodsId}", method = RequestMethod.GET)
+    Response goodsRuleInfo(@PathVariable("activityId") Long activityId,@PathVariable("goodsId") Long goodsId);
 }

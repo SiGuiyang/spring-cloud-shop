@@ -27,7 +27,6 @@ public interface Constants {
         String MANAGE = "/admin";
         String ORDER = "/order";
         String SELLER = "/seller";
-        String SETTLEMENT = "/settlement";
         String USER = "/user";
     }
 
@@ -119,7 +118,8 @@ public interface Constants {
         NORMAL(1, "普通商品"),
         SPECIAL(2, "特价商品"),
         FIGHT_GROUP(3, "拼团商品"),
-        SECOND_KILL(4, "秒杀商品");
+        SECOND_KILL(4, "秒杀商品"),
+        EXCHANGE(5, "满赠换购商品");
 
 
         private int type;
