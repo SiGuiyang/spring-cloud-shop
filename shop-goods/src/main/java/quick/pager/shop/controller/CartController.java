@@ -2,10 +2,12 @@ package quick.pager.shop.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.response.Response;
@@ -46,9 +48,21 @@ public class CartController {
      * 购物车商品的添加与删除
      */
     @ApiOperation("购物车商品的添加与删除")
+    /**
+     * 添加 | 删除购物车中的商品
+     *
+     * @param userId     用户Id
+     * @param goodsId    商品Id
+     * @param goodsCount 购买商品的数量
+     * @param event      购买行为
+     */
     @RequestMapping(value = "/cart/modify", method = RequestMethod.POST)
-    public Response addCart(CartDTO dto) {
-
+    public Response modifyGoodsCart(@RequestParam("userId") Long userId, @RequestParam("goodsIds") Long[] goodsIds, @RequestParam("goodsCount") Integer goodsCount, @RequestParam("event") String event) {
+        CartDTO dto = new CartDTO();
+        dto.setGoodsCount(goodsCount);
+        dto.setGoodsIds(Arrays.asList(goodsIds));
+        dto.setUserId(userId);
+        dto.setEvent(event);
         return cartModifyService.doService(dto);
     }
 

@@ -116,6 +116,17 @@
         order by id desc
     </select>
 
+    <select id="selectGoodsCarts" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        where delete_status = false
+        and user_id = #{userId,jdbcType=BIGINT}
+        and goods_id in
+        <foreach collection="goodsIds" item="g" separator=",">
+            #{g,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
     <select id="selectByBuyCartId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

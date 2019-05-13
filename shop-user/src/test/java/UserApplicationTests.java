@@ -1,6 +1,7 @@
 import cn.hutool.core.util.RandomUtil;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RabbitMqKeys;
 import quick.pager.shop.constants.ResponseStatus;
@@ -125,6 +127,16 @@ public class UserApplicationTests {
         if (response.getCode() == ResponseStatus.Code.SUCCESS) {
             System.out.println(1);
         }
+    }
+
+    @Test
+    public void testRedis(){
+        redisService.set("abc","1",30);
+        Serializable abc = redisService.get("abc");
+
+        System.out.println(abc);
+        System.out.println(StringUtils.isEmpty(abc));
+
     }
 
 }

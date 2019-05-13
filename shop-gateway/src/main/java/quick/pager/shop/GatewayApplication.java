@@ -17,12 +17,8 @@ public class GatewayApplication {
     @Bean
     public RouteLocator route(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("shop-activity", p -> p.path("/activity/**").uri("lb://shop-activity"))
-                .route("shop-goods", p -> p.path("/goods/**").uri("lb://shop-goods"))
                 .route("shop-manage", p -> p.path("/admin/**").uri("lb://shop-manage"))
                 .route("shop-auth", p -> p.path("/oauth/**").uri("lb://shop-auth"))
-                .route("shop-order", p -> p.path("/order/**").uri("lb://shop-order"))
-                .route("shop-settlement", p -> p.path("/settlement/**").uri("lb://shop-settlement"))
                 .route("shop-user", p -> p.path("/user/**").uri("lb://shop-user"))
                 .route("shop-seller", p -> p.path("/seller/**").uri("lb://shop-seller"))
 

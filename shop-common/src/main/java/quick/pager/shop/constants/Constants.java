@@ -38,6 +38,7 @@ public interface Constants {
         String MODIFY = "modify";
         String ADD = "add";
         String DELETE = "delete";
+        String DELETE_ALL = "deleteAll";
         String INFO = "info";
     }
 
@@ -109,6 +110,32 @@ public interface Constants {
         String COUPON_TYPE = "couponType";
         // 订单状态
         String ORDER_STATUS = "orderStatus";
+    }
+
+    /**
+     * 商品状态
+     */
+    enum GoodsStatus {
+        UPPER_SHELF(1, "上架"),
+        LOWER_SHELF(2, "下架");
+        private int status;
+
+        private String name;
+
+        GoodsStatus(int status, String name) {
+            this.status = status;
+            this.name = name;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+
+        public String getName() {
+            return name;
+        }
+
     }
 
     /**

@@ -37,7 +37,7 @@ public class UserOrderController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户Id", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "order", value = "所有订单 1, 待付款 2, 待收货 3, 待自提 4, 待评价 5", required = true, dataType = "String", paramType = "query")})
-    @RequestMapping(value = "/user/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/orders", method = RequestMethod.POST)
     public Response<List<OrderResponse>> userOrderList(@RequestBody OrderDTO dto) {
 
         return userOrderService.userOrderList(dto);

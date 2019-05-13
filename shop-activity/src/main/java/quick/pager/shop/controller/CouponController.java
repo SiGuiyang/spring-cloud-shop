@@ -67,7 +67,9 @@ public class CouponController {
     @ApiOperation("赠送优惠券")
     @RequestMapping(value = "/coupons/gift/{userId}", method = RequestMethod.POST)
     public Response giftCoupon(@PathVariable("userId") Long userId) {
-        return giftCouponService.doService(new AppDTO(userId));
+        AppDTO appDTO = new AppDTO();
+        appDTO.setUserId(userId);
+        return giftCouponService.doService(appDTO);
     }
 
 

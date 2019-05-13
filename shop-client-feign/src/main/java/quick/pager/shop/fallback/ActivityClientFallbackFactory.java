@@ -65,7 +65,7 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
 
             @Override
             public Response addTemplate(CouponTemplateDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
@@ -82,97 +82,97 @@ public class ActivityClientFallbackFactory implements FallbackFactory<ActivityCl
 
             @Override
             public Response fightGroupActivityList(FightGroupDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response addFightGroupActivity(FightGroupDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response modifyFightGroupActivity(FightGroupDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response fightGroupActivityRuleInfo(Long groupId) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response modifyFightGroupRule(FightGroupDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response fightGroupGoodsInfo(Long id) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response setFightGroupGoods(Long activityId, Long goodsId) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response queryFightGroupGoods(Long activityId, Long goodsId) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response fightGroupRecords(FightGroupDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response getExchangeActivity(Long activityId) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response getExchangeActivitys(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response addExchangeActivitys(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response modifyExchangeActivitys(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response getExchangeActivityRules(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response addExchangeActivityRules(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response modifyExchangeActivityRules(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response exchangeGoodsRule(Long activityId, Long ruleId, Long goodsId) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response goodsRuleInfo(Long activityId, Long goodsId) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response<List<ExchangeMemberResponse>> purchaseHistory(ExchangeActivityDTO dto) {
-                return null;
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
         };
     }

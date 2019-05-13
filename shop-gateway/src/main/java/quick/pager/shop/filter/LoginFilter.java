@@ -1,6 +1,5 @@
 //package quick.pager.shop.filter;
 //
-//import lombok.extern.slf4j.Slf4j;
 //import org.springframework.cloud.gateway.filter.GatewayFilter;
 //import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 //import org.springframework.core.Ordered;
@@ -8,9 +7,6 @@
 //import org.springframework.http.server.reactive.ServerHttpRequest;
 //import org.springframework.util.StringUtils;
 //import org.springframework.web.server.ServerWebExchange;
-//import quick.pager.shop.constants.ResponseStatus;
-//import quick.pager.shop.service.RedisService;
-//import quick.pager.shop.utils.ResponseUtils;
 //import reactor.core.publisher.Mono;
 //
 ///**
@@ -19,7 +15,6 @@
 // *
 // * @author siguiyang
 // */
-//@Slf4j
 //public class LoginFilter implements GatewayFilter, Ordered {
 //
 //

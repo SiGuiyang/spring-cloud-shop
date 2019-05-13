@@ -65,6 +65,16 @@ public class GoodsClientFallbackFactory implements FallbackFactory<GoodsClient> 
                 log.error("进入熔断措施 GoodsClient.queryBuyerOrderGoods");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
+
+            @Override
+            public Response goodsCarts(Long userId) {
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            }
+
+            @Override
+            public Response modifyGoodsCart(Long userId, Long[] goodsIds, Integer goodsCount, String event) {
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            }
         };
     }
 }

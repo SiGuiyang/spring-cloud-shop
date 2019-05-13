@@ -9,6 +9,7 @@ import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.OrderDTO;
 import quick.pager.shop.dto.SellerOrderDTO;
 import quick.pager.shop.fallback.OrderClientFallbackFactory;
+import quick.pager.shop.model.SellerOrder;
 import quick.pager.shop.model.UserOrder;
 import quick.pager.shop.response.Response;
 
@@ -23,7 +24,7 @@ public interface OrderClient {
     /**
      * 订单列表
      */
-    @RequestMapping(value = "/user/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/orders", method = RequestMethod.POST)
     Response orders(@RequestBody OrderDTO request);
 
     /**
@@ -35,20 +36,29 @@ public interface OrderClient {
     /**
      * 商户订单列表
      */
-    @RequestMapping(value = "/sellerOrders", method = RequestMethod.POST)
+    @RequestMapping(value = "/seller/orders", method = RequestMethod.POST)
     Response sellerOrders(@RequestBody SellerOrderDTO request);
 
     /**
      * 商户订单详情
      */
-    @RequestMapping(value = "/sellerOrderInfo/{sellerOrderId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/seller/order/{sellerOrderId}", method = RequestMethod.POST)
     Response sellerOrderInfo(@PathVariable("sellerOrderId") Long sellerOrderId);
 
     /**
-     * 创建订单
+     * 创建用户订单
      *
      * @param userOrder 订单
      */
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    Response orderCreate(@RequestBody UserOrder userOrder);
+    Response userOrderCreate(@RequestBody UserOrder userOrder);
+
+
+    /**
+     * 创建商户订单
+     *
+     * @param sellerOrder 订单
+     */
+    @RequestMapping(value = "/seller/create", method = RequestMethod.POST)
+    Response sellerOrderCreate(@RequestBody SellerOrder sellerOrder);
 }

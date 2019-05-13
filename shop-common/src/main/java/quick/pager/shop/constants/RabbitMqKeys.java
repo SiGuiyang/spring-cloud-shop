@@ -14,4 +14,6 @@ public interface RabbitMqKeys {
     String SEND_SMS = "sendSMS";
 
     String TOPIC_TEST = "topic.test";
+    // 好友邀请奖励
+    String TOPIC_INVITE_FRIEND_AWARD = "topic.invite_friend_award";
 }

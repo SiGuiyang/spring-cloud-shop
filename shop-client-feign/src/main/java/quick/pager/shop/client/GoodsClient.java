@@ -63,6 +63,26 @@ public interface GoodsClient {
     @RequestMapping(value = "/classification/modify", method = RequestMethod.PUT)
     Response modifyClassification(@RequestBody ClassificationDTO dto);
 
-    @RequestMapping(value = "/goods/buyer/order/{buyerOrderCartId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/buyer/order/{buyerOrderCartId}", method = RequestMethod.POST)
     Response<List<GoodsResponse>> queryBuyerOrderGoods(@PathVariable("buyerOrderCartId") Long buyerOrderCartId);
+
+
+    /**
+     * 用户购物车列表
+     *
+     * @param userId 用户Id
+     */
+    @RequestMapping(value = "/cart/list/{userId}", method = RequestMethod.POST)
+    Response goodsCarts(@PathVariable("userId") Long userId);
+
+    /**
+     * 添加 | 删除购物车中的商品
+     *
+     * @param userId     用户Id
+     * @param goodsIds   商品Id集
+     * @param goodsCount 购买商品的数量
+     * @param event      购买行为
+     */
+    @RequestMapping(value = "/cart/modify", method = RequestMethod.POST)
+    Response modifyGoodsCart(@RequestParam("userId") Long userId, @RequestParam("goodsIds") Long[] goodsIds, @RequestParam("goodsCount") Integer goodsCount, @RequestParam("event") String event);
 }
