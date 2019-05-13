@@ -11,39 +11,19 @@ ribbon:
 
 zuul:
   routes:
-    shop-activity:
-      path: /activity/**
-      serviceId: shop-activity
-      stripPrefix: false
     shop-auth:
       path: /oauth/**
       serviceId: shop-auth
       stripPrefix: false
       sensitiveHeaders: "*"
-    shop-goods:
-      path: /goods/**
-      serviceId: shop-goods
-      stripPrefix: false
     shop-manage:
       path: /admin/**
       serviceId: shop-manage
       stripPrefix: false
       sensitiveHeaders: "*"
-    shop-order:
-      path: /order/**
-      serviceId: shop-order
-      stripPrefix: false
-    shop-risk:
-      path: /risk/**
-      serviceId: shop-risk
-      stripPrefix: false
     shop-seller:
       path: /seller/**
       serviceId: shop-seller
-      stripPrefix: false
-    shop-settlement:
-      path: /settlement/**
-      serviceId: shop-settlement
       stripPrefix: false
     shop-user:
       path: /user/**

@@ -7,6 +7,11 @@ spring:
   profiles:
     active: dev
 
+
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: shop_seller_tx_group
 management:
   endpoints:
     web:

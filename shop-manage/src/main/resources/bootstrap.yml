@@ -5,6 +5,10 @@ spring:
   application:
     name: shop-manage
 
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: shop_manage_tx_group
 feign:
   hystrix:
     enabled: true
