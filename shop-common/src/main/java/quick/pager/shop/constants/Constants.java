@@ -28,6 +28,7 @@ public interface Constants {
         String ORDER = "/order";
         String SELLER = "/seller";
         String USER = "/user";
+        String RISK = "/risk";
     }
 
     /**

@@ -16,6 +16,6 @@ management:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  mapper-locations: classpath*:quick/pager/shop/risk/mapper/*.xml
+  mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model
 

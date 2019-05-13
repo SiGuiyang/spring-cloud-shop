@@ -211,6 +211,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                     <include>**/*.ftl</include>
+                    <include>**/*.conf</include>
                 </includes>
             </resource>
             <resource>
