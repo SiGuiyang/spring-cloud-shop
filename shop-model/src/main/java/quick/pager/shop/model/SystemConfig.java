@@ -10,6 +10,8 @@ public class SystemConfig extends Model {
 
     private String configName;
 
+    private String configType;
+
     private String configValue;
 
     private String module;

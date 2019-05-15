@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="quick.pager.shop.model.SystemConfig">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="config_name" jdbcType="VARCHAR" property="configName"/>
+        <result column="config_type" jdbcType="VARCHAR" property="configType"/>
         <result column="config_value" jdbcType="VARCHAR" property="configValue"/>
         <result column="module" jdbcType="VARCHAR" property="module"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
@@ -13,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, config_name, config_value, module, description, create_time, update_time, delete_status
+        id, config_name, config_type, config_value, module, description, create_time, update_time, delete_status
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,6 +32,9 @@
             </if>
             <if test="configName != null">
                 config_name,
+            </if>
+            <if test="configType != null">
+                config_type,
             </if>
             <if test="configValue != null">
                 config_value,
@@ -58,6 +62,9 @@
             <if test="configName != null">
                 #{configName,jdbcType=VARCHAR},
             </if>
+            <if test="configType != null">
+                #{configType,jdbcType=VARCHAR},
+            </if>
             <if test="configValue != null">
                 #{configValue,jdbcType=VARCHAR},
             </if>
@@ -83,6 +90,9 @@
         <set>
             <if test="configName != null">
                 config_name = #{configName,jdbcType=VARCHAR},
+            </if>
+            <if test="configType != null">
+                config_type = #{configType,jdbcType=VARCHAR},
             </if>
             <if test="configValue != null">
                 config_value = #{configValue,jdbcType=VARCHAR},
@@ -111,7 +121,7 @@
         <include refid="Base_Column_List"/>
         from t_system_config
         <where>
-            <if test="configName != null">
+            <if test="configName != null and configName != ''">
                 config_name = #{configName,jdbcType=VARCHAR}
             </if>
             <if test="module != null and module != ''">

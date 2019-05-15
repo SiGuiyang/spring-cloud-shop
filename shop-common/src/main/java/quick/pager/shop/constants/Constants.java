@@ -111,6 +111,8 @@ public interface Constants {
         String COUPON_TYPE = "couponType";
         // 订单状态
         String ORDER_STATUS = "orderStatus";
+        // 模块类型
+        String MODULE_TYPE = "moduleType";
     }
 
     /**

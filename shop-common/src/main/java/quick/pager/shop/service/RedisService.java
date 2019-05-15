@@ -1,6 +1,8 @@
 package quick.pager.shop.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,6 +34,26 @@ public class RedisService {
         shopRedisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
     }
 
+    /**
+     * get
+     *
+     * @param key redis key
+     */
+    public <T extends Serializable> T get(String key) {
+        return (T) shopRedisTemplate.opsForValue().get(key);
+    }
+
+
+    /**
+     * del 删除
+     *
+     * @param key redis key
+     */
+    public void del(String key) {
+        shopRedisTemplate.delete(key);
+    }
+
+
     public void setValueOps(String key, String value, long time) {
         shopRedisTemplate.boundValueOps(key).set(value, time, TimeUnit.SECONDS);
     }
@@ -62,23 +84,24 @@ public class RedisService {
         shopRedisTemplate.boundHashOps(key).putAll(value);
     }
 
+
     /**
-     * get
+     * redis list 处理
      *
-     * @param key redis key
+     * @param key  key
+     * @param data 缓存数组数据
      */
-    public <T extends Serializable> T get(String key) {
-        return (T) shopRedisTemplate.opsForValue().get(key);
+    public void setListOps(String key, ArrayList<?> data) {
+        shopRedisTemplate.opsForList().leftPush(key, data);
     }
 
-
     /**
-     * del 删除
+     * 从redis 中获取list数据
      *
      * @param key redis key
      */
-    public void del(String key) {
-        shopRedisTemplate.delete(key);
+    public List getListOps(String key) {
+        return (List) shopRedisTemplate.opsForList().rightPop(key);
     }
 
     /**

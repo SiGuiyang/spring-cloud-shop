@@ -15,6 +15,7 @@ import quick.pager.shop.service.IService;
 import quick.pager.shop.dto.SystemConfigDTO;
 import quick.pager.shop.mapper.SystemConfigMapper;
 import quick.pager.shop.model.SystemConfig;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * 系统配置服务
@@ -84,10 +85,13 @@ public class SystemConfigService implements IService {
         BeanUtils.copyProperties(dto, config);
 
         if (Constants.Event.ADD.equals(dto.getEvent())) {
-            config.setCreateTime(new Date());
+            Date date = DateUtils.now();
+            config.setCreateTime(date);
+            config.setUpdateTime(date);
             config.setDeleteStatus(false);
             systemConfigMapper.insertSelective(config);
         } else {
+            config.setUpdateTime(DateUtils.now());
             systemConfigMapper.updateByPrimaryKeySelective(config);
         }
     }

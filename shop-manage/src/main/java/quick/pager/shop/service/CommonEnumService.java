@@ -7,9 +7,10 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.model.SystemConfig;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.response.EnumResponse;
+import quick.pager.shop.utils.SystemConfigMap;
 
 /**
  * 通用枚举服务
@@ -19,6 +20,7 @@ import quick.pager.shop.response.EnumResponse;
 @Service
 @Slf4j
 public class CommonEnumService {
+
     public Response<Map<String, List<EnumResponse>>> getCommonEnumInfo() {
 
         Map<String, List<EnumResponse>> result = Maps.newConcurrentMap();
@@ -26,6 +28,7 @@ public class CommonEnumService {
         result.putIfAbsent(Constants.Type.GOODS_TYPE, getGoodsType());
         result.putIfAbsent(Constants.Type.ORDER_TYPE, getOrderType());
         result.putIfAbsent(Constants.Type.ORDER_STATUS, getOrderStatus());
+        result.putIfAbsent(Constants.Type.MODULE_TYPE, getModuleType());
 
         return new Response<>(result);
     }
@@ -34,34 +37,18 @@ public class CommonEnumService {
      * 优惠券
      */
     private List<EnumResponse> getCouponType() {
-        Constants.CouponType[] values = Constants.CouponType.values();
+        List<SystemConfig> couponType = SystemConfigMap.get("coupon_type");
 
-        List<EnumResponse> couponTypeResponses = Lists.newArrayList();
-
-        for (Constants.CouponType couponType : values) {
-            EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(couponType.getType());
-            orderStatusResponse.setValue(couponType.getName());
-            couponTypeResponses.add(orderStatusResponse);
-        }
-        return couponTypeResponses;
+        return getCommonInteger(couponType);
     }
 
     /**
      * 商品类型
      */
     private List<EnumResponse> getGoodsType() {
-        Constants.GoodsType[] values = Constants.GoodsType.values();
+        List<SystemConfig> goodsTypes = SystemConfigMap.get("goods_type");
 
-        List<EnumResponse> goodsTypeResponses = Lists.newArrayList();
-
-        for (Constants.GoodsType goodsType : values) {
-            EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(goodsType.getType());
-            orderStatusResponse.setValue(goodsType.getName());
-            goodsTypeResponses.add(orderStatusResponse);
-        }
-        return goodsTypeResponses;
+        return getCommonInteger(goodsTypes);
     }
 
 
@@ -69,33 +56,57 @@ public class CommonEnumService {
      * 订单类型
      */
     private List<EnumResponse> getOrderType() {
-        Constants.OrderType[] values = Constants.OrderType.values();
-
-        List<EnumResponse> orderTypeResponses = Lists.newArrayList();
-
-        for (Constants.OrderType orderType : values) {
-            EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(orderType.getType());
-            orderStatusResponse.setValue(orderType.getName());
-            orderTypeResponses.add(orderStatusResponse);
-        }
-        return orderTypeResponses;
+        List<SystemConfig> orderTypes = SystemConfigMap.get("order_type");
+        return getCommonInteger(orderTypes);
     }
 
     /**
      * 订单状态
      */
     private List<EnumResponse> getOrderStatus() {
-        Constants.OrderStatus[] values = Constants.OrderStatus.values();
 
-        List<EnumResponse> orderStatusResponses = Lists.newArrayList();
+        List<SystemConfig> orderStatus = SystemConfigMap.get("order_status");
 
-        for (Constants.OrderStatus orderStatus : values) {
+        return getCommonString(orderStatus);
+    }
+
+    /**
+     * 模块类型
+     */
+    private List<EnumResponse> getModuleType() {
+        List<SystemConfig> moduleType = SystemConfigMap.get("module_type");
+
+        return getCommonString(moduleType);
+    }
+
+    /**
+     * SystemConfig configValue 配置使用String型
+     */
+    private List<EnumResponse> getCommonString(List<SystemConfig> systemConfigs) {
+        List<EnumResponse> configs = Lists.newArrayList();
+
+        for (SystemConfig config : systemConfigs) {
             EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setKey(orderStatus.getStatus());
-            orderStatusResponse.setValue(orderStatus.getName());
-            orderStatusResponses.add(orderStatusResponse);
+            orderStatusResponse.setKey(config.getConfigValue());
+            orderStatusResponse.setValue(config.getDescription());
+            configs.add(orderStatusResponse);
         }
-        return orderStatusResponses;
+        return configs;
+    }
+
+
+    /**
+     * SystemConfig configValue 配置使用int型
+     */
+    private List<EnumResponse> getCommonInteger(List<SystemConfig> systemConfigs) {
+        List<EnumResponse> orderTypeResponses = Lists.newArrayList();
+
+        for (SystemConfig config : systemConfigs) {
+            EnumResponse orderStatusResponse = new EnumResponse();
+            orderStatusResponse.setType(Integer.parseInt(config.getConfigValue()));
+            orderStatusResponse.setValue(config.getDescription());
+            orderTypeResponses.add(orderStatusResponse);
+        }
+        return orderTypeResponses;
     }
 }

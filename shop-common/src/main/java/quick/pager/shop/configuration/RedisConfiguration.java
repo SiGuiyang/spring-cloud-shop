@@ -1,6 +1,5 @@
 package quick.pager.shop.configuration;
 
-import java.net.UnknownHostException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,7 @@ public class RedisConfiguration {
 
     @Bean
     public ShopRedisTemplate shopRedisTemplate(
-            RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {
+            RedisConnectionFactory redisConnectionFactory) {
         ShopRedisTemplate template = new ShopRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);
         return template;

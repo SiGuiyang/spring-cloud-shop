@@ -11,6 +11,8 @@ public class SystemConfigDTO extends ManageDTO {
 
     private String configName;
 
+    private String configType;
+
     private String configValue;
 
     private String module;
