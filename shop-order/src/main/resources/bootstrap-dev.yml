@@ -2,16 +2,9 @@
 spring:
   cloud:
     config:
-      uri: http://localhost:8889/
-      label: master
       profile: dev
     consul:
       host: 127.0.0.1
-      port: 8500
-      discovery:
-        tags: author=pager
-        healthCheckInterval: 15s
-        instance-id: shop-order
 
 mybatis:
   configuration:

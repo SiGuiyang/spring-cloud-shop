@@ -8,12 +8,11 @@ spring:
     active: dev
   cloud:
     consul:
-      discovery:
-        instance-id: shop-auth
-        ip-address: 127.0.0.1
-        prefer-ip-address: true
-      host: 127.0.0.1
       port: 8500
+      discovery:
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
+        port: ${server.port}
+        prefer-ip-address: true
   freemarker:
     template-loader-path: classpath:/templates/
 management:

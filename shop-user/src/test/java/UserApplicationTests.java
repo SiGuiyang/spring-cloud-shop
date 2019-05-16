@@ -91,18 +91,23 @@ public class UserApplicationTests {
     @Test
     public void testProperties() {
         test("shop-user");
+        System.out.println();
         test("shop-seller");
+        System.out.println();
         test("shop-activity");
+        System.out.println();
         test("shop-goods");
+        System.out.println();
         test("shop-manage");
+        System.out.println();
         test("shop-order");
-        test("shop-settlement");
+//        test("shop-settlement");
     }
 
 
     private void test(String serviceId) {
         for (Map.Entry<Object, Object> me : pro.entrySet()) {
-            StringBuilder builder = new StringBuilder("insert into `pager_config`.`t_config` (`label`, `profile`, `service_id`, `app_key`, `app_value`) values ('master', 'dev',");
+            StringBuilder builder = new StringBuilder("insert into t_config(`label`, `profile`, `service_id`, `app_key`, `app_value`) values ('master', 'dev',");
             builder.append("'");
             builder.append(serviceId);
             builder.append("'").append(",");

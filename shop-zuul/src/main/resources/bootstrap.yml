@@ -5,6 +5,18 @@ spring:
     name: shop-zuul
   profiles:
     active: dev
+  cloud:
+    config:
+      uri: http://127.0.0.1:8889/
+      label: master
+    consul:
+      port: 8500
+      discovery:
+        tags: pager=shop-zuul
+        healthCheckInterval: 30s
+        port: ${server.port}
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
 ribbon:
   ReadTimeout: 100000  # 单位毫秒数
   SocketTimeout: 100000

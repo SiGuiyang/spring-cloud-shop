@@ -149,8 +149,20 @@
         </plugins>
     </build>
     <modules>
+        <module>shop-activity</module>
+        <module>shop-auth</module>
         <module>shop-client-feign</module>
         <module>shop-common</module>
+        <module>shop-config</module>
+        <module>shop-gateway</module>
+        <module>shop-goods</module>
+        <module>shop-hystrix-dashboard</module>
+        <module>shop-manage</module>
         <module>shop-model</module>
+        <module>shop-order</module>
+        <module>shop-risk</module>
+        <module>shop-seller</module>
+        <module>shop-user</module>
+        <module>shop-zuul</module>
     </modules>
 </project>
