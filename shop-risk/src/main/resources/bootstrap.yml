@@ -7,9 +7,6 @@ spring:
   profiles:
     active: dev
   cloud:
-    config:
-      uri: http://127.0.0.1:8889/
-      label: master
     consul:
       port: 8500
       discovery:
@@ -30,3 +27,9 @@ mybatis:
   mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model
 
+
+apollo:
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true

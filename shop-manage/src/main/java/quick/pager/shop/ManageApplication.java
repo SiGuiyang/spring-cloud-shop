@@ -1,6 +1,6 @@
 package quick.pager.shop;
 
-import lombok.extern.slf4j.Slf4j;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -12,9 +12,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @SpringCloudApplication
 @EnableFeignClients
+@EnableApolloConfig
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @MapperScan(basePackages = "quick.pager.shop.mapper")
-@Slf4j
 public class ManageApplication {
 
     public static void main(String[] args) {

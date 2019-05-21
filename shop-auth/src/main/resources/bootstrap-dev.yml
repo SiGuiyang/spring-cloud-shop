@@ -1,7 +1,7 @@
 spring:
   cloud:
     consul:
-      host: 127.0.0.1
+      host: 172.16.11.109
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

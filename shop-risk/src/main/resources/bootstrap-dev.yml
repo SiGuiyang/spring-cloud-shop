@@ -1,10 +1,8 @@
 
 spring:
   cloud:
-    config:
-      profile: dev
     consul:
-      host: 127.0.0.1
+      host: 172.16.11.109
 
 mybatis:
   configuration:
