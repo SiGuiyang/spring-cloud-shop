@@ -41,7 +41,7 @@ public class ExchangeActivityManageController {
      * 活动列表
      */
     @PostMapping(value = "/exchangeActivity/list")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response getExchangeActivitys(ExchangeActivityDTO dto) {
         return exchangeActivityService.getExchangeActivitys(dto);
     }
@@ -50,7 +50,7 @@ public class ExchangeActivityManageController {
      * 活动新增
      */
     @PostMapping(value = "/exchangeActivity")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response addExchangeActivitys(ExchangeActivityDTO dto) {
         return exchangeActivityService.addExchangeActivitys(dto);
     }
@@ -59,7 +59,7 @@ public class ExchangeActivityManageController {
      * 活动修改
      */
     @PutMapping(value = "/exchangeActivity")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response modifyExchangeActivitys(ExchangeActivityDTO dto) {
         return exchangeActivityService.modifyExchangeActivitys(dto);
     }
@@ -69,7 +69,7 @@ public class ExchangeActivityManageController {
      * 列表
      */
     @PostMapping(value = "/exchange/rule/list")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response getExchangeActivityRules(ExchangeActivityDTO dto) {
         dto.setEvent(Constants.Event.LIST);
         return exchangeActivityService.getExchangeActivityRules(dto);
@@ -79,7 +79,7 @@ public class ExchangeActivityManageController {
      * 规则新增
      */
     @PostMapping(value = "/exchange/rule")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response addExchangeActivityRules(ExchangeActivityDTO dto) {
         return exchangeActivityService.addExchangeActivityRules(dto);
     }
@@ -88,7 +88,7 @@ public class ExchangeActivityManageController {
      * 规则修改
      */
     @PutMapping(value = "/exchange/rule")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response modifyExchangeActivityRules(ExchangeActivityDTO dto) {
         return exchangeActivityService.modifyExchangeActivityRules(dto);
     }
@@ -97,7 +97,7 @@ public class ExchangeActivityManageController {
      * 设置商品规则
      */
     @PutMapping("/exchange/goods/rule")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response goodsRule(ExchangeActivityDTO dto) {
         return exchangeActivityService.goodsRule(dto);
     }

@@ -29,7 +29,7 @@ public class BlackListController {
      * 列表
      */
     @PostMapping(value = "/blackList/list")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response getBlackLists(BlackListDTO dto){
         return blackListService.getBlackLists(dto);
     }
@@ -37,7 +37,7 @@ public class BlackListController {
     * 新增
     */
     @PostMapping(value = "/blackList")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response addBlackLists(BlackListDTO dto){
         return blackListService.addBlackLists(dto);
     }
@@ -45,7 +45,7 @@ public class BlackListController {
     * 修改
     */
     @PutMapping(value = "/blackList")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response modifyBlackLists(BlackListDTO dto){
         return blackListService.modifyBlackLists(dto);
     }
@@ -53,7 +53,7 @@ public class BlackListController {
     * 删除
     */
     @DeleteMapping(value = "/blackList/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response delBlackLists(@PathVariable("id") Long id){
         return blackListService.delBlackLists(id);
     }

@@ -21,7 +21,7 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("菜单授权")
     @PostMapping("/permission")
     public Response permission(@RequestParam("permissions") String permissions, @RequestParam("roleId") Long roleId) {

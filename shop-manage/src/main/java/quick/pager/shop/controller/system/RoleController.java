@@ -23,7 +23,7 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("获取系统角色")
     @PostMapping("/role/list")
     public Response systemRole(RoleDTO dto) {
@@ -31,7 +31,7 @@ public class RoleController {
         return roleService.doService(dto);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("新增系统角色")
     @PostMapping("/role")
     public Response addSystemRole(RoleDTO dto) {
@@ -39,7 +39,7 @@ public class RoleController {
         return roleService.doService(dto);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("修改系统角色")
     @PutMapping("/role")
     public Response modifySystemRole(RoleDTO dto) {
@@ -47,7 +47,7 @@ public class RoleController {
         return roleService.doService(dto);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("角色分类")
     @PostMapping("/role/classification")
     public Response roleClassification() {
@@ -56,7 +56,7 @@ public class RoleController {
         return roleService.doService(dto);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("查看某个系统角色的权限列表")
     @PostMapping("/role/menu/{roleId}")
     public Response querySysUserPermission(@PathVariable("roleId") Long roleId) {

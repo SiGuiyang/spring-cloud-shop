@@ -49,7 +49,7 @@ public class SystemController {
         return new Response();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("系统用户列表")
     @PostMapping("/system/user")
     public Response systemUser(SysUserDTO dto) {
@@ -58,7 +58,7 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("修改系统用户")
     @PostMapping("system/user/modify")
     public Response modifySystemUser(SysUserDTO dto) {
@@ -66,7 +66,7 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("删除系统用户")
     @DeleteMapping("system/user/{id}")
     public Response delSystemUser(@PathVariable Long id) {

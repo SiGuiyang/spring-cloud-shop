@@ -30,7 +30,7 @@ public class ${className}Controller {
      * 列表
      */
     @PostMapping(value = "/${changeClassName}/list")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response get${className}s(${className}DTO dto){
         dto.setEvent(Constants.Event.LIST);
         return ${changeClassName}Service.doService(dto);
@@ -39,7 +39,7 @@ public class ${className}Controller {
     * 新增
     */
     @PostMapping(value = "/${changeClassName}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response add${className}s(${className}DTO dto){
         dto.setEvent(Constants.Event.ADD);
         return ${changeClassName}Service.doService(dto);
@@ -48,7 +48,7 @@ public class ${className}Controller {
     * 修改
     */
     @PutMapping(value = "/${changeClassName}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response modify${className}s(${className}DTO dto){
         dto.setEvent(Constants.Event.MODIFY);
         return ${changeClassName}Service.doService(dto);
@@ -57,7 +57,7 @@ public class ${className}Controller {
     * 删除
     */
     @DeleteMapping(value = "/${changeClassName}/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response del${className}s(@PathVariable("id") Long id){
         ${className}DTO dto = new ${className}DTO();
         dto.setEvent(Constants.Event.DELETE);

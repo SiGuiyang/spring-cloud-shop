@@ -23,7 +23,7 @@ public class ConfigController {
     @Autowired
     private SystemConfigService systemConfigService;
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("系统菜单列表")
     @PostMapping("/config/list")
     public Response systemConfigList(SystemConfigDTO dto) {
@@ -35,7 +35,7 @@ public class ConfigController {
      * 新增
      */
     @PostMapping(value = "/config")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response addConfigs(SystemConfigDTO dto) {
         dto.setEvent(Constants.Event.ADD);
         return systemConfigService.doService(dto);
@@ -45,7 +45,7 @@ public class ConfigController {
      * 修改
      */
     @PutMapping(value = "/config")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response modifyConfigs(SystemConfigDTO dto) {
         dto.setEvent(Constants.Event.MODIFY);
         return systemConfigService.doService(dto);
@@ -55,7 +55,7 @@ public class ConfigController {
      * 删除
      */
     @DeleteMapping(value = "/config/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response delConfigs(@PathVariable("id") Long id) {
         SystemConfigDTO dto = new SystemConfigDTO();
         dto.setEvent(Constants.Event.DELETE);

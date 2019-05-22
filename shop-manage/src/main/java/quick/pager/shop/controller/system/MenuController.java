@@ -25,7 +25,7 @@ public class MenuController {
     private MenuService menuService;
 
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("系统菜单列表")
     @PostMapping("/menu/list")
     public Response systemMenuList() {
@@ -39,7 +39,7 @@ public class MenuController {
      * 新增
      */
     @PostMapping(value = "/menu")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response addMenus(MenuDTO dto){
         dto.setEvent(Constants.Event.ADD);
         return menuService.doService(dto);
@@ -48,7 +48,7 @@ public class MenuController {
      * 修改
      */
     @PutMapping(value = "/menu")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response modifyMenus(MenuDTO dto){
         dto.setEvent(Constants.Event.MODIFY);
         return menuService.doService(dto);
@@ -57,7 +57,7 @@ public class MenuController {
      * 删除
      */
     @DeleteMapping(value = "/menu/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     public Response delMenus(@PathVariable("id") Long id){
         MenuDTO dto = new MenuDTO();
         dto.setEvent(Constants.Event.DELETE);
