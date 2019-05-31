@@ -26,7 +26,7 @@ CREATE TABLE `t_goods` (
   `gcs_id` bigint(20) DEFAULT NULL COMMENT '产品分类Id',
   `goods_name` varchar(127) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '商品名称',
   `goods_code` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '商品编码',
-  `goods_status` tinyint(2) DEFAULT NULL COMMENT '商品状态',
+  `goods_status` tinyint(2) DEFAULT NULL COMMENT '商品状态 1 上架 2 下架',
   `goods_type` tinyint(4) DEFAULT NULL COMMENT '商品类型 1 普通商品 2 特价商品 3 拼团商品 4 秒杀商品',
   `goods_amount` decimal(4,2) DEFAULT NULL COMMENT '商品价格',
   `goods_discount_amount` decimal(4,2) DEFAULT NULL COMMENT '商品折扣价格',

@@ -1,12 +1,17 @@
 # spring-cloud-shop
     spring cloud 版分布式电商项目，全力打造顶级多模块，高可用，高扩展电商项目。
-    项目使用分库设计方案，不同的模块依赖不同的数据库实例pager_activity，pager_goods，pager_order，pager_shop，pager-risk，pager-auth。
+    目前项目使用分库设计方案，不同的模块依赖不同的数据库实例
+    营销模块: pager_activity 
+    数据中心: pager_goods 
+    订单中心: pager_order 
+    数据中心: pager_shop 
+    风控中心: pager-risk 
+    授权中心 pager-auth
     分布式文件系统采用apollo方式实现
+    后台登陆采用oauth2.0密码模式登陆或者授权码模式登陆
 # 设计初衷
-    设计此项目是为了进一步学习Spring Cloud 技术栈。从项目实战深入Spring Cloud 各个微服务的解决方案。因此采用最常见的电商业务员作为
+    设计此项目是为了进一步学习Spring Cloud 技术栈。从项目实战深入Spring Cloud 各个微服务的解决方案。因此采用最常见的电商业务作为
     练手项目。
-    第一版本设计比较单一，并没有太多Spring Cloud 的精髓，只是简单的使用了eureka，zuul，feign，config，hystrix几个解决方案。
-    本人计划将在第二个版本深入到Spring Cloud 的各个微服务阶段。 
 # 项目部署
 ## 部署<code>apollo</code>分布式配置系统
 1. 在mysql中导入<code>ApolloConfigDB.sql</code>与<code>ApolloPortalDB.sql</code>
@@ -15,7 +20,7 @@
 
 ## 部署consul注册中心，consul 为项目的注册中心（eureka 在2.0以后不维护了）
    [consul下载](https://www.consul.io/downloads.html) <br />
-   <code>consul agent -dev</code> 开发模式启动
+   <code>consul agent -dev -client ip地址</code> 开发模式启动服务
 
 ## 部署redis 分布式缓存中间件
    [redis 下载](https://redis.io/download)

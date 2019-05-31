@@ -89,13 +89,13 @@ CREATE TABLE `t_user_order` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 --  Records of `t_user_order`
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_user_order` VALUES ('1', '1', '13818471341', '1', '1', '1', '1', 'wsdfr3322edf', 'BS001', '1', '1.00', '111', '11.00', '20', '1', '2019-01-13 15:59:00', '2019-01-13 15:59:30', b'0'), ('5', null, '', null, null, null, null, 'demo123', '', null, null, null, null, null, null, null, '2019-04-22 17:11:19', null), ('6', null, '', null, null, null, null, 'demo123', '', null, null, null, null, null, null, null, '2019-04-22 17:12:27', null), ('7', null, '', null, null, null, null, 'demo123', '', null, null, null, null, null, null, null, '2019-04-22 17:14:49', null);
+INSERT INTO `t_user_order` VALUES ('1', '1', '13818471341', '1', '1', '1', '1', 'wsdfr3322edf', 'BS001', '1', '1.00', '111', '11.00', '20', '1', '2019-01-13 15:59:00', '2019-01-13 15:59:30', b'0');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
