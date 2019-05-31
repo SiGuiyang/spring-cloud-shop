@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
@@ -27,7 +28,7 @@ public class BlackListController {
      * 列表
      */
     @PostMapping(value = "/blackList/list")
-    public Response getBlackLists(BlackListDTO dto){
+    public Response getBlackLists(@RequestBody BlackListDTO dto){
         dto.setEvent(Constants.Event.LIST);
         return blackListService.doService(dto);
     }
@@ -35,7 +36,7 @@ public class BlackListController {
     * 新增
     */
     @PostMapping(value = "/blackList")
-    public Response addBlackLists(BlackListDTO dto){
+    public Response addBlackLists(@RequestBody BlackListDTO dto){
         dto.setEvent(Constants.Event.ADD);
         return blackListService.doService(dto);
     }
@@ -43,7 +44,7 @@ public class BlackListController {
     * 修改
     */
     @PutMapping(value = "/blackList")
-    public Response modifyBlackLists(BlackListDTO dto){
+    public Response modifyBlackLists(@RequestBody BlackListDTO dto){
         dto.setEvent(Constants.Event.MODIFY);
         return blackListService.doService(dto);
     }

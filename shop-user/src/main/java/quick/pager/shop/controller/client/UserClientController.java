@@ -77,17 +77,6 @@ public class UserClientController {
     }
 
     /**
-     * 获取用户地址
-     *
-     * @param addressId 地址id集合
-     */
-    @RequestMapping(value = "/queryAddress/{addressId}", method = RequestMethod.POST)
-    public Response<Address> queryAddress(@PathVariable("addressId") Long addressId) {
-
-        return userClientService.queryAddress(addressId);
-    }
-
-    /**
      * 查询站内信列表
      */
     @RequestMapping(value = "/queryStationLetter", method = RequestMethod.POST)

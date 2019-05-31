@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.UserInfoDTO;
 import quick.pager.shop.fallback.UserFallbackFactory;
 import quick.pager.shop.request.ManageRequest;
@@ -19,7 +20,7 @@ import quick.pager.shop.model.StationLetter;
  *
  * @author siguiyang
  */
-@FeignClient(value = "shop-user", path = "/user", fallbackFactory = UserFallbackFactory.class)
+@FeignClient(value = "shop-user", path = Constants.Module.USER, fallbackFactory = UserFallbackFactory.class)
 public interface UserClient {
 
     /**
@@ -52,5 +53,5 @@ public interface UserClient {
      * 批量获取用户信息
      */
     @RequestMapping(value = "/address/{addressId}", method = RequestMethod.POST)
-    Response<Address> queryAddress(@RequestParam("addressId") Long addressId);
+    Response<Address> address(@PathVariable("addressId") Long addressId);
 }

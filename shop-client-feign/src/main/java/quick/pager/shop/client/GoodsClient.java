@@ -63,6 +63,11 @@ public interface GoodsClient {
     @RequestMapping(value = "/classification/modify", method = RequestMethod.PUT)
     Response modifyClassification(@RequestBody ClassificationDTO dto);
 
+    /**
+     * 订单内的商品
+     *
+     * @param buyerOrderCartId 订单Id
+     */
     @RequestMapping(value = "/buyer/order/{buyerOrderCartId}", method = RequestMethod.POST)
     Response<List<GoodsResponse>> queryBuyerOrderGoods(@PathVariable("buyerOrderCartId") Long buyerOrderCartId);
 

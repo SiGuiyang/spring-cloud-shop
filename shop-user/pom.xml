@@ -193,15 +193,14 @@
                     <include>**/*.xml</include>
                     <include>**/*.yml</include>
                     <include>**/*.conf</include>
+                    <include>**/*.txt</include>
                 </includes>
             </resource>
             <resource>
                 <directory>src/main/java</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>**/*.properties</include>
                     <include>**/*.xml</include>
-                    <include>**/*.conf</include>
                 </includes>
             </resource>
         </resources>

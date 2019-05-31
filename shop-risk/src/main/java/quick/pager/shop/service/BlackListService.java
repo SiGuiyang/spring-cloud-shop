@@ -13,7 +13,7 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.BlackListDTO;
-import quick.pager.shop.model.BlackList;
+import quick.pager.shop.model.risk.BlackList;
 import quick.pager.shop.mapper.BlackListMapper;
 
 /**

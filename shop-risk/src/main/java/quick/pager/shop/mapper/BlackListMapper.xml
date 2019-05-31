@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.BlackListMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.BlackList">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.risk.BlackList">
     <id column="id" jdbcType="BIGINT" property="id"/>
     <result column="phone" jdbcType="VARCHAR" property="phone"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
@@ -24,7 +24,7 @@
         where id = #{id, jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.BlackList">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.risk.BlackList">
         insert into t_black_list
         <trim prefix="(" suffix=")" suffixOverrides=",">
 
@@ -69,7 +69,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.BlackList">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.risk.BlackList">
         update t_black_list
         <set>
             <if test="phone != null">
@@ -91,28 +91,13 @@
         where id = #{id, jdbcType=BIGINT}
     </update>
 
-    <select id="select" parameterType="quick.pager.shop.model.BlackList" resultMap="BaseResultMap">
+    <select id="select" parameterType="quick.pager.shop.model.risk.BlackList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_black_list
         <where>
-            <if test="id != null">
-                id = #{id, jdbcType=BIGINT},
-            </if>
-            <if test="phone != null">
-                and phone = #{phone, jdbcType=VARCHAR},
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime, jdbcType=TIMESTAMP},
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime, jdbcType=TIMESTAMP},
-            </if>
-            <if test="deleteStatus != null">
-                and delete_status = #{deleteStatus, jdbcType=BIT},
-            </if>
-            <if test="createUser != null">
-                and create_user = #{createUser, jdbcType=VARCHAR},
+            <if test="phone != null and phone != ''">
+                phone = #{phone, jdbcType=VARCHAR}
             </if>
         </where>
     </select>

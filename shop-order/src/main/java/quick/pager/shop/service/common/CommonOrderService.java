@@ -51,7 +51,7 @@ public class CommonOrderService {
             }
         }
         // 添加配送地址
-        Response<Address> addressResponse = userClient.queryAddress(userOrder.getShipId());
+        Response<Address> addressResponse = userClient.address(userOrder.getShipId());
         if (ResponseStatus.Code.SUCCESS == addressResponse.getCode()) {
             orderResponse.setAddress(addressResponse.getData());
         }

@@ -15,21 +15,21 @@ public class BlackListServiceImpl implements BlackListService {
 
     @Override
     public Response getBlackLists(BlackListDTO dto) {
-        return null;
+        return riskClient.getBlackLists(dto);
     }
 
     @Override
     public Response addBlackLists(BlackListDTO dto) {
-        return null;
+        return riskClient.addBlackLists(dto);
     }
 
     @Override
     public Response modifyBlackLists(BlackListDTO dto) {
-        return null;
+        return riskClient.modifyBlackLists(dto);
     }
 
     @Override
     public Response delBlackLists(Long id) {
-        return null;
+        return riskClient.delBlackLists(id);
     }
 }

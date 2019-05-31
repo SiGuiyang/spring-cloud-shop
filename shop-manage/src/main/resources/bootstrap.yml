@@ -17,6 +17,8 @@ spring:
     alibaba:
       seata:
         tx-service-group: shop_manage_tx_group
+  profiles:
+    active: dev
 feign:
   hystrix:
     enabled: true

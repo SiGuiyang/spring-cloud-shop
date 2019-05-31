@@ -9,10 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
@@ -22,6 +24,7 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
  * @author siguiyang
  */
 @Configuration
+@EnableAuthorizationServer
 public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAdapter {
 
 
@@ -31,6 +34,8 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
     private DataSource dataSource;
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private AuthorizationCodeServices authorizationCodeServices;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -49,6 +54,7 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .authenticationManager(authenticationManager)
+                .authorizationCodeServices(authorizationCodeServices)
                 .tokenStore(tokenStore())
                 .userDetailsService(userDetailsService)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);

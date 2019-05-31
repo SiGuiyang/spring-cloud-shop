@@ -44,7 +44,7 @@ public class UserFallbackFactory implements FallbackFactory<UserClient> {
             }
 
             @Override
-            public Response<Address> queryAddress(Long addressId) {
+            public Response<Address> address(Long addressId) {
                 log.error("进入熔断措施 UserClient.queryAddress");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }

@@ -3,6 +3,7 @@ package quick.pager.shop.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,27 +11,22 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import quick.pager.shop.filter.ShopUsernamePasswordAuthenticationFilter;
-import quick.pager.shop.handler.ShopAuthenticationSuccessHandler;
-import quick.pager.shop.security.ShopLoginUrlAuthenticationEntryPoint;
 import quick.pager.shop.service.UserService;
 
 @Configuration
 @EnableWebSecurity
+@Order(6)
 public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
 
         http
-                .addFilterAt(shopUsernamePasswordAuthenticationFilter(), ShopUsernamePasswordAuthenticationFilter.class)
-                .formLogin().permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(shopLoginUrlAuthenticationEntryPoint())
-                .and()
-                .logout().logoutUrl("/logout").deleteCookies("JSESSIONID").invalidateHttpSession(true).permitAll()
+                .logout().logoutUrl("/logout").permitAll().clearAuthentication(true)
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
@@ -39,7 +35,7 @@ public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().mvcMatchers("/css/**", "/images/**", "/js/**", "/index.html", "/webjars/**", "/oauth/login", "/actuator/**");
+        web.ignoring().mvcMatchers("/webjars/**", "/actuator/**");
     }
 
     @Override
@@ -59,23 +55,4 @@ public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-    @Bean
-    public ShopAuthenticationSuccessHandler shopAuthenticationSuccessHandler() {
-        return new ShopAuthenticationSuccessHandler();
-    }
-
-    @Bean
-    public ShopUsernamePasswordAuthenticationFilter shopUsernamePasswordAuthenticationFilter() throws Exception {
-
-        ShopUsernamePasswordAuthenticationFilter shopUsernamePasswordAuthenticationFilter = new ShopUsernamePasswordAuthenticationFilter();
-        shopUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler(shopAuthenticationSuccessHandler());
-        shopUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManagerBean());
-        shopUsernamePasswordAuthenticationFilter.setFilterProcessesUrl("/oauth/login");
-        return shopUsernamePasswordAuthenticationFilter;
-    }
-
-    public ShopLoginUrlAuthenticationEntryPoint shopLoginUrlAuthenticationEntryPoint() {
-        return new ShopLoginUrlAuthenticationEntryPoint("/");
-    }
 }

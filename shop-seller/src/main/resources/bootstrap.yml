@@ -4,10 +4,10 @@ server:
 spring:
   application:
     name: shop-seller
-  profiles:
-    active: dev
-
   cloud:
+    alibaba:
+      seata:
+        tx-service-group: shop_seller_tx_group
     consul:
       port: 8500
       discovery:
@@ -16,9 +16,8 @@ spring:
         port: ${server.port}
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
-    alibaba:
-      seata:
-        tx-service-group: shop_seller_tx_group
+  profiles:
+    active: dev
 management:
   endpoints:
     web:

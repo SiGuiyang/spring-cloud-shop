@@ -36,7 +36,17 @@ public interface AuthClient {
 
         @Override
         public AuthClient create(Throwable cause) {
-            return null;
+            return new AuthClient() {
+                @Override
+                public Response<UserDTO> getSysUser(String username) {
+                    return new Response<>(3000, "网络连接错误，请稍后重试");
+                }
+
+                @Override
+                public Response<Set<String>> getRolesBySysUserId(Long sysUserId) {
+                    return new Response<>(3000, "网络连接错误，请稍后重试");
+                }
+            };
         }
     }
 }

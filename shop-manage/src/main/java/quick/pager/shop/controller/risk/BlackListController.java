@@ -1,4 +1,4 @@
-package quick.pager.shop.controller;
+package quick.pager.shop.controller.risk;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;

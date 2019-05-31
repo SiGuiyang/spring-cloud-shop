@@ -3,6 +3,8 @@ package quick.pager.shop.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.fallback.SellerFallbackFactory;
 import quick.pager.shop.model.SellerInfo;
@@ -21,6 +23,6 @@ public interface SellerClient {
      *
      * @param sellerId 商家Id
      */
-    @PostMapping("/info/{sellerId}")
+    @RequestMapping(value = "/info/{sellerId}", method = RequestMethod.POST)
     Response<SellerInfo> querySeller(@PathVariable("sellerId") Long sellerId);
 }
