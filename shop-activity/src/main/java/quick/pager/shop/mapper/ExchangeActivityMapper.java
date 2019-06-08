@@ -2,12 +2,14 @@ package quick.pager.shop.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.model.ExchangeActivity;
+import quick.pager.shop.model.activity.ExchangeActivity;
 
 /**
  * @author siguiyang
  */
+@Mapper
 public interface ExchangeActivityMapper {
 
     int insertSelective(ExchangeActivity record);

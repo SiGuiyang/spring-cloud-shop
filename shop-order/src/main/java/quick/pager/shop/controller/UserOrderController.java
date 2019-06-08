@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.OrderDTO;
-import quick.pager.shop.model.UserOrder;
+import quick.pager.shop.model.order.UserOrder;
 import quick.pager.shop.response.OrderResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.UserOrderService;

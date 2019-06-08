@@ -1,7 +1,9 @@
 package quick.pager.shop.mapper;
 
-import quick.pager.shop.model.InviteCode;
+import org.apache.ibatis.annotations.Mapper;
+import quick.pager.shop.model.activity.InviteCode;
 
+@Mapper
 public interface InviteCodeMapper {
 
     int insertSelective(InviteCode record);

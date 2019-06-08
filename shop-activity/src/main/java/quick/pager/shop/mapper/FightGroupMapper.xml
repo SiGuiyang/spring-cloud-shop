@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.FightGroupMapper">
-  <resultMap id="BaseResultMap" type="quick.pager.shop.model.FightGroup">
+  <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.FightGroup">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="activity_name" jdbcType="VARCHAR" property="activityName" />
     <result column="activity_img" jdbcType="VARCHAR" property="activityImg" />
@@ -24,7 +24,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
-  <insert id="insertSelective" parameterType="quick.pager.shop.model.FightGroup">
+  <insert id="insertSelective" parameterType="quick.pager.shop.model.activity.FightGroup">
     insert into t_fight_group_activity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -85,7 +85,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.FightGroup">
+  <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.FightGroup">
     update t_fight_group_activity
     <set>
       <if test="activityName != null">

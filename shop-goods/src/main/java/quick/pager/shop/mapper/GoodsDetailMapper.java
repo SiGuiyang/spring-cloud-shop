@@ -1,8 +1,10 @@
 package quick.pager.shop.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.model.GoodsDetail;
+import quick.pager.shop.model.goods.GoodsDetail;
 
+@Mapper
 public interface GoodsDetailMapper {
 
     int insertSelective(GoodsDetail record);

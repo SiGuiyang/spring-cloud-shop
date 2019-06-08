@@ -18,7 +18,7 @@ import quick.pager.shop.dto.AppDTO;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.CouponDTO;
 import quick.pager.shop.dto.PublishCouponDTO;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.CouponService;
 import quick.pager.shop.service.GiftCouponService;

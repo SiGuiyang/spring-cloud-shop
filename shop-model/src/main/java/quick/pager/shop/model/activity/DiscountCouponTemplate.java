@@ -1,8 +1,9 @@
-package quick.pager.shop.model;
+package quick.pager.shop.model.activity;
 
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.shop.model.Model;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

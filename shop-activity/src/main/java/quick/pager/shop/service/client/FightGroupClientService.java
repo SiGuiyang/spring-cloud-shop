@@ -20,9 +20,9 @@ import quick.pager.shop.mapper.FightGroupGoodsMapper;
 import quick.pager.shop.mapper.FightGroupMemberMapper;
 import quick.pager.shop.mapper.FightGroupRuleMapper;
 import quick.pager.shop.dto.FightGroupDTO;
-import quick.pager.shop.model.FightGroup;
-import quick.pager.shop.model.FightGroupGoods;
-import quick.pager.shop.model.FightGroupRule;
+import quick.pager.shop.model.activity.FightGroup;
+import quick.pager.shop.model.activity.FightGroupGoods;
+import quick.pager.shop.model.activity.FightGroupRule;
 import quick.pager.shop.utils.DateUtils;
 
 /**

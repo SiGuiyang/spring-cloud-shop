@@ -3,8 +3,8 @@ package quick.pager.shop.response;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.Data;
-import quick.pager.shop.model.Goods;
-import quick.pager.shop.model.GoodsDetail;
+import quick.pager.shop.model.goods.Goods;
+import quick.pager.shop.model.goods.GoodsDetail;
 
 @Data
 public class GoodsResponse implements Serializable {

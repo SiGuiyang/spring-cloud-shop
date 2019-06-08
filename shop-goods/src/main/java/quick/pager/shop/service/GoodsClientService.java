@@ -3,7 +3,6 @@ package quick.pager.shop.service;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +17,9 @@ import quick.pager.shop.mapper.GoodsCartMapper;
 import quick.pager.shop.mapper.GoodsDetailMapper;
 import quick.pager.shop.mapper.GoodsMapper;
 import quick.pager.shop.service.common.CommonGoodsService;
-import quick.pager.shop.model.Goods;
-import quick.pager.shop.model.GoodsCart;
-import quick.pager.shop.model.GoodsDetail;
+import quick.pager.shop.model.goods.Goods;
+import quick.pager.shop.model.goods.GoodsCart;
+import quick.pager.shop.model.goods.GoodsDetail;
 
 @Service
 @Slf4j

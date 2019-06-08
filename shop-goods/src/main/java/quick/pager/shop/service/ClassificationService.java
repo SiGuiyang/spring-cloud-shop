@@ -13,7 +13,7 @@ import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.ClassificationDTO;
 import quick.pager.shop.mapper.GoodsClassMapper;
-import quick.pager.shop.model.GoodsClass;
+import quick.pager.shop.model.goods.GoodsClass;
 
 /**
  * 商品分类列表服务

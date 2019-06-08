@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.GoodsDetailMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.GoodsDetail">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.goods.GoodsDetail">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
         <result column="goods_img" jdbcType="VARCHAR" property="goodsImg"/>
@@ -37,7 +37,7 @@
         where goods_id = #{goodsId,jdbcType=BIGINT} and delete_status = false
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.GoodsDetail">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.goods.GoodsDetail">
         insert into t_goods_detail
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -129,7 +129,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.GoodsDetail">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.goods.GoodsDetail">
         update t_goods_detail
         <set>
             <if test="goodsId != null">

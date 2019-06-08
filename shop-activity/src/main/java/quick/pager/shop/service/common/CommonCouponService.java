@@ -14,7 +14,7 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.client.UserClient;
 import quick.pager.shop.dto.UserInfoDTO;
 import quick.pager.shop.response.CouponResponse;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
  * 优惠券通用服务

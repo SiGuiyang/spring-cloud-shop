@@ -1,7 +1,6 @@
 package quick.pager.shop.service.client;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +15,7 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
 import quick.pager.shop.mapper.DiscountCouponTemplateMapper;
 import quick.pager.shop.dto.CouponTemplateDTO;
-import quick.pager.shop.model.DiscountCouponTemplate;
+import quick.pager.shop.model.activity.DiscountCouponTemplate;
 
 /**
  * 优惠券模板服务

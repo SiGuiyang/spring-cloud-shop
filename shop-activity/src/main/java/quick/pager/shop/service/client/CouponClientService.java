@@ -12,7 +12,7 @@ import quick.pager.shop.mapper.DiscountCouponMapper;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
 import quick.pager.shop.dto.CouponDTO;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
  * 用户优惠券服务

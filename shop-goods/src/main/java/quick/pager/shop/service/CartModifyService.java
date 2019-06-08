@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.CartDTO;
-import quick.pager.shop.model.GoodsCart;
+import quick.pager.shop.model.goods.GoodsCart;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.mapper.GoodsCartMapper;
 import quick.pager.shop.utils.DateUtils;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.BannerMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.Banner">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.Banner">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="banner_url" jdbcType="VARCHAR" property="bannerUrl"/>
@@ -28,7 +28,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.Banner">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.activity.Banner">
         insert into t_banner
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -119,7 +119,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.Banner">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.Banner">
         update t_banner
         <set>
             <if test="title != null and title !=''">

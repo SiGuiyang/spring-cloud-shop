@@ -69,6 +69,13 @@ public interface Constants {
     }
 
     /**
+     * 短信模块
+     */
+    interface SMS_MODULE{
+        String SELLER = "seller";
+        String USER = "user";
+    }
+    /**
      * 短信模板code
      */
     interface SMS {

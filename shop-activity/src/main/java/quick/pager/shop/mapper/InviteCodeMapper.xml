@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.InviteCodeMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.InviteCode">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.InviteCode">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="user_id" jdbcType="BIGINT" property="userId"/>
         <result column="template_id" jdbcType="BIGINT" property="templateId"/>
@@ -21,7 +21,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.InviteCode">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.activity.InviteCode">
         insert into t_invite_code
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -76,7 +76,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.InviteCode">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.InviteCode">
         update t_invite_code
         <set>
             <if test="userId != null">

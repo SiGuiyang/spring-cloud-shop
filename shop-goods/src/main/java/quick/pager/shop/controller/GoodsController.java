@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.GoodsDTO;
-import quick.pager.shop.model.Goods;
+import quick.pager.shop.model.goods.Goods;
 import quick.pager.shop.request.AppRequest;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.Response;

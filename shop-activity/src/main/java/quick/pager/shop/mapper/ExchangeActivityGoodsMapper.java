@@ -1,10 +1,12 @@
 package quick.pager.shop.mapper;
 
-import quick.pager.shop.model.ExchangeActivityGoods;
+import org.apache.ibatis.annotations.Mapper;
+import quick.pager.shop.model.activity.ExchangeActivityGoods;
 
 /**
 * @author siguiyang
 */
+@Mapper
 public interface ExchangeActivityGoodsMapper {
 
     int insertSelective(ExchangeActivityGoods record);

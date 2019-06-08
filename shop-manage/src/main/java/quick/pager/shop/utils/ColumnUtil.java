@@ -54,10 +54,6 @@ public class ColumnUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        System.out.println(column2Java("TIMESTAMP"));
-    }
-
     /**
      * 将类字段名，mybatis jdbcType 转换xml映射方式
      *

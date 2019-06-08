@@ -1,9 +1,10 @@
-package quick.pager.shop.model;
+package quick.pager.shop.model.activity;
 
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import quick.pager.shop.model.Model;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

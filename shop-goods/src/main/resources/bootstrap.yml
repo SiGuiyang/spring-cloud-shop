@@ -25,17 +25,15 @@ management:
       exposure:
         include: refresh,health,info,
 mybatis:
-  configuration:
-      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
-  type-aliases-package: quick.pager.shop.model
+  type-aliases-package: quick.pager.shop.model.goods
+
 pagehelper:
   auto-dialect: mysql
   reasonable: true
   support-methods-arguments: true
 
 apollo:
-  meta: http://192.168.1.87:8080
   bootstrap:
     enabled: true
     eagerLoad:

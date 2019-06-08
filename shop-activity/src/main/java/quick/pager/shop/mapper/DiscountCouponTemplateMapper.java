@@ -1,9 +1,11 @@
 package quick.pager.shop.mapper;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.model.DiscountCouponTemplate;
+import quick.pager.shop.model.activity.DiscountCouponTemplate;
 
+@Mapper
 public interface DiscountCouponTemplateMapper {
 
     int insertSelective(DiscountCouponTemplate record);

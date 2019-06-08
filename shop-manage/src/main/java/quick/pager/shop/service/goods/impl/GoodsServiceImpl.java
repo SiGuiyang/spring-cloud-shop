@@ -9,7 +9,7 @@ import quick.pager.shop.client.ActivityClient;
 import quick.pager.shop.client.GoodsClient;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.GoodsDTO;
-import quick.pager.shop.model.Goods;
+import quick.pager.shop.model.goods.Goods;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.goods.GoodsService;
 

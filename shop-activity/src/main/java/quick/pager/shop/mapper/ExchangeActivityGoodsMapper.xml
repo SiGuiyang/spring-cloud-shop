@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.ExchangeActivityGoodsMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.ExchangeActivityGoods">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.ExchangeActivityGoods">
     <id column="id" jdbcType="BIGINT" property="id"/>
     <result column="activity_id" jdbcType="BIGINT" property="activityId"/>
     <result column="rule_id" jdbcType="BIGINT" property="ruleId"/>
@@ -26,7 +26,7 @@
         where id = #{id, jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.ExchangeActivityGoods">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.activity.ExchangeActivityGoods">
         insert into t_exchange_activity_goods
         <trim prefix="(" suffix=")" suffixOverrides=",">
 
@@ -77,7 +77,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.ExchangeActivityGoods">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.ExchangeActivityGoods">
         update t_exchange_activity_goods
         <set>
             <if test="activityId != null">
@@ -102,7 +102,7 @@
         where id = #{id, jdbcType=BIGINT}
     </update>
 
-    <select id="select" parameterType="quick.pager.shop.model.ExchangeActivityGoods" resultMap="BaseResultMap">
+    <select id="select" parameterType="quick.pager.shop.model.activity.ExchangeActivityGoods" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_exchange_activity_goods

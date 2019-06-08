@@ -10,8 +10,8 @@ import org.springframework.util.CollectionUtils;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.mapper.GoodsDetailMapper;
 import quick.pager.shop.mapper.GoodsMapper;
-import quick.pager.shop.model.Goods;
-import quick.pager.shop.model.GoodsCart;
+import quick.pager.shop.model.goods.Goods;
+import quick.pager.shop.model.goods.GoodsCart;
 
 @Service
 @Slf4j

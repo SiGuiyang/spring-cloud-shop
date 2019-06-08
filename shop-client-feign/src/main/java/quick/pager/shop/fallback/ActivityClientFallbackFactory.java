@@ -13,7 +13,7 @@ import quick.pager.shop.dto.FightGroupDTO;
 import quick.pager.shop.response.ExchangeMemberResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.client.ActivityClient;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
  * 活动模块熔断工厂

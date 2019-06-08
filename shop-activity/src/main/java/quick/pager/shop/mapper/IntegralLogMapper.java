@@ -1,7 +1,9 @@
 package quick.pager.shop.mapper;
 
-import quick.pager.shop.model.IntegralLog;
+import org.apache.ibatis.annotations.Mapper;
+import quick.pager.shop.model.activity.IntegralLog;
 
+@Mapper
 public interface IntegralLogMapper {
 
     int insertSelective(IntegralLog record);

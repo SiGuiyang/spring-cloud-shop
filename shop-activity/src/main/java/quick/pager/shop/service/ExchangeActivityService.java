@@ -10,7 +10,7 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.ExchangeActivityDTO;
 import quick.pager.shop.mapper.ExchangeActivityMapper;
-import quick.pager.shop.model.ExchangeActivity;
+import quick.pager.shop.model.activity.ExchangeActivity;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.utils.DateUtils;
 

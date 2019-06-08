@@ -26,6 +26,7 @@ import quick.pager.shop.service.StationMessageService;
 import quick.pager.shop.service.UserForgetPasswordService;
 import quick.pager.shop.service.UserInfoService;
 import quick.pager.shop.service.UserLoginService;
+import quick.pager.shop.service.UserModifyService;
 import quick.pager.shop.service.UserSubscribeService;
 
 /**
@@ -42,6 +43,8 @@ public class UserController {
 
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private UserModifyService userModifyService;
     @Autowired
     private UserLoginService userLoginService;
     @Autowired
@@ -96,7 +99,7 @@ public class UserController {
         dto.setPassword(request.getPassword());
         dto.setPhone(request.getPhone());
 
-//        redisService.set(key, request.getPhone(), 30);
+        redisService.set(key, request.getPhone(), 30);
 
         return userLoginService.doService(dto);
     }
@@ -105,7 +108,15 @@ public class UserController {
     @PostMapping("/edit")
     public Response edit(UserInfoDTO request) {
 
-        return null;
+        String key = RedisKeys.UserKeys.SHOP_MODIFY_USER_INFO + request.getUserId();
+
+        if (!StringUtils.isEmpty(redisService.get(key))) {
+            return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.REPEAT_SUBMIT);
+        }
+
+        redisService.set(key, Constants.Common.ONE, 30);
+
+        return userModifyService.doService(request);
     }
 
     /**
@@ -157,7 +168,8 @@ public class UserController {
     @ApiOperation("退出登陆")
     @RequestMapping(value = "/logout/{userId}", method = RequestMethod.POST)
     public Response logout(@PathVariable("userId") Long userId) {
-        return null;
+        redisService.del(String.valueOf(userId));
+        return new Response();
     }
 
     /**

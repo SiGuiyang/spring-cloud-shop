@@ -13,9 +13,9 @@ import quick.pager.shop.client.GoodsClient;
 import quick.pager.shop.client.UserClient;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.OrderResponse;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.Address;
-import quick.pager.shop.model.UserOrder;
+import quick.pager.shop.model.order.UserOrder;
 
 @Service
 @Slf4j

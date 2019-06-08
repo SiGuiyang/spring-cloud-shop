@@ -26,6 +26,8 @@ public interface RedisKeys {
         String SHOP_LOGIN = "shop_login_";
         // 登陆验证码
         String SHOP_LOGIN_SMS = "shop_login_sms_";
+        // 修改用户信息
+        String SHOP_MODIFY_USER_INFO = "shop_modify_user_info:";
         // 忘记密码
         String SHOP_FORGET_PASSWORD_SMS = "shop_forget_password_sms_";
         // 注册前缀

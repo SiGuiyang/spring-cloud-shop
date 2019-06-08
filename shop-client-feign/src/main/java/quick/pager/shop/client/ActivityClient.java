@@ -1,7 +1,6 @@
 package quick.pager.shop.client;
 
 import java.util.List;
-import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,7 @@ import quick.pager.shop.dto.FightGroupDTO;
 import quick.pager.shop.fallback.ActivityClientFallbackFactory;
 import quick.pager.shop.response.ExchangeMemberResponse;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
  * 活动模块

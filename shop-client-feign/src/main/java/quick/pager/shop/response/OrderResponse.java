@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.Address;
-import quick.pager.shop.model.UserOrder;
+import quick.pager.shop.model.order.UserOrder;
 import quick.pager.shop.model.SellerInfo;
 
 @Data

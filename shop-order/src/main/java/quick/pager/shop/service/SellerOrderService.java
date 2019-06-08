@@ -1,6 +1,6 @@
 package quick.pager.shop.service;
 
-import quick.pager.shop.model.SellerOrder;
+import quick.pager.shop.model.order.SellerOrder;
 import quick.pager.shop.response.Response;
 
 /**

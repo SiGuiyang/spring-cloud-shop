@@ -17,7 +17,7 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
 import quick.pager.shop.mapper.BannerMapper;
 import quick.pager.shop.dto.BannerDTO;
-import quick.pager.shop.model.Banner;
+import quick.pager.shop.model.activity.Banner;
 
 @Service
 @Slf4j

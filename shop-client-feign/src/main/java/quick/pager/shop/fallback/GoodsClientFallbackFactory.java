@@ -10,7 +10,7 @@ import quick.pager.shop.dto.GoodsDTO;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.client.GoodsClient;
-import quick.pager.shop.model.Goods;
+import quick.pager.shop.model.goods.Goods;
 
 /**
  * 商品模块熔断工厂

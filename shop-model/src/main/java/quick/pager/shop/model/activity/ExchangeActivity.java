@@ -1,8 +1,9 @@
-package quick.pager.shop.model;
+package quick.pager.shop.model.activity;
 
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.shop.model.Model;
 
 /**
 * @author siguiyang

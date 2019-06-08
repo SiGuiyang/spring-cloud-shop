@@ -75,7 +75,7 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         loginOrSubscribeResponse.setUserId(user.getId());
 
         // 使用队列发送短信初始密码
-        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule(Constants.Module.USER, Constants.SMS.INITIAL_CIPHER_SMS);
+        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule(Constants.SMS_MODULE.USER, Constants.SMS.INITIAL_CIPHER_SMS);
         SmsTemplate smsTemplate = smsTemplates.get(0);
         String content = MessageFormat.format(smsTemplate.getSmsTemplateContent(), user.getPhone());
         SmsDTO smsdto = new SmsDTO();

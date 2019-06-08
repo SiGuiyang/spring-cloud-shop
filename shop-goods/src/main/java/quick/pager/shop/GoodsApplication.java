@@ -1,6 +1,5 @@
 package quick.pager.shop;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -10,7 +9,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringCloudApplication
 @EnableFeignClients
-@MapperScan(basePackages = "quick.pager.shop.mapper")
 public class GoodsApplication {
 
     public static void main(String[] args) {

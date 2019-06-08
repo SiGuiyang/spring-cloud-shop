@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quick.pager.shop.mapper.DiscountCouponTemplateMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.DiscountCouponTemplate">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.activity.DiscountCouponTemplate">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="order_amount" jdbcType="DECIMAL" property="orderAmount"/>
         <result column="coupon_amount" jdbcType="DECIMAL" property="couponAmount"/>
@@ -25,7 +25,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insertSelective" parameterType="quick.pager.shop.model.DiscountCouponTemplate">
+    <insert id="insertSelective" parameterType="quick.pager.shop.model.activity.DiscountCouponTemplate">
         insert into t_discount_coupon_template
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -99,7 +99,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.DiscountCouponTemplate">
+    <update id="updateByPrimaryKeySelective" parameterType="quick.pager.shop.model.activity.DiscountCouponTemplate">
         update t_discount_coupon_template
         <set>
             <if test="orderAmount != null and orderAmount != ''">

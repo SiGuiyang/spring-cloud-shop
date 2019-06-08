@@ -24,10 +24,6 @@
         from t_user_info
         where id = #{id,jdbcType=BIGINT}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from t_user_info
-        where id = #{id,jdbcType=BIGINT}
-    </delete>
 
     <insert id="insertSelective" parameterType="quick.pager.shop.model.UserInfo">
         insert into t_user_info
@@ -138,5 +134,9 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from t_user_info where user_id = #{userId,jdbcType=BIGINT}
+    </select>
 
 </mapper>

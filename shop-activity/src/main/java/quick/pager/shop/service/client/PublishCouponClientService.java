@@ -28,8 +28,8 @@ import quick.pager.shop.task.SendCouponTask;
 import quick.pager.shop.client.UserClient;
 import quick.pager.shop.dto.PublishCouponDTO;
 import quick.pager.shop.dto.UserInfoDTO;
-import quick.pager.shop.model.DiscountCoupon;
-import quick.pager.shop.model.DiscountCouponTemplate;
+import quick.pager.shop.model.activity.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCouponTemplate;
 
 /**
  * 发送优惠券

@@ -1,7 +1,8 @@
-package quick.pager.shop.model;
+package quick.pager.shop.model.activity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.shop.model.Model;
 
 /**
  * 首页banner

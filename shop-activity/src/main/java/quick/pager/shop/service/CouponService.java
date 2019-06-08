@@ -11,7 +11,7 @@ import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.mapper.DiscountCouponMapper;
 import quick.pager.shop.response.CouponResponse;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.model.DiscountCoupon;
+import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
  * 优惠券列表

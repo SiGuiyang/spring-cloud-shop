@@ -39,7 +39,7 @@ public class InitService {
      * 初始化项目配置信息
      */
     private void initSystemConfig() {
-        List<SystemConfig> systemConfigs = systemConfigMapper.selectByModule("user");
+        List<SystemConfig> systemConfigs = systemConfigMapper.selectByModule(Constants.SMS_MODULE.USER);
 
         systemConfigs.forEach(systemConfig -> {
             redisService.set(RedisKeys.UserKeys.SHOP_SYSTEM_CONFIG + systemConfig.getConfigName(), systemConfig.getConfigValue(), 30 * 24 * 60 * 60);
@@ -52,7 +52,7 @@ public class InitService {
      */
     private void initSMSTemplate() {
 
-        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule("user", null);
+        List<SmsTemplate> smsTemplates = smsTemplateMapper.selectByModule(Constants.SMS_MODULE.USER, null);
         smsTemplates.forEach(smsTemplate -> {
             redisService.set(RedisKeys.UserKeys.SHOP_SMS_TEMPLATE + smsTemplate.getSmsTemplateCode(), smsTemplate.getSmsTemplateContent(), 30 * 24 * 60 * 60);
         });

@@ -33,7 +33,7 @@ public class UserInfoService implements IService<UserInfoResponse> {
 
         UserInfoDTO userInfoDTO = (UserInfoDTO) dto;
 
-        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(userInfoDTO.getId());
+        UserInfo userInfo = userInfoMapper.selectByUserId(userInfoDTO.getUserId());
 
         if (ObjectUtils.isEmpty(userInfo)) {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_PHONE_NOT_EXISTS);

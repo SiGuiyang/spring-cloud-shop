@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.mapper.SellerOrderMapper;
-import quick.pager.shop.model.SellerOrder;
+import quick.pager.shop.model.order.SellerOrder;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.SellerOrderService;
 

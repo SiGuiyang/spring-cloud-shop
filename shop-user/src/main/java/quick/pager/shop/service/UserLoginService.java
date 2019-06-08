@@ -51,7 +51,7 @@ public class UserLoginService implements IService<LoginOrSubscribeResponse> {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_ACCOUNT_PASSWORD_NOT_CORRECT);
         }
 
-        // 删除token
+        // 删除历史token
         redisService.del(String.valueOf(user.getId()));
 
         String token = createToken(user.getId());
