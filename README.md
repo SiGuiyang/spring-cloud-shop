@@ -6,8 +6,9 @@
     订单中心: pager_order 
     数据中心: pager_shop 
     风控中心: pager-risk 
-    授权中心 pager-auth
+    授权中心: pager-auth
     分布式文件系统采用apollo方式实现
+    分布式定时任务采用xxl-job方式实现
     后台登陆采用oauth2.0密码模式登陆或者授权码模式登陆
 # 设计初衷
     设计此项目是为了进一步学习Spring Cloud 技术栈。从项目实战深入Spring Cloud 各个微服务的解决方案。因此采用最常见的电商业务作为
