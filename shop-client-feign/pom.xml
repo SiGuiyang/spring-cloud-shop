@@ -3,9 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>quick.pager</groupId>
+    <parent>
+        <artifactId>spring-cloud-shop</artifactId>
+        <groupId>quick.pager</groupId>
+        <version>cloud-1.0</version>
+    </parent>
     <artifactId>shop-client-feign</artifactId>
-    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>shop-client-feign</name>
@@ -21,7 +24,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.1.2.RELEASE</version>
             <scope>provided</scope>
         </dependency>
 
@@ -42,14 +44,14 @@
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-model</artifactId>
-            <version>2.0</version>
+            <version>${shop.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-common</artifactId>
-            <version>2.0</version>
+            <version>${shop.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -71,6 +73,19 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

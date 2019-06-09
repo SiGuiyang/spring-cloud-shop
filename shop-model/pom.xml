@@ -5,7 +5,7 @@
     <parent>
         <artifactId>spring-cloud-shop</artifactId>
         <groupId>quick.pager</groupId>
-        <version>2.0</version>
+        <version>cloud-1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
