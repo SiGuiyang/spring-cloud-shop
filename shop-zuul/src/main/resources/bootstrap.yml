@@ -6,9 +6,6 @@ spring:
   profiles:
     active: dev
   cloud:
-    config:
-      uri: http://127.0.0.1:8889/
-      label: master
     consul:
       port: 8500
       discovery:

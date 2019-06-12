@@ -1,6 +1,4 @@
 spring:
   cloud:
-    config:
-      profile: dev
     consul:
       host: 172.16.11.109
