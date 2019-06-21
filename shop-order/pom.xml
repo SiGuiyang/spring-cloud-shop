@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
 
     <name>shop-order</name>
-    <description>Demo project for Spring Boot</description>
+    <description>订单服务</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

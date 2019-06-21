@@ -9,7 +9,7 @@
     </parent>
     <artifactId>shop-gateway</artifactId>
     <name>shop-gateway</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Gateway服务网关</description>
 
     <properties>
         <java.version>1.8</java.version>

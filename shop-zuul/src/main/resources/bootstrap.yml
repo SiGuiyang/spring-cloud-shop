@@ -1,5 +1,5 @@
 server:
-  port: 8099
+  port: 8999
 spring:
   application:
     name: shop-zuul

@@ -12,7 +12,7 @@
     <packaging>jar</packaging>
 
     <name>shop-zuul</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Zuul 网关服务</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

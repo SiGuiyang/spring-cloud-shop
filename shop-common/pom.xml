@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>shop-common</artifactId>
+    <description>通用服务工具包</description>
 
 
     <dependencies>

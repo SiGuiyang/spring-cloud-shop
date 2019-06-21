@@ -1,9 +1,10 @@
-<html>
+<html lang="zh">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="/webjars/Semantic-UI/2.2.10/semantic.min.css"/>
+    <title>Pager 授权中心</title>
 </head>
 <style type="text/css">
     body {
@@ -42,33 +43,33 @@
         </p>
     </div>
     <div class="actions">
-        <div class="ui ok button" id="ok">允许</div>
-        <div class="ui cancel button" id="no">拒绝</div>
+        <div class="ui ok button" id="allow">允许</div>
+        <div class="ui cancel button" id="reject">拒绝</div>
     </div>
 </div>
 </body>
 <script src="/webjars/jquery/3.2.1/jquery.min.js" ></script>
 <script src="/webjars/Semantic-UI/2.2.10/semantic.min.js" ></script>
 <script>
-    $("#modal").modal({closable: false}).modal('show')
-    $("#ok").click(function () {
+    $("#modal").modal({closable: false}).modal('show');
+    $("#allow").click(function () {
         $("#approval").val("true");
         $("#approveOrDeny").attr("name", "authorize").val("Authorize");
         $("#form").submit();
-    })
+    });
 
-    $("#no").click(function () {
+    $("#reject").click(function () {
         $("#approval").val("false");
         $("#approveOrDeny").attr("name", "deny").val("Deny");
         $("#scope").val("false");
         $("#form").submit();
-    })
+    });
     function changeUser() {
         const getUrlParameters = url =>
         url.match(/([^?=&]+)(=([^&]*))/g).reduce(
                 (a, v) => (a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1), a), {});
-        var url = getUrlParameters(window.location.href)['redirect_uri']
-        if (url.indexOf('?') == -1) {
+        var url = getUrlParameters(window.location.href)['redirect_uri'];
+        if (url.indexOf('?') === -1) {
             url += '?logout=yes'
         } else {
             url += '&logout=yes'

@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>shop-model</artifactId>
+    <description>实体类服务</description>
 
 
     <dependencies>
