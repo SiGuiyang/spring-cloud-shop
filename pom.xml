@@ -236,7 +236,6 @@
         <module>shop-common</module>
         <module>shop-gateway</module>
         <module>shop-goods</module>
-        <module>shop-hystrix-dashboard</module>
         <module>shop-manage</module>
         <module>shop-model</module>
         <module>shop-order</module>
