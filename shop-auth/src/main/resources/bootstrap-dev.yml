@@ -9,6 +9,3 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/pager_auth?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
     password: root
-logging:
-  level:
-    org.springframework.security: DEBUG

@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: shop-manage
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
 
   cloud:
     consul:
@@ -17,12 +19,23 @@ spring:
     alibaba:
       seata:
         tx-service-group: shop_tx_group
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: dev
 feign:
   hystrix:
     enabled: true
-
+ribbon:
+  ReadTimeout:  30000
+  ConnectTimeout:  15000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
 mybatis:
   mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model

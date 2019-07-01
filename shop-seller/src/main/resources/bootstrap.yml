@@ -16,8 +16,25 @@ spring:
         port: ${server.port}
         prefer-ip-address: true
         instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: dev
+
+feign:
+  hystrix:
+    enabled: true
+ribbon:
+  ReadTimeout:  30000
+  ConnectTimeout:  15000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
 management:
   endpoints:
     web:
