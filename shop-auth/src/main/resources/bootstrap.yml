@@ -20,3 +20,6 @@ management:
     web:
       exposure:
         include: refresh,health,info
+logging:
+  level:
+    org.springframework: debug

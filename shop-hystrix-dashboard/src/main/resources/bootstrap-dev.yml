@@ -1,5 +1,0 @@
-
-spring:
-  cloud:
-    consul:
-      host: 172.16.11.109

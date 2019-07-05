@@ -1,8 +1,8 @@
 spring:
   cloud:
     consul:
-      host: 172.16.11.109
-#      host: localhost
+#      host: 172.16.11.109
+      host: 192.168.199.101
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
