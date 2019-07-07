@@ -243,6 +243,5 @@
         <module>shop-seller</module>
         <module>shop-task</module>
         <module>shop-user</module>
-        <module>shop-zuul</module>
     </modules>
 </project>
