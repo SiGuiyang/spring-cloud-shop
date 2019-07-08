@@ -20,7 +20,6 @@ spring:
         locator:
           lower-case-service-id: true
 
-
 management:
   endpoints:
     web:

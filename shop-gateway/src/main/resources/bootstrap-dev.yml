@@ -3,4 +3,8 @@ spring:
   cloud:
     consul:
       host: 172.16.11.109
+#      host: 192.168.199.101
 #      host: localhost
+logging:
+  level:
+    org.springframework: debug
