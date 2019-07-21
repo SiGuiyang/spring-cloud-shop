@@ -8,14 +8,6 @@ spring:
     exclude: org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
 
   cloud:
-    consul:
-      port: 8500
-      discovery:
-        tags: pager=shop-manage
-        healthCheckInterval: 30s
-        port: ${server.port}
-        prefer-ip-address: true
-        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
     alibaba:
       seata:
         tx-service-group: shop_tx_group
@@ -39,12 +31,6 @@ hystrix:
 mybatis:
   mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model
-
-apollo:
-  bootstrap:
-    enabled: true
-    eagerLoad:
-      enabled: true
 
 management:
   endpoints:

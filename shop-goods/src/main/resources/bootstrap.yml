@@ -4,15 +4,6 @@ server:
 spring:
   application:
     name: shop-goods
-  cloud:
-    consul:
-      port: 8500
-      discovery:
-        tags: pager=shop-goods
-        healthCheckInterval: 30s
-        port: ${server.port}
-        prefer-ip-address: true
-        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
   profiles:
     active: dev
 feign:
@@ -41,10 +32,3 @@ pagehelper:
   auto-dialect: mysql
   reasonable: true
   support-methods-arguments: true
-
-apollo:
-  bootstrap:
-    enabled: true
-    eagerLoad:
-      enabled: true
-

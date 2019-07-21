@@ -6,13 +6,6 @@ spring:
     name: shop-auth
   profiles:
     active: dev
-  cloud:
-    consul:
-      port: 8500
-      discovery:
-        instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}:${server.port}}}
-        port: ${server.port}
-        prefer-ip-address: true
   freemarker:
     template-loader-path: classpath:/templates/
 management:
@@ -20,6 +13,3 @@ management:
     web:
       exposure:
         include: refresh,health,info
-logging:
-  level:
-    org.springframework: debug

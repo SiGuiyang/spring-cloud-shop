@@ -38,13 +38,12 @@
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>spring-cloud-netflix-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>
@@ -111,11 +110,22 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-alibaba-seata</artifactId>
-            <version>0.9.0.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>io.seata</groupId>
                     <artifactId>seata-spring</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.ctrip.framework.apollo</groupId>
+                    <artifactId>apollo-client</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.ctrip.framework.apollo</groupId>
+                    <artifactId>apollo-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.ecwid.consul</groupId>
+                    <artifactId>consul-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
