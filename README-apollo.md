@@ -10,10 +10,9 @@
     分布式文件系统采用apollo方式实现
     分布式定时任务采用xxl-job方式实现
     后台登陆采用oauth2.0密码模式登陆或者授权码模式登陆
-# 项目版本分支
- 1. master分支 注册中心与配置中心已使用alibaba nacos
- 2. consul分支 注册中心使用consul，配置中心使用 [apollo](https://github.com/Siguiyang/spring-cloud-shop/blob/master/README-apollo.md)。
-
+# 项目版本
+    master分支 注册中心与配置中心已使用alibaba nacos
+    consul分支 注册中心使用consul，配置中心使用apollo 
 # 设计初衷
     设计此项目是为了进一步学习Spring Cloud 技术栈。从项目实战深入Spring Cloud 各个微服务的解决方案。因此采用最常见的电商业务作为
     练手项目。
@@ -37,8 +36,11 @@
    将seata-server部署在服务器中，启动服务 <code>sh seata-server.sh 8091 file</code>
    
 ## 部署shop-*模块
-   1. 修改对应的环境连接nacos地址   
+   1. 修改shop-*各个模块存在的apollo-env.properties 指定分布式配置系统路径Url 
+   2. 修改对应的环境连接consul 的负载均衡的host url 地址   
    
+#### 注意：启动各个项目时请加上 例如<code>env=DEV</code> VM Options，根据环境修改不同的配置
+
 ## 部署平台管理系统
    前往[系统管理平台](https://github.com/SiGuiyang/vue-shop-admin.git)下载，下载之前请先安装node工具
 
@@ -49,13 +51,5 @@
 ##### [系统管理平台](https://github.com/SiGuiyang/vue-shop-admin.git)
 ## 项目结构图
 ![Pager分布式电商项目](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/pager_shop.jpg "Pager分布式电商项目")
-
-## 项目截图
-![登陆](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/login.png "Pager分布式电商项目")
-![首页](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/home.png "Pager分布式电商项目")
-![优惠券](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/coupon.png "Pager分布式电商项目")
-![用户](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/user.png "Pager分布式电商项目")
-![角色](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/role.png "Pager分布式电商项目")
-![菜单](https://github.com/SiGuiyang/spring-cloud-shop/blob/master/images/menu.png "Pager分布式电商项目")
 
 #### 如有疑问，欢迎参与，如有更好的方案，可以邮件联系我本人**siguiyang1992@outlook.com**，谢谢！
