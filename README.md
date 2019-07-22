@@ -18,29 +18,14 @@
     设计此项目是为了进一步学习Spring Cloud 技术栈。从项目实战深入Spring Cloud 各个微服务的解决方案。因此采用最常见的电商业务作为
     练手项目。
 # 项目部署
-## 部署<code>apollo</code>分布式配置系统
-1. 在mysql中导入<code>ApolloConfigDB.sql</code>与<code>ApolloPortalDB.sql</code>
-2. 修改apollo-*模块中的<code>config</code>文件夹中的数据配置信息
-3. 修改apollo-*模块中<code>script</code> start.sh 的<code>SERVER_URL=eurakeUrl</code>地址
-
-## 部署consul注册中心，consul 为项目的注册中心（eureka 在2.0以后不维护了）
-   [consul下载](https://www.consul.io/downloads.html) <br />
-   <code>consul agent -dev -client ip地址</code> 开发模式启动服务
-
-## 部署redis 分布式缓存中间件
-   [redis 下载](https://redis.io/download)
-
-## 部署RabbitMq，异步扩展高可用消息中间件
-   [RabbitMq 下载](https://www.rabbitmq.com/)
-
-## 部署alibaba 分布式事务管理seata-server
-   将seata-server部署在服务器中，启动服务 <code>sh seata-server.sh 8091 file</code>
-   
-## 部署shop-*模块
-   1. 修改对应的环境连接nacos地址   
-   
-## 部署平台管理系统
-   前往[系统管理平台](https://github.com/SiGuiyang/vue-shop-admin.git)下载，下载之前请先安装node工具
+    1. 搭建各个服务的数据库服务，sql在doc文件中
+    2. 搭建nacos 注册中心服务，可集群部署
+    3. 搭建redis 中间件缓存服务，可集群部署
+    4. 搭建rabbitMq 中间件队列服务
+    5. 搭建seata 分布式事务管理服务
+    6. 搭建xxl-job-admin 分布式定时任务管理平台，可集群搭建
+    7. 搭建shop-* 项目，可多实例部署
+    8. 安装node工具，将vue-shop-admin后台管理服务打包部署，并使用nginx做反向代理，转发到服务网关层
 
 
 ## 前端模块
