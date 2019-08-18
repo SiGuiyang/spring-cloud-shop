@@ -1,5 +1,6 @@
 package quick.pager.shop.dto;
 
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.dto.AppDTO;
@@ -23,5 +24,6 @@ public class ForgetPasswordDTO extends AppDTO {
     /**
      * 短信验证码
      */
+    @NotBlank(message = "短信验证码不能为空")
     private String verifyCode;
 }

@@ -14,6 +14,8 @@ import quick.pager.shop.utils.SMSUtil;
 
 /**
  * 短信监听
+ *
+ * @author siguiyang
  */
 @Component
 @RabbitListener(queues = RabbitMqKeys.SEND_SMS)

@@ -17,11 +17,11 @@ import quick.pager.shop.utils.DateUtils;
  */
 @Component
 @Slf4j
-public class MqService implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback {
+public class RabbitService implements RabbitTemplate.ConfirmCallback, RabbitTemplate.ReturnCallback {
 
     private RabbitTemplate rabbitTemplate;
 
-    public MqService(RabbitTemplate rabbitTemplate) {
+    public RabbitService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
         rabbitTemplate.setConfirmCallback(this);
         rabbitTemplate.setReturnCallback(this);

@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
@@ -30,7 +31,7 @@ public class NativeMessageController {
 
     @PostMapping("/message/modify")
     @ApiOperation("站内消息操作 删除 已读")
-    public Response modifyMessage(StationMessageDTO dto) {
+    public Response modifyMessage(@RequestBody StationMessageDTO dto) {
         return null;
     }
 }

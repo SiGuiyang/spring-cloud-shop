@@ -19,7 +19,7 @@ import quick.pager.shop.response.Response;
 @Slf4j
 public class OperationLogAspect {
 
-    @Around("execution(* quick.pager.shop.seller.service.*.doService(..))")
+    @Around("execution(* quick.pager.shop.service.*.doService(..))")
     public Response doOperation(ProceedingJoinPoint pjp) throws Throwable {
 
         log.info("========================================================================================");

@@ -2,14 +2,18 @@ package quick.pager.shop.controller.system;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.dto.LoginDTO;
 import quick.pager.shop.dto.SysUserDTO;
@@ -61,7 +65,8 @@ public class SystemController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("修改系统用户")
     @PostMapping("system/user/modify")
-    public Response modifySystemUser(SysUserDTO dto) {
+    public Response modifySystemUser(@Valid SysUserDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
 
         return sysUserService.doService(dto);
     }

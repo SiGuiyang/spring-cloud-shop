@@ -2,14 +2,18 @@ package quick.pager.shop.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RedisKeys;
 import quick.pager.shop.constants.ResponseStatus;
@@ -62,19 +66,13 @@ public class UserController {
      */
     @ApiOperation("登陆")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response<LoginOrSubscribeResponse> login(UserLoginDTO request) {
-
+    public Response<LoginOrSubscribeResponse> login(@RequestBody @Valid UserLoginDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         String key = RedisKeys.UserKeys.SHOP_LOGIN + request.getPhone();
 
         if (null != redisService.get(key)) {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.REPEAT_SUBMIT);
         }
-
-        // 图形验证码不能为空
-//        if (StringUtils.isEmpty(request.getGraphicCode())) {
-//
-//            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_GRAPHIC_CODE_EMPTY);
-//        }
 
         // 密码为空 则使用短信验证码登陆
         if (StringUtils.isEmpty(request.getPassword())) {
@@ -106,8 +104,8 @@ public class UserController {
 
     @ApiOperation("修改用户信息")
     @PostMapping("/edit")
-    public Response edit(UserInfoDTO request) {
-
+    public Response edit(@RequestBody @Valid UserInfoDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         String key = RedisKeys.UserKeys.SHOP_MODIFY_USER_INFO + request.getUserId();
 
         if (!StringUtils.isEmpty(redisService.get(key))) {
@@ -123,25 +121,47 @@ public class UserController {
      * 注册
      */
     @ApiOperation("注册")
-    @RequestMapping(value = "/user/subscribe", method = RequestMethod.POST)
-    public Response subscribe(UserSubscribeDTO request) {
+    @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
+    public Response subscribe(@RequestBody @Valid UserSubscribeDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         String key = RedisKeys.UserKeys.SHOP_REGISTER + request.getPhone();
+
+        Response verifySubscribeResp = verifySubscribe(key, request.getPhone(), request.getVerifyCode());
+
+        if (ResponseStatus.Code.SUCCESS != verifySubscribeResp.getCode()) {
+            return verifySubscribeResp;
+        }
+
+        UserSubscribeDTO dto = new UserSubscribeDTO();
+        dto.setVerifyCode(request.getVerifyCode());
+        dto.setPhone(request.getPhone());
+
+        redisService.set(key, request.getPhone(), 30);
+
+        return userSubscribeService.doService(dto);
+    }
+
+    /**
+     * 注册验证
+     *
+     * @param key        重复注册的redis key
+     * @param phone      手机号码
+     * @param verifyCode 手机短信验证码
+     */
+    private Response verifySubscribe(String key, String phone, String verifyCode) {
 
         if (null != redisService.get(key)) {
             return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.REPEAT_SUBMIT);
 
         }
 
-        redisService.set(key, request.getPhone(), 30);
-
-
-        if (StringUtils.isEmpty(request.getVerifyCode())) {
+        if (StringUtils.isEmpty(verifyCode)) {
 
             return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.SMS_CODE_NOT_EMPTY);
         }
 
         // 验证短信验证码
-        String smsKey = RedisKeys.UserKeys.SHOP_REGISTER_SMS + request.getPhone();
+        String smsKey = RedisKeys.UserKeys.SHOP_REGISTER_SMS + phone;
 
         String smsCode = redisService.get(smsKey);
 
@@ -150,16 +170,11 @@ public class UserController {
 
         }
 
-        if (!smsCode.equalsIgnoreCase(request.getVerifyCode())) {
+        if (!smsCode.equalsIgnoreCase(verifyCode)) {
             return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.SMS_CODE_ERROR);
         }
 
-        UserSubscribeDTO dto = new UserSubscribeDTO();
-        dto.setGraphicCode(request.getGraphicCode());
-        dto.setVerifyCode(request.getVerifyCode());
-        dto.setPhone(request.getPhone());
-
-        return userSubscribeService.doService(dto);
+        return new Response();
     }
 
     /**
@@ -188,7 +203,9 @@ public class UserController {
      */
     @ApiOperation("忘记密码")
     @RequestMapping(value = "/forget/password", method = RequestMethod.POST)
-    public Response forgetPassword(ForgetPasswordDTO request) {
+    public Response forgetPassword(@RequestBody @Valid ForgetPasswordDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
+
         if (StringUtils.isEmpty(request.getPhone())) {
             return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
@@ -215,7 +232,8 @@ public class UserController {
 
     @ApiOperation("站内信列表")
     @RequestMapping(value = "/station/message", method = RequestMethod.POST)
-    public Response message(AppRequest request) {
+    public Response message(@RequestBody @Valid AppRequest request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         StationMessageDTO dto = new StationMessageDTO();
         dto.setId(request.getUserId());
         dto.setEvent(request.getEvent());

@@ -1,6 +1,7 @@
 package quick.pager.shop.dto;
 
 import java.util.List;
+import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.dto.ManageDTO;
@@ -13,10 +14,12 @@ public class BannerDTO extends ManageDTO {
     /**
      * 活动标题
      */
+    @NotBlank(message = "活动标题不能为空")
     private String title;
     /**
      * banner在首页展示的图片地址
      */
+    @NotBlank(message = "banner图片地址不能为空")
     private String bannerUrl;
     /**
      * banner在首页点击的地址
@@ -25,6 +28,7 @@ public class BannerDTO extends ManageDTO {
     /**
      * banner 类型
      */
+    @NotBlank(message = "banner 类型不能为空")
     private String bannerType;
     /**
      * 分享地址

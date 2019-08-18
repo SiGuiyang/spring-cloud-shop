@@ -7,7 +7,6 @@ import quick.pager.shop.response.Response;
  *
  * @author siguiyang
  */
-@FunctionalInterface
 public interface IHandler<T> {
 
     /**
@@ -17,4 +16,5 @@ public interface IHandler<T> {
      * @return 数据结果返回
      */
     Response<T> doHandler(Object obj);
+
 }

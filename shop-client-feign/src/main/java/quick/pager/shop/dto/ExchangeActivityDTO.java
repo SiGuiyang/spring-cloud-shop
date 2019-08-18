@@ -1,6 +1,7 @@
 package quick.pager.shop.dto;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.dto.ManageDTO;
@@ -31,6 +32,7 @@ public class ExchangeActivityDTO extends ManageDTO {
     /**
      * 活动名称
      */
+    @NotNull(message = "活动名称不能为空")
     private String activityName;
     /**
      * 规则名称
@@ -39,6 +41,7 @@ public class ExchangeActivityDTO extends ManageDTO {
     /**
      * 活动图片
      */
+    @NotNull(message = "活动图片不能为空")
     private String activityImg;
     /**
      * 更新操作人

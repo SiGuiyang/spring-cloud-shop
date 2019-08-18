@@ -10,6 +10,7 @@ import quick.pager.shop.model.Model;
 public class DiscountCouponTemplate extends Model {
 
     private static final long serialVersionUID = 1608002644741787377L;
+
     private BigDecimal orderAmount;
 
     private BigDecimal couponAmount;

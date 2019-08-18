@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
@@ -28,17 +30,18 @@ import quick.pager.shop.UserApplication;
 import quick.pager.shop.handler.TestHandler01;
 import quick.pager.shop.handler.TestHandler02;
 import quick.pager.shop.mapper.SmsTemplateMapper;
-import quick.pager.shop.mq.MqService;
+import quick.pager.shop.mq.RabbitService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserApplication.class)
+@Profile("dev")
 public class UserApplicationTests {
 
     @Autowired
     private RedisService redisService;
 
     @Autowired
-    private MqService mqService;
+    private RabbitService rabbitService;
     @Autowired
     private SmsTemplateMapper smsTemplateMapper;
 
@@ -63,6 +66,23 @@ public class UserApplicationTests {
         System.out.println(redisService.getValueOps(String.valueOf(user.getId())));
     }
 
+
+    @Test
+    public void testRedisLeftPush() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(12);
+        list.add(13);
+        list.add(14);
+        list.add(15);
+
+        redisService.setListOps("hello4",list);
+
+
+        List hello4 = redisService.getListOps("hello4");
+        System.out.println(hello4);
+    }
+
     @Test
     public void testMq() throws IOException {
 
@@ -72,9 +92,9 @@ public class UserApplicationTests {
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone("13818471341");
         smsdto.setContent(content);
-        mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
+        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
 
-        mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.TOPIC_TEST).payLoad("Test.Error").build());
+        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.TOPIC_TEST).payLoad("Test.Error").build());
         System.in.read();
     }
 
@@ -135,8 +155,8 @@ public class UserApplicationTests {
     }
 
     @Test
-    public void testRedis(){
-        redisService.set("abc","1",30);
+    public void testRedis() {
+        redisService.set("abc", "1", 30);
         Serializable abc = redisService.get("abc");
 
         System.out.println(abc);

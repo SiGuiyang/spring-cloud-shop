@@ -4,16 +4,23 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RedisKeys;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.SmsDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.RedisService;
+import quick.pager.shop.service.SMSCodeService;
 import quick.pager.shop.utils.VerifyCodeUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,14 +38,19 @@ public class UserCodeController {
 
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private SMSCodeService smsCodeService;
 
     /**
      * 发送短信验证码
      */
     @RequestMapping(value = "/code/sendSMS", method = RequestMethod.POST)
     @ApiOperation("发送短信验证码")
-    public Response sendSMS(SmsDTO dto) {
-        return null;
+    public Response sendSMS(@RequestBody SmsDTO dto) {
+
+
+
+        return smsCodeService.doService(dto);
     }
 
 

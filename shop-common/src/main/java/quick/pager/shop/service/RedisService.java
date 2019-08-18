@@ -2,6 +2,7 @@ package quick.pager.shop.service;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -92,7 +93,7 @@ public class RedisService {
      * @param data 缓存数组数据
      */
     public void setListOps(String key, ArrayList<?> data) {
-        shopRedisTemplate.opsForList().leftPush(key, data);
+        shopRedisTemplate.opsForList().leftPushAll(key, data);
     }
 
     /**

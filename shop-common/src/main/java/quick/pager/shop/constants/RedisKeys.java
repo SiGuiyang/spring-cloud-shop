@@ -38,8 +38,12 @@ public interface RedisKeys {
         String SHOP_SYSTEM_CONFIG = "shop_system_config:";
         // 用户短信模板配置
         String SHOP_SMS_TEMPLATE = "shop_sms_template:";
+        // 短信验证码模板code
+        String SHOP_SMS_TEMPLATE_CODE = "shop_sms_template_code";
         // 图形验证码
-        String SHOP_GRAPHICS_CODE = "SHP_graphics_code_";
+        String SHOP_GRAPHICS_CODE = "shop_graphics_code_";
+        // 短信验证码
+        String SHOP_SMS_VERIFY_CODE = "shop_sms_verify_code:";
         // 用户下单
         String SHOP_ORDER_ = "shop_order_";
     }

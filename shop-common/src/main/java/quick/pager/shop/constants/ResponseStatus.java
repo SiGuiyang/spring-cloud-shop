@@ -43,6 +43,8 @@ public interface ResponseStatus {
     String USER_PHONE_REGISTERED = "此号码已注册";
 
     String USER_GRAPHIC_CODE_EMPTY = "图形验证码不能为空";
+    String USER_GRAPHIC_CODE_EXPIRE = "图形验证码已过期";
+    String USER_GRAPHIC_CODE_ERROR = "图形验证码不正确";
 
     String SMS_CODE_NOT_EMPTY = "短信验证码不能为空";
 

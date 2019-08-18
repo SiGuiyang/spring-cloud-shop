@@ -20,7 +20,7 @@ import quick.pager.shop.model.SmsTemplate;
 import quick.pager.shop.dto.ForgetPasswordDTO;
 import quick.pager.shop.mapper.SmsTemplateMapper;
 import quick.pager.shop.mapper.UserMapper;
-import quick.pager.shop.mq.MqService;
+import quick.pager.shop.mq.RabbitService;
 
 /**
  * 忘记密码服务
@@ -35,7 +35,7 @@ public class UserForgetPasswordService implements IService {
     @Autowired
     private SmsTemplateMapper smsTemplateMapper;
     @Autowired
-    private MqService mqService;
+    private RabbitService rabbitService;
 
     @Override
     public Response doService(BaseDTO dto) {
@@ -61,7 +61,7 @@ public class UserForgetPasswordService implements IService {
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone(user.getPhone());
         smsdto.setContent(content);
-        mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
+        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
 
         return new Response<>();
     }

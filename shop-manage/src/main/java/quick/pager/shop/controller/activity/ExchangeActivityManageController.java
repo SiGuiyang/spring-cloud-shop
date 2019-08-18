@@ -1,7 +1,9 @@
 package quick.pager.shop.controller.activity;
 
+import javax.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.ExchangeActivityDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.activity.ExchangeActivityService;
@@ -51,7 +55,8 @@ public class ExchangeActivityManageController {
      */
     @PostMapping(value = "/exchangeActivity")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response addExchangeActivitys(ExchangeActivityDTO dto) {
+    public Response addExchangeActivitys(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return exchangeActivityService.addExchangeActivitys(dto);
     }
 
@@ -60,7 +65,8 @@ public class ExchangeActivityManageController {
      */
     @PutMapping(value = "/exchangeActivity")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response modifyExchangeActivitys(ExchangeActivityDTO dto) {
+    public Response modifyExchangeActivitys(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return exchangeActivityService.modifyExchangeActivitys(dto);
     }
 
@@ -70,7 +76,8 @@ public class ExchangeActivityManageController {
      */
     @PostMapping(value = "/exchange/rule/list")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response getExchangeActivityRules(ExchangeActivityDTO dto) {
+    public Response getExchangeActivityRules(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         dto.setEvent(Constants.Event.LIST);
         return exchangeActivityService.getExchangeActivityRules(dto);
     }
@@ -80,7 +87,8 @@ public class ExchangeActivityManageController {
      */
     @PostMapping(value = "/exchange/rule")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response addExchangeActivityRules(ExchangeActivityDTO dto) {
+    public Response addExchangeActivityRules(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return exchangeActivityService.addExchangeActivityRules(dto);
     }
 
@@ -89,7 +97,8 @@ public class ExchangeActivityManageController {
      */
     @PutMapping(value = "/exchange/rule")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response modifyExchangeActivityRules(ExchangeActivityDTO dto) {
+    public Response modifyExchangeActivityRules(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return exchangeActivityService.modifyExchangeActivityRules(dto);
     }
 
@@ -98,7 +107,8 @@ public class ExchangeActivityManageController {
      */
     @PutMapping("/exchange/goods/rule")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response goodsRule(ExchangeActivityDTO dto) {
+    public Response goodsRule(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return exchangeActivityService.goodsRule(dto);
     }
 
@@ -108,15 +118,16 @@ public class ExchangeActivityManageController {
      * @param goodsId 商品Id
      */
     @GetMapping("/exchange/goods/rule/{activityId}/{goodsId}")
-    public Response goodsRuleInfo(@PathVariable("activityId") Long activityId,@PathVariable("goodsId") Long goodsId) {
-        return exchangeActivityService.goodsRuleInfo(activityId,goodsId);
+    public Response goodsRuleInfo(@PathVariable("activityId") Long activityId, @PathVariable("goodsId") Long goodsId) {
+        return exchangeActivityService.goodsRuleInfo(activityId, goodsId);
     }
 
     /**
      * 购买记录
      */
     @PostMapping("/exchange/purchase/history")
-    public Response purchaseHistory(ExchangeActivityDTO dto) {
+    public Response purchaseHistory(@Valid ExchangeActivityDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return exchangeActivityService.purchaseHistory(dto);
     }
 

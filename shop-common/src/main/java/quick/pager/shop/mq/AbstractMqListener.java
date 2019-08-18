@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
  * 包含实现消息确认，以及业务处理异常场景
  *
  * @param <T>
+ * @author siguiyang
  */
 @Slf4j
 public abstract class AbstractMqListener<T> implements IListener<T> {
@@ -24,8 +25,8 @@ public abstract class AbstractMqListener<T> implements IListener<T> {
 
         if (!this.doProcess(obj, message, channel)) {
             log.error("消息确认失败未消费");
-            // 处理业务发生异常
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
+            // 处理业务发生异常，不消费消息，可重新再次消费消息
+            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
         }
     }
 
@@ -37,7 +38,8 @@ public abstract class AbstractMqListener<T> implements IListener<T> {
         } catch (IOException e) {
             log.error("消息确认失败未消费");
             try {
-                channel.basicNack(deliveryTag, false, false);
+                // 重新接收消息，不消费此消息
+                channel.basicNack(deliveryTag, false, true);
             } catch (IOException e1) {
                 log.error("重新发送消息失败。。。");
             }

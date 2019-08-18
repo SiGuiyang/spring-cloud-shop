@@ -3,13 +3,17 @@ package quick.pager.shop.controller.common;
 import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.GeneratorDTO;
 import quick.pager.shop.model.Columns;
 import quick.pager.shop.response.Response;
@@ -31,7 +35,8 @@ public class GeneratorController {
 
     @ApiOperation("所有表")
     @PostMapping("/generator/tables")
-    public Response tables(GeneratorDTO dto) {
+    public Response tables(@Valid GeneratorDTO dto, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
 
         return generatorService.tables(dto);
     }
@@ -40,7 +45,7 @@ public class GeneratorController {
     @GetMapping("generator/tables")
     public Response tables(@RequestParam("tableSchema") String tableSchema, @RequestParam("tableName") String tableName) {
 
-        return generatorService.tables(tableSchema,tableName);
+        return generatorService.tables(tableSchema, tableName);
     }
 
 

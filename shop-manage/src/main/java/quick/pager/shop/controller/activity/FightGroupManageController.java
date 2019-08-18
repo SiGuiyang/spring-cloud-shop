@@ -1,12 +1,16 @@
 package quick.pager.shop.controller.activity;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.client.ActivityClient;
 import quick.pager.shop.dto.FightGroupDTO;
@@ -36,7 +40,8 @@ public class FightGroupManageController {
      * 拼团活动新增
      */
     @PostMapping("/activity/fightGroup/modify")
-    public Response addFightGroupActivity(FightGroupDTO request) {
+    public Response addFightGroupActivity(@Valid FightGroupDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return fightGroupService.addFightGroupActivity(request);
     }
 
@@ -44,7 +49,8 @@ public class FightGroupManageController {
      * 拼团活动修改
      */
     @PutMapping("/activity/fightGroup/modify")
-    public Response modifyFightGroupActivity(FightGroupDTO request) {
+    public Response modifyFightGroupActivity(@Valid FightGroupDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return fightGroupService.modifyFightGroupActivity(request);
     }
 
@@ -60,7 +66,8 @@ public class FightGroupManageController {
      * 活动规则
      */
     @PostMapping("/activity/fightGroup/rule/modify")
-    public Response rule(FightGroupDTO request) {
+    public Response rule(@Valid FightGroupDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return fightGroupService.modifyFightGroupRule(request);
     }
 
@@ -76,7 +83,8 @@ public class FightGroupManageController {
      * 设置活动商品
      */
     @PutMapping("/activity/fightGroup/goods/modify")
-    public Response setFightGroupGoods(FightGroupDTO request) {
+    public Response setFightGroupGoods(@Valid FightGroupDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return fightGroupService.setFightGroupGoods(request);
     }
 
@@ -84,7 +92,8 @@ public class FightGroupManageController {
      * 活动成团记录成员
      */
     @PostMapping("/activity/fightGroup/members")
-    public Response fightGroupRecord(FightGroupDTO request) {
+    public Response fightGroupRecord(@Valid FightGroupDTO request, BindingResult bindingResult) {
+        BindingResultUtils.getFieldErrorMessage(bindingResult);
         return fightGroupService.fightGroupRecord(request);
     }
 }

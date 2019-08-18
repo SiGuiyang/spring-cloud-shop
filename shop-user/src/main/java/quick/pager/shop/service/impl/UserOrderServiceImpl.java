@@ -23,7 +23,7 @@ import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.order.SellerOrder;
 import quick.pager.shop.model.order.UserOrder;
 import quick.pager.shop.mq.MqMessage;
-import quick.pager.shop.mq.MqService;
+import quick.pager.shop.mq.RabbitService;
 import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.CheckOrderService;
@@ -48,7 +48,7 @@ public class UserOrderServiceImpl implements UserOrderService {
     @Autowired
     private CheckOrderService checkOrderService;
     @Autowired
-    private MqService mqService;
+    private RabbitService rabbitService;
 
 
     @Override
@@ -122,7 +122,7 @@ public class UserOrderServiceImpl implements UserOrderService {
             // 好友佣金计算，分配奖励，使用异步方式实现放在MQ处理
             InviteFriendAwardDTO inviteFriendAwardDTO = new InviteFriendAwardDTO();
             inviteFriendAwardDTO.setUserId(dto.getUserId());
-            mqService.sender(MqMessage.builder().queueName(RabbitMqKeys.TOPIC_INVITE_FRIEND_AWARD).payLoad(inviteFriendAwardDTO).build());
+            rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.TOPIC_INVITE_FRIEND_AWARD).payLoad(inviteFriendAwardDTO).build());
         } finally {
 
             redisService.del(key);

@@ -1,7 +1,6 @@
 package quick.pager.shop.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -25,10 +24,4 @@ public class GatewayConfiguration {
 
                 .build();
     }
-
-    @Bean
-    public RedisRateLimiter redisRateLimiter() {
-        return new RedisRateLimiter(1, 2);
-    }
-
 }
