@@ -44,14 +44,14 @@
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-model</artifactId>
-            <version>${shop.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-common</artifactId>
-            <version>${shop.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

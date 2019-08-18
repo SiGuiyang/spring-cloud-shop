@@ -91,7 +91,7 @@
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-client-feign</artifactId>
-            <version>${shop.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
     </dependencies>
