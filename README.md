@@ -2,7 +2,7 @@
     spring cloud 版分布式电商项目，全力打造顶级多模块，高可用，高扩展电商项目。
     目前项目使用分库设计方案，不同的模块依赖不同的数据库实例
     营销模块: pager_activity 
-    数据中心: pager_goods 
+    商品中心: pager_goods 
     订单中心: pager_order 
     数据中心: pager_shop 
     风控中心: pager-risk 
