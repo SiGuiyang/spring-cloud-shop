@@ -11,9 +11,31 @@ spring:
       discovery:
         locator:
           lower-case-service-id: true
+      routes:
+        - id: shop-auth
+          uri: lb://shop-auth
+          predicates:
+            - Path=/oauth/**
+        - id: shop-manage
+          uri: lb://shop-manage
+          predicates:
+            - Path=/admin/**
+        - id: shop-seller
+          uri: lb://shop-seller
+          predicates:
+            - Path=/seller/**
+        - id: shop-user
+          uri: lb://shop-user
+          predicates:
+            - Path=/user/app/**
+            - Path=/user/**
 
 management:
   endpoints:
     web:
       exposure:
         include: refresh,health,info
+logging:
+  level:
+    org.springframework.security: debug
+    com.alibaba.nacos: error

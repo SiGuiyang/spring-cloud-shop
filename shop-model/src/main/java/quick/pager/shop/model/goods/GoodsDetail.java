@@ -10,6 +10,12 @@ public class GoodsDetail extends Model {
     private static final long serialVersionUID = 4774603647596393848L;
 
     private Long goodsId;
+    // 描述
+    private String description;
+    // 产地
+    private String placeOrigin;
+    // 储存
+    private String storage;
     // 商品小图
     private String goodsImg;
     // 商品详情banner 图片一

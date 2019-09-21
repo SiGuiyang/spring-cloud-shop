@@ -2,7 +2,6 @@ package quick.pager.shop.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import quick.pager.shop.service.UserService;
 
-@Configuration
 @EnableWebSecurity
 @Order(6)
 public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {

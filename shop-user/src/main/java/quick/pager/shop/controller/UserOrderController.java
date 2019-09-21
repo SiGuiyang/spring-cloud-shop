@@ -1,6 +1,7 @@
 package quick.pager.shop.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ public class UserOrderController {
 
     @ApiOperation("订单气泡数")
     @PostMapping("/order/badge/{userId}")
+    @ApiImplicitParam(name = "userId", value = "用户Id", required = true, paramType = "path")
     public Response userOrderBadge(@PathVariable("userId") Long userId) {
         return null;
     }
@@ -26,7 +28,7 @@ public class UserOrderController {
     public Response userOrders() {
         return null;
     }
-    
+
     @ApiOperation("订单详情")
     @PostMapping("/orderId")
     public Response userOrderInfo(@PathVariable("orderId") Long orderId) {

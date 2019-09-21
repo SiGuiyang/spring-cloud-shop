@@ -17,11 +17,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.RabbitMqKeys;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.SmsDTO;
 import quick.pager.shop.handler.AbstractHandler;
-import quick.pager.shop.mq.MqMessage;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.RedisService;
 import quick.pager.shop.model.SmsTemplate;
@@ -30,7 +28,6 @@ import quick.pager.shop.UserApplication;
 import quick.pager.shop.handler.TestHandler01;
 import quick.pager.shop.handler.TestHandler02;
 import quick.pager.shop.mapper.SmsTemplateMapper;
-import quick.pager.shop.mq.RabbitService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserApplication.class)
@@ -39,9 +36,6 @@ public class UserApplicationTests {
 
     @Autowired
     private RedisService redisService;
-
-    @Autowired
-    private RabbitService rabbitService;
     @Autowired
     private SmsTemplateMapper smsTemplateMapper;
 
@@ -92,10 +86,6 @@ public class UserApplicationTests {
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone("13818471341");
         smsdto.setContent(content);
-        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
-
-        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.TOPIC_TEST).payLoad("Test.Error").build());
-        System.in.read();
     }
 
 

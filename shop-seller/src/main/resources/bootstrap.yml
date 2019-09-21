@@ -7,7 +7,7 @@ spring:
   cloud:
     alibaba:
       seata:
-        tx-service-group: shop_seller_tx_group
+        tx-service-group: shop_tx_group
   main:
     allow-bean-definition-overriding: true
   profiles:

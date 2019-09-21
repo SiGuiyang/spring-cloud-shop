@@ -14,6 +14,7 @@ import quick.pager.shop.constants.RabbitMqKeys;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.SmsDTO;
+import quick.pager.shop.mq.KafkaService;
 import quick.pager.shop.mq.MqMessage;
 import quick.pager.shop.response.LoginOrSubscribeResponse;
 import quick.pager.shop.response.Response;
@@ -21,7 +22,6 @@ import quick.pager.shop.model.SmsTemplate;
 import quick.pager.shop.dto.UserSubscribeDTO;
 import quick.pager.shop.mapper.SmsTemplateMapper;
 import quick.pager.shop.mapper.UserMapper;
-import quick.pager.shop.mq.RabbitService;
 
 import java.util.Date;
 
@@ -41,7 +41,7 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
     @Autowired
     private RedisService redisService;
     @Autowired
-    private RabbitService rabbitService;
+    private KafkaService kafkaService;
 
     @Override
     public Response<LoginOrSubscribeResponse> doService(BaseDTO dto) {
@@ -81,7 +81,7 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone(user.getPhone());
         smsdto.setContent(content);
-        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
+        kafkaService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
 
         return new Response<>(loginOrSubscribeResponse);
     }

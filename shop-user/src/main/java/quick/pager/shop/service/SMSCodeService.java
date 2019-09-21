@@ -10,8 +10,8 @@ import quick.pager.shop.constants.RedisKeys;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.dto.SmsDTO;
+import quick.pager.shop.mq.KafkaService;
 import quick.pager.shop.mq.MqMessage;
-import quick.pager.shop.mq.RabbitService;
 import quick.pager.shop.response.Response;
 
 /**
@@ -25,7 +25,7 @@ public class SMSCodeService implements IService {
     @Autowired
     private RedisService redisService;
     @Autowired
-    private RabbitService rabbitService;
+    private KafkaService kafkaService;
 
 
     @Override
@@ -50,7 +50,7 @@ public class SMSCodeService implements IService {
         SmsDTO smsdto = new SmsDTO();
         smsdto.setPhone(phone);
         smsdto.setContent(MessageFormat.format(content, verifySendSMSResp.getData()));
-        rabbitService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
+        kafkaService.sender(MqMessage.builder().queueName(RabbitMqKeys.SEND_SMS).payLoad(smsdto).build());
 
         return verifySendSMSResp;
     }

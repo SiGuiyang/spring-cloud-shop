@@ -69,9 +69,11 @@
         <module>shop-manage</module>
         <module>shop-model</module>
         <module>shop-order</module>
+        <module>shop-platform</module>
         <module>shop-risk</module>
         <module>shop-seller</module>
         <module>shop-task</module>
         <module>shop-user</module>
+        <module>shop-zuul</module>
     </modules>
 </project>

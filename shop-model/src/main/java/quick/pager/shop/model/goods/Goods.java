@@ -10,8 +10,10 @@ import quick.pager.shop.model.Model;
 public class Goods extends Model {
 
     private static final long serialVersionUID = 4792746346655301002L;
-
+    // 商品分类Id
     private Long gcsId;
+    // 商户Id
+    private Long sellerId;
 
     private String goodsName;
 
@@ -24,12 +26,6 @@ public class Goods extends Model {
     private BigDecimal goodsAmount;
 
     private BigDecimal goodsDiscountAmount;
-
-    private String description;
-    // 产地
-    private String placeOrigin;
-    // 储存
-    private String storage;
 
     private Integer integral;
 
