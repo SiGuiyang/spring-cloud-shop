@@ -1,5 +1,6 @@
 package quick.pager.shop.dto;
 
+import java.util.Date;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,24 +19,29 @@ class DTO implements Serializable {
      * 操作类型事件
      */
     private String event;
+    /**
+     * 创建人
+     */
+    private String createUser;
+    /**
+     * 更新操作人
+     */
+    private String updateUser;
+    /**
+     * 创建时间
+     */
 
+    private Date createTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
     /**
      * 启用标志
      */
     private Boolean deleteStatus;
     /**
-     * 操作人
-     */
-    private String createUser;
-    /**
      * 访问token
      */
     private String access_token;
-
-    public DTO() {
-    }
-
-    public DTO(Long id) {
-        this.id = id;
-    }
 }

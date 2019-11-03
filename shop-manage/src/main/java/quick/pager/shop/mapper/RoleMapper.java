@@ -1,17 +1,13 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.Role;
+
 @Mapper
-public interface RoleMapper {
-    int insertSelective(Role record);
-
-    Role selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Role record);
-
+public interface RoleMapper extends BaseMapper<Role> {
     /**
      * 根据系统用户ID查询角色
      */

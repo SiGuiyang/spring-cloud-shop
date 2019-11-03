@@ -14,12 +14,13 @@ public class ManageDTO extends BaseDTO {
     private String username;
 
     /**
-     * 起始时间
+     * 操作人
      */
-    private String beginTime;
+    private String createUser;
+
     /**
-     * 结束时间
+     * 更新人
      */
-    private String endTime;
+    private String updateUser;
 
 }

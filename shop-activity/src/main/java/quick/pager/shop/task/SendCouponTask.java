@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.concurrent.RecursiveTask;
 import lombok.extern.slf4j.Slf4j;
 import quick.pager.shop.mapper.DiscountCouponMapper;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.activity.DiscountCouponTemplate;
+import quick.pager.shop.utils.DateUtils;
 
 @Slf4j
 public class SendCouponTask extends RecursiveTask<List<String>> {
@@ -44,18 +45,12 @@ public class SendCouponTask extends RecursiveTask<List<String>> {
 
             users.forEach(v -> {
                 DiscountCoupon discountCoupon = new DiscountCoupon();
-                discountCoupon.setCouponName(discountCouponTemplate.getTemplateName());
-                discountCoupon.setBeginTime(new Date());
-                discountCoupon.setEndTime(DateUtil.offsetDay(new Date(), 3));
-                discountCoupon.setCouponAmount(discountCouponTemplate.getCouponAmount());
-                discountCoupon.setOrderAmount(discountCouponTemplate.getOrderAmount());
-                discountCoupon.setDiscountType(discountCouponTemplate.getTemplateType());
-                discountCoupon.setDiscountStrength(discountCouponTemplate.getDiscountStrength());
                 discountCoupon.setUserId(v.getId());
-                discountCoupon.setCreateTime(new Date());
-                discountCoupon.setDeleteStatus(false);
-                discountCoupon.setDescription(discountCouponTemplate.getDescription());
                 discountCoupon.setTemplateId(discountCouponTemplate.getId());
+                discountCoupon.setUsed(Boolean.FALSE);
+                discountCoupon.setCreateTime(DateUtils.now());
+                discountCoupon.setUpdateTime(DateUtils.now());
+                discountCoupon.setDeleteStatus(Boolean.FALSE);
 
                 discountCoupons.add(discountCoupon);
 

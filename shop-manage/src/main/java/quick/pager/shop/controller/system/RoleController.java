@@ -30,7 +30,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("获取系统角色")
     @PostMapping("/role/list")
-    public Response systemRole(RoleDTO dto) {
+    public Response systemRole(@RequestBody RoleDTO dto) {
         dto.setEvent(Constants.Event.LIST);
         return roleService.doService(dto);
     }
@@ -38,7 +38,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("新增系统角色")
     @PostMapping("/role")
-    public Response addSystemRole(@Valid RoleDTO dto, BindingResult bindingResult) {
+    public Response addSystemRole(@Valid @RequestBody RoleDTO dto, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
         dto.setEvent(Constants.Event.ADD);
         return roleService.doService(dto);
@@ -47,7 +47,7 @@ public class RoleController {
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
     @ApiOperation("修改系统角色")
     @PutMapping("/role")
-    public Response modifySystemRole(@Valid RoleDTO dto, BindingResult bindingResult) {
+    public Response modifySystemRole(@Valid @RequestBody RoleDTO dto, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
         dto.setEvent(Constants.Event.MODIFY);
         return roleService.doService(dto);

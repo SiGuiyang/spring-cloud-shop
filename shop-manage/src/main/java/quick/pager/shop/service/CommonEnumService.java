@@ -1,10 +1,9 @@
 package quick.pager.shop.service;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.model.SystemConfig;
@@ -18,12 +17,11 @@ import quick.pager.shop.utils.SystemConfigMap;
  * @author siguiyang
  */
 @Service
-@Slf4j
 public class CommonEnumService {
 
     public Response<Map<String, List<EnumResponse>>> getCommonEnumInfo() {
 
-        Map<String, List<EnumResponse>> result = Maps.newConcurrentMap();
+        Map<String, List<EnumResponse>> result = Maps.newHashMap();
         result.putIfAbsent(Constants.Type.COUPON_TYPE, getCouponType());
         result.putIfAbsent(Constants.Type.GOODS_TYPE, getGoodsType());
         result.putIfAbsent(Constants.Type.ORDER_TYPE, getOrderType());
@@ -83,15 +81,9 @@ public class CommonEnumService {
      * SystemConfig configValue 配置使用String型
      */
     private List<EnumResponse> getCommonString(List<SystemConfig> systemConfigs) {
-        List<EnumResponse> configs = Lists.newArrayList();
-
-        for (SystemConfig config : systemConfigs) {
-            EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setKey(config.getConfigValue());
-            orderStatusResponse.setValue(config.getDescription());
-            configs.add(orderStatusResponse);
-        }
-        return configs;
+        return systemConfigs.stream()
+                .map(config -> new EnumResponse(config.getConfigValue(), config.getDescription()))
+                .collect(Collectors.toList());
     }
 
 
@@ -99,14 +91,8 @@ public class CommonEnumService {
      * SystemConfig configValue 配置使用int型
      */
     private List<EnumResponse> getCommonInteger(List<SystemConfig> systemConfigs) {
-        List<EnumResponse> orderTypeResponses = Lists.newArrayList();
-
-        for (SystemConfig config : systemConfigs) {
-            EnumResponse orderStatusResponse = new EnumResponse();
-            orderStatusResponse.setType(Integer.parseInt(config.getConfigValue()));
-            orderStatusResponse.setValue(config.getDescription());
-            orderTypeResponses.add(orderStatusResponse);
-        }
-        return orderTypeResponses;
+        return systemConfigs.stream()
+                .map(config -> new EnumResponse(Integer.parseInt(config.getConfigValue()), config.getDescription()))
+                .collect(Collectors.toList());
     }
 }

@@ -69,8 +69,8 @@ public class SysUserInfoService implements IService<SysUserResponse> {
         // 整合成父子结构
         List<Menu> routers = recursivePermission(Lists.newArrayList(), topMenu, menus, permissions);
 
-        sysUserResponse.setSysCode(sysUser.getUsername());
-        sysUserResponse.setSysName(sysUser.getSysName());
+        sysUserResponse.setPhone(sysUser.getPhone());
+        sysUserResponse.setUsername(sysUser.getUsername());
         sysUserResponse.setRouters(routers);
         sysUserResponse.setPermissions(permissions);
 

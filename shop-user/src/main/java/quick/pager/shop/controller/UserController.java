@@ -20,7 +20,7 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.request.AppRequest;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.RedisService;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 import quick.pager.shop.dto.ForgetPasswordDTO;
 import quick.pager.shop.dto.StationMessageDTO;
 import quick.pager.shop.dto.UserLoginDTO;

@@ -1,12 +1,12 @@
 package quick.pager.shop.service.system;
 
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.Date;
-import java.util.List;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
@@ -16,6 +16,7 @@ import quick.pager.shop.dto.SystemConfigDTO;
 import quick.pager.shop.mapper.SystemConfigMapper;
 import quick.pager.shop.model.SystemConfig;
 import quick.pager.shop.utils.DateUtils;
+import quick.pager.shop.utils.PrincipalUtils;
 
 /**
  * 系统配置服务
@@ -23,7 +24,6 @@ import quick.pager.shop.utils.DateUtils;
  * @author siguiyang
  */
 @Service
-@Slf4j
 public class SystemConfigService implements IService {
 
     @Autowired
@@ -61,7 +61,7 @@ public class SystemConfigService implements IService {
         SystemConfig config = new SystemConfig();
         config.setId(id);
         config.setDeleteStatus(Boolean.TRUE);
-        systemConfigMapper.updateByPrimaryKeySelective(config);
+        systemConfigMapper.updateById(config);
         return new Response();
     }
 
@@ -70,11 +70,16 @@ public class SystemConfigService implements IService {
      */
     private Response getSystemConfigList(SystemConfigDTO systemConfigDTO) {
 
-        PageHelper.startPage(systemConfigDTO.getPage(), systemConfigDTO.getPageSize());
+        Page<SystemConfig> page = new Page<>(systemConfigDTO.getPage(), systemConfigDTO.getPageSize());
 
-        List<SystemConfig> systemConfigs = systemConfigMapper.selectSystemConfig(systemConfigDTO.getConfigName(),
-                systemConfigDTO.getModule());
-        return Response.toResponse(systemConfigs);
+        QueryWrapper<SystemConfig> queryWrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(systemConfigDTO.getConfigName())) {
+            queryWrapper.likeRight("config_name", systemConfigDTO.getConfigName());
+        }
+        if (!StringUtils.isEmpty(systemConfigDTO.getModule())) {
+            queryWrapper.eq("module", systemConfigDTO.getModule());
+        }
+        return Response.toResponse(systemConfigMapper.selectPage(page, queryWrapper));
     }
 
     /**
@@ -82,17 +87,19 @@ public class SystemConfigService implements IService {
      */
     private void modifySystemConfig(SystemConfigDTO dto) {
         SystemConfig config = new SystemConfig();
-        BeanUtils.copyProperties(dto, config);
+        BeanCopier beanCopier = BeanCopier.create(SystemConfigDTO.class, SystemConfig.class, false);
+        beanCopier.copy(dto, config, null);
 
+        Date date = DateUtils.now();
         if (Constants.Event.ADD.equals(dto.getEvent())) {
-            Date date = DateUtils.now();
             config.setCreateTime(date);
             config.setUpdateTime(date);
-            config.setDeleteStatus(false);
-            systemConfigMapper.insertSelective(config);
+            config.setDeleteStatus(Boolean.FALSE);
+            systemConfigMapper.insert(config);
         } else {
-            config.setUpdateTime(DateUtils.now());
-            systemConfigMapper.updateByPrimaryKeySelective(config);
+            config.setUpdateUser(PrincipalUtils.getPrincipal().getName());
+            config.setUpdateTime(date);
+            systemConfigMapper.updateById(config);
         }
     }
 

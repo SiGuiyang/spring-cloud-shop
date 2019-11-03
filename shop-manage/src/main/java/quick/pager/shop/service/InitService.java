@@ -1,6 +1,6 @@
 package quick.pager.shop.service;
 
-import com.google.common.collect.Lists;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,8 +52,10 @@ public class InitService {
 
     private void initConfig() {
         log.info("初始化系统配置");
+        SystemConfig systemConfig = new SystemConfig();
+        systemConfig.setDeleteStatus(Boolean.FALSE);
         // 查询所有的系统配置
-        List<SystemConfig> systemConfigs = systemConfigMapper.selectSystemConfig(null, null);
+        List<SystemConfig> systemConfigs = systemConfigMapper.selectList(new QueryWrapper<>(systemConfig));
 
         Map<String, List<SystemConfig>> map = systemConfigs.stream().collect(Collectors.groupingBy(SystemConfig::getConfigType));
         SystemConfigMap.putAllSystemConfig(map);

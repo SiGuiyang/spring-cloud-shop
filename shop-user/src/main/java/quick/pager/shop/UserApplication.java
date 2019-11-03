@@ -1,5 +1,6 @@
 package quick.pager.shop;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,7 @@ import quick.pager.shop.mq.MqMessage;
 @SpringCloudApplication
 @EnableFeignClients
 @EnableAspectJAutoProxy(proxyTargetClass = true)
+@MapperScan("quick.pager.shop.mapper")
 public class UserApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

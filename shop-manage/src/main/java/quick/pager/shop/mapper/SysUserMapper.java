@@ -1,25 +1,21 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.SysUser;
+
 @Mapper
-public interface SysUserMapper {
-
-    int insertSelective(SysUser record);
-
-    SysUser selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(SysUser record);
+public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 根据用户名查询系统登陆用户
      *
-     * @param username
+     * @param phone
      * @return
      */
-    SysUser selectSysUserByUsername(@Param("username") String username);
+    SysUser selectSysUserByUsername(@Param("phone") String phone);
 
 
     /**

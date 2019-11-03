@@ -1,17 +1,13 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.SystemConfig;
+
 @Mapper
-public interface SystemConfigMapper {
-
-    int insertSelective(SystemConfig record);
-
-    SystemConfig selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(SystemConfig record);
+public interface SystemConfigMapper extends BaseMapper<SystemConfig> {
 
     /**
      * 配置列表

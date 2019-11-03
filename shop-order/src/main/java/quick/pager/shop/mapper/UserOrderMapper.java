@@ -1,18 +1,12 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.order.UserOrder;
 
-@Mapper
-public interface UserOrderMapper {
+public interface UserOrderMapper extends BaseMapper<UserOrder> {
 
-    int insertSelective(UserOrder record);
-
-    UserOrder selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(UserOrder record);
 
     /**
      * 查询用户订单列表

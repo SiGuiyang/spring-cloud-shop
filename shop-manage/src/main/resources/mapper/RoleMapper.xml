@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.model.Role">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="delete_status" jdbcType="BIT" property="deleteStatus"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, role_name, role_code, create_user, create_time, update_time, delete_status
+    </sql>
+
+    <select id="selectRoleBySysUserId" resultMap="BaseResultMap">
+        select
+          r.id,
+          r.role_name,
+          r.role_code,
+          r.create_user,
+          r.create_time,
+          r.update_time,
+          r.delete_status
+        from t_role r left join t_sys_role sr on r.id = sr.role_id
+        where sr.sys_user_id = #{sysUserId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectRoles" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        <where>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR}
+            </if>
+            <if test="deleteStatus != null">
+                and delete_status = #{deleteStatus,jdbcType=BIT}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+</mapper>

@@ -1,19 +1,13 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.Menu;
+
 @Mapper
-public interface MenuMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insertSelective(Menu record);
-
-    Menu selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Menu record);
-
+public interface MenuMapper extends BaseMapper<Menu> {
 
     /**
      * 查询最顶级的菜单
@@ -48,7 +42,7 @@ public interface MenuMapper {
      * @param roleId 角色Id
      * @param menuId 菜单Id
      */
-    void deleteRoleMenu(@Param("roleId") Long roleId, @Param("menuId") Long menuId);
+    int deleteRoleMenu(@Param("roleId") Long roleId, @Param("menuId") Long menuId);
 
     /**
      * 插入 t_role_menu

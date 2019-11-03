@@ -41,7 +41,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
@@ -53,28 +52,21 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.29</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -101,12 +93,32 @@
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
         <dependency>
@@ -117,52 +129,11 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
         </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.seata</groupId>
-                    <artifactId>seata-spring</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.ctrip.framework.apollo</groupId>
-                    <artifactId>apollo-client</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.ctrip.framework.apollo</groupId>
-                    <artifactId>apollo-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.ecwid.consul</groupId>
-                    <artifactId>consul-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-spring</artifactId>
-            <version>${seata.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>cglib</groupId>
-                    <artifactId>cglib</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>fastjson</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -188,32 +159,9 @@
             <artifactId>shop-client-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
-        </dependency>
-
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -238,76 +186,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>src/main/resources/public</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>copy Vue.js frontend content</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>src/main/resources/public</outputDirectory>
-                            <overwrite>true</overwrite>
-                            <resources>
-                                <resource>
-                                    <directory>${project.parent.basedir}/vue-shop-admin/dist</directory>
-                                    <includes>
-                                        <include>static/</include>
-                                        <include>index.html</include>
-                                        <include>favicon.ico</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.mybatis.generator</groupId>-->
-            <!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
-            <!--<version>1.3.5</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>Generate MyBatis Artifacts</id>-->
-            <!--<goals>-->
-            <!--<goal>generate</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>mysql</groupId>-->
-            <!--<artifactId>mysql-connector-java</artifactId>-->
-            <!--<version>5.1.46</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--<configuration>-->
-            <!--&lt;!&ndash; 打印执行过程 &ndash;&gt;-->
-            <!--<verbose>true</verbose>-->
-            <!--&lt;!&ndash; 允许覆盖生成的文件 &ndash;&gt;-->
-            <!--<overwrite>true</overwrite>-->
-            <!--&lt;!&ndash; 配置文件路径 &ndash;&gt;-->
-            <!--<configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 

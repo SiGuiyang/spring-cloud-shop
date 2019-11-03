@@ -1,8 +1,23 @@
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.apache.commons.beanutils.ConvertUtils;
 import org.junit.Test;
 import quick.pager.shop.model.SystemConfig;
 
 public class ManageApplicationNoSpringTests {
+
+    @Test
+    public void testConvert() {
+
+//        List<Long> collect = Stream.of().collect(Collectors.toList());
+        List<Long> collect = Stream.of((Long[]) ConvertUtils.convert("32323,8888,999".split(","), Long.class)).collect(Collectors.toList());
+
+        System.out.println(collect);
+    }
 
     @Test
     public void testLong() {
@@ -15,6 +30,8 @@ public class ManageApplicationNoSpringTests {
         quickSort(arr, 0, arr.length - 1);
 
         System.out.println("快速排序结果：" + Arrays.toString(arr));
+
+        System.out.println(System.getProperty("user.name"));
 
     }
 

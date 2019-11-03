@@ -1,5 +1,6 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import quick.pager.shop.model.activity.ExchangeActivityGoods;
 
@@ -7,7 +8,7 @@ import quick.pager.shop.model.activity.ExchangeActivityGoods;
 * @author siguiyang
 */
 @Mapper
-public interface ExchangeActivityGoodsMapper {
+public interface ExchangeActivityGoodsMapper extends BaseMapper<ExchangeActivityGoods> {
 
     int insertSelective(ExchangeActivityGoods record);
 

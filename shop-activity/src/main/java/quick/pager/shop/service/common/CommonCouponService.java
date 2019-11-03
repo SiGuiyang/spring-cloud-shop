@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.client.UserClient;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.client.user.UserClient;
+import quick.pager.shop.dto.user.UserInfoDTO;
 import quick.pager.shop.response.CouponResponse;
 import quick.pager.shop.model.activity.DiscountCoupon;
 

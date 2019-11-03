@@ -17,6 +17,7 @@ import quick.pager.shop.service.system.SysUserClientService;
 
 /**
  * 非需权限接口
+ *
  * @author siguiyang
  */
 @RestController
@@ -31,10 +32,10 @@ public class LoginController {
 
     @ApiOperation("登陆")
     @PostMapping("/permit/login")
-    public Response login(@RequestParam String username, @RequestParam String password) {
+    public Response login(@RequestParam("phone") String phone, @RequestParam("password") String password) {
 
         LoginDTO dto = new LoginDTO();
-        dto.setUsername(username);
+        dto.setPhone(phone);
         dto.setPassword(password);
 
         return loginService.doService(dto);
@@ -42,8 +43,8 @@ public class LoginController {
 
     @ApiOperation("获取系统用户")
     @PostMapping("/permit/sysUser")
-    public Response<SysUser> getSysUser(@RequestParam("username") String username) {
-        return sysUserClientService.querySysUserByUsername(username);
+    public Response<SysUser> getSysUser(@RequestParam("phone") String phone) {
+        return sysUserClientService.querySysUserByUsername(phone);
     }
 
     @PostMapping("/permit/permission/{sysUserId}")

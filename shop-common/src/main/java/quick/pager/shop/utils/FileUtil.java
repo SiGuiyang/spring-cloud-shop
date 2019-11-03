@@ -31,8 +31,8 @@ public class FileUtil {
      */
     public static void write(InputStream in, OutputStream out) throws Exception {
         //创建缓冲区
-        byte buffer[] = new byte[1024];
-        int len = 0;
+        byte[] buffer = new byte[1024];
+        int len;
         //循环将输入流中的内容读取到缓冲区当中
         while ((len = in.read(buffer)) > 0) {
             //输出缓冲区的内容到浏览器，实现文件下载

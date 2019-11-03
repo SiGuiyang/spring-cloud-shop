@@ -65,6 +65,18 @@ public class DateUtils {
     }
 
     /**
+     * 转换时间
+     *
+     * @param parseTime 时间内容
+     */
+    public static Date parseDateTime(String parseTime) {
+
+        LocalDateTime dateTime = LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").parse(parseTime));
+
+        return Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
      * 加 年
      */
     public static Date plusYears(LocalDateTime dateTime, long years) {

@@ -1,18 +1,15 @@
 package quick.pager.shop.controller.activity;
 
 import io.swagger.annotations.ApiOperation;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.dto.BannerDTO;
+import quick.pager.shop.dto.activity.BannerDTO;
 import quick.pager.shop.service.activity.BannerService;
 
 /**
@@ -29,22 +26,26 @@ public class BannerManageController {
 
     @ApiOperation("banner 列表")
     @PostMapping("/activity/banner/list")
-    public Response list(BannerDTO dto) {
+    public Response list(@RequestBody BannerDTO dto) {
         return bannerService.fetch(dto);
+    }
+
+    @ApiOperation("banner 新增")
+    @PostMapping("/activity/banner/create")
+    public Response create(@RequestBody BannerDTO dto) {
+        return bannerService.create(dto);
     }
 
     @ApiOperation("banner 修改")
     @PutMapping("/activity/banner/modify")
-    public Response addBanner(@Valid BannerDTO dto, BindingResult bindingResult) {
-        BindingResultUtils.getFieldErrorMessage(bindingResult);
-        return bannerService.addBanner(dto);
+    public Response modify(@RequestBody BannerDTO dto) {
+        return bannerService.modify(dto);
     }
 
-    @ApiOperation("banner 新增")
-    @PostMapping("/activity/banner/modify")
-    public Response modifyBanner(@Valid BannerDTO dto, BindingResult bindingResult) {
-        BindingResultUtils.getFieldErrorMessage(bindingResult);
-        return bannerService.modifyBanner(dto);
+    @ApiOperation("根据banner类型查询列表")
+    @PostMapping("/activity/banner/listAll")
+    public Response listAll(@RequestBody BannerDTO dto) {
+        return bannerService.listAll(dto);
     }
 
 }

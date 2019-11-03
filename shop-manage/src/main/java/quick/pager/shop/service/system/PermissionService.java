@@ -32,7 +32,7 @@ public class PermissionService implements IService {
         AuthorizationDTO authorizationDTO = (AuthorizationDTO) dto;
 
         // 此角色历史权限
-        List<Menu> menus = menuMapper.selectMenuByRoleId(authorizationDTO.getId());
+        List<Menu> menus = menuMapper.selectMenuByRoleId(authorizationDTO.getRoleId());
         List<Long> menuIds = Optional.of(menus).orElse(Collections.emptyList()).stream().map(Model::getId).collect(Collectors.toList());
 
         // 拷贝权限
@@ -49,10 +49,10 @@ public class PermissionService implements IService {
 
 
         // 删除取消的权限
-        menuIds.forEach(p -> menuMapper.deleteRoleMenu(authorizationDTO.getId(), p));
+        menuIds.forEach(p -> menuMapper.deleteRoleMenu(authorizationDTO.getRoleId(), p));
 
         // 新增权限
-        permissionIds.forEach(p -> menuMapper.insertRoleMenu(authorizationDTO.getId(), p));
+        permissionIds.forEach(p -> menuMapper.insertRoleMenu(authorizationDTO.getRoleId(), p));
 
 
         return new Response();

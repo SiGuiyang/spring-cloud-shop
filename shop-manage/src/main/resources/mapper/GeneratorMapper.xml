@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.mapper.GeneratorMapper">
+    <resultMap id="ColumnResultMap" type="quick.pager.shop.model.Columns">
+        <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema" />
+        <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+        <result column="COLUMN_NAME" jdbcType="VARCHAR" property="columnName" />
+        <result column="DATA_TYPE" jdbcType="VARCHAR" property="dataType" />
+        <result column="COLUMN_KEY" jdbcType="VARCHAR" property="columnKey" />
+        <result column="COLUMN_TYPE" jdbcType="LONGVARCHAR" property="columnType" />
+        <result column="COLUMN_COMMENT" jdbcType="VARCHAR" property="columnComment" />
+    </resultMap>
+
+    <resultMap id="TableResultMap" type="quick.pager.shop.model.Tables">
+        <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema" />
+        <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+        <result column="TABLE_COMMENT" jdbcType="VARCHAR" property="tableComment" />
+    </resultMap>
+
+    <sql id="Column_List">
+    TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, DATA_TYPE, COLUMN_KEY, COLUMN_TYPE, COLUMN_COMMENT
+  </sql>
+
+    <sql id="Table_List">
+    TABLE_SCHEMA, TABLE_NAME, TABLE_COMMENT
+  </sql>
+
+    <select id="selectTables" resultMap="TableResultMap">
+
+        select <include refid="Table_List" />
+        from information_schema.TABLES
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <select id="selectColumns" resultMap="ColumnResultMap">
+        select <include refid="Column_List"/>
+        from information_schema.COLUMNS
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+</mapper>

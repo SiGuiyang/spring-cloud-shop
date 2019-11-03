@@ -1,5 +1,6 @@
 package quick.pager.shop.service.system;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -22,8 +23,10 @@ public class SysUserClientService {
     @Autowired
     private MenuMapper menuMapper;
 
-    public Response<SysUser> querySysUserByUsername(String username) {
-        return new Response<>(sysUserMapper.selectSysUserByUsername(username));
+    public Response<SysUser> querySysUserByUsername(String phone) {
+        QueryWrapper<SysUser> qw = new QueryWrapper<>();
+        qw.eq("phone", phone);
+        return new Response<>(sysUserMapper.selectOne(qw));
     }
 
     public Response<Set<String>> getRolesBySysUserId(Long sysUserId) {

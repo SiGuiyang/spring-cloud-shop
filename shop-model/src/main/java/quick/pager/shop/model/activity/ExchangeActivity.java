@@ -1,8 +1,10 @@
 package quick.pager.shop.model.activity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
 /**
@@ -10,6 +12,8 @@ import quick.pager.shop.model.Model;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
+@TableName("t_exchange_activity")
 public class ExchangeActivity extends Model {
     private static final long serialVersionUID = 5899171576409045835L;
     /**
@@ -20,10 +24,6 @@ public class ExchangeActivity extends Model {
      * 活动图片
      */
     private String activityImg;
-    /**
-     * 更新操作人
-     */
-    private String updateUser;
 
     private Date beginTime;
 

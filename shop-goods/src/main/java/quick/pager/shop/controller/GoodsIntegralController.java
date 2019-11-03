@@ -13,9 +13,9 @@ import quick.pager.shop.response.Response;
  *
  * @author siguiyang
  */
+@Api(description = "积分商城")
 @RestController
 @RequestMapping(Constants.Module.GOODS)
-@Api(description = "积分商城")
 public class GoodsIntegralController {
 
     @ApiOperation("积分商城列表")

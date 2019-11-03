@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: shop-goods
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: dev
 feign:
@@ -24,11 +26,8 @@ management:
     web:
       exposure:
         include: refresh,health,info,
-mybatis:
-  mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: quick.pager.shop.model.goods
-
-pagehelper:
-  auto-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

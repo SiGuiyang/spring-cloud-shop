@@ -9,7 +9,7 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.response.UserInfoResponse;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 import quick.pager.shop.model.UserInfo;
 import quick.pager.shop.mapper.UserInfoMapper;
 import quick.pager.shop.mapper.UserMapper;

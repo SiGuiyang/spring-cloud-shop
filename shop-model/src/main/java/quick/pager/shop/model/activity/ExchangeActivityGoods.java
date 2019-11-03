@@ -1,7 +1,9 @@
 package quick.pager.shop.model.activity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
 /**
@@ -9,6 +11,8 @@ import quick.pager.shop.model.Model;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
+@TableName("t_exchange_activity_goods")
 public class ExchangeActivityGoods extends Model {
     private static final long serialVersionUID = 4035091690901248350L;
     /**

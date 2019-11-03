@@ -3,7 +3,7 @@ package quick.pager.shop.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 
 /**
  * 登陆

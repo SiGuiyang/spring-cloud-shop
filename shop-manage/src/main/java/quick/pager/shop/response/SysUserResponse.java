@@ -12,9 +12,9 @@ import quick.pager.shop.model.Menu;
 public class SysUserResponse implements Serializable {
     private static final long serialVersionUID = -8644887463379126570L;
 
-    private String sysName;
+    private String username;
 
-    private String sysCode;
+    private String phone;
 
     private String avatar;
 

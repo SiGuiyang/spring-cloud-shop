@@ -1,7 +1,9 @@
 package quick.pager.shop.model.activity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
 /**
@@ -11,6 +13,8 @@ import quick.pager.shop.model.Model;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
+@TableName("t_banner")
 public class Banner extends Model {
 
     private static final long serialVersionUID = 2497737003636382468L;
@@ -50,8 +54,5 @@ public class Banner extends Model {
      * 分享渠道
      */
     private String shareChannel;
-
-    private String createUser;
-
 
 }

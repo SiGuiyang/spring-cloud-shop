@@ -16,10 +16,10 @@ public interface AuthClient {
     /**
      * 获取系统用户
      *
-     * @param username 用户名
+     * @param phone 手机号码
      */
     @RequestMapping(value = "/permit/sysUser", method = RequestMethod.POST)
-    Response<UserDTO> getSysUser(@RequestParam("username") String username);
+    Response<UserDTO> getSysUser(@RequestParam("phone") String phone);
 
     /**
      * 根据系统用户Id查询此用户所拥有的角色

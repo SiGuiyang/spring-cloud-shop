@@ -1,17 +1,13 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.SysRole;
+
 @Mapper
-public interface SysRoleMapper {
-
-    int insertSelective(SysRole record);
-
-    SysRole selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(SysRole record);
+public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     /**
      * 根据roleId 与 sysUserId 查看系统用户角色

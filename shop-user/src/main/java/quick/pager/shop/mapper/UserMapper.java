@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.User;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 
 @Mapper
 public interface UserMapper {

@@ -1,12 +1,17 @@
 package quick.pager.shop.model.activity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.math.BigDecimal;
+import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
+@TableName("t_discount_coupon_template")
 public class DiscountCouponTemplate extends Model {
 
     private static final long serialVersionUID = 1608002644741787377L;
@@ -23,8 +28,8 @@ public class DiscountCouponTemplate extends Model {
 
     private String description;
 
-    private String updateUser;
+    private Date beginTime;
 
-    private String createUser;
+    private Date endTime;
 
 }

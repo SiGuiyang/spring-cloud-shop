@@ -1,12 +1,11 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import quick.pager.shop.model.StationLetter;
 
-@Mapper
-public interface StationLetterMapper {
+public interface StationLetterMapper extends BaseMapper<StationLetter> {
     int insertSelective(StationLetter record);
 
     StationLetter selectByPrimaryKey(Long id);

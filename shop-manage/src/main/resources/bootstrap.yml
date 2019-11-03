@@ -5,7 +5,8 @@ spring:
   application:
     name: shop-manage
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
+    exclude:
+     - org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
 
   cloud:
     alibaba:
@@ -18,9 +19,9 @@ spring:
 feign:
   hystrix:
     enabled: true
-ribbon:
-  ReadTimeout:  30000
-  ConnectTimeout:  15000
+#ribbon:
+#  ReadTimeout:  30000
+#  ConnectTimeout:  15000
 hystrix:
   command:
     default:
@@ -28,9 +29,12 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 10000
-mybatis:
-  mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: quick.pager.shop.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 management:
   endpoints:
@@ -39,5 +43,4 @@ management:
         include: refresh,health,info
 logging:
   level:
-    org.springframework.security: debug
     com.alibaba.nacos: error

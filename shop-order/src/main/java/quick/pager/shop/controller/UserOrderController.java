@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.dto.OrderDTO;
+import quick.pager.shop.dto.order.OrderDTO;
 import quick.pager.shop.model.order.UserOrder;
-import quick.pager.shop.response.OrderResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.UserOrderService;
 
@@ -32,14 +31,14 @@ public class UserOrderController {
 
     @ApiOperation("用户订单列表")
     @RequestMapping(value = "/user/orders", method = RequestMethod.POST)
-    public Response<List<OrderResponse>> userOrderList(@RequestBody OrderDTO dto) {
+    public Response<List<Object>> userOrderList(@RequestBody OrderDTO dto) {
 
         return userOrderService.userOrderList(dto);
     }
 
     @ApiOperation("App订单详情")
     @RequestMapping(value = "/detail/user/{orderId}", method = RequestMethod.POST)
-    public Response<OrderResponse> userOrderDetail(@PathVariable("orderId") Long orderId) {
+    public Response<Object> userOrderDetail(@PathVariable("orderId") Long orderId) {
         return userOrderService.userOrderDetail(orderId);
     }
 

@@ -4,8 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.service.IService;
-import quick.pager.shop.response.OrderResponse;
 
 /**
  * 订单详情
@@ -14,9 +12,9 @@ import quick.pager.shop.response.OrderResponse;
  */
 @Service
 @Slf4j
-public class OrderDetailService implements IService<OrderResponse> {
+public class OrderDetailService implements IService {
     @Override
-    public Response<OrderResponse> doService(BaseDTO dto) {
+    public Response doService(BaseDTO dto) {
         return null;
     }
 }

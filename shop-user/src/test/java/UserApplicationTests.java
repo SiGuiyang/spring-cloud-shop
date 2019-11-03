@@ -106,7 +106,7 @@ public class UserApplicationTests {
         System.out.println();
         test("shop-activity");
         System.out.println();
-        test("shop-goods");
+        test("shop");
         System.out.println();
         test("shop-manage");
         System.out.println();

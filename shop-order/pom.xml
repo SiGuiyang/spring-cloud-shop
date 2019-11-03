@@ -25,10 +25,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -44,7 +40,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
@@ -56,8 +51,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -83,6 +78,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
         <dependency>
@@ -119,16 +119,6 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-client-feign</artifactId>
             <version>${project.version}</version>
@@ -136,25 +126,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.yml</include>
-                    <include>**/*.txt</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -179,34 +150,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.mybatis.generator</groupId>-->
-            <!--<artifactId>mybatis-generator-maven-plugin</artifactId>-->
-            <!--<version>1.3.5</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>Generate MyBatis Artifacts</id>-->
-            <!--<goals>-->
-            <!--<goal>generate</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>mysql</groupId>-->
-            <!--<artifactId>mysql-connector-java</artifactId>-->
-            <!--<version>5.1.46</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--<configuration>-->
-            <!--&lt;!&ndash; 打印执行过程 &ndash;&gt;-->
-            <!--<verbose>true</verbose>-->
-            <!--&lt;!&ndash; 允许覆盖生成的文件 &ndash;&gt;-->
-            <!--<overwrite>true</overwrite>-->
-            <!--&lt;!&ndash; 配置文件路径 &ndash;&gt;-->
-            <!--<configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 

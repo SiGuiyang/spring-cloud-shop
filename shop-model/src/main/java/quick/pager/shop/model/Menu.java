@@ -1,14 +1,19 @@
 package quick.pager.shop.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Accessors(chain = true)
+@TableName("t_menu")
 public class Menu extends Model {
 
     private static final long serialVersionUID = -3246720425417855255L;
@@ -36,9 +41,9 @@ public class Menu extends Model {
     private String permissionName;
 
     private Boolean hidden;
-
+    @TableField(exist = false)
     private List<Menu> children = new ArrayList<>();
-
+    @TableField(exist = false)
     private Meta meta;
 
     @Data

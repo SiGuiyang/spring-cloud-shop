@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.dto.BlackListDTO;
+import quick.pager.shop.dto.risk.BlackListDTO;
 import quick.pager.shop.service.risk.BlackListService;
 import quick.pager.shop.response.Response;
 
@@ -34,7 +34,7 @@ public class BlackListController {
      */
     @PostMapping(value = "/blackList/list")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response getBlackLists(@Valid BlackListDTO dto, BindingResult bindingResult) {
+    public Response getBlackLists(@Valid @RequestBody BlackListDTO dto, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
         return blackListService.getBlackLists(dto);
     }
@@ -44,7 +44,7 @@ public class BlackListController {
      */
     @PostMapping(value = "/blackList")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response addBlackLists(@Valid BlackListDTO dto, BindingResult bindingResult) {
+    public Response addBlackLists(@Valid @RequestBody BlackListDTO dto, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
         return blackListService.addBlackLists(dto);
     }
@@ -54,7 +54,7 @@ public class BlackListController {
      */
     @PutMapping(value = "/blackList")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    public Response modifyBlackLists(@Valid BlackListDTO dto, BindingResult bindingResult) {
+    public Response modifyBlackLists(@Valid @RequestBody BlackListDTO dto, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
         return blackListService.modifyBlackLists(dto);
     }

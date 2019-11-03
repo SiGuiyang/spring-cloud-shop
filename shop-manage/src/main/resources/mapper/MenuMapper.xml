@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="quick.pager.shop.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="quick.pager.shop.model.Menu">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="hidden" jdbcType="BIT" property="hidden" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="redirect" jdbcType="VARCHAR" property="redirect" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="menu_type" jdbcType="INTEGER" property="menuType"/>
+    <result column="permission" jdbcType="VARCHAR" property="permission"/>
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, sequence, parent_id, path, hidden, component, redirect,icon,menu_type,permission,permission_name
+  </sql>
+
+  <select id="selectTopMenu" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_menu
+    where parent_id is null order by sequence asc
+  </select>
+
+  <select id="selectSubMenu" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_menu
+    <where>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT}
+      </if>
+      <if test="menuType != null">
+        and menu_type = #{menuType, jdbcType=INTEGER}
+      </if>
+    </where>
+    order by sequence asc
+  </select>
+
+  <sql id="All_Column_BY_ALIAS">
+    SELECT
+        m.id,
+        m.name,
+        m.sequence,
+        m.parent_id,
+        m.path,
+        m.hidden,
+        m.component,
+        m.redirect,
+        m.icon,
+        m.menu_type,
+        m.permission,
+        m.permission_name
+  </sql>
+
+  <select id="selectMenuBySysUserId" resultMap="BaseResultMap">
+    <include refid="All_Column_BY_ALIAS"/>
+    FROM
+        t_role_menu rm,
+        t_menu m,
+        t_role r,
+        t_sys_user su,
+        t_sys_role sr
+    WHERE
+        rm.menu_id = m.id
+    AND rm.role_id = r.id
+    AND sr.role_id = r.id
+    AND sr.sys_user_id = su.id
+    AND su.id = #{sysUserId, jdbcType=BIGINT} ORDER BY m.sequence ASC
+  </select>
+
+
+  <select id="selectMenuByRoleId" resultMap="BaseResultMap">
+    <include refid="All_Column_BY_ALIAS"/>
+    FROM
+      t_role_menu rm,
+      t_menu m
+    WHERE
+      rm.menu_id = m.id
+    AND rm.role_id = #{roleId, jdbcType=BIGINT}
+  </select>
+
+
+  <delete id="deleteRoleMenu">
+    delete from t_role_menu where role_id = #{roleId, jdbcType=BIGINT} and menu_id = #{menuId, jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertRoleMenu">
+    insert into t_role_menu(role_id,menu_id) values(#{roleId, jdbcType=BIGINT}, #{menuId, jdbcType=BIGINT})
+  </insert>
+</mapper>

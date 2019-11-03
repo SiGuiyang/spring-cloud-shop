@@ -27,6 +27,6 @@ management:
       exposure:
         include: refresh,health,info,hystrix.stream
 
-mybatis:
-  mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: quick.pager.shop.model.risk

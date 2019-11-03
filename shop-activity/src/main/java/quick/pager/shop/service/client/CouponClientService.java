@@ -1,6 +1,7 @@
 package quick.pager.shop.service.client;
 
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.mapper.DiscountCouponMapper;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
-import quick.pager.shop.dto.CouponDTO;
+import quick.pager.shop.dto.activity.CouponDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 
 /**
@@ -44,9 +45,11 @@ public class CouponClientService implements IService {
      */
     private Response<List<DiscountCoupon>> queryCoupons(CouponDTO couponDTO) {
 
-        PageHelper.startPage(couponDTO.getPage(), couponDTO.getPageSize());
         List<DiscountCoupon> discountCoupons = discountCouponMapper.selectCoupons(couponDTO);
 
-        return Response.toResponse(discountCoupons);
+
+        QueryWrapper<DiscountCoupon> discountCouponQueryWrapper = new QueryWrapper<>();
+
+        return Response.toResponse(discountCouponMapper.selectPage(new Page<>(couponDTO.getPage(), couponDTO.getPageSize()), discountCouponQueryWrapper));
     }
 }

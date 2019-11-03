@@ -1,16 +1,16 @@
 package quick.pager.shop.service.system;
 
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
@@ -23,6 +23,7 @@ import quick.pager.shop.service.IService;
 import quick.pager.shop.dto.RoleDTO;
 import quick.pager.shop.mapper.RoleMapper;
 import quick.pager.shop.model.Role;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * 角色
@@ -69,7 +70,7 @@ public class RoleService implements IService {
         Role role = new Role();
         role.setId(id);
         role.setDeleteStatus(true);
-        roleMapper.updateByPrimaryKeySelective(role);
+        roleMapper.updateById(role);
         return new Response();
     }
 
@@ -131,22 +132,25 @@ public class RoleService implements IService {
 
     // 角色列表
     private Response selectRoles(RoleDTO roleDTO) {
-        PageHelper.startPage(roleDTO.getPage(), roleDTO.getPageSize());
-        List<Role> roles = roleMapper.selectRoles(roleDTO.getRoleName(), null);
 
-        return Response.toResponse(roles);
+        Page<Role> page = new Page<>(roleDTO.getPage(), roleDTO.getPageSize());
+        Role role = new Role();
+        role.setRoleName(roleDTO.getRoleName());
+        role.setDeleteStatus(roleDTO.getDeleteStatus());
+        return Response.toResponse(roleMapper.selectPage(page, new QueryWrapper<>(role)));
     }
 
     // 新增修改角色
     private Response modifyRole(RoleDTO dto) {
         Role role = new Role();
-        BeanUtils.copyProperties(dto, role);
+        BeanCopier beanCopier = BeanCopier.create(RoleDTO.class, Role.class, false);
+        beanCopier.copy(dto, role, null);
         if (Constants.Event.ADD.equals(dto.getEvent())) { // 新增
-            role.setDeleteStatus(false);
-            role.setCreateTime(new Date());
-            roleMapper.insertSelective(role);
+            role.setDeleteStatus(Boolean.FALSE);
+            role.setCreateTime(DateUtils.now());
+            roleMapper.insert(role);
         } else {
-            roleMapper.updateByPrimaryKeySelective(role);
+            roleMapper.updateById(role);
         }
         return new Response();
     }

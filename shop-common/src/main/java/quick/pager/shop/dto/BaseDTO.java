@@ -1,5 +1,6 @@
 package quick.pager.shop.dto;
 
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,6 +16,15 @@ public class BaseDTO extends DTO {
      */
     private Long userId;
     /**
+     * 手机号
+     */
+    private String phone;
+    /**
+     * 时间范围
+     */
+    private List<String> timeRange;
+
+    /**
      * 分页数大小
      */
     private Integer pageSize;
@@ -22,8 +32,4 @@ public class BaseDTO extends DTO {
      * 页码
      */
     private Integer page;
-    /**
-     * 手机号
-     */
-    private String phone;
 }

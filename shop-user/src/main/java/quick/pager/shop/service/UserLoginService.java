@@ -11,7 +11,7 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.LoginOrSubscribeResponse;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 import quick.pager.shop.dto.UserLoginDTO;
 import quick.pager.shop.dto.UserSubscribeDTO;
 import quick.pager.shop.mapper.UserMapper;

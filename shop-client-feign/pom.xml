@@ -53,12 +53,6 @@
             <artifactId>shop-common</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.pagehelper</groupId>
-                    <artifactId>pagehelper-spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

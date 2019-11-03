@@ -1,9 +1,8 @@
 package quick.pager.shop.service;
 
 import java.util.List;
-import quick.pager.shop.dto.OrderDTO;
+import quick.pager.shop.dto.order.OrderDTO;
 import quick.pager.shop.model.order.UserOrder;
-import quick.pager.shop.response.OrderResponse;
 import quick.pager.shop.response.Response;
 
 /**
@@ -16,14 +15,14 @@ public interface UserOrderService {
     /**
      * 查看用户订单列表
      */
-    Response<List<OrderResponse>> userOrderList(OrderDTO dto);
+    Response<List<Object>> userOrderList(OrderDTO dto);
 
     /**
      * 用户订单详情
      *
      * @param orderId 订单Id
      */
-    Response<OrderResponse> userOrderDetail(Long orderId);
+    Response<Object> userOrderDetail(Long orderId);
 
     /**
      * 创建订单

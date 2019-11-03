@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.dto.BlackListDTO;
+import quick.pager.shop.dto.risk.BlackListDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.BlackListService;
 

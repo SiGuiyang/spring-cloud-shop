@@ -1,6 +1,6 @@
 package quick.pager.shop.service.goods;
 
-import quick.pager.shop.dto.GoodsDTO;
+import quick.pager.shop.dto.goods.GoodsDTO;
 import quick.pager.shop.response.Response;
 
 /**

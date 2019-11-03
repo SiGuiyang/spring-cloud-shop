@@ -2,29 +2,26 @@ package quick.pager.shop.service.impl;
 
 import io.seata.spring.annotation.GlobalTransactional;
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import quick.pager.shop.client.ActivityClient;
-import quick.pager.shop.client.GoodsClient;
-import quick.pager.shop.client.OrderClient;
+import quick.pager.shop.client.activity.DiscountCouponClient;
+import quick.pager.shop.client.order.SellerOrderClient;
+import quick.pager.shop.client.order.UserOrderClient;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RabbitMqKeys;
 import quick.pager.shop.constants.RedisKeys;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.InviteFriendAwardDTO;
-import quick.pager.shop.dto.OrderDTO;
+import quick.pager.shop.dto.order.OrderDTO;
 import quick.pager.shop.dto.UserOrderDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 import quick.pager.shop.model.order.SellerOrder;
 import quick.pager.shop.model.order.UserOrder;
 import quick.pager.shop.mq.KafkaService;
 import quick.pager.shop.mq.MqMessage;
-import quick.pager.shop.response.GoodsResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.CheckOrderService;
 import quick.pager.shop.service.RedisService;
@@ -36,11 +33,13 @@ import quick.pager.shop.utils.DateUtils;
 public class UserOrderServiceImpl implements UserOrderService {
 
     @Autowired
-    private ActivityClient activityClient;
+    private DiscountCouponClient discountCouponClient;
     @Autowired
-    private OrderClient orderClient;
+    private UserOrderClient userOrderClient;
     @Autowired
-    private GoodsClient goodsClient;
+    private SellerOrderClient sellerOrderClient;
+//    @Autowired
+//    private GoodsClient goodsClient;
 
     @Autowired
     private RedisService redisService;
@@ -58,7 +57,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
     @Override
     public Response orderInfo(Long orderId) {
-        return orderClient.orderInfo(orderId);
+        return userOrderClient.orderInfo(orderId);
     }
 
     @Override
@@ -86,17 +85,17 @@ public class UserOrderServiceImpl implements UserOrderService {
             // 商户结算金额
             BigDecimal sellerTotalAmount = BigDecimal.ZERO;
             // 获取购买的商品
-            Optional.ofNullable(goodsCart).orElse(Collections.emptyList()).forEach(goodsCartDTO -> {
-                Response<GoodsResponse> goodsResponseResponse = goodsClient.goodsInfo(goodsCartDTO.getGoodsId());
-                if (ResponseStatus.Code.SUCCESS == goodsResponseResponse.getCode()) {
-                    GoodsResponse goodsResponse = goodsResponseResponse.getData();
-                    BigDecimal goodsDiscountAmount = goodsResponse.getGoods().getGoodsDiscountAmount();
-                }
-            });
+//            Optional.ofNullable(goodsCart).orElse(Collections.emptyList()).forEach(goodsCartDTO -> {
+//                Response<GoodsResponse> goodsResponseResponse = goodsClient.goodsInfo(goodsCartDTO.getGoodsId());
+//                if (ResponseStatus.Code.SUCCESS == goodsResponseResponse.getCode()) {
+//                    GoodsResponse goodsResponse = goodsResponseResponse.getData();
+//                    BigDecimal goodsDiscountAmount = goodsResponse.getGoods().getGoodsDiscountAmount();
+//                }
+//            });
 
             // TODO 计算是否使用优惠券
             if (null != dto.getCouponId()) {
-                Response<DiscountCoupon> discountCouponResponse = activityClient.userCoupons(dto.getCouponId());
+                Response<DiscountCoupon> discountCouponResponse = discountCouponClient.userCoupons(dto.getCouponId());
             }
             // TODO 创建订单
 
@@ -106,7 +105,7 @@ public class UserOrderServiceImpl implements UserOrderService {
             userOrder.setUserId(dto.getUserId());
             userOrder.setOrderType(dto.getOrderType());
 
-            Response response = orderClient.userOrderCreate(userOrder);
+            Response response = userOrderClient.userOrderCreate(userOrder);
 
             // TODO 创建商户订单
 
@@ -116,7 +115,7 @@ public class UserOrderServiceImpl implements UserOrderService {
             sellerOrder.setDeleteStatus(false);
 
 
-            orderClient.sellerOrderCreate(sellerOrder);
+            sellerOrderClient.sellerOrderCreate(sellerOrder);
 
 
             // 好友佣金计算，分配奖励，使用异步方式实现放在MQ处理

@@ -1,7 +1,7 @@
 package quick.pager.shop.service.activity;
 
 import quick.pager.shop.response.Response;
-import quick.pager.shop.dto.ExchangeActivityDTO;
+import quick.pager.shop.dto.activity.ExchangeActivityDTO;
 
 /**
  * 满赠换购
@@ -13,39 +13,39 @@ public interface ExchangeActivityService {
     /**
      * 获取满赠换购活动列表
      */
-    Response getExchangeActivitys(ExchangeActivityDTO dto);
+    Response list(ExchangeActivityDTO dto);
 
     /**
      * 添加满赠换购活动
      */
-    Response addExchangeActivitys(ExchangeActivityDTO dto);
+    Response create(ExchangeActivityDTO dto);
 
     /**
      * 修改满赠换购活动
      */
-    Response modifyExchangeActivitys(ExchangeActivityDTO dto);
+    Response modify(ExchangeActivityDTO dto);
 
     /**
      * 活动规则列表
      */
-    Response getExchangeActivityRules(ExchangeActivityDTO dto);
+    Response rules(ExchangeActivityDTO dto);
 
     /**
      * 活动规则新增
      */
-    Response addExchangeActivityRules(ExchangeActivityDTO dto);
+    Response createRule(ExchangeActivityDTO dto);
 
     /**
      * 活动规则修改
      */
-    Response modifyExchangeActivityRules(ExchangeActivityDTO dto);
+    Response modifyRule(ExchangeActivityDTO dto);
 
     /**
      * 获取活动
      *
      * @param activityId 活动Id
      */
-    Response getExchangeActivity(Long activityId);
+    Response info(Long activityId);
 
     /**
      * 购买记录

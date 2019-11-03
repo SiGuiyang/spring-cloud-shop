@@ -16,6 +16,7 @@ import quick.pager.shop.mapper.MenuMapper;
 import quick.pager.shop.model.Menu;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * 权限菜单列表
@@ -90,16 +91,18 @@ public class MenuService implements IService {
         BeanUtils.copyProperties(dto, menu);
         if (Constants.Event.ADD.equals(dto.getEvent())) { // 新增
             menu.setMenuType(1);
-            menuMapper.insertSelective(menu);
+            menu.setCreateTime(DateUtils.now());
+            menu.setDeleteStatus(Boolean.FALSE);
+            menuMapper.insert(menu);
         } else {
-            menuMapper.updateByPrimaryKeySelective(menu);
+            menuMapper.updateById(menu);
         }
         return new Response();
     }
 
     private Response delMenu(Long id) {
 
-        Menu menu = menuMapper.selectByPrimaryKey(id);
+        Menu menu = menuMapper.selectById(id);
 
         if (ObjectUtils.isEmpty(menu)) {
             return new Response(ResponseStatus.Code.FAIL_CODE, "未知菜单");
@@ -108,9 +111,9 @@ public class MenuService implements IService {
         // 顶级菜单，删除关联的子集菜单
         if (null == menu.getParentId() || 0 == menu.getParentId()) {
             List<Menu> menus = menuMapper.selectSubMenu(menu.getId(), 1);
-            menus.forEach(m -> menuMapper.deleteByPrimaryKey(m.getId()));
+            menus.forEach(m -> menuMapper.deleteById(m.getId()));
         }
-        menuMapper.deleteByPrimaryKey(id);
+        menuMapper.deleteById(id);
         return new Response();
     }
 }

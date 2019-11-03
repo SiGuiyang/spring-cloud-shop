@@ -47,8 +47,8 @@ public class LoginService implements IService<LoginResponse> {
             return response;
         }
         LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setSysCode(loginDTO.getUsername());
-        loginResponse.setSysName(sysUser.getSysName());
+        loginResponse.setPhone(loginDTO.getPhone());
+        loginResponse.setUsername(sysUser.getUsername());
         response.setData(loginResponse);
 
         return response;

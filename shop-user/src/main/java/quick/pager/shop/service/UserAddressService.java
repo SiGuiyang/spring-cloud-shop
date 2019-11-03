@@ -14,6 +14,7 @@ import quick.pager.shop.model.Address;
 import quick.pager.shop.model.ShippingAddress;
 import quick.pager.shop.dto.AddressDTO;
 import quick.pager.shop.mapper.AddressMapper;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * 地址管理服务
@@ -64,7 +65,7 @@ public class UserAddressService implements IService {
             address.setPhone(addressDTO.getPhone());
             address.setUserId(addressDTO.getUserId());
             address.setUsername(addressDTO.getUsername());
-            address.setCreateTime(new Date());
+            address.setCreateTime(DateUtils.now());
             addressMapper.insertSelective(address);
             return new Response();
         }

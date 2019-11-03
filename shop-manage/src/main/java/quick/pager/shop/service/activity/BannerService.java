@@ -1,24 +1,33 @@
 package quick.pager.shop.service.activity;
 
-import quick.pager.shop.dto.BannerDTO;
+import java.util.List;
+import quick.pager.shop.dto.activity.BannerDTO;
 import quick.pager.shop.response.Response;
+import quick.pager.shop.response.activity.BannerResponse;
 
 /**
- * banner 服务
+ * banner service
+ *
+ * @author siguiyang
  */
 public interface BannerService {
-    /**
-     * banner 列表
-     */
-    Response fetch(BannerDTO dto);
+
+
+    Response<List<BannerResponse>> fetch(BannerDTO dto);
 
     /**
-     * 添加banner
+     * 新增
      */
-    Response addBanner(BannerDTO dto);
+    Response create(BannerDTO dto);
 
     /**
-     * 修改banner
+     * 修改
      */
-    Response modifyBanner(BannerDTO dto);
+    Response modify(BannerDTO dto);
+
+
+    /**
+     * 根据banner类型查询列表
+     */
+    Response listAll(BannerDTO dto);
 }

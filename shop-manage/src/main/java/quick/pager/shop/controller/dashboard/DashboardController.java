@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,15 +31,13 @@ public class DashboardController {
     @ApiOperation("首页周期统计数据")
     @PostMapping("/dashboard/cycle/statistics")
     public Response cycleStatistics(@RequestParam("event") String event) {
-        BaseDTO dto = new BaseDTO();
-        dto.setEvent(event);
-        return dashboardService.doService(dto);
+
+        return null;
     }
 
     @ApiOperation("首页统计数据")
     @PostMapping("/dashboard/statistics")
-    public Response statistics(@Valid BaseDTO dto, BindingResult bindingResult) {
-        BindingResultUtils.getFieldErrorMessage(bindingResult);
-        return dashboardService.doService(dto);
+    public Response statistics(@RequestBody BaseDTO dto) {
+        return null;
     }
 }

@@ -1,13 +1,15 @@
 package quick.pager.shop.service;
 
-import com.github.pagehelper.PageHelper;
-import java.util.List;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import quick.pager.shop.dto.BaseDTO;
-import quick.pager.shop.dto.ExchangeActivityDTO;
+import quick.pager.shop.dto.activity.ExchangeActivityDTO;
+import quick.pager.shop.dto.ExchangeMemberDTO;
 import quick.pager.shop.mapper.ExchangeActivityMembersMapper;
-import quick.pager.shop.response.ExchangeMemberResponse;
 import quick.pager.shop.response.Response;
 
 @Service
@@ -22,11 +24,18 @@ public class ExchangeActivityHistoryService implements IService {
 
         ExchangeActivityDTO exchangeActivityDTO = (ExchangeActivityDTO) dto;
 
-        PageHelper.startPage(exchangeActivityDTO.getPage(), exchangeActivityDTO.getPageSize());
+        IPage<ExchangeMemberDTO> page = new Page<>(exchangeActivityDTO.getPage(), exchangeActivityDTO.getPageSize());
 
-        List<ExchangeMemberResponse> mapList = exchangeActivityMembersMapper.select(exchangeActivityDTO.getActivityId(),
-                exchangeActivityDTO.getPhone(), exchangeActivityDTO.getRuleId());
+        QueryWrapper<ExchangeMemberDTO> qw = new QueryWrapper<>();
 
-        return Response.toResponse(mapList);
+        qw.eq("am.activity_id", exchangeActivityDTO.getActivityId());
+        if (!StringUtils.isEmpty(exchangeActivityDTO.getPhone())) {
+            qw.eq("am.phone", exchangeActivityDTO.getPhone());
+        }
+        if (null != exchangeActivityDTO.getRuleId()) {
+            qw.eq("ar.id", exchangeActivityDTO.getRuleId());
+        }
+        qw.orderByDesc("am.id");
+        return Response.toResponse(exchangeActivityMembersMapper.select(page, qw));
     }
 }

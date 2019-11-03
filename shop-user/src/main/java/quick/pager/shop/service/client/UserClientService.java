@@ -1,14 +1,15 @@
 package quick.pager.shop.service.client;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import quick.pager.shop.model.StationLetter;
 import quick.pager.shop.model.User;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.dto.UserInfoDTO;
+import quick.pager.shop.dto.user.UserInfoDTO;
 import quick.pager.shop.model.Address;
 import quick.pager.shop.mapper.AddressMapper;
 import quick.pager.shop.mapper.StationLetterMapper;
@@ -59,15 +60,14 @@ public class UserClientService {
      * @param phone 手机号
      */
     public Response<List<StationLetter>> queryStationLetter(String phone, Integer page, Integer pageSize) {
-        PageHelper.startPage(page, pageSize);
-        List<StationLetter> stationLetters = stationLetterMapper.selectStationMessagesByPhone(phone);
 
-        PageInfo<StationLetter> pageInfo = new PageInfo<>(stationLetters);
+        QueryWrapper<StationLetter> qw = new QueryWrapper<>();
 
-        Response<List<StationLetter>> response = new Response<>();
-        response.setData(pageInfo.getList());
-        response.setTotal(pageInfo.getTotal());
-        return response;
+        if (!StringUtils.isEmpty(phone)) {
+            qw.eq("phone", phone);
+        }
+        qw.orderByDesc("id");
+        return Response.toResponse(stationLetterMapper.selectPage(new Page<>(page, pageSize), qw));
     }
 
     /**

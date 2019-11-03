@@ -1,15 +1,16 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import quick.pager.shop.model.activity.FightGroupRecord;
+import quick.pager.shop.model.activity.AssembleActivityRecord;
 
 @Mapper
-public interface FightGroupRecordMapper {
+public interface FightGroupRecordMapper extends BaseMapper<AssembleActivityRecord> {
 
-    int insertSelective(FightGroupRecord record);
+    int insertSelective(AssembleActivityRecord record);
 
-    FightGroupRecord selectByPrimaryKey(Long id);
+    AssembleActivityRecord selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(FightGroupRecord record);
+    int updateByPrimaryKeySelective(AssembleActivityRecord record);
 
 }

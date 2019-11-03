@@ -1,6 +1,6 @@
 package quick.pager.shop.service.activity;
 
-import quick.pager.shop.dto.CouponTemplateDTO;
+import quick.pager.shop.dto.activity.CouponTemplateDTO;
 import quick.pager.shop.response.Response;
 
 /**

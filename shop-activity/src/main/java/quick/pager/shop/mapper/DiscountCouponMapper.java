@@ -1,27 +1,14 @@
 package quick.pager.shop.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import quick.pager.shop.dto.CouponDTO;
+import quick.pager.shop.dto.activity.CouponDTO;
 import quick.pager.shop.model.activity.DiscountCoupon;
 
 @Mapper
-public interface DiscountCouponMapper {
-
-    int insertSelective(DiscountCoupon record);
-
-    DiscountCoupon selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(DiscountCoupon record);
-
-    /**
-     * 根据id批量获取优惠券
-     *
-     * @param ids
-     */
-    List<DiscountCoupon> selectBatchByPrimaryKey(List<Long> ids);
-
+public interface DiscountCouponMapper extends BaseMapper<DiscountCoupon> {
     /**
      * 批量插入优惠券
      */

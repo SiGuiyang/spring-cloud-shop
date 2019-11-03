@@ -24,6 +24,7 @@ import quick.pager.shop.mapper.SmsTemplateMapper;
 import quick.pager.shop.mapper.UserMapper;
 
 import java.util.Date;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * 用户注册服务
@@ -58,7 +59,7 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         user = new User();
         user.setPhone(subscribeDTO.getPhone());
         user.setPassword(SecureUtil.md5(password));
-        user.setCreateTime(new Date());
+        user.setCreateTime(DateUtils.now());
 
         userMapper.insertSelective(user);
 
