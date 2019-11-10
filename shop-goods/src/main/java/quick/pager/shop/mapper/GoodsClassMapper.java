@@ -22,13 +22,20 @@ import quick.pager.shop.model.goods.GoodsClass;
 @Mapper
 public interface GoodsClassMapper extends BaseMapper<GoodsClass> {
 
+
+    /**
+     * 分页查询分类
+     */
+    @Select("select count(t1.id) from t_goods_class t1 left join t_goods_class t2 on t1.parent_id = t2.id")
+    int selectGoodsClassCount(@Param(Constants.WRAPPER) Wrapper<ClassificationDTO> wrapper);
+
     /**
      * 分页查询分类
      */
     @Select("select t1.id,t1.parent_id as parentId,t1.class_name as className,t1.icon," +
             "t1.create_user as createUser,t1.update_user as updateUser,t1.create_time as createTime," +
             "t1.update_time as updateTime,t1.delete_status as deleteStatus,t2.class_name as parentClassName " +
-            "from t_goods_class t1 left join t_goods_class t2 on t1.parent_id = t2.id")
+            "from t_goods_class t1 left join t_goods_class t2 on t1.parent_id = t2.id where ${ew.sqlSegment}")
     IPage<ClassificationDTO> selectGoodsClassList(IPage<ClassificationDTO> page, @Param(Constants.WRAPPER) Wrapper<ClassificationDTO> wrapper);
 
     /**

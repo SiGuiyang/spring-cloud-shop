@@ -65,7 +65,7 @@ public class UserAddressService implements IService {
             address.setPhone(addressDTO.getPhone());
             address.setUserId(addressDTO.getUserId());
             address.setUsername(addressDTO.getUsername());
-            address.setCreateTime(DateUtils.now());
+            address.setCreateTime(DateUtils.dateTime());
             addressMapper.insertSelective(address);
             return new Response();
         }

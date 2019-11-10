@@ -1,6 +1,5 @@
 package quick.pager.shop.controller;
 
-import io.swagger.annotations.ApiOperation;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +29,9 @@ public class LoginController {
     @Autowired
     private SysUserClientService sysUserClientService;
 
-    @ApiOperation("登陆")
+    /**
+     * 登陆
+     */
     @PostMapping("/permit/login")
     public Response login(@RequestParam("phone") String phone, @RequestParam("password") String password) {
 
@@ -41,7 +42,9 @@ public class LoginController {
         return loginService.doService(dto);
     }
 
-    @ApiOperation("获取系统用户")
+    /**
+     * 获取系统用户
+     */
     @PostMapping("/permit/sysUser")
     public Response<SysUser> getSysUser(@RequestParam("phone") String phone) {
         return sysUserClientService.querySysUserByUsername(phone);

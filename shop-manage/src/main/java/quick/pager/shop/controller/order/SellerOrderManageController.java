@@ -1,7 +1,5 @@
 package quick.pager.shop.controller.order;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -21,7 +19,6 @@ import quick.pager.shop.dto.order.SellerOrderDTO;
  *
  * @author siguiyang
  */
-@Api(description = "商家订单管理")
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
 public class SellerOrderManageController {
@@ -29,14 +26,18 @@ public class SellerOrderManageController {
     @Autowired
     private SellerOrderClient sellerOrderClient;
 
-    @ApiOperation("商户订单")
+    /**
+     * 商户订单
+     */
     @PostMapping("/order/seller")
     public Response sellerOrder(@Valid @RequestBody SellerOrderDTO request, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
         return sellerOrderClient.sellerOrders(request);
     }
 
-    @ApiOperation("商户订单详情")
+    /**
+     * 商户订单详情
+     */
     @PostMapping("/order/seller/info")
     public Response sellerOrderInfo(@RequestParam("sellerOrderId") Long sellerOrderId) {
         return sellerOrderClient.sellerOrderInfo(sellerOrderId);

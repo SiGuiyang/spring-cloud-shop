@@ -4,21 +4,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 分页请求基类
- *
  * @author siguiyang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class LimitRequest extends Request {
+public class PageRequest extends Request {
     private static final long serialVersionUID = -8989796076245602142L;
 
     /**
-     * 一页的大小
+     * 一页的数量
      */
-    private Integer pageSize;
+    private Integer pageSize = 10;
     /**
      * 页码
      */
-    private Integer page;
+    private Integer page = 0;
 }

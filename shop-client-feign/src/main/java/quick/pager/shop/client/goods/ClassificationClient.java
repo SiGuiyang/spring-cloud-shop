@@ -21,17 +21,23 @@ public interface ClassificationClient {
      * 商品分类列表
      */
     @RequestMapping(value = "/classification/list", method = RequestMethod.POST)
-    Response classificationList(@RequestBody ClassificationDTO dto);
+    Response list(@RequestBody ClassificationDTO dto);
+
+    /**
+     * 商品分类新增
+     */
+    @RequestMapping(value = "/classification/create", method = RequestMethod.POST)
+    Response create(@RequestBody ClassificationDTO dto);
 
     /**
      * 商品分类修改
      */
     @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
-    Response modifyClassification(@RequestBody ClassificationDTO dto);
+    Response modify(@RequestBody ClassificationDTO dto);
 
     /**
      * 商品分类树形结构
      */
     @RequestMapping(value = "/classification/tree", method = RequestMethod.POST)
-    Response classificationTree();
+    Response tree();
 }

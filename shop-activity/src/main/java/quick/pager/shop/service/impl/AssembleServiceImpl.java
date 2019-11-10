@@ -83,7 +83,7 @@ public class AssembleServiceImpl implements AssembleService {
 
         AssembleActivity assembleActivity = BeanCopier.create(dto, new AssembleActivity(), CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true))
                 .copy();
-        assembleActivity.setCreateTime(DateUtils.now());
+        assembleActivity.setCreateTime(DateUtils.dateTime());
         assembleActivity.setDeleteStatus(Boolean.FALSE);
         assembleMapper.insert(assembleActivity);
         return new Response();
@@ -128,7 +128,7 @@ public class AssembleServiceImpl implements AssembleService {
         // 不存在则新增
         if (null == rule) {
             activityRule.setDeleteStatus(Boolean.FALSE);
-            activityRule.setCreateTime(DateUtils.now());
+            activityRule.setCreateTime(DateUtils.dateTime());
             assembleActivityRuleMapper.insert(activityRule);
         } else {
             assembleActivityRuleMapper.updateById(activityRule);
@@ -148,7 +148,7 @@ public class AssembleServiceImpl implements AssembleService {
         AssembleActivityGoods goods = assembleActivityGoodsMapper.selectOne(qw);
 
         if (null == goods) {
-            activityGoods.setCreateTime(DateUtils.now());
+            activityGoods.setCreateTime(DateUtils.dateTime());
             assembleActivityGoodsMapper.insert(activityGoods);
 
         } else {

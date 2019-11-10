@@ -2,6 +2,7 @@ package quick.pager.shop.service.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import java.time.LocalDateTime;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
@@ -90,7 +91,7 @@ public class SystemConfigService implements IService {
         BeanCopier beanCopier = BeanCopier.create(SystemConfigDTO.class, SystemConfig.class, false);
         beanCopier.copy(dto, config, null);
 
-        Date date = DateUtils.now();
+        LocalDateTime date = DateUtils.dateTime();
         if (Constants.Event.ADD.equals(dto.getEvent())) {
             config.setCreateTime(date);
             config.setUpdateTime(date);

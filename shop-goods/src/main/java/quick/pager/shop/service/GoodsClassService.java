@@ -1,6 +1,5 @@
 package quick.pager.shop.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import quick.pager.shop.dto.goods.ClassificationDTO;
 import quick.pager.shop.model.goods.GoodsClass;
@@ -14,7 +13,7 @@ import quick.pager.shop.response.Response;
  * @author Siguiyang
  * @since 2019-10-07
  */
-public interface GoodsClassService extends IService<GoodsClass> {
+public interface GoodsClassService extends IPageService<GoodsClass> {
 
     /**
      * 获取分类列表

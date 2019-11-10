@@ -40,7 +40,7 @@ public class UserLoginService implements IService<LoginOrSubscribeResponse> {
         UserInfoDTO user = userMapper.selectInfoByPhone(userLoginDTO.getPhone());
 
         if (ObjectUtils.isEmpty(user)) {
-            log.info("用户不存在，开始自动登陆并注册 params = {}", JSON.toJSONString(dto));
+            log.info("用户不存在，开始自动登陆并注册 request = {}", JSON.toJSONString(dto));
             UserSubscribeDTO userSubscribeDTO = new UserSubscribeDTO();
             userSubscribeDTO.setPhone(userLoginDTO.getPhone());
             return userSubscribeService.doService(userSubscribeDTO);

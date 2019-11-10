@@ -39,7 +39,7 @@ public class UserModifyService implements IService {
             userInfo.setEmail(userInfoDTO.getEmail());
             userInfo.setGender(userInfoDTO.getGender());
             userInfo.setUsername(userInfoDTO.getUsername());
-            userInfo.setCreateTime(DateUtils.now());
+            userInfo.setCreateTime(DateUtils.dateTime());
             userInfo.setDeleteStatus(false);
             userInfoMapper.insertSelective(userInfo);
         } else {

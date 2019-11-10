@@ -60,7 +60,7 @@ public class BlackListService implements IService {
         BeanUtils.copyProperties(blackListDTO, blackList);
         if (Constants.Event.ADD.equals(blackListDTO.getEvent())) { // 新增
             blackList.setDeleteStatus(false);
-            blackList.setCreateTime(DateUtils.now());
+            blackList.setCreateTime(DateUtils.dateTime());
             blackListMapper.insertSelective(blackList);
         } else {
             blackListMapper.updateByPrimaryKeySelective(blackList);

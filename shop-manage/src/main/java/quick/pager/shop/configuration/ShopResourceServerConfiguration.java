@@ -15,7 +15,8 @@ public class ShopResourceServerConfiguration extends ResourceServerConfigurerAda
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().mvcMatchers("/actuator/**", "/druid/**", "/css/**", "/admin/permit/**","/swagger-ui.html").permitAll()
+                .authorizeRequests().mvcMatchers("/actuator/**", "/druid/**", "/css/**", "/admin/permit/**",
+                "/v2/**","/webjars/**","/swagger-resources/**","/swagger-ui.html").permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();

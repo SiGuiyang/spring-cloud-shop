@@ -1,6 +1,7 @@
 package quick.pager.shop.response;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,8 +31,8 @@ public class DiscountCouponResponse extends BasicResponse {
 
     private String description;
 
-    private Date beginTime;
+    private LocalDateTime beginTime;
 
-    private Date endTime;
+    private LocalDateTime endTime;
 
 }

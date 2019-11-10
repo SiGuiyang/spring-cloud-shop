@@ -1,7 +1,5 @@
 package quick.pager.shop.controller.system;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +15,9 @@ import quick.pager.shop.dto.MenuDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.system.MenuService;
 
-@Api(description = "菜单管理")
+/**
+ * 菜单管理
+ */
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
 public class MenuController {
@@ -27,8 +27,10 @@ public class MenuController {
     private MenuService menuService;
 
 
+    /**
+     * 系统菜单列表
+     */
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    @ApiOperation("系统菜单列表")
     @PostMapping("/menu/list")
     public Response systemMenuList() {
         MenuDTO dto = new MenuDTO();

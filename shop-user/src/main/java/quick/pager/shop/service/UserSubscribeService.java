@@ -59,7 +59,7 @@ public class UserSubscribeService implements IService<LoginOrSubscribeResponse> 
         user = new User();
         user.setPhone(subscribeDTO.getPhone());
         user.setPassword(SecureUtil.md5(password));
-        user.setCreateTime(DateUtils.now());
+        user.setCreateTime(DateUtils.dateTime());
 
         userMapper.insertSelective(user);
 

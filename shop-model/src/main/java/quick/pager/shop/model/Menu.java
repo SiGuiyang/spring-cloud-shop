@@ -25,7 +25,7 @@ public class Menu extends Model {
     private Integer menuType;
 
     private String name;
-
+    @TableField(exist = false)
     private String text;
 
     private String path;

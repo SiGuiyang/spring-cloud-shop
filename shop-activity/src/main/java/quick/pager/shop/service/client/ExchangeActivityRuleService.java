@@ -73,7 +73,7 @@ public class ExchangeActivityRuleService implements IService {
         // 如果不存在，则新增
         if (ObjectUtils.isEmpty(activityGoods)) {
             exchangeActivityGoods.setRuleId(ruleId);
-            exchangeActivityGoods.setCreateTime(DateUtils.now());
+            exchangeActivityGoods.setCreateTime(DateUtils.dateTime());
             exchangeActivityGoods.setDeleteStatus(Boolean.FALSE);
             exchangeActivityGoodsMapper.insert(exchangeActivityGoods);
         } else {

@@ -1,6 +1,5 @@
 package quick.pager.shop.controller.activity;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,25 +23,33 @@ public class BannerManageController {
     @Autowired
     private BannerService bannerService;
 
-    @ApiOperation("banner 列表")
+    /**
+     * banner 列表
+     */
     @PostMapping("/activity/banner/list")
     public Response list(@RequestBody BannerDTO dto) {
         return bannerService.fetch(dto);
     }
 
-    @ApiOperation("banner 新增")
+    /**
+     * banner 新增
+     */
     @PostMapping("/activity/banner/create")
     public Response create(@RequestBody BannerDTO dto) {
         return bannerService.create(dto);
     }
 
-    @ApiOperation("banner 修改")
+    /**
+     * banner 修改
+     */
     @PutMapping("/activity/banner/modify")
     public Response modify(@RequestBody BannerDTO dto) {
         return bannerService.modify(dto);
     }
 
-    @ApiOperation("根据banner类型查询列表")
+    /**
+     * 根据banner类型查询列表
+     */
     @PostMapping("/activity/banner/listAll")
     public Response listAll(@RequestBody BannerDTO dto) {
         return bannerService.listAll(dto);

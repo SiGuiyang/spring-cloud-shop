@@ -1,17 +1,12 @@
 package quick.pager.shop.controller.dashboard;
 
-import io.swagger.annotations.ApiOperation;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import quick.pager.shop.BindingResultUtils;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.dto.BaseDTO;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.dashboard.DashboardService;
@@ -28,14 +23,18 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
 
-    @ApiOperation("首页周期统计数据")
+    /**
+     * 首页周期统计数据
+     */
     @PostMapping("/dashboard/cycle/statistics")
     public Response cycleStatistics(@RequestParam("event") String event) {
 
         return null;
     }
 
-    @ApiOperation("首页统计数据")
+    /**
+     * 首页统计数据
+     */
     @PostMapping("/dashboard/statistics")
     public Response statistics(@RequestBody BaseDTO dto) {
         return null;

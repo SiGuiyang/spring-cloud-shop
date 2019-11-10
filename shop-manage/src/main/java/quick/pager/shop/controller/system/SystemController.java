@@ -1,7 +1,5 @@
 package quick.pager.shop.controller.system;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +23,6 @@ import quick.pager.shop.utils.PrincipalUtils;
  *
  * @author siguiyang
  */
-@Api(description = "系统管理")
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
 public class SystemController {
@@ -35,7 +32,9 @@ public class SystemController {
     @Autowired
     private SysUserService sysUserService;
 
-    @ApiOperation("系统登陆用户吧信息")
+    /**
+     * 系统登陆用户吧信息
+     */
     @PostMapping("/system/adminInfo")
     public Response sysUserInfo() {
         LoginDTO dto = new LoginDTO();
@@ -52,8 +51,10 @@ public class SystemController {
         return new Response();
     }
 
+    /**
+     * 系统用户列表
+     */
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    @ApiOperation("系统用户列表")
     @PostMapping("/system/user")
     public Response systemUser(@RequestBody SysUserDTO dto) {
         dto.setEvent(Constants.Event.LIST);
@@ -61,8 +62,10 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
+    /**
+     * 修改系统用户
+     */
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    @ApiOperation("修改系统用户")
     @PostMapping("system/user/modify")
     public Response modifySystemUser(@Valid @RequestBody SysUserDTO dto, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
@@ -70,8 +73,10 @@ public class SystemController {
         return sysUserService.doService(dto);
     }
 
+    /**
+     * 修改状态系统用户
+     */
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
-    @ApiOperation("修改状态系统用户")
     @PostMapping("system/user/{id}")
     public Response delSystemUser(@PathVariable Long id, @RequestBody SysUserDTO dto) {
         SysUserDTO sysUserDTO = new SysUserDTO();

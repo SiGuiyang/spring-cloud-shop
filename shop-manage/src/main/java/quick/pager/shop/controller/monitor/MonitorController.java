@@ -1,7 +1,5 @@
 package quick.pager.shop.controller.monitor;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -15,7 +13,9 @@ import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 
-@Api(description = "监控服务")
+/**
+ * 监控服务
+ */
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
 public class MonitorController {
@@ -23,7 +23,9 @@ public class MonitorController {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    @ApiOperation("获取serviceUrl服务地址")
+    /**
+     * 获取serviceUrl服务地址
+     */
     @PostMapping("/monitor/serviceUrl")
     public Response<String> serviceUrl(@RequestParam("serviceId") String serviceId) {
 

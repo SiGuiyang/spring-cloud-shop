@@ -59,7 +59,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<DiscountCouponTemplat
 
         if (null == template.getId()) {
             template.setDeleteStatus(Boolean.FALSE);
-            template.setCreateTime(DateUtils.now());
+            template.setCreateTime(DateUtils.dateTime());
             this.save(template);
         } else {
             this.updateById(template);

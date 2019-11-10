@@ -1,7 +1,5 @@
 package quick.pager.shop.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ import quick.pager.shop.utils.DateUtils;
 @RestController
 @Slf4j
 @RequestMapping(Constants.Module.ACTIVITY)
-@Api(description = "优惠券接口")
 public class CouponController {
 
     @Autowired
@@ -38,7 +35,9 @@ public class CouponController {
     @Autowired
     private DiscountCouponService discountCouponService;
 
-    @ApiOperation("用户优惠券列表")
+    /**
+     * 用户优惠券列表
+     */
     @PostMapping("/coupon/list")
     public Response<List<DiscountCoupon>> coupons(@RequestBody CouponDTO dto) {
 
@@ -49,15 +48,18 @@ public class CouponController {
         return discountCouponService.list(dto);
     }
 
-
-    @ApiOperation("获取一张优惠券详情")
+    /**
+     * 获取一张优惠券详情
+     */
     @PostMapping("/coupon/{couponId}")
     public Response<DiscountCoupon> userCoupons(@PathVariable("couponId") Long couponId) {
 
         return discountCouponService.info(couponId);
     }
 
-    @ApiOperation("赠送优惠券")
+    /**
+     * 赠送优惠券
+     */
     @PostMapping("/coupon/gift/{userId}")
     public Response giftCoupon(@PathVariable("userId") Long userId) {
         AppDTO appDTO = new AppDTO();
@@ -65,7 +67,9 @@ public class CouponController {
         return giftCouponService.doService(appDTO);
     }
 
-    @ApiOperation("发送优惠券")
+    /**
+     * 发送优惠券
+     */
     @PostMapping("/coupon/publish")
     public Response publishCoupon(@RequestParam String file, @RequestParam Long templateId) {
         return discountCouponService.publish(file, templateId);

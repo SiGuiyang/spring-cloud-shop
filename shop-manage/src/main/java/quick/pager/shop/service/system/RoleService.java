@@ -147,7 +147,7 @@ public class RoleService implements IService {
         beanCopier.copy(dto, role, null);
         if (Constants.Event.ADD.equals(dto.getEvent())) { // 新增
             role.setDeleteStatus(Boolean.FALSE);
-            role.setCreateTime(DateUtils.now());
+            role.setCreateTime(DateUtils.dateTime());
             roleMapper.insert(role);
         } else {
             roleMapper.updateById(role);

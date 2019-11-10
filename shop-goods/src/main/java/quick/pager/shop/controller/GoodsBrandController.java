@@ -1,18 +1,13 @@
 package quick.pager.shop.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
@@ -31,7 +26,6 @@ import quick.pager.shop.utils.DateUtils;
  *
  * @author siguiyang
  */
-@Api(description = "商品品牌")
 @RestController
 @RequestMapping(Constants.Module.GOODS)
 public class GoodsBrandController {
@@ -41,61 +35,46 @@ public class GoodsBrandController {
     @Autowired
     private GoodsBrandGroupService goodsBrandGroupService;
 
-    @ApiOperation("新增品牌")
-    @RequestMapping(value = "/brand/create", method = RequestMethod.POST)
+    /**
+     * 新增品牌
+     */
+    @PostMapping("/brand/create")
     public Response create(@RequestBody GoodsBrandDTO dto) {
         GoodsBrand brand = this.convert(dto);
         brand.setDeleteStatus(Boolean.FALSE);
-        brand.setCreateTime(DateUtils.now());
-        brand.setUpdateTime(DateUtils.now());
-
-        boolean save = goodsBrandService.save(brand);
-        if (save) {
-            return new Response();
-        }
-
-        return new Response(ResponseStatus.Code.FAIL_CODE, "新增品牌失败");
+        brand.setCreateTime(DateUtils.dateTime());
+        goodsBrandService.save(brand);
+        return new Response();
     }
 
-    @ApiOperation("修改品牌")
-    @RequestMapping(value = "/brand/modify", method = RequestMethod.POST)
+    /**
+     * 修改品牌
+     */
+    @PutMapping("/brand/modify")
     public Response modify(@RequestBody GoodsBrandDTO dto) {
         GoodsBrand brand = this.convert(dto);
-        brand.setCreateUser(null);
-        brand.setUpdateTime(DateUtils.now());
-        boolean update = goodsBrandService.updateById(brand);
-        if (update) {
-            return new Response();
-        }
-
-        return new Response(ResponseStatus.Code.FAIL_CODE, "修改品牌失败");
+        goodsBrandService.updateById(brand);
+        return new Response();
     }
 
-    @ApiOperation("品牌列表")
-    @RequestMapping(value = "/brand/list", method = RequestMethod.POST)
+    /**
+     * 品牌列表
+     */
+    @PostMapping("/brand/list")
     public Response<List<GoodsBrandDTO>> list(@RequestBody GoodsBrandDTO dto) {
-
-        QueryWrapper<GoodsBrand> qw = new QueryWrapper<>();
-        qw.eq("delete_status", Boolean.FALSE);
-
-        if (!StringUtils.isEmpty(dto.getBrandName())) {
-            qw.likeRight("brand_name", dto.getBrandName());
+        Response<List<GoodsBrand>> response = goodsBrandService.goodsBrandList(dto);
+        List<GoodsBrandDTO> result = Collections.emptyList();
+        if (ResponseStatus.Code.SUCCESS != response.getCode()) {
+            result = response.getData().stream().map(this::convert).collect(Collectors.toList());
         }
 
-        if (!CollectionUtils.isEmpty(dto.getTimeRange())) {
-            qw.ge("create_time", dto.getTimeRange().get(0));
-            qw.le("create_time", dto.getTimeRange().get(1));
-        }
-
-        IPage<GoodsBrand> page = goodsBrandService.page(new Page<>(dto.getPage(), dto.getPageSize()), qw);
-
-        List<GoodsBrandDTO> collect = page.getRecords().stream().map(this::convert).collect(Collectors.toList());
-
-        return Response.toResponse(collect, page.getTotal());
+        return Response.toResponse(result, response.getTotal());
     }
 
-    @ApiOperation("App 品牌列表显示")
-    @RequestMapping(value = "/brand/app/list", method = RequestMethod.POST)
+    /**
+     * 品牌列表显示
+     */
+    @PostMapping("/brand/app/list")
     public Response list() {
 
 

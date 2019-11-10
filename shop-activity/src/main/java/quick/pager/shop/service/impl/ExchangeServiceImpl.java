@@ -48,7 +48,7 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, Exc
 
         if (null == dto.getId()) {
             exchangeActivity.setDeleteStatus(false);
-            exchangeActivity.setCreateTime(DateUtils.now());
+            exchangeActivity.setCreateTime(DateUtils.dateTime());
             this.baseMapper.insert(exchangeActivity);
         } else {
             this.baseMapper.updateById(exchangeActivity);

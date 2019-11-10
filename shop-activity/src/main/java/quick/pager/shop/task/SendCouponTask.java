@@ -48,8 +48,8 @@ public class SendCouponTask extends RecursiveTask<List<String>> {
                 discountCoupon.setUserId(v.getId());
                 discountCoupon.setTemplateId(discountCouponTemplate.getId());
                 discountCoupon.setUsed(Boolean.FALSE);
-                discountCoupon.setCreateTime(DateUtils.now());
-                discountCoupon.setUpdateTime(DateUtils.now());
+                discountCoupon.setCreateTime(DateUtils.dateTime());
+                discountCoupon.setUpdateTime(DateUtils.dateTime());
                 discountCoupon.setDeleteStatus(Boolean.FALSE);
 
                 discountCoupons.add(discountCoupon);

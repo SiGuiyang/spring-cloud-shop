@@ -1,6 +1,5 @@
 package quick.pager.shop.controller.common;
 
-import io.swagger.annotations.Api;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,9 @@ import quick.pager.shop.response.Response;
 import quick.pager.shop.response.EnumResponse;
 import quick.pager.shop.service.CommonEnumService;
 
-@Api(description = "常量枚举")
+/**
+ * 常量枚举
+ */
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
 public class CommonEnumController {

@@ -1,7 +1,5 @@
 package quick.pager.shop.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +14,9 @@ import quick.pager.shop.model.activity.DiscountCouponTemplate;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.CouponTemplateService;
 
-@Api(description = "优惠券模板管理")
+/**
+ * 优惠券模板管理
+ */
 @RestController
 @RequestMapping(Constants.Module.ACTIVITY)
 public class CouponTemplateController {
@@ -25,25 +25,33 @@ public class CouponTemplateController {
     @Autowired
     private CouponTemplateService couponTemplateService;
 
-    @ApiOperation("优惠券模板列表")
+    /**
+     * 优惠券模板列表
+     */
     @PostMapping("/coupon/template/list")
     public Response template(@RequestBody CouponTemplateDTO dto) {
         return couponTemplateService.list(dto);
     }
 
-    @ApiOperation("优惠券模板新增")
+    /**
+     * 优惠券模板新增
+     */
     @PostMapping("/coupon/template/create")
     public Response create(@RequestBody CouponTemplateDTO dto) {
         return couponTemplateService.modify(dto);
     }
 
-    @ApiOperation("优惠券模板修改")
+    /**
+     * 优惠券模板修改
+     */
     @PutMapping("/coupon/template/modify")
     public Response modify(@RequestBody CouponTemplateDTO dto) {
         return couponTemplateService.modify(dto);
     }
 
-    @ApiOperation("获取优惠券模板信息")
+    /**
+     * 获取优惠券模板信息
+     */
     @GetMapping("/coupon/template/{templateId}")
     public Response<DiscountCouponTemplate> templateInfo(@PathVariable("templateId") Long templateId) {
         return new Response<>(couponTemplateService.getById(templateId));

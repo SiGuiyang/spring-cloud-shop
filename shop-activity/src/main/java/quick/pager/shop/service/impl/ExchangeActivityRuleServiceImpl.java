@@ -33,7 +33,7 @@ public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleServ
 
         if (null == dto.getId()) {
             rule.setDeleteStatus(Boolean.FALSE);
-            rule.setCreateTime(DateUtils.now());
+            rule.setCreateTime(DateUtils.dateTime());
             exchangeActivityRuleMapper.insert(rule);
         } else {
             exchangeActivityRuleMapper.updateById(rule);

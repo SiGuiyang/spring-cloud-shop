@@ -1,7 +1,5 @@
 package quick.pager.shop.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +37,6 @@ import quick.pager.shop.service.UserSubscribeService;
  *
  * @author siguiyang
  */
-@Api(description = "用户模块")
 @RestController
 @RequestMapping(Constants.Module.USER)
 @Slf4j
@@ -64,7 +61,6 @@ public class UserController {
     /**
      * 登陆
      */
-    @ApiOperation("登陆")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Response<LoginOrSubscribeResponse> login(@RequestBody @Valid UserLoginDTO request, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
@@ -102,7 +98,9 @@ public class UserController {
         return userLoginService.doService(dto);
     }
 
-    @ApiOperation("修改用户信息")
+    /**
+     * 修改用户信息
+     */
     @PostMapping("/edit")
     public Response edit(@RequestBody @Valid UserInfoDTO request, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
@@ -120,7 +118,6 @@ public class UserController {
     /**
      * 注册
      */
-    @ApiOperation("注册")
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
     public Response subscribe(@RequestBody @Valid UserSubscribeDTO request, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
@@ -180,7 +177,6 @@ public class UserController {
     /**
      * 退出
      */
-    @ApiOperation("退出登陆")
     @RequestMapping(value = "/logout/{userId}", method = RequestMethod.POST)
     public Response logout(@PathVariable("userId") Long userId) {
         redisService.del(String.valueOf(userId));
@@ -190,7 +186,6 @@ public class UserController {
     /**
      * 用户信息
      */
-    @ApiOperation("用户信息")
     @RequestMapping(value = "/info/{userId}", method = RequestMethod.POST)
     public Response userInfo(@PathVariable("userId") Long userId) {
         UserInfoDTO dto = new UserInfoDTO();
@@ -201,7 +196,6 @@ public class UserController {
     /**
      * 忘记密码
      */
-    @ApiOperation("忘记密码")
     @RequestMapping(value = "/forget/password", method = RequestMethod.POST)
     public Response forgetPassword(@RequestBody @Valid ForgetPasswordDTO request, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
@@ -230,7 +224,9 @@ public class UserController {
         return userForgetPasswordService.doService(dto);
     }
 
-    @ApiOperation("站内信列表")
+    /**
+     * 站内信列表
+     */
     @RequestMapping(value = "/station/message", method = RequestMethod.POST)
     public Response message(@RequestBody @Valid AppRequest request, BindingResult bindingResult) {
         BindingResultUtils.getFieldErrorMessage(bindingResult);
@@ -242,7 +238,9 @@ public class UserController {
         return stationMessageService.doService(dto);
     }
 
-    @ApiOperation("未读站内信个数")
+    /**
+     * 未读站内信个数
+     */
     @PostMapping("/station/count")
     public Response messageCount(@PathVariable("userId") Long userId) {
         StationMessageDTO stationMessageDTO = new StationMessageDTO();

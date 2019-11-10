@@ -91,7 +91,7 @@ public class MenuService implements IService {
         BeanUtils.copyProperties(dto, menu);
         if (Constants.Event.ADD.equals(dto.getEvent())) { // 新增
             menu.setMenuType(1);
-            menu.setCreateTime(DateUtils.now());
+            menu.setCreateTime(DateUtils.dateTime());
             menu.setDeleteStatus(Boolean.FALSE);
             menuMapper.insert(menu);
         } else {

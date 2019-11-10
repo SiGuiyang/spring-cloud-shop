@@ -2,10 +2,10 @@ package quick.pager.shop.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * model 基类
@@ -33,11 +33,11 @@ public class Model implements Serializable {
     /**
      * 数据库记录创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
     /**
      * 数据库记录发生更新的时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
     /**
      * 数据库删除标志<br />
      * 1: 删除

@@ -131,8 +131,8 @@ public class DiscountCouponServiceImpl extends ServiceImpl<DiscountCouponMapper,
                             discountCoupon.setTemplateId(template.getId());
                             discountCoupon.setPhone(v.getPhone());
                             discountCoupon.setUsed(Boolean.FALSE);
-                            discountCoupon.setCreateTime(DateUtils.now());
-                            discountCoupon.setUpdateTime(DateUtils.now());
+                            discountCoupon.setCreateTime(DateUtils.dateTime());
+                            discountCoupon.setUpdateTime(DateUtils.dateTime());
                             discountCoupon.setDeleteStatus(Boolean.FALSE);
 
                             discountCoupons.add(discountCoupon);

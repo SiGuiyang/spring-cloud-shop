@@ -3,8 +3,6 @@ package quick.pager.shop.controller.common;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.URLUtil;
 import com.google.common.collect.Maps;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,14 +26,15 @@ import quick.pager.shop.utils.FileUtil;
 /**
  * 上传 | 下载文件
  */
-@Api(description = "上传")
 @Slf4j
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
 public class UploadController {
 
 
-    @ApiOperation("管理后端上传服务")
+    /**
+     * 管理后端上传服务
+     */
     @PostMapping("/upload")
     public Response<Map<String, String>> upload(@RequestParam MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
@@ -48,7 +47,9 @@ public class UploadController {
         return new Response<>(result);
     }
 
-    @ApiOperation("管理后端下载文件服务")
+    /**
+     * 管理后端下载文件服务
+     */
     @GetMapping("/download")
     public void download(@RequestParam String downloadFile, @RequestParam String downloadFilename, HttpServletResponse response) throws Exception {
 

@@ -168,7 +168,7 @@ public class DateUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(DateUtils.now());
+        System.out.println(DateUtils.dateTime());
 
         System.out.println(DateUtils.parse("2019-08-08 23:30:00", "yyyy-MM-dd HH:mm:ss"));
 

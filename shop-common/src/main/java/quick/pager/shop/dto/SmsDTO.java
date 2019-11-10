@@ -1,6 +1,5 @@
 package quick.pager.shop.dto;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,13 +12,21 @@ public class SmsDTO extends BaseDTO {
 
     private static final long serialVersionUID = 6004420887746924633L;
 
-    @ApiModelProperty(value = "手机号码", required = true)
+    /**
+     * 手机号码
+     */
     private String phone;
-    @ApiModelProperty(value = "发送短信事件源", required = true)
+    /**
+     * 发送短信事件源
+     */
     private String source;
-    @ApiModelProperty(value = "图形验证码", required = false)
+    /**
+     * 图形验证码
+     */
     private String graphicCode;
-
+    /**
+     * 短信内容
+     */
     private String content;
 
 }

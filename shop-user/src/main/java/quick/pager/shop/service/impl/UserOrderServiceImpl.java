@@ -111,7 +111,7 @@ public class UserOrderServiceImpl implements UserOrderService {
 
             SellerOrder sellerOrder = new SellerOrder();
             sellerOrder.setSellerId(dto.getSellerId());
-            sellerOrder.setCreateTime(DateUtils.now());
+            sellerOrder.setCreateTime(DateUtils.dateTime());
             sellerOrder.setDeleteStatus(false);
 
 

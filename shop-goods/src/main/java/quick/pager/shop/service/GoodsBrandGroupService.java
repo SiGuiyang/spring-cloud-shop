@@ -1,7 +1,9 @@
 package quick.pager.shop.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
+import quick.pager.shop.dto.goods.GoodsBrandGroupDTO;
 import quick.pager.shop.model.goods.GoodsBrandGroup;
+import quick.pager.shop.response.Response;
 
 /**
  * <p>
@@ -11,6 +13,10 @@ import quick.pager.shop.model.goods.GoodsBrandGroup;
  * @author Siguiyang
  * @since 2019-10-07
  */
-public interface GoodsBrandGroupService extends IService<GoodsBrandGroup> {
+public interface GoodsBrandGroupService extends IPageService<GoodsBrandGroup> {
 
+    /**
+     * 商品品牌组列表
+     */
+    Response<List<GoodsBrandGroup>> groupList(GoodsBrandGroupDTO dto);
 }

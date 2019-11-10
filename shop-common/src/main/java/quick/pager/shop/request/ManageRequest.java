@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ManageRequest extends LimitRequest {
+public class ManageRequest extends PageRequest {
 
     private static final long serialVersionUID = -5688667377694449671L;
     /**

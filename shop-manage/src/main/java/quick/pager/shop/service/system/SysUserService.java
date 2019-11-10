@@ -71,7 +71,7 @@ public class SysUserService implements IService {
         SysUser sysUser = new SysUser();
         sysUser.setId(id);
         sysUser.setDeleteStatus(deleteStatus);
-        sysUser.setUpdateTime(DateUtils.now());
+        sysUser.setUpdateTime(DateUtils.dateTime());
         sysUser.setUpdateUser(PrincipalUtils.getPrincipal().getName());
         sysUserMapper.updateById(sysUser);
         return new Response();
@@ -121,7 +121,7 @@ public class SysUserService implements IService {
         } else {
             sysUser.setCreateUser(PrincipalUtils.getPrincipal().getName());
             sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
-            sysUser.setCreateTime(DateUtils.now());
+            sysUser.setCreateTime(DateUtils.dateTime());
             sysUser.setDeleteStatus(false);
             sysUserMapper.insert(sysUser);
         }
@@ -136,7 +136,7 @@ public class SysUserService implements IService {
                 sysRole = new SysRole();
                 sysRole.setRoleId(id);
                 sysRole.setSysUserId(sysUser.getId());
-                sysRole.setCreateTime(DateUtils.now());
+                sysRole.setCreateTime(DateUtils.dateTime());
                 sysRole.setDeleteStatus(false);
                 sysRoleMapper.insert(sysRole);
                 index[0]++;
