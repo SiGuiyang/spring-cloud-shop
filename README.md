@@ -7,12 +7,16 @@
     数据中心: pager_shop 
     风控中心: pager-risk 
     授权中心: pager-auth
-    分布式文件系统采用apollo方式实现
     分布式定时任务采用xxl-job方式实现
     后台登陆采用oauth2.0密码模式登陆或者授权码模式登陆
-# 项目版本分支
- 1. master分支 注册中心与配置中心已使用alibaba nacos
- 2. consul分支 注册中心使用consul，配置中心使用 [apollo](https://github.com/Siguiyang/spring-cloud-shop/blob/master/README-apollo.md)。
+    注册中心与配置中心已使用alibaba nacos
+    
+# 目前开发计划
+    1. 为了提高前端的开发效率，目前正在开发自定义表单系统，大约会在12月中旬开发完成
+    2. 2019年初提供在线体验Demo
+    3. 2019年春节过后将会把商品体系与订单体系完成
+    4. 商品体系与订单体系完成后，将会与营销活动集成，打通整体电商平台
+    5. docker 版本将会在2019年初集成    
 
 # 设计初衷
     设计此项目是为了进一步学习Spring Cloud 技术栈。从项目实战深入Spring Cloud 各个微服务的解决方案。因此采用最常见的电商业务作为
