@@ -26,8 +26,8 @@ zuul:
       service-id: shop-demo
       strip-prefix: false
     shop-activity:
-      path: /activity/**
-      service-id: shop-activity
+      path: /fallback/**
+      service-id: shop-fallback
       strip-prefix: false
     shop-goods:
       path: /goods/**

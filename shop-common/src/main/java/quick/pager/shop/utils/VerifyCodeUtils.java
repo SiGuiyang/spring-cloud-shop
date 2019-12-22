@@ -12,6 +12,9 @@ import java.util.Random;
 
 /**
  * 验证码生成器
+ *
+ * @author siguiyang
+ * @version 3.0
  */
 public class VerifyCodeUtils {
 

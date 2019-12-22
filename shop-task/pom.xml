@@ -88,12 +88,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>quick.pager</groupId>
-            <artifactId>shop-client-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>

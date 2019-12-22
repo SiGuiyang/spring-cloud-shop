@@ -2,7 +2,6 @@ package quick.pager.shop.response;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.List;
-import lombok.Builder;
 import lombok.Data;
 import quick.pager.shop.constants.ResponseStatus;
 

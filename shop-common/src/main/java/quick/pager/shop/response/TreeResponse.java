@@ -8,6 +8,7 @@ import lombok.Data;
  * 树形结构响应对象
  *
  * @author siguiyang
+ * @version 3.0
  */
 @Data
 public class TreeResponse implements Serializable {

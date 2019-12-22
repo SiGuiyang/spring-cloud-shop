@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="quick.pager.shop.mapper.RoleMapper">
-    <resultMap id="BaseResultMap" type="quick.pager.shop.model.Role">
+<mapper namespace="quick.pager.shop.manage.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="quick.pager.shop.manage.model.Role">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>

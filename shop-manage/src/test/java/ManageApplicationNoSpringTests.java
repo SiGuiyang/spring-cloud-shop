@@ -1,12 +1,9 @@
-import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.StrUtil;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.junit.Test;
-import quick.pager.shop.model.SystemConfig;
 
 public class ManageApplicationNoSpringTests {
 

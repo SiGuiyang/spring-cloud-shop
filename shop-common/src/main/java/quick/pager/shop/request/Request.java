@@ -1,6 +1,6 @@
 package quick.pager.shop.request;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -37,11 +37,11 @@ public class Request implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
     /**
      * 启用标志
      */
@@ -50,5 +50,7 @@ public class Request implements Serializable {
      * 访问token
      */
     private String access_token;
+
+    private Boolean serverStatus;
 
 }

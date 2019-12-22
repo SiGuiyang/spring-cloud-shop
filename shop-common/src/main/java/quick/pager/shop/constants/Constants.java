@@ -21,7 +21,7 @@ public interface Constants {
      * 项目模块
      */
     interface Module {
-        String ACTIVITY = "/activity";
+        String ACTIVITY = "/fallback";
         String CART = "/cart";
         String GOODS = "/goods";
         String MANAGE = "/admin";
@@ -29,6 +29,7 @@ public interface Constants {
         String SELLER = "/seller";
         String USER = "/user";
         String RISK = "/risk";
+        String PLATFORM = "/platform";
     }
 
     /**

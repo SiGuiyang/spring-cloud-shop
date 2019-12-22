@@ -13,7 +13,7 @@ public interface RedisKeys {
         String SEND_COUPON_LIST = "send_coupon_list";
     }
 
-    // activity 模块
+    // fallback 模块
     interface ActivityKeys {
         // banner 列表
         String SHOP_BANNER_LIST = "shop_banner_list";

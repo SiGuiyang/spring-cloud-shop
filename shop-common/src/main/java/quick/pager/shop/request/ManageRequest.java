@@ -2,6 +2,7 @@ package quick.pager.shop.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.shop.request.PageRequest;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -13,11 +14,6 @@ public class ManageRequest extends PageRequest {
      */
     private String sysCode;
     /**
-     * 系统操作人
-     */
-    private String createUser;
-
-    /**
      * 起始时间
      */
     private String beginTime;
@@ -25,9 +21,4 @@ public class ManageRequest extends PageRequest {
      * 结束时间
      */
     private String endTime;
-
-    /**
-     * 启用标志
-     */
-    private Boolean deleteStatus;
 }

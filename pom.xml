@@ -61,13 +61,11 @@
     <modules>
         <module>shop-activity</module>
         <module>shop-auth</module>
-        <module>shop-client-feign</module>
         <module>shop-common</module>
         <module>shop-dependencies</module>
         <module>shop-gateway</module>
         <module>shop-goods</module>
         <module>shop-manage</module>
-        <module>shop-model</module>
         <module>shop-order</module>
         <module>shop-platform</module>
         <module>shop-risk</module>

@@ -16,6 +16,10 @@ spring:
           uri: lb://shop-auth
           predicates:
             - Path=/oauth/**
+        - id: shop-fallback
+          uri: lb://shop-fallback
+          predicates:
+            - Path=/fallback/**
         - id: shop-manage
           uri: lb://shop-manage
           predicates:
@@ -29,7 +33,14 @@ spring:
           predicates:
             - Path=/user/app/**
             - Path=/user/**
-
+        - id: shop-order
+          uri: lb://shop-order
+          predicates:
+            - Path=/order/**
+        - id: shop-goods
+          uri: lb://shop-goods
+          predicates:
+            - Path=/goods/**
 management:
   endpoints:
     web:

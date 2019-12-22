@@ -31,6 +31,19 @@ public class BeanCopier<T> implements Copier<T> {
     private T dest;
     private CopyOptions copyOptions;
 
+
+    /**
+     * 创建BeanCopier
+     *
+     * @param <T>         目标Bean类型
+     * @param source      来源对象，可以是Bean或者Map
+     * @param dest        目标Bean对象
+     * @return BeanCopier
+     */
+    public static <T> BeanCopier<T> create(Object source, T dest) {
+        return new BeanCopier<>(source, dest, CopyOptions.create().setIgnoreNullValue(Boolean.TRUE).setIgnoreError(Boolean.TRUE));
+    }
+
     /**
      * 创建BeanCopier
      *
