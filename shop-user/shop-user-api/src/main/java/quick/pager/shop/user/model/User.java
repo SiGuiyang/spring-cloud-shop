@@ -10,4 +10,8 @@ public class User extends Model {
 
     private static final long serialVersionUID = 6874571522967825468L;
 
+    private String phone;
+
+    private String password;
+
 }

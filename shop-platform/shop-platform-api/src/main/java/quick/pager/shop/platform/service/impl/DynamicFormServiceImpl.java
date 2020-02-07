@@ -1,12 +1,14 @@
 package quick.pager.shop.platform.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.platform.mapper.DynamicFormMapper;
 import quick.pager.shop.platform.model.DynamicForm;
+import quick.pager.shop.platform.request.DynamicFormSaveRequest;
 import quick.pager.shop.platform.service.DynamicFormService;
+import quick.pager.shop.service.impl.ServiceImpl;
+import quick.pager.shop.utils.BeanCopier;
 
 /**
  * <p>
@@ -23,8 +25,22 @@ public class DynamicFormServiceImpl extends ServiceImpl<DynamicFormMapper, Dynam
     public List<DynamicForm> get(String bizType) {
         DynamicForm df = new DynamicForm();
         df.setBizType(bizType);
-        QueryWrapper<DynamicForm> qw = new QueryWrapper<>(df);
+        return this.baseMapper.selectList(new QueryWrapper<>(df));
+    }
 
-        return this.baseMapper.selectList(qw);
+    @Override
+    public Long create(DynamicFormSaveRequest request) {
+        DynamicForm df = new DynamicForm();
+        BeanCopier.create(request, df).copy();
+        this.baseMapper.insert(df);
+        return df.getId();
+    }
+
+    @Override
+    public Long modify(DynamicFormSaveRequest request) {
+        DynamicForm df = new DynamicForm();
+        BeanCopier.create(request, df).copy();
+        this.baseMapper.updateById(df);
+        return df.getId();
     }
 }

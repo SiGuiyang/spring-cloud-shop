@@ -1,17 +1,19 @@
 package quick.pager.shop.user.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
+import quick.pager.shop.constants.RedisKeys;
+import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.response.Response;
 import quick.pager.shop.service.RedisService;
-import quick.pager.shop.user.service.StationMessageService;
-import quick.pager.shop.user.service.UserForgetPasswordService;
-import quick.pager.shop.user.service.UserInfoService;
-import quick.pager.shop.user.service.UserLoginService;
-import quick.pager.shop.user.service.UserModifyService;
-import quick.pager.shop.user.service.UserSubscribeService;
+import quick.pager.shop.user.param.UserLoginParam;
+import quick.pager.shop.user.service.UserService;
 
 /**
  * 用户管理<br />
@@ -25,60 +27,42 @@ import quick.pager.shop.user.service.UserSubscribeService;
 public class UserController {
 
     @Autowired
-    private UserInfoService userInfoService;
-    @Autowired
-    private UserModifyService userModifyService;
-    @Autowired
-    private UserLoginService userLoginService;
-    @Autowired
-    private UserSubscribeService userSubscribeService;
-    @Autowired
-    private UserForgetPasswordService userForgetPasswordService;
-    @Autowired
-    private StationMessageService stationMessageService;
+    private UserService userService;
     @Autowired
     private RedisService redisService;
 
 
-//    /**
-//     * 登陆
-//     */
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public Response<LoginOrSubscribeResponse> login(@RequestBody @Valid UserLoginDTO request, BindingResult bindingResult) {
-//        BindingResultUtils.getFieldErrorMessage(bindingResult);
-//        String key = RedisKeys.UserKeys.SHOP_LOGIN + request.getPhone();
-//
-//        if (null != redisService.get(key)) {
-//            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.REPEAT_SUBMIT);
-//        }
-//
-//        // 密码为空 则使用短信验证码登陆
-//        if (StringUtils.isEmpty(request.getPassword())) {
-//            log.info("密码为空，使用短信验证码登陆 phone = {}", request.getPhone());
-//            // 验证短信验证码
-//            String smsKey = RedisKeys.UserKeys.SHOP_LOGIN_SMS + request.getPhone();
-//
-//            String smsCode = redisService.get(smsKey);
-//
-//            // 短信验证码过期
-//            if (StringUtils.isEmpty(smsCode)) {
-//                return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.SMS_CODE_EXPIRE);
-//            }
-//
-//            // 短信验证码是否匹配
-//            if (!smsCode.equalsIgnoreCase(request.getVerifyCode())) {
-//                return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.SMS_CODE_ERROR);
-//            }
-//        }
-//
-//        UserLoginDTO dto = new UserLoginDTO();
-//        dto.setPassword(request.getPassword());
-//        dto.setPhone(request.getPhone());
-//
-//        redisService.set(key, request.getPhone(), 30);
-//
-//        return userLoginService.doService(dto);
-//    }
+    /**
+     * 登陆
+     */
+    @PostMapping("/login")
+    public Response login(@RequestBody UserLoginParam param) {
+        String key = RedisKeys.UserKeys.SHOP_LOGIN + param.getPhone();
+
+        if (null != redisService.get(key)) {
+            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.REPEAT_SUBMIT);
+        }
+
+        // 密码为空 则使用短信验证码登陆
+        if (StringUtils.isEmpty(param.getPassword())) {
+            log.info("密码为空，使用短信验证码登陆 phone = {}", param.getPhone());
+            // 验证短信验证码
+            String smsKey = RedisKeys.UserKeys.SHOP_LOGIN_SMS + param.getPhone();
+
+            String smsCode = redisService.get(smsKey);
+
+            // 短信验证码过期
+            if (StringUtils.isEmpty(smsCode)) {
+                return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.SMS_CODE_EXPIRE);
+            }
+
+            // 短信验证码是否匹配
+            if (!smsCode.equalsIgnoreCase(param.getVerifyCode())) {
+                return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.SMS_CODE_ERROR);
+            }
+        }
+        return userService.login(param.getPhone(), param.getPassword());
+    }
 //
 //    /**
 //     * 修改用户信息

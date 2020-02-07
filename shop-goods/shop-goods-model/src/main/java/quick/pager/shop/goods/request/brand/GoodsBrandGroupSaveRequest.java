@@ -1,10 +1,18 @@
 package quick.pager.shop.goods.request.brand;
 
-import java.io.Serializable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import quick.pager.shop.request.Request;
 
+/**
+ * 商品品牌组保存
+ * request
+ *
+ * @author siguiyang
+ */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class GoodsBrandGroupSaveRequest implements Serializable {
+public class GoodsBrandGroupSaveRequest extends Request {
     private static final long serialVersionUID = 5927681281149773666L;
 
     /**

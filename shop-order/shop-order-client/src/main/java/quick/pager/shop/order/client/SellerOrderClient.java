@@ -21,12 +21,18 @@ public interface SellerOrderClient {
 
     /**
      * 商户订单列表
+     *
+     * @param request 请求参数
+     * @return 商户订单列表
      */
     @RequestMapping(value = "/seller/orders", method = RequestMethod.POST)
     Response sellerOrders(@RequestBody SellerOrderPageRequest request);
 
     /**
      * 商户订单详情
+     *
+     * @param sellerOrderId 商户订单主键
+     * @return 商户订单详情
      */
     @RequestMapping(value = "/seller/{sellerOrderId}/order", method = RequestMethod.POST)
     Response sellerOrderInfo(@PathVariable("sellerOrderId") Long sellerOrderId);
@@ -34,16 +40,18 @@ public interface SellerOrderClient {
     /**
      * 创建商户订单
      *
-     * @param sellerOrder 订单
+     * @param request 请求参数
+     * @return 商户订单主键
      */
     @RequestMapping(value = "/seller/create", method = RequestMethod.POST)
-    Response sellerOrderCreate(@RequestBody SellerOrderSaveRequest sellerOrder);
+    Response<Long> create(@RequestBody SellerOrderSaveRequest request);
 
     /**
      * 修改商户订单
      *
      * @param sellerOrder 订单
+     * @return 商户订单主键
      */
     @RequestMapping(value = "/seller/mofidy", method = RequestMethod.PUT)
-    Response sellerOrderModify(@RequestBody SellerOrderSaveRequest sellerOrder);
+    Response<Long> modify(@RequestBody SellerOrderSaveRequest sellerOrder);
 }

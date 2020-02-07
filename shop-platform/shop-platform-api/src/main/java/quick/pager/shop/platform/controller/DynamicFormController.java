@@ -3,6 +3,7 @@ package quick.pager.shop.platform.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.ConstantsClient;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.platform.model.DynamicForm;
 import quick.pager.shop.platform.request.DynamicFormSaveRequest;
 import quick.pager.shop.platform.response.DynamicFormResponse;
@@ -29,7 +32,7 @@ import quick.pager.shop.utils.BeanCopier;
  * @author siguiyang
  * @since 2019-12-14
  */
-@Controller
+@RestController
 @RequestMapping(ConstantsClient.PLATFORM)
 public class DynamicFormController {
 
@@ -41,10 +44,7 @@ public class DynamicFormController {
      */
     @PostMapping("/dynamic/form/create")
     public Response<Long> create(@RequestBody DynamicFormSaveRequest request) {
-        DynamicForm df = new DynamicForm();
-        BeanCopier.create(request, df).copy();
-        dynamicFormService.save(df);
-        return new Response<>(df.getId());
+        return new Response<>(dynamicFormService.create(request));
     }
 
     /**
@@ -53,10 +53,10 @@ public class DynamicFormController {
     @PostMapping("/dynamic/form/modify")
     public Response<Long> modify(@RequestBody DynamicFormSaveRequest request) {
 
-        DynamicForm df = new DynamicForm();
-        BeanCopier.create(request, df).copy();
-        dynamicFormService.updateById(df);
-        return new Response<>(df.getId());
+        if (Objects.isNull(request.getId())) {
+            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+        }
+        return new Response<>(dynamicFormService.modify(request));
     }
 
     /**
@@ -66,17 +66,10 @@ public class DynamicFormController {
     public Response<List<DynamicFormResponse>> get(@RequestParam String bizType) {
 
         List<DynamicForm> forms = dynamicFormService.get(bizType);
-        return new Response<>(Optional.ofNullable(forms).orElse(Collections.emptyList()).stream().map(this::convert).collect(Collectors.toList()));
-    }
-
-    /**
-     * 数据转换
-     * DynamicForm -> DynamicFormResponse
-     */
-    private DynamicFormResponse convert(DynamicForm df) {
-        DynamicFormResponse response = new DynamicFormResponse();
-        BeanCopier.create(df, response).copy();
-        return response;
+        List<DynamicFormResponse> responseList = Optional.ofNullable(forms).orElse(Collections.emptyList()).stream()
+                .map(item -> BeanCopier.create(item, new DynamicFormResponse()).copy())
+                .collect(Collectors.toList());
+        return new Response<>(responseList);
     }
 
 }

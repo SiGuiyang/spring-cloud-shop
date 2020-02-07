@@ -1,6 +1,7 @@
 package quick.pager.shop.manage.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ public class GeneratorController {
     /**
      * 所有表
      */
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_GENERATE')")
     @PostMapping("/generator/tables")
     public Response tables(@RequestBody GeneratorPageParam dto) {
 
@@ -36,6 +38,7 @@ public class GeneratorController {
     /**
      * 表的元素信息
      */
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_GENERATE')")
     @GetMapping("generator/tables")
     public Response tables(@RequestParam String tableSchema, @RequestParam String tableName) {
 
@@ -45,6 +48,7 @@ public class GeneratorController {
     /**
      * 代码自动生成
      */
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_GENERATE')")
     @PostMapping("/generator")
     public Response generator(@RequestBody GeneratorPageParam dto) {
         return generatorService.generator(dto.getTableSchema(), dto.getTableName());

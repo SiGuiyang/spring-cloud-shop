@@ -1,9 +1,11 @@
 package quick.pager.shop.manage.service.system;
 
 import java.util.List;
-import quick.pager.shop.manage.param.system.RoleParam;
+import quick.pager.shop.manage.param.system.RoleOtherParam;
+import quick.pager.shop.manage.param.system.RolePageParam;
+import quick.pager.shop.manage.param.system.RoleSaveParam;
 import quick.pager.shop.manage.response.PermissionResponse;
-import quick.pager.shop.manage.model.Role;
+import quick.pager.shop.manage.response.system.RoleResponse;
 import quick.pager.shop.response.Response;
 
 /**
@@ -17,22 +19,22 @@ public interface RoleService {
     /**
      * 查询列表
      */
-    Response<List<Role>> queryPage(RoleParam param);
+    Response<List<RoleResponse>> queryPage(RolePageParam param);
 
     /**
      * 查询列表，无分页
      */
-    Response<List<Role>> queryList(RoleParam param);
+    Response<List<RoleResponse>> queryList(RoleOtherParam param);
 
     /**
      * 新增
      */
-    Response<Long> create(RoleParam param);
+    Response<Long> create(RoleSaveParam param);
 
     /**
      * 修改
      */
-    Response<Long> modify(RoleParam param);
+    Response<Long> modify(RoleSaveParam param);
 
     /**
      * 删除

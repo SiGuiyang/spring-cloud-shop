@@ -17,22 +17,32 @@ import java.util.Random;
  * @version 3.0
  */
 public class VerifyCodeUtils {
-
-
-    // 图片的宽度。
+    /**
+     * 图片的宽度
+     */
     private int width = 120;
-    // 图片的高度。
+    /**
+     * 图片的高度
+     */
     private int height = 40;
-    // 验证码字符个数
+    /**
+     * 验证码字符个数
+     */
     private int codeCount = 4;
-    // 验证码
+    /**
+     * 验证码
+     */
     private String code = null;
-    // 验证码图片Buffer
+    /**
+     * 验证码图片Buffer
+     */
     private BufferedImage buffImg = null;
 
     private char[] codeSequence = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'M', 'N', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '8', '9'};
-    // 生成随机数
+    /**
+     * 生成随机数
+     */
     private Random random = new Random();
 
     public VerifyCodeUtils() {
@@ -64,8 +74,10 @@ public class VerifyCodeUtils {
     public void createCode() {
         int codeX = 0;
         int fontHeight = 0;
-        fontHeight = height - 5;// 字体的高度
-        codeX = width / (codeCount + 3);// 每个字符的宽度
+        // 字体的高度
+        fontHeight = height - 5;
+        // 每个字符的宽度
+        codeX = width / (codeCount + 3);
 
         // 图像buffer
         buffImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -111,9 +123,10 @@ public class VerifyCodeUtils {
     }
 
     public void write(String path) throws IOException {
-        OutputStream sos = new FileOutputStream(path);
-        this.write(sos);
-        sos.close();
+        OutputStream out = new FileOutputStream(path);
+        this.write(out);
+        out.flush();
+        out.close();
     }
 
     public void write(OutputStream sos) throws IOException {
@@ -139,13 +152,11 @@ public class VerifyCodeUtils {
         }
 
         private byte[] hex2byte(String str) {
-            if (str == null)
+            if (str == null || str.isEmpty()) {
                 return null;
+            }
             str = str.trim();
             int len = str.length();
-            if (len == 0 || len % 2 == 1)
-                return null;
-
             byte[] b = new byte[len / 2];
             try {
                 for (int i = 0; i < str.length(); i += 2) {

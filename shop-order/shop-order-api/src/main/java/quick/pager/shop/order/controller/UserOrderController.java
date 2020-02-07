@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.order.model.UserOrder;
-import quick.pager.shop.order.request.OrderRequest;
+import quick.pager.shop.order.request.OrderPageRequest;
 import quick.pager.shop.order.request.UserOrderSaveRequest;
+import quick.pager.shop.order.response.OrderResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.order.service.UserOrderService;
 
@@ -33,24 +33,24 @@ public class UserOrderController {
      * 用户订单列表
      */
     @PostMapping(value = "/user/orders")
-    public Response<List<Object>> userOrderList(@RequestBody OrderRequest request) {
+    public Response<List<OrderResponse>> orders(@RequestBody OrderPageRequest request) {
 
-        return userOrderService.userOrderList(request);
+        return userOrderService.queryPage(request);
     }
 
     /**
      * App订单详情
      */
-    @RequestMapping(value = "/user/detail/{orderId}")
-    public Response<Object> userOrderDetail(@PathVariable("orderId") Long orderId) {
-        return userOrderService.userOrderDetail(orderId);
+    @RequestMapping(value = "/user/{orderId}/detail")
+    public Response<Object> detail(@PathVariable("orderId") Long orderId) {
+        return userOrderService.detail(orderId);
     }
 
     /**
      * 创建订单
      */
     @RequestMapping(value = "/user/create")
-    public Response orderCreate(@RequestBody UserOrderSaveRequest request) {
-        return userOrderService.orderCreate(request);
+    public Response<Long> create(@RequestBody UserOrderSaveRequest request) {
+        return userOrderService.create(request);
     }
 }

@@ -16,24 +16,14 @@ spring:
     exclude: org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
 
 feign:
-  hystrix:
+  sentinel:
     enabled: true
-ribbon:
-  ReadTimeout:  30000
-  ConnectTimeout:  15000
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000
 management:
   endpoints:
     web:
       exposure:
         include: refresh,health,info,hystrix.stream
 
-mybatis:
+mybatis-plus:
   mapper-locations: classpath*:quick/pager/shop/mapper/*.xml
   type-aliases-package: quick.pager.shop.model

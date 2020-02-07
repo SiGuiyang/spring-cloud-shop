@@ -35,9 +35,13 @@ public interface ConstantsClient {
      */
     String PLATFORM_CLIENT = "shop-platform";
     /**
+     * 定时任务服务
+     */
+    String JOB_CLIENT = "shop-job";
+    /**
      * 活动请求前缀
      */
-    String ACTIVITY = "/fallback";
+    String ACTIVITY = "/activity";
     /**
      * 商品中心请求前缀
      */
@@ -66,4 +70,8 @@ public interface ConstantsClient {
      * 平台中心请求前缀
      */
     String PLATFORM = "/platform";
+    /**
+     * 定时任务前缀
+     */
+    String JOB = "/job";
 }

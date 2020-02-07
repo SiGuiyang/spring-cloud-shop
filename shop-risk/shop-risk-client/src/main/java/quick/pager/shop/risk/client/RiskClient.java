@@ -16,32 +16,45 @@ import quick.pager.shop.risk.request.BlackListSaveRequest;
  * 风控服务
  *
  * @author siguiyang
+ * @version 3.0
  */
 @FeignClient(value = ConstantsClient.RISK_CLIENT, path = ConstantsClient.RISK, fallbackFactory = RiskClientFallbackFactory.class)
 public interface RiskClient {
 
 
     /**
-     * 列表
+     * 黑名单列表
+     *
+     * @param request 请求参数
+     * @return 黑名单列表
      */
     @PostMapping(value = "/blackList/list")
-    Response getBlackLists(@RequestBody BlackListPageRequest request);
+    Response queryList(@RequestBody BlackListPageRequest request);
 
     /**
-     * 新增
+     * 新增黑名单
+     *
+     * @param request 请求参数
+     * @return 黑名单主键
      */
-    @PostMapping(value = "/blackList")
-    Response addBlackLists(@RequestBody BlackListSaveRequest request);
+    @PostMapping(value = "/create")
+    Response<Long> create(@RequestBody BlackListSaveRequest request);
 
     /**
      * 修改
+     *
+     * @param request 请求参数
+     * @return 黑名单主键
      */
-    @PutMapping(value = "/blackList")
-    Response modifyBlackLists(@RequestBody BlackListSaveRequest request);
+    @PutMapping(value = "/modify")
+    Response<Long> modify(@RequestBody BlackListSaveRequest request);
 
     /**
-     * 删除
+     * 删除黑名单
+     *
+     * @param id 黑名单主键
+     * @return 黑名单主键
      */
-    @DeleteMapping(value = "/{id}/blackList")
-    Response delBlackLists(@PathVariable("id") Long id);
+    @DeleteMapping(value = "/{id}/delete")
+    Response<Long> delete(@PathVariable("id") Long id);
 }

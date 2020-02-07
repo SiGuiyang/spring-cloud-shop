@@ -1,7 +1,7 @@
 package quick.pager.shop.client;
 
 import feign.hystrix.FallbackFactory;
-import java.util.Set;
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.shop.dto.UserDTO;
 import quick.pager.shop.resp.Response;
 
+/**
+ * 授权client
+ *
+ * @author siguiyang
+ */
 @FeignClient(value = "shop-manage", path = "/admin", fallbackFactory = AuthClient.AuthClientFactory.class)
 public interface AuthClient {
 
@@ -17,6 +22,7 @@ public interface AuthClient {
      * 获取系统用户
      *
      * @param phone 手机号码
+     * @return 根据手机号码查询用户
      */
     @RequestMapping(value = "/permit/sysUser", method = RequestMethod.POST)
     Response<UserDTO> getSysUser(@RequestParam("phone") String phone);
@@ -25,12 +31,15 @@ public interface AuthClient {
      * 根据系统用户Id查询此用户所拥有的角色
      *
      * @param sysUserId 系统用户Id
+     * @return 返回当前系统登陆用户拥有的权限
      */
     @RequestMapping(value = "/permit/permission/{sysUserId}", method = RequestMethod.POST)
-    Response<Set<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId);
+    Response<List<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId);
 
     /**
      * 熔断工厂
+     *
+     * @author siguiyang
      */
     class AuthClientFactory implements FallbackFactory<AuthClient> {
 
@@ -43,7 +52,7 @@ public interface AuthClient {
                 }
 
                 @Override
-                public Response<Set<String>> getRolesBySysUserId(Long sysUserId) {
+                public Response<List<String>> getRolesBySysUserId(Long sysUserId) {
                     return new Response<>(3000, "网络连接错误，请稍后重试");
                 }
             };

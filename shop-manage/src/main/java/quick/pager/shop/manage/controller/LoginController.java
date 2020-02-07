@@ -1,5 +1,6 @@
 package quick.pager.shop.manage.controller;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,6 @@ import quick.pager.shop.constants.Constants;
 import quick.pager.shop.manage.param.LoginDTO;
 import quick.pager.shop.manage.model.SysUser;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.manage.service.system.impl.LoginService;
 import quick.pager.shop.manage.service.system.impl.SysUserClientService;
 
 /**
@@ -24,22 +24,8 @@ import quick.pager.shop.manage.service.system.impl.SysUserClientService;
 public class LoginController {
 
     @Autowired
-    private LoginService loginService;
-    @Autowired
     private SysUserClientService sysUserClientService;
 
-    /**
-     * 登陆
-     */
-    @PostMapping("/permit/login")
-    public Response login(@RequestParam("phone") String phone, @RequestParam("password") String password) {
-
-        LoginDTO dto = new LoginDTO();
-        dto.setPhone(phone);
-        dto.setPassword(password);
-
-        return loginService.doService(dto);
-    }
 
     /**
      * 获取系统用户
@@ -49,8 +35,13 @@ public class LoginController {
         return sysUserClientService.querySysUserByUsername(phone);
     }
 
+    /**
+     * 登陆获取用户的权限
+     *
+     * @param sysUserId 登陆的用户主键
+     */
     @PostMapping("/permit/permission/{sysUserId}")
-    public Response<Set<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
+    public Response<List<String>> getRolesBySysUserId(@PathVariable("sysUserId") Long sysUserId) {
         return sysUserClientService.getRolesBySysUserId(sysUserId);
     }
 

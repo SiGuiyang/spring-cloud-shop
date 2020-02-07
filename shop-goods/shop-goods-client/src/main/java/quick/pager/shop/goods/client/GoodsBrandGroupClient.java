@@ -22,24 +22,35 @@ public interface GoodsBrandGroupClient {
 
     /**
      * 新建商品品牌组
+     *
+     * @param request 请求参数
+     * @return 品牌组主键
      */
     @RequestMapping(value = "/brand/group/create", method = RequestMethod.POST)
-    Response create(@RequestBody GoodsBrandGroupSaveRequest request);
+    Response<Long> create(@RequestBody GoodsBrandGroupSaveRequest request);
 
     /**
      * 修改商品品牌组
+     *
+     * @param request 请求参数
+     * @return 品牌组主键
      */
     @RequestMapping(value = "/brand/group/modify", method = RequestMethod.POST)
-    Response modify(@RequestBody GoodsBrandGroupSaveRequest request);
+    Response<Long> modify(@RequestBody GoodsBrandGroupSaveRequest request);
 
     /**
      * 商品品牌组列表
+     *
+     * @param request 请求参数
+     * @return 品牌组列表
      */
     @RequestMapping(value = "/brand/group/list", method = RequestMethod.POST)
     Response<List<GoodsBrandGroupResponse>> list(@RequestBody GoodsBrandGroupPageRequest request);
 
     /**
      * 商品品牌组所有列表
+     *
+     * @return 品牌组列表
      */
     @RequestMapping(value = "/brand/group/listAll", method = RequestMethod.POST)
     Response<List<GoodsBrandGroupResponse>> listAll();

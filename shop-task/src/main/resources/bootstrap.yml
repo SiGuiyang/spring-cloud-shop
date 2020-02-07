@@ -14,8 +14,8 @@ management:
         include: refresh,health,info,hystrix.stream
 xxl:
   job:
-    log-path: ./logs/xxl-job/jobhandler
-    admin-address: http://localhost:9999/xxl-job-admin
+    log-path: ./logs/quick.pager.shop.job-job/jobhandler
+    admin-address: http://localhost:9988/quick.pager.shop.job-job-admin
     executor:
       appname: shop-task
       port: 8098

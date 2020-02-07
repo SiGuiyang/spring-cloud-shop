@@ -1,17 +1,12 @@
 package quick.pager.shop.user.service;
 
-import java.util.List;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import quick.pager.shop.dto.BaseDTO;
-import quick.pager.shop.user.response.AreaResponse;
-import quick.pager.shop.response.Response;
-import quick.pager.shop.service.IService;
-
-@Service
-@Slf4j
-public class AreaService implements IService<AreaResponse> {
+/**
+ * 地区服务
+ *
+ * @author siguiyang
+ * @version 3.0
+ */
+public interface AreaService {
 
 //    @Autowired
 //    private AreaMapper areaMapper;
@@ -20,19 +15,19 @@ public class AreaService implements IService<AreaResponse> {
 //    @Autowired
 //    private ProvinceMapper provinceMapper;
 
-    @Override
-    public Response<AreaResponse> doService(BaseDTO dto) {
-
-        AreaResponse areaDTO = new AreaResponse();
-
-//        List<Area> areas = areaMapper.selectAll();
-//        List<City> cities = cityMapper.selectAll();
-//        List<Province> provinces = provinceMapper.selectAll();
+//    @Override
+//    public Response<AreaResponse> doService(BaseDTO dto) {
 //
-//        areaDTO.setAreas(areas);
-//        areaDTO.setCities(cities);
-//        areaDTO.setProvinces(provinces);
-
-        return new Response<>(areaDTO);
-    }
+//        AreaResponse areaDTO = new AreaResponse();
+//
+////        List<Area> areas = areaMapper.selectAll();
+////        List<City> cities = cityMapper.selectAll();
+////        List<Province> provinces = provinceMapper.selectAll();
+////
+////        areaDTO.setAreas(areas);
+////        areaDTO.setCities(cities);
+////        areaDTO.setProvinces(provinces);
+//
+//        return new Response<>(areaDTO);
+//    }
 }

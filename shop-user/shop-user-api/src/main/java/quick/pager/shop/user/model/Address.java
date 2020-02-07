@@ -4,10 +4,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.Model;
 
+/**
+ * 地址
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Address extends Model {
-    private Long id;
+    private static final long serialVersionUID = 6960557030672760699L;
 
     private Long userId;
 

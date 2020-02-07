@@ -6,15 +6,25 @@ package quick.pager.shop.constants;
  * @author siguiyang
  */
 public interface Constants {
-    // 冻结
+    /**
+     * 冻结
+     */
     Byte FROZEN = 1;
-    // 正常
+    /**
+     * 正常
+     */
     Byte NORMAL = 2;
-    // 删除
+    /**
+     * 删除
+     */
     Byte DELETE = 3;
-    // 成功
+    /**
+     * 成功
+     */
     String SUCCESS = "SUCCESS";
-    // 失败
+    /**
+     * 失败
+     */
     String FAILURE = "FAILURE";
 
     /**

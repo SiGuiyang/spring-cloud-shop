@@ -37,12 +37,12 @@ public interface SystemConfigClient {
     /**
      * 查询配置列表，无分页
      */
-    @RequestMapping(value = "/config/queryList", method = RequestMethod.POST)
-    Response<List<SystemConfigResponse>> queryList(@RequestBody SystemConfigOtherRequest request);
+    @RequestMapping(value = "/config/list", method = RequestMethod.GET)
+    Response<List<SystemConfigResponse>> queryList(SystemConfigOtherRequest request);
 
     /**
      * 查询配置列表分页
      */
-    @RequestMapping(value = "/config/queryPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/config/page", method = RequestMethod.POST)
     Response<List<SystemConfigResponse>> queryPage(@RequestBody SystemConfigPageRequest request);
 }

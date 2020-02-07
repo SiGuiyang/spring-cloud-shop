@@ -8,7 +8,10 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
-
+  redis:
+    host: 101.132.121.178
+    port: 6379
+    password: abc+123
 management:
   endpoints:
     web:

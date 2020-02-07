@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.shop.constants.ConstantsClient;
-import quick.pager.shop.request.ManageRequest;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.user.fallback.UserFallbackFactory;
+import quick.pager.shop.user.request.StationLetterRequest;
 import quick.pager.shop.user.request.UserRequest;
 import quick.pager.shop.user.response.AddressResponse;
 import quick.pager.shop.user.response.StationLetterResponse;
@@ -48,7 +47,7 @@ public interface UserClient {
      * 查询站内信列表
      */
     @RequestMapping(value = "/queryStationLetter", method = RequestMethod.POST)
-    Response<List<StationLetterResponse>> queryStationLetter(@RequestBody ManageRequest request);
+    Response<List<StationLetterResponse>> queryStationLetter(@RequestBody StationLetterRequest request);
 
     /**
      * 批量获取用户信息

@@ -1,14 +1,12 @@
 package quick.pager.shop.manage.service.system.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -17,13 +15,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import quick.pager.shop.manage.mapper.MenuMapper;
 import quick.pager.shop.manage.mapper.RoleMapper;
-import quick.pager.shop.manage.param.system.RoleParam;
+import quick.pager.shop.manage.param.system.RoleOtherParam;
+import quick.pager.shop.manage.param.system.RolePageParam;
+import quick.pager.shop.manage.param.system.RoleSaveParam;
 import quick.pager.shop.manage.response.PermissionResponse;
 import quick.pager.shop.manage.response.system.MenuResponse;
+import quick.pager.shop.manage.response.system.RoleResponse;
 import quick.pager.shop.manage.service.system.RoleService;
 import quick.pager.shop.manage.model.Menu;
 import quick.pager.shop.manage.model.Role;
 import quick.pager.shop.response.Response;
+import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
@@ -34,24 +36,30 @@ import quick.pager.shop.utils.DateUtils;
  */
 @Service
 @Slf4j
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
-    @Autowired
-    private RoleMapper roleMapper;
     @Autowired
     private MenuMapper menuMapper;
 
     @Override
-    public Response<List<Role>> queryPage(RoleParam param) {
-        Page<Role> page = new Page<>(param.getPage(), param.getPageSize());
+    public Response<List<RoleResponse>> queryPage(RolePageParam param) {
         Role role = new Role();
-        role.setRoleName(param.getRoleName());
         role.setDeleteStatus(param.getDeleteStatus());
-        return Response.toResponse(roleMapper.selectPage(page, new QueryWrapper<>(role)));
+        if (StringUtils.isNotBlank(param.getRoleName())) {
+
+            role.setRoleName(param.getRoleName());
+        }
+        QueryWrapper<Role> qw = new QueryWrapper<>(role);
+
+        Response<List<Role>> response = this.toPage(param.getPage(), param.getPageSize(), qw);
+
+        return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
+                        .map(item -> BeanCopier.create(item, new RoleResponse()).copy()).collect(Collectors.toList())
+                , response.getTotal());
     }
 
     @Override
-    public Response<List<Role>> queryList(RoleParam param) {
+    public Response<List<RoleResponse>> queryList(RoleOtherParam param) {
 
         Role role = new Role();
         role.setDeleteStatus(Boolean.FALSE);
@@ -59,25 +67,26 @@ public class RoleServiceImpl implements RoleService {
         if (StringUtils.isNotEmpty(param.getRoleName())) {
             role.setRoleName(param.getRoleName());
         }
+        List<Role> roles = this.list(new QueryWrapper<>(role));
 
-        return new Response<>(roleMapper.selectList(new QueryWrapper<>(role)));
+        return new Response<>(roles.stream().map(item -> BeanCopier.create(item, new RoleResponse()).copy()).collect(Collectors.toList()));
     }
 
     @Override
-    public Response<Long> create(RoleParam param) {
+    public Response<Long> create(RoleSaveParam param) {
         Role role = new Role();
         BeanCopier.create(param, role).copy();
         role.setDeleteStatus(Boolean.FALSE);
         role.setCreateTime(DateUtils.dateTime());
-        roleMapper.insert(role);
+        this.baseMapper.insert(role);
         return new Response<>(role.getId());
     }
 
     @Override
-    public Response<Long> modify(RoleParam param) {
+    public Response<Long> modify(RoleSaveParam param) {
         Role role = new Role();
         BeanCopier.create(param, role).copy();
-        roleMapper.updateById(role);
+        this.baseMapper.updateById(role);
         return new Response<>(role.getId());
     }
 
@@ -86,7 +95,7 @@ public class RoleServiceImpl implements RoleService {
         Role role = new Role();
         role.setId(id);
         role.setDeleteStatus(Boolean.TRUE);
-        roleMapper.updateById(role);
+        this.baseMapper.updateById(role);
         return new Response<>(id);
     }
 
@@ -103,7 +112,7 @@ public class RoleServiceImpl implements RoleService {
                 .collect(Collectors.toList());
         // 按照parentId分组，用于树形结构组装数据
         Map<Long, List<MenuResponse>> childrenMap = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream()
-                .filter(item -> Objects.nonNull(item.getParentId()))
+                .filter(item -> Objects.nonNull(item.getParentId()) && 1 == item.getMenuType())
                 .map(this::conv)
                 .collect(Collectors.groupingBy(MenuResponse::getParentId, Collectors.toList()));
         // 记录父级元素的Id
@@ -112,20 +121,18 @@ public class RoleServiceImpl implements RoleService {
         toTree(parentResp, childrenMap, parentIds);
         // 所有用户访问菜单的路由
         List<Menu> allMenus = menuMapper.selectMenuByRoleId(roleId);
-        /*
-         * 这种做法是帮助页面显示的<br />
-         * 原因 v-tree 父节点只要被选中，则它的所有子节点会选中<br />
-         * 这样不符合逻辑<br />
-         */
-        List<Long> menuIds = parentResp.stream().map(MenuResponse::getId).collect(Collectors.toList());
-        Set<Long> hadPermissionIds = Optional.ofNullable(allMenus).orElse(Collections.emptyList()).stream()
-                .filter(item -> !menuIds.contains(item.getId()))
-                .filter(item -> !parentIds.contains(item.getId()))
-                .map(Menu::getId).collect(Collectors.toSet());
+        List<Long> routerPermissions = Optional.ofNullable(allMenus).orElse(Collections.emptyList()).stream()
+                .filter(item -> 1 == item.getMenuType())
+                .map(Menu::getId).distinct().collect(Collectors.toList());
+
+        List<Long> btnPermissions = Optional.ofNullable(allMenus).orElse(Collections.emptyList()).stream()
+                .filter(item -> 2 == item.getMenuType())
+                .map(Menu::getId).distinct().collect(Collectors.toList());
 
         PermissionResponse response = new PermissionResponse();
-        response.setHadPermissions(hadPermissionIds);
-        response.setMenus(parentResp);
+        response.setRouterPermission(routerPermissions);
+        response.setBtnPermission(btnPermissions);
+        response.setRouters(parentResp);
 
         return new Response<>(response);
     }
@@ -150,16 +157,7 @@ public class RoleServiceImpl implements RoleService {
 
     private MenuResponse conv(Menu menu) {
         MenuResponse resp = new MenuResponse();
-        resp.setId(menu.getId());
-        resp.setParentId(menu.getParentId());
-        resp.setName(menu.getName());
-        resp.setComponent(menu.getComponent());
-        resp.setMenuType(menu.getMenuType());
-        resp.setSequence(menu.getSequence());
-        resp.setPath(menu.getPath());
-        resp.setRedirect(menu.getRedirect());
-        resp.setHidden(menu.getHidden());
-        resp.setIcon(menu.getIcon());
+        BeanCopier.create(menu, resp).copy();
         resp.setMeta(new MenuResponse.Meta(menu.getName(), menu.getIcon(), false, null));
         if (Objects.isNull(resp.getParentId())) {
             resp.setComponent("Layout");

@@ -1,9 +1,9 @@
 package quick.pager.shop.order.service;
 
 import java.util.List;
-import quick.pager.shop.order.model.UserOrder;
-import quick.pager.shop.order.request.OrderRequest;
+import quick.pager.shop.order.request.OrderPageRequest;
 import quick.pager.shop.order.request.UserOrderSaveRequest;
+import quick.pager.shop.order.response.OrderResponse;
 import quick.pager.shop.response.Response;
 
 /**
@@ -16,17 +16,17 @@ public interface UserOrderService {
     /**
      * 查看用户订单列表
      */
-    Response<List<Object>> userOrderList(OrderRequest request);
+    Response<List<OrderResponse>> queryPage(OrderPageRequest request);
 
     /**
      * 用户订单详情
      *
      * @param orderId 订单Id
      */
-    Response<Object> userOrderDetail(Long orderId);
+    Response<Object> detail(Long orderId);
 
     /**
      * 创建订单
      */
-    Response orderCreate(UserOrderSaveRequest request);
+    Response<Long> create(UserOrderSaveRequest request);
 }

@@ -24,24 +24,36 @@ public interface BannerClient {
 
     /**
      * 列表
+     *
+     * @param request 请求参数
+     * @return Banner 列表
      */
-    @RequestMapping(value = "/banner/queryList", method = RequestMethod.POST)
+    @RequestMapping(value = "/banner/list", method = RequestMethod.POST)
     Response<List<BannerResponse>> queryList(@RequestBody BannerOtherRequest request);
 
     /**
      * 列表分页
+     *
+     * @param request 请求参数
+     * @return Banner 列表
      */
-    @RequestMapping(value = "/banner/queryPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/banner/page", method = RequestMethod.POST)
     Response<List<BannerResponse>> queryPage(@RequestBody BannerPageRequest request);
 
     /**
      * 新增
+     *
+     * @param request 请求参数
+     * @return Banner 主键
      */
     @RequestMapping(value = "/banner/create", method = RequestMethod.POST)
     Response<Long> create(@RequestBody BannerSaveRequest request);
 
     /**
      * 修改
+     *
+     * @param request 请求参数
+     * @return Banner 主键
      */
     @RequestMapping(value = "/banner/modify", method = RequestMethod.PUT)
     Response<Long> modify(@RequestBody BannerSaveRequest request);

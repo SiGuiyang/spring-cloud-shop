@@ -12,6 +12,11 @@ public class UserLoginParam implements Serializable {
     private static final long serialVersionUID = -8483169592580367377L;
 
     /**
+     * 手机号码
+     */
+    private String phone;
+
+    /**
      * 短信验证码
      */
     private String verifyCode;

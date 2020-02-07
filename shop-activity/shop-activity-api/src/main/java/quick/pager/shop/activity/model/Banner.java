@@ -47,7 +47,7 @@ public class Banner extends Model {
     /**
      * 分享副标题
      */
-    private String ShareSubtitle;
+    private String shareSubtitle;
     /**
      * 分享图标
      */

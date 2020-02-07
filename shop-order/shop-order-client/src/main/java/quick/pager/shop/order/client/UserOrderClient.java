@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.order.fallback.UserOrderClientFallbackFactory;
-import quick.pager.shop.order.request.OrderRequest;
+import quick.pager.shop.order.request.OrderPageRequest;
 import quick.pager.shop.order.request.UserOrderSaveRequest;
 import quick.pager.shop.response.Response;
 
@@ -21,21 +21,28 @@ public interface UserOrderClient {
 
     /**
      * 订单列表
+     *
+     * @param request 请求参数
+     * @return 订单列表
      */
     @RequestMapping(value = "/user/orders", method = RequestMethod.POST)
-    Response orders(@RequestBody OrderRequest request);
+    Response orders(@RequestBody OrderPageRequest request);
 
     /**
      * 订单详情
+     *
+     * @param orderId 订单主键
+     * @return 订单详情
      */
-    @RequestMapping(value = "/detail/{orderId}/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/{orderId}/detail", method = RequestMethod.POST)
     Response orderInfo(@PathVariable("orderId") Long orderId);
 
     /**
      * 创建用户订单
      *
      * @param request 订单
+     * @return 订单主键
      */
     @RequestMapping(value = "/user/create", method = RequestMethod.POST)
-    Response userOrderCreate(@RequestBody UserOrderSaveRequest request);
+    Response<Long> userOrderCreate(@RequestBody UserOrderSaveRequest request);
 }

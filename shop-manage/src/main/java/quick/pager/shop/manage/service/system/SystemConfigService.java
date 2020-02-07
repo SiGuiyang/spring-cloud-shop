@@ -19,6 +19,11 @@ public interface SystemConfigService {
     Response<List<SystemConfigResponse>> queryPage(SystemConfigParam param);
 
     /**
+     * 配置列表
+     */
+    Response<List<SystemConfigResponse>> queryList(SystemConfigParam param);
+
+    /**
      * 新增
      */
     Response<Long> create(SystemConfigParam param);

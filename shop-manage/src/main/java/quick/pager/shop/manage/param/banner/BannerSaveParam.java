@@ -45,7 +45,7 @@ public class BannerSaveParam extends Param {
     /**
      * 分享副标题
      */
-    private String ShareSubtitle;
+    private String shareSubtitle;
     /**
      * 分享图标
      */

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,19 +23,20 @@ public class SysUserClientService {
     private MenuMapper menuMapper;
 
     public Response<SysUser> querySysUserByUsername(String phone) {
-        QueryWrapper<SysUser> qw = new QueryWrapper<>();
-        qw.eq("phone", phone);
-        return new Response<>(sysUserMapper.selectOne(qw));
+        SysUser sysUser = new SysUser();
+        sysUser.setDeleteStatus(Boolean.FALSE);
+        sysUser.setPhone(phone);
+        return new Response<>(sysUserMapper.selectOne(new QueryWrapper<>(sysUser)));
     }
 
-    public Response<Set<String>> getRolesBySysUserId(Long sysUserId) {
+    public Response<List<String>> getRolesBySysUserId(Long sysUserId) {
 
         // 所有访问菜单的路由
         List<Menu> menus = menuMapper.selectMenuBySysUserId(sysUserId);
-        Set<String> list = Optional.of(menus).orElse(Collections.emptyList()).stream()
+        return new Response<>(Optional.of(menus).orElse(Collections.emptyList()).stream()
                 .filter(menu -> !StringUtils.isEmpty(menu.getPermission()))
                 .map(Menu::getPermission)
-                .collect(Collectors.toSet());
-        return new Response<>(list);
+                .distinct()
+                .collect(Collectors.toList()));
     }
 }

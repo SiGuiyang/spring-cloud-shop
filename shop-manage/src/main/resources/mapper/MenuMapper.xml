@@ -13,10 +13,9 @@
         <result column="icon" jdbcType="VARCHAR" property="icon"/>
         <result column="menu_type" jdbcType="INTEGER" property="menuType"/>
         <result column="permission" jdbcType="VARCHAR" property="permission"/>
-        <result column="permission_name" jdbcType="VARCHAR" property="permissionName"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, sequence, parent_id, path, hidden, component, redirect,icon,menu_type,permission,permission_name
+    id, name, sequence, parent_id, path, hidden, component, redirect,icon,menu_type,permission
   </sql>
 
     <sql id="All_Column_BY_ALIAS">
@@ -31,8 +30,7 @@
         m.redirect,
         m.icon,
         m.menu_type,
-        m.permission,
-        m.permission_name
+        m.permission
   </sql>
 
     <select id="selectMenuBySysUserId" resultMap="BaseResultMap">

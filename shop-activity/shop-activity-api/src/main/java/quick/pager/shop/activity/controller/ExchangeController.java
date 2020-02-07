@@ -52,7 +52,7 @@ public class ExchangeController {
     /**
      * 活动列表
      */
-    @PostMapping("/exchange/queryPage")
+    @PostMapping("/exchange/page")
     public Response<List<ExchangeActivityResponse>> queryPage(@RequestBody ExchangeActivityPageRequest request) {
         return exchangeService.queryPage(request);
     }
@@ -125,6 +125,6 @@ public class ExchangeController {
      */
     @PostMapping("/exchange/purchase/history")
     public Response purchaseHistory(@RequestBody ExchangeActivityParam param) {
-        return exchangeActivityHistoryService.doService(null);
+        return null;
     }
 }

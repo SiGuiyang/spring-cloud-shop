@@ -1,21 +1,17 @@
 package quick.pager.shop.activity.service;
 
 import java.util.List;
-import quick.pager.shop.activity.model.ExchangeActivity;
-import quick.pager.shop.activity.param.exchange.ExchangeActivityPageParam;
-import quick.pager.shop.activity.param.exchange.ExchangeActivitySaveParam;
 import quick.pager.shop.activity.request.exchange.ExchangeActivityPageRequest;
 import quick.pager.shop.activity.request.exchange.ExchangeActivitySaveRequest;
 import quick.pager.shop.activity.response.exchange.ExchangeActivityResponse;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.service.IPageService;
 
 /**
  * 满赠换购服务
  *
  * @author siguiyang
  */
-public interface ExchangeService extends IPageService<ExchangeActivity> {
+public interface ExchangeService {
 
     /**
      * 活动详情

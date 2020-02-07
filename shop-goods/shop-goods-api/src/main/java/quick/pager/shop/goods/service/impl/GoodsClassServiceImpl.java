@@ -1,22 +1,24 @@
 package quick.pager.shop.goods.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import quick.pager.shop.activity.client.BannerClient;
+//import quick.pager.shop.activity.client.BannerClient;
 import quick.pager.shop.goods.model.GoodsClass;
 import quick.pager.shop.goods.mapper.GoodsClassMapper;
+import quick.pager.shop.goods.request.classification.GoodsClassificationRequest;
+import quick.pager.shop.goods.request.classification.GoodsClassificationSaveRequest;
 import quick.pager.shop.goods.response.classification.GoodsClassificationResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.goods.service.GoodsClassService;
+import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
-import quick.pager.shop.utils.CopyOptions;
+import quick.pager.shop.utils.DateUtils;
 
 /**
  * <p>
@@ -29,24 +31,42 @@ import quick.pager.shop.utils.CopyOptions;
 @Service
 public class GoodsClassServiceImpl extends ServiceImpl<GoodsClassMapper, GoodsClass> implements GoodsClassService {
 
-    @Autowired
-    private BannerClient bannerClient;
+//    @Autowired
+//    private BannerClient bannerClient;
 
     @Override
-    public Response<List<GoodsClassificationResponse>> getGoodsClass(String className, Integer page, Integer pageSize) {
+    public Response<Long> create(GoodsClassificationSaveRequest request) {
+        GoodsClass gc = this.convert(request);
+        gc.setCreateTime(DateUtils.dateTime());
+        gc.setDeleteStatus(Boolean.FALSE);
+        this.baseMapper.insert(gc);
+        return new Response<>(gc.getId());
+    }
+
+    @Override
+    public Response<Long> modify(GoodsClassificationSaveRequest request) {
+        GoodsClass gc = this.convert(request);
+        this.baseMapper.updateById(gc);
+
+        return new Response<>(gc.getId());
+    }
+
+    @Override
+    public Response<List<GoodsClassificationResponse>> queryPage(GoodsClassificationRequest request) {
         QueryWrapper<GoodsClass> qw = new QueryWrapper<>();
+        qw.eq("delete_status", Boolean.FALSE);
 
-        qw.eq("t1.delete_status", Boolean.FALSE);
-        if (!StringUtils.isEmpty(className)) {
-            qw.likeRight("t1.class_name", className);
+        if (StringUtils.isNotBlank(request.getClassName())) {
+            qw.likeRight("class_name", request.getClassName());
         }
 
-        int count = this.baseMapper.selectGoodsClassCount(qw);
-        List<GoodsClassificationResponse> result = Collections.emptyList();
-        if (0 < count) {
-            result = this.baseMapper.selectGoodsClassList(new Page<>(page, pageSize), qw).getRecords();
-        }
-        return Response.toResponse(result, count);
+        Response<List<GoodsClass>> response = this.toPage(request.getPage(), request.getPageSize(), qw);
+
+        return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
+                        .map(this::convert)
+                        .peek(item -> item.setChildren(this.toTree(item.getId())))
+                        .collect(Collectors.toList())
+                , response.getTotal());
     }
 
     @Override
@@ -56,11 +76,10 @@ public class GoodsClassServiceImpl extends ServiceImpl<GoodsClassMapper, GoodsCl
         qw.isNull("parent_id");
 
         List<GoodsClass> goodsClasses = this.baseMapper.selectList(qw);
-        List<GoodsClassificationResponse> collect = goodsClasses.stream().map(this::convert)
-                .peek(m -> m.setChildren(this.transChildren(m.getId())))
-                .collect(Collectors.toList());
 
-        return Response.toResponse(collect, 0);
+        return Response.toResponse(goodsClasses.stream().map(this::convert)
+                .peek(m -> m.setChildren(this.toTree(m.getId())))
+                .collect(Collectors.toList()), 0);
     }
 
 
@@ -74,7 +93,7 @@ public class GoodsClassServiceImpl extends ServiceImpl<GoodsClassMapper, GoodsCl
     /**
      * 设置子节点孩子数据
      */
-    private List<GoodsClassificationResponse> transChildren(Long id) {
+    private List<GoodsClassificationResponse> toTree(Long id) {
 
         GoodsClass gc = new GoodsClass();
         gc.setDeleteStatus(Boolean.FALSE);
@@ -82,6 +101,13 @@ public class GoodsClassServiceImpl extends ServiceImpl<GoodsClassMapper, GoodsCl
         List<GoodsClass> goodsClasses = this.baseMapper.selectList(new QueryWrapper<>(gc));
         return goodsClasses.stream().map(this::convert).collect(Collectors.toList());
 
+    }
+
+    /**
+     * DTO -> db model
+     */
+    private GoodsClass convert(GoodsClassificationSaveRequest request) {
+        return BeanCopier.create(request, new GoodsClass()).copy();
     }
 
 }

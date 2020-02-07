@@ -55,7 +55,7 @@ public class ShopFallback implements FallbackProvider {
             @Override
             @NonNull
             public InputStream getBody() throws IOException {
-                Map<String, Object> result = new HashMap<>();
+                Map<String, Object> result = new HashMap<>(2);
                 result.put("code", 1000);
                 result.put("msg", "网络发生点故障，请稍后重试");
                 return new ByteArrayInputStream(JSON.toJSONString(result).getBytes(Charset.forName("UTF-8")));

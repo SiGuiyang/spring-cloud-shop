@@ -13,7 +13,9 @@ import quick.pager.shop.platform.response.SystemConfigResponse;
  */
 public class SystemConfigMap {
 
-    // 系统配置t_system_config配置缓存
+    /**
+     * 系统配置t_system_config配置缓存
+     */
     private static final Map<String, List<SystemConfigResponse>> CACHE = new ConcurrentHashMap<>();
 
 

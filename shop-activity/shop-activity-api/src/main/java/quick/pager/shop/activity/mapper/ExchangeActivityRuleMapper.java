@@ -9,12 +9,17 @@ import quick.pager.shop.activity.model.ExchangeActivityRule;
 import quick.pager.shop.activity.response.exchange.ExchangeActivityRuleResponse;
 
 /**
-* @author siguiyang
-*/
+ * 满赠换购规则Mapper
+ *
+ * @author siguiyang
+ */
 @Mapper
 public interface ExchangeActivityRuleMapper extends BaseMapper<ExchangeActivityRule> {
     /**
      * 表格查询
+     *
+     * @param activityId 活动主键
+     * @return 满赠换购规则列表
      */
     @Select("select r.id as id, r.activity_id as activityId, r.rule_name as ruleName, r.order_amount as orderAmount, "
             + "r.update_time as updateTime, r.create_time as createTime, r.delete_status as deleteStatus, ac.activity_name as activityName "

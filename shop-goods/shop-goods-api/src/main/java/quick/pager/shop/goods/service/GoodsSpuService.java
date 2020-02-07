@@ -1,7 +1,10 @@
 package quick.pager.shop.goods.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import quick.pager.shop.goods.model.GoodsSpu;
+import java.util.List;
+import quick.pager.shop.goods.request.spu.GoodsSpuPageRequest;
+import quick.pager.shop.goods.request.spu.GoodsSpuSaveRequest;
+import quick.pager.shop.goods.response.spu.GoodsSpuResponse;
+import quick.pager.shop.response.Response;
 
 /**
  * <p>
@@ -11,6 +14,20 @@ import quick.pager.shop.goods.model.GoodsSpu;
  * @author Siguiyang
  * @since 2019-10-07
  */
-public interface GoodsSpuService extends IService<GoodsSpu> {
+public interface GoodsSpuService {
 
+    /**
+     * 新增
+     */
+    Response<Long> create(GoodsSpuSaveRequest request);
+
+    /**
+     * 编辑修改
+     */
+    Response<Long> modify(GoodsSpuSaveRequest request);
+
+    /**
+     * 查询spu 分页
+     */
+    Response<List<GoodsSpuResponse>> queryPage(GoodsSpuPageRequest request);
 }

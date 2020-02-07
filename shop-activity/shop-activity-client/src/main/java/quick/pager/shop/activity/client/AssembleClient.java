@@ -29,36 +29,54 @@ public interface AssembleClient {
 
     /**
      * 拼团活动列表
+     *
+     * @param request 请求参数
+     * @return 拼团活动列表
      */
     @RequestMapping(value = "/assemble/list", method = RequestMethod.POST)
     Response<List<AssembleActivityResponse>> list(@RequestBody AssemblePageRequest request);
 
     /**
      * 拼团活动新增
+     *
+     * @param request 请求参数
+     * @return 规则主键
      */
     @RequestMapping(value = "/assemble/create", method = RequestMethod.POST)
     Response<Long> create(@RequestBody AssembleSaveRequest request);
 
     /**
      * 拼团活动修改
+     *
+     * @param request 请求参数
+     * @return 活动主键
      */
     @RequestMapping(value = "/assemble/modify", method = RequestMethod.PUT)
     Response<Long> modify(@RequestBody AssembleSaveRequest request);
 
     /**
      * 拼团活动规则详情
+     *
+     * @param activityId 拼团主键
+     * @return 拼团活动规则详情
      */
     @RequestMapping(value = "/assemble/{activityId}/rule", method = RequestMethod.GET)
     Response<AssembleResponse> ruleInfo(@PathVariable("activityId") Long activityId);
 
     /**
      * 拼团活动规则新增
+     *
+     * @param request 请求参数
+     * @return 规则主键
      */
     @RequestMapping(value = "/assemble/rule/create", method = RequestMethod.POST)
     Response<Long> create(@RequestBody AssembleRuleSaveRequest request);
 
     /**
      * 拼团活动规则新增或者修改
+     *
+     * @param request 请求参数
+     * @return 规则主键
      */
     @RequestMapping(value = "/assemble/rule/modify", method = RequestMethod.PUT)
     Response<Long> modify(@RequestBody AssembleRuleSaveRequest request);
@@ -67,6 +85,7 @@ public interface AssembleClient {
      * 拼团活动商品详情
      *
      * @param activityId 活动主键
+     * @return 拼团活动商品详情
      */
     @RequestMapping(value = "/assemble/{activityId}/goods", method = RequestMethod.GET)
     Response assembleGoodsInfo(@PathVariable("activityId") Long activityId);
@@ -76,12 +95,16 @@ public interface AssembleClient {
      *
      * @param activityId 活动主键
      * @param goodsId    商品主键
+     * @return 拼团规则的商品
      */
     @RequestMapping(value = "/assemble/goods/modify", method = RequestMethod.PUT)
     Response assembleGoods(@RequestParam("activityId") Long activityId, @RequestParam("goodsId") Long goodsId);
 
     /**
      * 拼团成员
+     *
+     * @param request 请求参数
+     * @return 拼团成员
      */
     @RequestMapping(value = "/assemble/members", method = RequestMethod.POST)
     Response<List<AssembleMemberResponse>> members(@RequestBody AssembleMemberPageRequest request);

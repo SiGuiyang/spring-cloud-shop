@@ -24,6 +24,10 @@ public class BannerOtherRequest extends Request {
      */
     private String bannerType;
     /**
+     * banner 状态
+     */
+    private Boolean bannerStatus;
+    /**
      * 分享渠道
      */
     private List<String> shareChannel;

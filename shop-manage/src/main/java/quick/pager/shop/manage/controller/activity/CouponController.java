@@ -2,6 +2,7 @@ package quick.pager.shop.manage.controller.activity;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class CouponController {
     /**
      * 发送优惠券
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_COUPON_PUBLISH')")
     @PostMapping("/publish/coupon")
     public Response publishCoupon(@RequestParam String file, @RequestParam Long templateId) {
         return couponService.publishCoupon(file, templateId);
@@ -34,6 +36,7 @@ public class CouponController {
     /**
      * 用户优惠券列表
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_COUPON')")
     @PostMapping("/activity/coupon/list")
     public Response<List<DiscountCouponResponse>> coupons(@RequestBody DiscountCouponPageParam param) {
         return couponService.coupons(param);

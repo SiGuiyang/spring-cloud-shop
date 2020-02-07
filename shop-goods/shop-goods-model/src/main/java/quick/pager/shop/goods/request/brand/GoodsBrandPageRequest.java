@@ -17,6 +17,9 @@ import quick.pager.shop.request.PageRequest;
 public class GoodsBrandPageRequest extends PageRequest {
     private static final long serialVersionUID = 8251378580124843900L;
 
+    /**
+     * 品牌名称
+     */
     private String brandName;
 
     private List<LocalDateTime> dateTimes;

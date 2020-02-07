@@ -4,10 +4,10 @@ import feign.hystrix.FallbackFactory;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import quick.pager.shop.request.ManageRequest;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.user.client.UserClient;
+import quick.pager.shop.user.request.StationLetterRequest;
 import quick.pager.shop.user.request.UserRequest;
 import quick.pager.shop.user.response.AddressResponse;
 import quick.pager.shop.user.response.StationLetterResponse;
@@ -39,7 +39,7 @@ public class UserFallbackFactory implements FallbackFactory<UserClient> {
             }
 
             @Override
-            public Response<List<StationLetterResponse>> queryStationLetter(ManageRequest request) {
+            public Response<List<StationLetterResponse>> queryStationLetter(StationLetterRequest request) {
                 log.error("进入熔断措施 UserClient.queryStationLetter");
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }

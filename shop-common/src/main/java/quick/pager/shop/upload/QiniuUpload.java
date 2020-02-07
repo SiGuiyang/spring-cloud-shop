@@ -5,6 +5,9 @@ import java.io.InputStream;
 
 /**
  * 七牛文件上传
+ *
+ * @author siguiyang
+ * @version 3.0
  */
 public class QiniuUpload {
 

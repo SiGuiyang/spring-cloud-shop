@@ -16,17 +16,23 @@ import quick.pager.shop.request.PageRequest;
 @Data
 public class AssemblePageRequest extends PageRequest {
     private static final long serialVersionUID = -5329561098615911834L;
-
+    /**
+     * 活动名称
+     */
     private String activityName;
-
+    /**
+     * 活动图片
+     */
     private String activityImg;
 
-    private String createUser;
-
     private Long goodsId;
-
+    /**
+     * 活动主键
+     */
     private Long activityId;
-
+    /**
+     * 活动规则主键
+     */
     private Long ruleId;
 
     private Long recordId;

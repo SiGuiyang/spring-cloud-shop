@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.manage.service.system.SystemConfigService;
 import quick.pager.shop.platform.client.SystemConfigClient;
+import quick.pager.shop.platform.request.SystemConfigOtherRequest;
 import quick.pager.shop.platform.request.SystemConfigPageRequest;
 import quick.pager.shop.platform.request.SystemConfigSaveRequest;
 import quick.pager.shop.platform.response.SystemConfigResponse;
@@ -26,6 +27,13 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
         return systemConfigClient.queryPage(request);
 
+    }
+
+    @Override
+    public Response<List<SystemConfigResponse>> queryList(SystemConfigParam param) {
+        SystemConfigOtherRequest request = new SystemConfigOtherRequest();
+        BeanCopier.create(param, request).copy();
+        return systemConfigClient.queryList(request);
     }
 
     @Override

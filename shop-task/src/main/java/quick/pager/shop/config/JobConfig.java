@@ -7,27 +7,27 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import quick.pager.shop.properties.XXLJobProperties;
+import quick.pager.shop.properties.XxlJobProperties;
 
 /**
- * xxl job配置
+ * quick.pager.shop.job job配置
  *
  * @author siguiyang
  */
 @Configuration
 @Slf4j
-@EnableConfigurationProperties(XXLJobProperties.class)
+@EnableConfigurationProperties(XxlJobProperties.class)
 public class JobConfig {
 
     @Autowired
-    private XXLJobProperties xxlJobProperties;
+    private XxlJobProperties xxlJobProperties;
     @Autowired
     private InetUtils inetUtils;
 
 
     @Bean(initMethod = "start", destroyMethod = "destroy")
     public XxlJobSpringExecutor xxlJobExecutor() {
-        log.info(">>>>>>>>>>> xxl-job config init.");
+        log.info(">>>>>>>>>>> quick.pager.shop.job-job config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(xxlJobProperties.getAdminAddress());
         xxlJobSpringExecutor.setAppName(xxlJobProperties.getExecutor().getAppname());

@@ -1,10 +1,8 @@
 package quick.pager.shop.manage.response;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 import lombok.Data;
 import quick.pager.shop.manage.response.system.MenuResponse;
 
@@ -13,8 +11,16 @@ public class PermissionResponse implements Serializable {
 
 
     private static final long serialVersionUID = 6106613383509895940L;
-
-    private Set<Long> hadPermissions = Sets.newHashSet();
-
-    private List<MenuResponse> menus = Lists.newArrayList();
+    /**
+     * 路由拥有的权限
+     */
+    private List<Long> routerPermission = Lists.newArrayList();
+    /**
+     * 按钮拥有的权限
+     */
+    private List<Long> btnPermission = Lists.newArrayList();
+    /**
+     * 路由
+     */
+    private List<MenuResponse> routers = Lists.newArrayList();
 }

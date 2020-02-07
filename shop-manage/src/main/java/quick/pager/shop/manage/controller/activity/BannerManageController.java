@@ -3,6 +3,7 @@ package quick.pager.shop.manage.controller.activity;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ public class BannerManageController {
     /**
      * banner 列表
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_BANNER')")
     @PostMapping("/activity/banner/list")
     public Response<List<BannerResponse>> list(@RequestBody BannerPageParam param) {
         return bannerService.queryPage(param);
@@ -39,6 +41,7 @@ public class BannerManageController {
     /**
      * banner 新增
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_BANNER_CREATE')")
     @PostMapping("/activity/banner/create")
     public Response<Long> create(@RequestBody BannerSaveParam param) {
         return bannerService.create(param);
@@ -47,6 +50,7 @@ public class BannerManageController {
     /**
      * banner 修改
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_BANNER_MODIFY')")
     @PutMapping("/activity/banner/modify")
     public Response<Long> modify(@RequestBody BannerSaveParam param) {
         if (Objects.isNull(param.getId())) {

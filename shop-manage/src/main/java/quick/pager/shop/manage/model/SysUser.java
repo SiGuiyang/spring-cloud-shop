@@ -8,6 +8,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.Model;
 
+/**
+ * 系统登陆用户
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("t_sys_user")
@@ -15,12 +20,23 @@ public class SysUser extends Model {
 
     private static final long serialVersionUID = 6227594831283103430L;
 
-    // 登陆用户名
+    /**
+     * 登陆用户名
+     */
     private String username;
-    // 手机号码
+    /**
+     * 手机号码
+     */
     private String phone;
-    // 密码
+    /**
+     * 密码
+     */
     private String password;
+
+    /**
+     * true 超级管理员
+     */
+    private Boolean beAdmin;
 
     private String avatar;
 

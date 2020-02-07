@@ -2,6 +2,7 @@ package quick.pager.shop.manage.controller.system;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,9 @@ import quick.pager.shop.response.Response;
 
 /**
  * 菜单管理
+ *
+ * @author siguiyang
+ * @version 3.0
  */
 @RestController
 @RequestMapping(Constants.Module.MANAGE)
@@ -27,6 +31,7 @@ public class MenuController {
     /**
      * 系统菜单列表
      */
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU')")
     @PostMapping("/menu/list")
     public Response list() {
         return menuService.queryList();
@@ -35,24 +40,27 @@ public class MenuController {
     /**
      * 新增
      */
-    @PostMapping(value = "/menu")
-    public Response addMenus(@RequestBody MenuParam dto) {
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU_CREATE')")
+    @PostMapping("/menu")
+    public Response create(@RequestBody MenuParam dto) {
         return menuService.create(dto);
     }
 
     /**
      * 修改
      */
-    @PutMapping(value = "/menu")
-    public Response modifyMenus(@Valid @RequestBody MenuParam dto) {
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU_MODIFY')")
+    @PutMapping("/menu")
+    public Response modify(@Valid @RequestBody MenuParam dto) {
         return menuService.modify(dto);
     }
 
     /**
      * 删除
      */
-    @DeleteMapping(value = "/menu/{id}")
-    public Response delMenus(@PathVariable("id") Long id) {
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU_DELETE')")
+    @DeleteMapping("/menu/{id}")
+    public Response delete(@PathVariable("id") Long id) {
         return menuService.delete(id);
     }
 

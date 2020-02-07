@@ -19,22 +19,22 @@ public class RiskClientFallbackFactory implements FallbackFactory<RiskClient> {
     public RiskClient create(Throwable cause) {
         return new RiskClient() {
             @Override
-            public Response getBlackLists(BlackListPageRequest request) {
+            public Response queryList(BlackListPageRequest request) {
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response addBlackLists(BlackListSaveRequest request) {
+            public Response<Long> create(BlackListSaveRequest request) {
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response modifyBlackLists(BlackListSaveRequest request) {
+            public Response<Long> modify(BlackListSaveRequest request) {
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response delBlackLists(Long id) {
+            public Response<Long> delete(Long id) {
                 return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
         };

@@ -8,7 +8,7 @@ import quick.pager.shop.order.service.SellerOrderService;
 @Service
 public class SellerOrderServiceImpl implements SellerOrderService {
     @Override
-    public Response sellerOrderCreate(SellerOrderSaveRequest request) {
+    public Response create(SellerOrderSaveRequest request) {
         return null;
     }
 }

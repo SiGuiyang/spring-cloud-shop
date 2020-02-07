@@ -42,7 +42,7 @@ public class BannerSaveRequest extends Request {
     /**
      * 分享副标题
      */
-    private String ShareSubtitle;
+    private String shareSubtitle;
     /**
      * 分享图标
      */

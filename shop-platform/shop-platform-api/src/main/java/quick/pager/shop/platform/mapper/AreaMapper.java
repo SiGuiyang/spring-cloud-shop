@@ -5,19 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import quick.pager.shop.platform.model.Area;
 
+/**
+ * 地区
+ *
+ * @author siguiyang
+ */
 @Mapper
 public interface AreaMapper extends BaseMapper<Area> {
-
-    int insertSelective(Area record);
-
-    Area selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Area record);
-
-    /**
-     * 查询所有
-     */
-    List<Area> selectAll();
-
 
 }

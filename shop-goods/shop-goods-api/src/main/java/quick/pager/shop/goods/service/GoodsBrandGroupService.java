@@ -1,11 +1,11 @@
 package quick.pager.shop.goods.service;
 
 import java.util.List;
-//import quick.pager.shop.param.goods.GoodsBrandGroupDTO;
 import quick.pager.shop.goods.model.GoodsBrandGroup;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupPageRequest;
+import quick.pager.shop.goods.request.brand.GoodsBrandGroupSaveRequest;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.service.IPageService;
+import quick.pager.shop.service.IService;
 
 /**
  * <p>
@@ -15,10 +15,20 @@ import quick.pager.shop.service.IPageService;
  * @author Siguiyang
  * @since 2019-10-07
  */
-public interface GoodsBrandGroupService extends IPageService<GoodsBrandGroup> {
+public interface GoodsBrandGroupService extends IService<GoodsBrandGroup> {
+
+    /**
+     * 新增
+     */
+    Response<Long> create(GoodsBrandGroupSaveRequest request);
+
+    /**
+     * 更新
+     */
+    Response<Long> modify(GoodsBrandGroupSaveRequest request);
 
     /**
      * 商品品牌组列表
      */
-    Response<List<GoodsBrandGroup>> groupList(GoodsBrandGroupPageRequest request);
+    Response<List<GoodsBrandGroup>> queryPage(GoodsBrandGroupPageRequest request);
 }

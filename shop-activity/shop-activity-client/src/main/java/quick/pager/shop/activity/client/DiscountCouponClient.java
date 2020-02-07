@@ -20,25 +20,34 @@ import quick.pager.shop.response.Response;
  * 优惠券服务Client
  *
  * @author siguiyang
- * @version 1.0
+ * @version 3.0
  */
 @FeignClient(value = ConstantsClient.ACTIVITY_CLIENT, path = ConstantsClient.ACTIVITY, fallbackFactory = DiscountCouponClientFallbackFactory.class)
 public interface DiscountCouponClient {
 
     /**
      * 优惠券模板列表
+     *
+     * @param request 请求参数
+     * @return 优惠券模板响应数据
      */
-    @RequestMapping(value = "/coupon/template/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/coupon/template/page", method = RequestMethod.POST)
     Response<List<DiscountCouponTemplateResponse>> queryPage(@RequestBody DiscountCouponTemplatePageRequest request);
 
     /**
      * 优惠券模板新增
+     *
+     * @param request 请求参数
+     * @return 优惠券模板主键
      */
     @RequestMapping(value = "/coupon/template/create", method = RequestMethod.POST)
     Response<Long> create(@RequestBody DiscountCouponTemplateSaveRequest request);
 
     /**
      * 优惠券模板修改
+     *
+     * @param request 请求参数
+     * @return 优惠券模板主键
      */
     @RequestMapping(value = "/coupon/template/modify", method = RequestMethod.PUT)
     Response<Long> modify(@RequestBody DiscountCouponTemplateSaveRequest request);
@@ -47,14 +56,18 @@ public interface DiscountCouponClient {
      * 获取优惠券模板信息
      *
      * @param templateId 优惠券模板主键
+     * @return 优惠券模板内容
      */
     @RequestMapping(value = "/coupon/{templateId}/template", method = RequestMethod.GET)
     Response<DiscountCouponTemplateResponse> templateInfo(@PathVariable("templateId") Long templateId);
 
     /**
      * 优惠券列表
+     *
+     * @param request 请求参数
+     * @return 优惠券列表
      */
-    @RequestMapping(value = "/coupon/queryPage", method = RequestMethod.POST)
+    @RequestMapping(value = "/coupon/page", method = RequestMethod.POST)
     Response<List<DiscountCouponResponse>> couponList(@RequestBody DiscountCouponPageRequest request);
 
     /**
@@ -62,6 +75,7 @@ public interface DiscountCouponClient {
      *
      * @param templateId 优惠券模板主键
      * @param file       发布文件路径
+     * @return 响应数据
      */
     @RequestMapping(value = "/coupon/publish", method = RequestMethod.POST)
     Response publishCoupon(@RequestParam("file") String file, @RequestParam("templateId") Long templateId);
@@ -70,6 +84,7 @@ public interface DiscountCouponClient {
      * 获取一张优惠券详情
      *
      * @param couponId 优惠券主键
+     * @return 优惠券内容
      */
     @RequestMapping(value = "/coupon/{couponId}", method = RequestMethod.GET)
     Response<DiscountCouponResponse> userCoupons(@PathVariable("couponId") Long couponId);

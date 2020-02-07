@@ -2,7 +2,6 @@ package quick.pager.shop.activity.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +28,7 @@ import quick.pager.shop.activity.response.assemble.AssembleMemberResponse;
 import quick.pager.shop.activity.response.assemble.AssembleResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.activity.service.AssembleService;
+import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
@@ -68,16 +68,7 @@ public class AssembleServiceImpl extends ServiceImpl<AssembleMapper, AssembleAct
 
     @Override
     public Response<Long> modify(AssembleSaveRequest request) {
-
-        if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
-        AssembleActivity assembleActivity = new AssembleActivity();
-        BeanCopier.create(request, assembleActivity).copy();
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            assembleActivity.setBeginTime(request.getTimeRange().get(0));
-            assembleActivity.setEndTime(request.getTimeRange().get(1));
-        }
+        AssembleActivity assembleActivity = this.conv(request);
         this.baseMapper.updateById(assembleActivity);
         return new Response<>(request.getId());
     }
@@ -85,12 +76,7 @@ public class AssembleServiceImpl extends ServiceImpl<AssembleMapper, AssembleAct
     @Override
     public Response<Long> create(AssembleSaveRequest request) {
 
-        AssembleActivity assembleActivity = new AssembleActivity();
-        BeanCopier.create(request, assembleActivity).copy();
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            assembleActivity.setBeginTime(request.getTimeRange().get(0));
-            assembleActivity.setEndTime(request.getTimeRange().get(1));
-        }
+        AssembleActivity assembleActivity = this.conv(request);
         assembleActivity.setServerStatus(Boolean.FALSE);
         assembleActivity.setCreateTime(DateUtils.dateTime());
         assembleActivity.setDeleteStatus(Boolean.FALSE);
@@ -190,6 +176,19 @@ public class AssembleServiceImpl extends ServiceImpl<AssembleMapper, AssembleAct
         return Response.toResponse(result, total);
     }
 
+    /**
+     * AssembleSaveRequest -> AssembleActivity
+     */
+    public AssembleActivity conv(AssembleSaveRequest request) {
+
+        AssembleActivity assembleActivity = new AssembleActivity();
+        BeanCopier.create(request, assembleActivity).copy();
+        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
+            assembleActivity.setBeginTime(request.getTimeRange().get(0));
+            assembleActivity.setEndTime(request.getTimeRange().get(1));
+        }
+        return assembleActivity;
+    }
 
     /**
      * activity -> AssembleActivityResponse

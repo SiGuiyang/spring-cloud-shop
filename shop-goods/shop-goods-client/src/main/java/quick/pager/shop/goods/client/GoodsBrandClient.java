@@ -22,18 +22,27 @@ public interface GoodsBrandClient {
 
     /**
      * 创建品牌
+     *
+     * @param request 请求参数
+     * @return 品牌主键
      */
     @RequestMapping(value = "/brand/create", method = RequestMethod.POST)
-    Response create(@RequestBody GoodsBrandSaveRequest request);
+    Response<Long> create(@RequestBody GoodsBrandSaveRequest request);
 
     /**
      * 修改品牌
+     *
+     * @param request 请求参数
+     * @return 品牌主键
      */
     @RequestMapping(value = "/brand/modify", method = RequestMethod.POST)
-    Response modify(@RequestBody GoodsBrandSaveRequest request);
+    Response<Long> modify(@RequestBody GoodsBrandSaveRequest request);
 
     /**
      * 品牌列表
+     *
+     * @param request 请求参数
+     * @return 品牌列表
      */
     @RequestMapping(value = "/brand/list", method = RequestMethod.POST)
     Response<List<GoodsBrandResponse>> list(@RequestBody GoodsBrandPageRequest request);

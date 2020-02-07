@@ -5,8 +5,10 @@ import org.apache.ibatis.annotations.Mapper;
 import quick.pager.shop.activity.model.ExchangeActivityGoods;
 
 /**
-* @author siguiyang
-*/
+ * 满赠换购商品
+ *
+ * @author siguiyang
+ */
 @Mapper
 public interface ExchangeActivityGoodsMapper extends BaseMapper<ExchangeActivityGoods> {
 }

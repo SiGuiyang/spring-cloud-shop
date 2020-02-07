@@ -3,6 +3,7 @@ package quick.pager.shop.manage.controller.activity;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,7 @@ public class AssembleManageController {
     /**
      * 活动列表
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY')")
     @PostMapping("/activity/assemble/list")
     public Response list(@RequestBody AssemblePageParam param) {
         return assembleService.list(param);
@@ -44,6 +46,7 @@ public class AssembleManageController {
     /**
      * 拼团活动新增
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_CREATE')")
     @PostMapping("/activity/assemble/create")
     public Response create(@RequestBody AssembleSaveParam param) {
         return assembleService.create(param);
@@ -52,6 +55,7 @@ public class AssembleManageController {
     /**
      * 拼团活动修改
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_MODIFY')")
     @PutMapping("/activity/assemble/modify")
     public Response modify(@RequestBody AssembleSaveParam dto) {
         return assembleService.modify(dto);
@@ -60,6 +64,7 @@ public class AssembleManageController {
     /**
      * 活动规则详情
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_RULE_DETAIL')")
     @GetMapping("/activity/assemble/rule/{activityId}")
     public Response<AssembleResponse> ruleInfo(@PathVariable("activityId") Long activityId) {
         return assembleService.ruleInfo(activityId);
@@ -68,6 +73,7 @@ public class AssembleManageController {
     /**
      * 活动规则
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_RULE')")
     @PutMapping("/activity/assemble/rule/modify")
     public Response<Long> rule(@RequestBody AssembleRuleSaveParam param) {
         if (Objects.isNull(param.getActivityId())) {
@@ -79,6 +85,7 @@ public class AssembleManageController {
     /**
      * 活动商品详情
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_GOODS_DETAIL')")
     @PostMapping("/activity/assemble/goods/{activityId}")
     public Response fightGroupGoodsInfo(@PathVariable("activityId") Long activityId) {
         return assembleService.fightGroupGoodsInfo(activityId);
@@ -87,6 +94,7 @@ public class AssembleManageController {
     /**
      * 设置活动商品
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_GOODS_SETTING')")
     @PutMapping("/activity/assemble/goods/modify")
     public Response setFightGroupGoods(@RequestBody AssembleMemberParam dto) {
         return assembleService.setFightGroupGoods(dto);
@@ -95,6 +103,7 @@ public class AssembleManageController {
     /**
      * 活动成团记录成员
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_ASSEMBLY_RECORD')")
     @PostMapping("/activity/assemble/members")
     public Response<List<AssembleMemberResponse>> members(@RequestBody AssembleMemberParam param) {
         if (Objects.isNull(param.getActivityId())) {

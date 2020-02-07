@@ -5,6 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.Model;
 
+/**
+ * 表属性
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Columns extends Model {

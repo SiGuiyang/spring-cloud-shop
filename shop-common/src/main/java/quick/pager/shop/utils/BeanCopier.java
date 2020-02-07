@@ -35,9 +35,9 @@ public class BeanCopier<T> implements Copier<T> {
     /**
      * 创建BeanCopier
      *
-     * @param <T>         目标Bean类型
-     * @param source      来源对象，可以是Bean或者Map
-     * @param dest        目标Bean对象
+     * @param <T>    目标Bean类型
+     * @param source 来源对象，可以是Bean或者Map
+     * @param dest   目标Bean对象
      * @return BeanCopier
      */
     public static <T> BeanCopier<T> create(Object source, T dest) {
@@ -141,23 +141,26 @@ public class BeanCopier<T> implements Copier<T> {
             }
             final String providerKey = mappingKey(fieldReverseMapping, fieldName);
             if (!valueProvider.containsKey(providerKey)) {
-                //无对应值可提供
+                // 无对应值可提供
                 continue;
             }
             setterMethod = prop.getSetter();
             if (null == setterMethod) {
-                //Setter方法不存在跳过
+                // Setter方法不存在跳过
                 continue;
             }
             value = valueProvider.value(providerKey, TypeUtil.getFirstParamType(setterMethod));
-            if (value instanceof String) { // 如果是字符串
-                String v = (String) value; // 字符串为空，则跳过
+            // 如果是字符串
+            if (value instanceof String) {
+                String v = (String) value;
+                // 字符串为空，则跳过
                 if (StrUtil.isBlank(v) && copyOptions.ignoreNullValue) {
                     continue;
                 }
             }
             if (null == value && copyOptions.ignoreNullValue) {
-                continue;// 当允许跳过空时，跳过
+                // 当允许跳过空时，跳过
+                continue;
             }
 
             try {
@@ -166,7 +169,8 @@ public class BeanCopier<T> implements Copier<T> {
                 if (!propClass.isInstance(value)) {
                     value = Convert.convert(propClass, value);
                     if (null == value && copyOptions.ignoreNullValue) {
-                        continue;// 当允许跳过空时，跳过
+                        // 当允许跳过空时，跳过
+                        continue;
                     }
                 }
 
@@ -174,7 +178,8 @@ public class BeanCopier<T> implements Copier<T> {
                 setterMethod.invoke(bean, value);
             } catch (Exception e) {
                 if (copyOptions.ignoreError) {
-                    continue;// 忽略注入失败
+                    // 忽略注入失败
+                    continue;
                 } else {
                     throw new UtilException(e, "Inject [{}] error!", prop.getFieldName());
                 }

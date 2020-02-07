@@ -1,6 +1,7 @@
 package quick.pager.shop.manage.controller.order;
 
 import javax.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class SellerOrderManageController {
     /**
      * 商户订单
      */
+    @PreAuthorize("hasAuthority('PAGER_ORDER_SELLER')")
     @PostMapping("/order/seller")
     public Response sellerOrder(@Valid @RequestBody SellerOrderPageRequest request) {
         return null;

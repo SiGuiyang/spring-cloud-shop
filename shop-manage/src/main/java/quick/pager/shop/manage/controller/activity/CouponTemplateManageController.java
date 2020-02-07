@@ -3,6 +3,7 @@ package quick.pager.shop.manage.controller.activity;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ public class CouponTemplateManageController {
     /**
      * 优惠券模板列表
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_COUPON_TEMPLATE')")
     @PostMapping("/activity/coupon/template/list")
     public Response<List<DiscountCouponTemplateResponse>> template(@RequestBody DiscountCouponTemplatePageParam param) {
         return couponTemplateService.template(param);
@@ -37,6 +39,7 @@ public class CouponTemplateManageController {
     /**
      * 优惠券模板修改
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_COUPON_TEMPLATE_MODIFY')")
     @PutMapping("/activity/coupon/template/modify")
     public Response modify(@RequestBody DiscountCouponTemplateSaveParam param) {
         if (Objects.isNull(param.getId())) {
@@ -48,6 +51,7 @@ public class CouponTemplateManageController {
     /**
      * 优惠券模板新增
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_COUPON_TEMPLATE_CREATE')")
     @PostMapping("/activity/coupon/template/create")
     public Response create(@RequestBody DiscountCouponTemplateSaveParam param) {
         return couponTemplateService.create(param);

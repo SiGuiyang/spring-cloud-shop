@@ -6,6 +6,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
+/**
+ * 菜单资源
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -31,8 +36,6 @@ public class Menu extends Model {
     private String icon;
 
     private String permission;
-
-    private String permissionName;
 
     private Boolean hidden;
 

@@ -3,6 +3,7 @@ package quick.pager.shop.manage.controller.activity;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class ExchangeActivityManageController {
     /**
      * 活动列表
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE')")
     @PostMapping("/activity/exchange/list")
     public Response<List<ExchangeActivityResponse>> list(@RequestBody ExchangeActivityPageParam param) {
         return exchangeActivityService.list(param);
@@ -56,6 +58,7 @@ public class ExchangeActivityManageController {
     /**
      * 活动新增
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_CREATE')")
     @PostMapping("/activity/exchange/create")
     public Response<Long> create(@RequestBody ExchangeActivitySaveParam param) {
         return exchangeActivityService.create(param);
@@ -64,6 +67,7 @@ public class ExchangeActivityManageController {
     /**
      * 活动修改
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_MODIFY')")
     @PutMapping("/activity/exchange/modify")
     public Response<Long> modify(@RequestBody ExchangeActivitySaveParam param) {
         if (Objects.isNull(param.getId())) {
@@ -77,6 +81,7 @@ public class ExchangeActivityManageController {
     /**
      * 列表
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_RULE')")
     @GetMapping("/activity/exchange/rule/{activityId}")
     public Response<List<ExchangeActivityRuleResponse>> rules(@PathVariable Long activityId) {
         return exchangeActivityService.rules(activityId);
@@ -85,6 +90,7 @@ public class ExchangeActivityManageController {
     /**
      * 规则新增
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_RULE_CREATE')")
     @PostMapping("/activity/exchange/rule/create")
     public Response<Long> createRule(@RequestBody ExchangeActivityRuleSaveParam param) {
         return exchangeActivityService.createRule(param);
@@ -93,6 +99,7 @@ public class ExchangeActivityManageController {
     /**
      * 规则修改
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_RULE_MODIFY')")
     @PutMapping("/activity/exchange/rule/modify")
     public Response<Long> modifyRule(@RequestBody ExchangeActivityRuleSaveParam param) {
         return exchangeActivityService.modifyRule(param);
@@ -101,6 +108,7 @@ public class ExchangeActivityManageController {
     /**
      * 设置商品规则
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_GOODS_SETTING')")
     @PutMapping("/activity/exchange/goods/rule")
     public Response goodsRule(@RequestBody ExchangeActivityParam param) {
         return exchangeActivityService.goodsRule(param);
@@ -119,6 +127,7 @@ public class ExchangeActivityManageController {
     /**
      * 购买记录
      */
+    @PreAuthorize("hasAuthority('PAGER_ACTIVITY_EXCHANGE_RECORD')")
     @PostMapping("/activity/exchange/purchase/history")
     public Response purchaseHistory(@RequestBody ExchangeActivityParam param) {
         return exchangeActivityService.purchaseHistory(param);

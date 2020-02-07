@@ -16,10 +16,10 @@ spring:
           uri: lb://shop-auth
           predicates:
             - Path=/oauth/**
-        - id: shop-fallback
-          uri: lb://shop-fallback
+        - id: shop-activity
+          uri: lb://shop-activity
           predicates:
-            - Path=/fallback/**
+            - Path=/activity/**
         - id: shop-manage
           uri: lb://shop-manage
           predicates:

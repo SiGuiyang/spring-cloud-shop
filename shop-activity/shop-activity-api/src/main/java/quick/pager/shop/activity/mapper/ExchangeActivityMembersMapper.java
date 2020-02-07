@@ -2,13 +2,15 @@ package quick.pager.shop.activity.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import quick.pager.shop.activity.model.ExchangeActivityMembers;
+import quick.pager.shop.activity.model.ExchangeActivityMember;
 
 /**
+ * 满赠换购成员
+ *
  * @author siguiyang
  */
 @Mapper
-public interface ExchangeActivityMembersMapper extends BaseMapper<ExchangeActivityMembers> {
+public interface ExchangeActivityMembersMapper extends BaseMapper<ExchangeActivityMember> {
 
     /**
      * 换购记录查询

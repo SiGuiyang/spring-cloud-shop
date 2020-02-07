@@ -1,5 +1,6 @@
 package quick.pager.shop.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -49,7 +50,8 @@ public class Request implements Serializable {
     /**
      * 访问token
      */
-    private String access_token;
+    @JsonProperty("access_token")
+    private String accessToken;
 
     private Boolean serverStatus;
 

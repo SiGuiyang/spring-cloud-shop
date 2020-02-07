@@ -1,5 +1,7 @@
 package quick.pager.shop.activity.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -17,12 +19,12 @@ import quick.pager.shop.activity.model.DiscountCouponTemplate;
 import quick.pager.shop.activity.request.coupon.DiscountCouponTemplatePageRequest;
 import quick.pager.shop.activity.request.coupon.DiscountCouponTemplateSaveRequest;
 import quick.pager.shop.activity.response.coupon.DiscountCouponTemplateResponse;
+import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.activity.service.CouponTemplateService;
 import quick.pager.shop.utils.BeanCopier;
-import quick.pager.shop.utils.CopyOptions;
 
 /**
  * 优惠券模板管理
@@ -34,16 +36,15 @@ import quick.pager.shop.utils.CopyOptions;
 @RequestMapping(ConstantsClient.ACTIVITY)
 public class CouponTemplateController {
 
-
     @Autowired
     private CouponTemplateService couponTemplateService;
 
     /**
      * 优惠券模板列表
      */
-    @PostMapping("/coupon/template/list")
-    public Response<List<DiscountCouponTemplateResponse>> templateList(@RequestBody DiscountCouponTemplatePageRequest request) {
-        Response<List<DiscountCouponTemplate>> response = couponTemplateService.list(request);
+    @PostMapping("/coupon/template/page")
+    public Response<List<DiscountCouponTemplateResponse>> queryPage(@RequestBody DiscountCouponTemplatePageRequest request) {
+        Response<List<DiscountCouponTemplate>> response = couponTemplateService.queryPage(request);
 
         return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
                         .map(this::convert)
@@ -56,7 +57,23 @@ public class CouponTemplateController {
      */
     @PostMapping("/coupon/template/create")
     public Response create(@RequestBody DiscountCouponTemplateSaveRequest request) {
-        return couponTemplateService.modify(request);
+        if (null != request.getTemplateType() && null != request.getDiscountStrength()) {
+            // 如果是折扣券
+            if (Constants.CouponType.DISCOUNT.getType() == request.getTemplateType()) {
+                BigDecimal hundred = new BigDecimal("100");
+
+                if (hundred.compareTo(request.getDiscountStrength()) <= 0) {
+                    return new Response<>(ResponseStatus.Code.FAIL_CODE, "折扣力度不能必须小于100");
+                } else if (BigDecimal.ZERO.compareTo(request.getDiscountStrength()) >= 0) {
+                    return new Response<>(ResponseStatus.Code.FAIL_CODE, "折扣力度必须是整数");
+                }
+
+                request.setDiscountStrength(request.getDiscountStrength().divide(new BigDecimal("100"), RoundingMode.HALF_UP));
+            }
+
+        }
+
+        return couponTemplateService.create(request);
     }
 
     /**
@@ -67,6 +84,21 @@ public class CouponTemplateController {
         if (Objects.isNull(request.getId())) {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
+        if (null != request.getTemplateType() && null != request.getDiscountStrength()) {
+            // 如果是折扣券
+            if (Constants.CouponType.DISCOUNT.getType() == request.getTemplateType()) {
+                BigDecimal hundred = new BigDecimal("100");
+
+                if (hundred.compareTo(request.getDiscountStrength()) <= 0) {
+                    return new Response<>(ResponseStatus.Code.FAIL_CODE, "折扣力度不能必须小于100");
+                } else if (BigDecimal.ZERO.compareTo(request.getDiscountStrength()) >= 0) {
+                    return new Response<>(ResponseStatus.Code.FAIL_CODE, "折扣力度必须是整数");
+                }
+
+                request.setDiscountStrength(request.getDiscountStrength().divide(new BigDecimal("100"), RoundingMode.HALF_UP));
+            }
+
+        }
         return couponTemplateService.modify(request);
     }
 
@@ -74,11 +106,14 @@ public class CouponTemplateController {
      * 获取优惠券模板信息
      */
     @GetMapping("/coupon/template/{templateId}")
-    public Response<DiscountCouponTemplateResponse> templateInfo(@PathVariable("templateId") Long templateId) {
-        return new Response<>(convert(couponTemplateService.getById(templateId)));
+    public Response<DiscountCouponTemplateResponse> info(@PathVariable("templateId") Long templateId) {
+        return new Response<>(convert(couponTemplateService.info(templateId)));
     }
 
     private DiscountCouponTemplateResponse convert(DiscountCouponTemplate template) {
+        if (Objects.isNull(template)) {
+            return null;
+        }
         DiscountCouponTemplateResponse response = new DiscountCouponTemplateResponse();
         BeanCopier.create(template, response).copy();
 

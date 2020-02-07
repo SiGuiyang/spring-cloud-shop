@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.ManageDTO;
+import quick.pager.shop.request.Request;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ClassificationRequest extends ManageDTO {
+public class ClassificationRequest extends Request {
     private static final long serialVersionUID = 8834227650288882046L;
 
     /**
@@ -32,9 +32,9 @@ public class ClassificationRequest extends ManageDTO {
      * 子集分类
      */
     private List<ClassificationRequest> children = new ArrayList<>();
-    /**
-     * 关联的banner列表
-     */
+//    /**
+//     * 关联的banner列表
+//     */
 //    private List<BannerDTO> bannerDTOS = new ArrayList<>();
 
 }

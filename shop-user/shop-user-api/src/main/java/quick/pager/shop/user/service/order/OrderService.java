@@ -1,15 +1,10 @@
 package quick.pager.shop.user.service.order;
 
-import org.springframework.stereotype.Service;
-import quick.pager.shop.dto.BaseDTO;
-import quick.pager.shop.response.Response;
-import quick.pager.shop.service.IService;
+/**
+ * 订单服务
+ *
+ * @author siguiyang
+ */
+public interface OrderService {
 
-@Service
-public class OrderService implements IService {
-
-    @Override
-    public Response doService(BaseDTO dto) {
-        return null;
-    }
 }

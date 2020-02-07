@@ -5,6 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.Model;
 
+/**
+ * 系统用户与角色关联表
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("t_sys_role")

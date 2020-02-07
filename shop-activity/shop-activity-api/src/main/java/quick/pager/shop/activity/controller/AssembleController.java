@@ -1,6 +1,7 @@
 package quick.pager.shop.activity.controller;
 
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import quick.pager.shop.activity.request.assemble.AssembleSaveRequest;
 import quick.pager.shop.activity.response.assemble.AssembleActivityResponse;
 import quick.pager.shop.activity.response.assemble.AssembleResponse;
 import quick.pager.shop.constants.ConstantsClient;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.activity.service.AssembleService;
 
@@ -51,7 +53,11 @@ public class AssembleController {
      * 修改拼团活动
      */
     @PutMapping("/assemble/modify")
-    public Response<Long> modifyActivity(@RequestBody AssembleSaveRequest request) {
+    public Response<Long> modify(@RequestBody AssembleSaveRequest request) {
+        if (Objects.isNull(request.getId())) {
+            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+        }
+
         return assembleService.modify(request);
     }
 

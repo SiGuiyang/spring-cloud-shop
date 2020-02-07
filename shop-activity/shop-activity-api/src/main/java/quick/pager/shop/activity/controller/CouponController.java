@@ -33,7 +33,7 @@ public class CouponController {
     /**
      * 用户优惠券列表
      */
-    @PostMapping("/coupon/queryPage")
+    @PostMapping("/coupon/page")
     public Response<List<DiscountCouponResponse>> coupons(@RequestBody DiscountCouponPageRequest request) {
 
         return discountCouponService.queryPage(request);

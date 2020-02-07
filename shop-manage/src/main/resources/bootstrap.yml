@@ -7,7 +7,6 @@ spring:
   autoconfigure:
     exclude:
      - org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
-
   cloud:
     alibaba:
       seata:
@@ -16,19 +15,13 @@ spring:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
+  redis:
+    host: 101.132.121.178
+    port: 6379
+    password: abc+123
 feign:
-  hystrix:
+  sentinel:
     enabled: true
-#ribbon:
-#  ReadTimeout:  30000
-#  ConnectTimeout:  15000
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: quick.pager.shop.model

@@ -2,7 +2,9 @@ package quick.pager.shop.platform.fallback;
 
 import feign.hystrix.FallbackFactory;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.platform.client.SystemConfigClient;
 import quick.pager.shop.platform.request.SystemConfigOtherRequest;
 import quick.pager.shop.platform.request.SystemConfigPageRequest;
@@ -17,28 +19,33 @@ import quick.pager.shop.response.Response;
  * @version 3.0
  */
 @Component
+@Slf4j
 public class SystemConfigClientFallback implements FallbackFactory<SystemConfigClient> {
     @Override
     public SystemConfigClient create(Throwable cause) {
         return new SystemConfigClient() {
             @Override
             public Response<Long> create(SystemConfigSaveRequest request) {
-                return null;
+                log.error("SystemConfigClient.create 进入熔断措施 msg = {}", cause.getMessage());
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<Long> modify(SystemConfigSaveRequest request) {
-                return null;
+                log.error("SystemConfigClient.modify 进入熔断措施 msg = {}", cause.getMessage());
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<SystemConfigResponse>> queryList(SystemConfigOtherRequest request) {
-                return new Response<>();
+                log.error("SystemConfigClient.queryList 进入熔断措施 msg = {}", cause.getMessage());
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<SystemConfigResponse>> queryPage(SystemConfigPageRequest request) {
-                return null;
+                log.error("SystemConfigClient.queryPage 进入熔断措施 msg = {}", cause.getMessage());
+                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
         };
     }

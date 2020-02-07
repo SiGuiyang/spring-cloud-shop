@@ -1,7 +1,6 @@
 package quick.pager.shop.activity.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +15,7 @@ import quick.pager.shop.activity.request.exchange.ExchangeActivitySaveRequest;
 import quick.pager.shop.activity.response.exchange.ExchangeActivityResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.activity.service.ExchangeService;
+import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 

@@ -30,7 +30,7 @@ public class ShopSpringContext implements ApplicationContextAware {
      * @return 实例对象引用
      */
     public static <T> T getBean(Class<T> tClass) {
-        return applicationContext.getBean(tClass);
+        return getApplicationContext().getBean(tClass);
     }
 
     /**
@@ -42,6 +42,10 @@ public class ShopSpringContext implements ApplicationContextAware {
      * @return 实例对象引用
      */
     public static <T> T getBean(String beanName, Class<T> tClass) {
-        return applicationContext.getBean(beanName, tClass);
+        return getApplicationContext().getBean(beanName, tClass);
+    }
+
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 }

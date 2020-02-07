@@ -10,18 +10,8 @@ spring:
     active: dev
 
 feign:
-  hystrix:
+  sentinel:
     enabled: true
-ribbon:
-  ReadTimeout:  30000
-  ConnectTimeout:  15000
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 10000
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml

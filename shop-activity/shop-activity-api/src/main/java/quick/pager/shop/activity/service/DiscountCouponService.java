@@ -1,12 +1,9 @@
 package quick.pager.shop.activity.service;
 
 import java.util.List;
-import quick.pager.shop.activity.model.DiscountCoupon;
-import quick.pager.shop.activity.param.coupon.DiscountCouponPageParam;
 import quick.pager.shop.activity.request.coupon.DiscountCouponPageRequest;
 import quick.pager.shop.activity.response.coupon.DiscountCouponResponse;
 import quick.pager.shop.response.Response;
-import quick.pager.shop.service.IPageService;
 
 /**
  * 优惠券服务
@@ -14,7 +11,7 @@ import quick.pager.shop.service.IPageService;
  * @author siguiyang
  * @version 3.0
  */
-public interface DiscountCouponService extends IPageService<DiscountCoupon> {
+public interface DiscountCouponService {
 
     /**
      * 优惠券列表

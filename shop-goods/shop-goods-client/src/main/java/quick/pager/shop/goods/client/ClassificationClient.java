@@ -22,24 +22,35 @@ public interface ClassificationClient {
 
     /**
      * 商品分类列表
+     *
+     * @param request 请求参数
+     * @return 商品分类列表
      */
     @RequestMapping(value = "/classification/list", method = RequestMethod.POST)
     Response<List<GoodsClassificationResponse>> list(@RequestBody GoodsClassificationRequest request);
 
     /**
      * 商品分类新增
+     *
+     * @param request 请求参数
+     * @return 商品分类主键
      */
     @RequestMapping(value = "/classification/create", method = RequestMethod.POST)
     Response<Long> create(@RequestBody GoodsClassificationSaveRequest request);
 
     /**
      * 商品分类修改
+     *
+     * @param request 请求参数
+     * @return 商品分类主键
      */
     @RequestMapping(value = "/classification/modify", method = RequestMethod.POST)
     Response<Long> modify(@RequestBody GoodsClassificationSaveRequest request);
 
     /**
      * 商品分类树形结构
+     *
+     * @return 商品分类树形结构
      */
     @RequestMapping(value = "/classification/tree", method = RequestMethod.POST)
     Response tree();

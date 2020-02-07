@@ -3,11 +3,11 @@ package quick.pager.shop.goods.request;
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.ManageDTO;
+import quick.pager.shop.request.Request;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GoodsRequest extends ManageDTO {
+public class GoodsRequest extends Request {
     private static final long serialVersionUID = 675509028031796700L;
 
     private Long goodsDetailId;

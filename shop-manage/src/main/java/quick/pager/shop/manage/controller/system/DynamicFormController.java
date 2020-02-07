@@ -3,6 +3,8 @@ package quick.pager.shop.manage.controller.system;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,7 @@ public class DynamicFormController {
     /**
      * 创建表单
      */
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_DYNAMIC')")
     @PostMapping("/dynamic/form/create")
     public Response<Long> create(@RequestBody DynamicFormOtherSaveParam param) {
 
@@ -44,6 +47,7 @@ public class DynamicFormController {
     /**
      * 创建表单
      */
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_DYNAMIC')")
     @PostMapping("/dynamic/form/modify")
     public Response modify(@RequestBody DynamicFormOtherSaveParam param) {
 
@@ -57,7 +61,8 @@ public class DynamicFormController {
     /**
      * 创建表单
      */
-    @PostMapping("/dynamic/form/get")
+    @PreAuthorize("hasAuthority('PAGER_SYSTEM_DYNAMIC')")
+    @GetMapping("/dynamic/form/get")
     public Response<List<DynamicFormResponse>> get(@RequestParam String bizType) {
 
         return dynamicFormService.get(bizType);

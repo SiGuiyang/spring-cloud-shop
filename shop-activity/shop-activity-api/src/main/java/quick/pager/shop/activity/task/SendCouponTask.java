@@ -11,6 +11,11 @@ import quick.pager.shop.activity.model.DiscountCouponTemplate;
 import quick.pager.shop.user.response.UserInfoResponse;
 import quick.pager.shop.utils.DateUtils;
 
+/**
+ * 发送优惠券线程
+ *
+ * @author siguiyang
+ */
 @Slf4j
 public class SendCouponTask extends RecursiveTask<List<String>> {
     private static final long serialVersionUID = 3590505263802424175L;
@@ -21,7 +26,9 @@ public class SendCouponTask extends RecursiveTask<List<String>> {
 
     private DiscountCouponMapper discountCouponMapper;
 
-    // 容量值
+    /**
+     * 容量值
+     */
     private static final int CAPACITY = 1000;
 
     public SendCouponTask(List<UserInfoResponse> users, DiscountCouponTemplate discountCouponTemplate, DiscountCouponMapper discountCouponMapper) {

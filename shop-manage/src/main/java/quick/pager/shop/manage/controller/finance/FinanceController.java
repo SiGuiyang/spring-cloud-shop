@@ -1,5 +1,6 @@
 package quick.pager.shop.manage.controller.finance;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ public class FinanceController {
     /**
      * 资金管理
      */
+    @PreAuthorize("hasAuthority('PAGER_FINANCE_FUND')")
     @PostMapping("/finance/fund")
     public Response fund() {
         return null;
@@ -23,6 +25,7 @@ public class FinanceController {
     /**
      * 交易管理
      */
+    @PreAuthorize("hasAuthority('PAGER_FINANCE_TRADE')")
     @PostMapping("/finance/trade")
     public Response trade() {
         return null;

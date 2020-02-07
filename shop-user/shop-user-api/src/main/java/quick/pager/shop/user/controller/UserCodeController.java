@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RedisKeys;
 import quick.pager.shop.dto.SmsDTO;
+import quick.pager.shop.param.SendParam;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.RedisService;
 import quick.pager.shop.user.service.SMSCodeService;
@@ -34,10 +35,10 @@ public class UserCodeController {
      * 发送短信验证码
      */
     @RequestMapping(value = "/code/sendSMS", method = RequestMethod.POST)
-    public Response sendSMS(@RequestBody SmsDTO dto) {
+    public Response sendSMS(@RequestBody SendParam param) {
 
 
-        return smsCodeService.doService(dto);
+        return smsCodeService.send(param);
     }
 
 
