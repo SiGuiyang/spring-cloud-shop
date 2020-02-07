@@ -8,7 +8,7 @@
     风控中心: pager-risk 
     授权中心: pager-auth
     分布式定时任务采用xxl-job方式实现
-    后台登陆采用oauth2.0密码模式登陆或者授权码模式登陆
+    后台登陆采用oauth2.0密码模式登陆
     注册中心与配置中心已使用alibaba nacos
 # 脚本升级
 ```
