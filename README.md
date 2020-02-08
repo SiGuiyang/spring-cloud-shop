@@ -12,7 +12,7 @@
     注册中心与配置中心已使用alibaba nacos
 # 在线demo地址 仅提供访问，预览，不提供新增编辑功能
 ```
-    访问地址[Spring Cloud Shop](http://106.54.251.32)
+    访问地址 [Spring Cloud Shop](http://106.54.251.32)
 ```
 # 脚本升级
 ```
