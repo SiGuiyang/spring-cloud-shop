@@ -10,10 +10,9 @@
     分布式定时任务采用xxl-job方式实现
     后台登陆采用oauth2.0密码模式登陆
     注册中心与配置中心已使用alibaba nacos
-# 在线demo地址 仅提供访问，预览，不提供新增编辑功能
-```
-    访问地址 [Spring Cloud Shop](http://106.54.251.32)
-```
+# 在线demo地址 [Spring Cloud Shop](http://106.54.251.32)
+    1. 仅提供访问，预览
+    2. 不提供新增编辑功能
 # 脚本升级
 ```
     自2020年02月07日起，spring-cloud-shop项目提供脚本升级方案，基础脚本存放在doc/base目录中，升级脚本存放在doc/upgrade中。
