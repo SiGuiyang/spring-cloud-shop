@@ -21,6 +21,10 @@ public class GoodsBrandPageRequest extends PageRequest {
      * 品牌名称
      */
     private String brandName;
+    /**
+     * 品牌编码
+     */
+    private String brandCode;
 
     private List<LocalDateTime> dateTimes;
 }

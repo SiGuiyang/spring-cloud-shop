@@ -23,7 +23,7 @@ import quick.pager.shop.dto.UserDTO;
  * @version 3.0
  */
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
 
     @Autowired
     private AuthClient authClient;

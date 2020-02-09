@@ -22,9 +22,12 @@ public class JobConfiguration {
 
         SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
         schedulerFactory.setDataSource(dataSource);
-        schedulerFactory.setAutoStartup(true);                  // 自动启动
-        schedulerFactory.setStartupDelay(20);                   // 延时启动，应用启动成功后在启动
-        schedulerFactory.setOverwriteExistingJobs(true);        // 覆盖DB中JOB：true、以数据库中已经存在的为准：false
+        // 自动启动
+        schedulerFactory.setAutoStartup(true);
+        // 延时启动，应用启动成功后在启动
+        schedulerFactory.setStartupDelay(20);
+        // 覆盖DB中JOB：true、以数据库中已经存在的为准：false
+        schedulerFactory.setOverwriteExistingJobs(true);
         schedulerFactory.setApplicationContextSchedulerContextKey("applicationContext");
         schedulerFactory.setConfigLocation(new ClassPathResource("quartz.properties"));
 

@@ -1,19 +1,12 @@
 package quick.pager.shop.goods.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.goods.mapper.GoodsSkuMapper;
 import quick.pager.shop.goods.model.GoodsSku;
-import quick.pager.shop.goods.model.GoodsSpu;
 import quick.pager.shop.goods.request.sku.GoodsSkuPageRequest;
 import quick.pager.shop.goods.request.sku.GoodsSkuSaveRequest;
-import quick.pager.shop.goods.request.spu.GoodsSpuSaveRequest;
-import quick.pager.shop.goods.response.sku.GoodsSkuResponse;
-import quick.pager.shop.goods.response.spu.GoodsSpuResponse;
 import quick.pager.shop.goods.service.GoodsSkuService;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.impl.ServiceImpl;
@@ -48,25 +41,15 @@ public class GoodsSkuServiceImpl extends ServiceImpl<GoodsSkuMapper, GoodsSku> i
     }
 
     @Override
-    public Response<List<GoodsSkuResponse>> queryPage(GoodsSkuPageRequest request) {
+    public Response<List<GoodsSku>> queryPage(GoodsSkuPageRequest request) {
         QueryWrapper<GoodsSku> qw = new QueryWrapper<>();
 
-        Response<List<GoodsSku>> response = this.toPage(request.getPage(), request.getPageSize(), qw);
-
-        return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
-                        .map(this::conv).collect(Collectors.toList())
-                , response.getTotal());
+        return this.toPage(request.getPage(), request.getPageSize(), qw);
     }
 
     private GoodsSku conv(GoodsSkuSaveRequest request) {
         GoodsSku sku = new GoodsSku();
         BeanCopier.create(request, sku).copy();
         return sku;
-    }
-
-    private GoodsSkuResponse conv(GoodsSku sku) {
-        GoodsSkuResponse response = new GoodsSkuResponse();
-        BeanCopier.create(sku, response).copy();
-        return response;
     }
 }

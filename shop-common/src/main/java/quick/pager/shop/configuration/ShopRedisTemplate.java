@@ -38,6 +38,7 @@ public class ShopRedisTemplate extends RedisTemplate<String, Serializable> {
     }
 
     @NonNull
+    @Override
     protected RedisConnection preProcessConnection(@NonNull RedisConnection connection, boolean existingConnection) {
         return new DefaultStringRedisConnection(connection);
     }

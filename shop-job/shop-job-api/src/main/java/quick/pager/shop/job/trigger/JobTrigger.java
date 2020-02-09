@@ -22,6 +22,7 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import java.util.List;
 import java.util.Set;
+import quick.pager.shop.job.enums.JobEnums;
 import quick.pager.shop.job.enums.JobStatusEnums;
 import quick.pager.shop.job.model.JobInfo;
 import quick.pager.shop.job.schedule.JobQuartzJobBean;
@@ -297,7 +298,7 @@ public class JobTrigger {
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
             Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
             // 忽略状态为PAUSED的任务，解决集群环境中在其他机器设置定时任务为PAUSED状态后，集群环境启动另一台主机时定时任务全被唤醒的bug
-            if (!triggerState.name().equalsIgnoreCase("PAUSED")) {
+            if (!JobEnums.PAUSE.name().equalsIgnoreCase(triggerState.name())) {
                 // 按新的trigger重新设置job执行
                 scheduler.rescheduleJob(triggerKey, trigger);
             }

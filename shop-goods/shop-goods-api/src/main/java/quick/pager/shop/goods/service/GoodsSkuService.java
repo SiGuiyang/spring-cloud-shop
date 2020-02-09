@@ -1,9 +1,9 @@
 package quick.pager.shop.goods.service;
 
 import java.util.List;
+import quick.pager.shop.goods.model.GoodsSku;
 import quick.pager.shop.goods.request.sku.GoodsSkuPageRequest;
 import quick.pager.shop.goods.request.sku.GoodsSkuSaveRequest;
-import quick.pager.shop.goods.response.sku.GoodsSkuResponse;
 import quick.pager.shop.response.Response;
 
 /**
@@ -29,5 +29,5 @@ public interface GoodsSkuService {
     /**
      * 列表分页
      */
-    Response<List<GoodsSkuResponse>> queryPage(GoodsSkuPageRequest request);
+    Response<List<GoodsSku>> queryPage(GoodsSkuPageRequest request);
 }

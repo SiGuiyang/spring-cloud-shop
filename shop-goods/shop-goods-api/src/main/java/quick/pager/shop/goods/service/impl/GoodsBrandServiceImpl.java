@@ -23,8 +23,12 @@ public class GoodsBrandServiceImpl extends ServiceImpl<GoodsBrandMapper, GoodsBr
         QueryWrapper<GoodsBrand> qw = new QueryWrapper<>();
         qw.eq("delete_status", Boolean.FALSE);
 
-        if (!StringUtils.isEmpty(request.getBrandName())) {
+        if (StringUtils.isNotBlank(request.getBrandName())) {
             qw.likeRight("brand_name", request.getBrandName());
+        }
+
+        if (StringUtils.isNotBlank(request.getBrandCode())) {
+            qw.eq("brand_code", request.getBrandCode());
         }
 
         if (!CollectionUtils.isEmpty(request.getDateTimes())) {

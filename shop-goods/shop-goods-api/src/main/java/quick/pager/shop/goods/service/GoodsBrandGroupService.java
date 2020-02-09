@@ -19,16 +19,25 @@ public interface GoodsBrandGroupService extends IService<GoodsBrandGroup> {
 
     /**
      * 新增
+     *
+     * @param request 请求参数
+     * @return 品牌组主键
      */
     Response<Long> create(GoodsBrandGroupSaveRequest request);
 
     /**
      * 更新
+     *
+     * @param request 请求参数
+     * @return 品牌组主键
      */
     Response<Long> modify(GoodsBrandGroupSaveRequest request);
 
     /**
      * 商品品牌组列表
+     *
+     * @param request 请求参数
+     * @return 品牌组集
      */
     Response<List<GoodsBrandGroup>> queryPage(GoodsBrandGroupPageRequest request);
 }

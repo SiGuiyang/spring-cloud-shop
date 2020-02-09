@@ -30,6 +30,9 @@ public class GoodsClassificationController {
 
     /**
      * 商品分类列表
+     *
+     * @param request 请求参数
+     * @return 分类列表
      */
     @PostMapping("/classification/list")
     public Response<List<GoodsClassificationResponse>> list(@RequestBody GoodsClassificationRequest request) {
@@ -39,6 +42,9 @@ public class GoodsClassificationController {
 
     /**
      * 新增商品分类
+     *
+     * @param request 请求参数
+     * @return 分类主键
      */
     @PostMapping("/classification/create")
     public Response<Long> create(@RequestBody GoodsClassificationSaveRequest request) {
@@ -47,6 +53,9 @@ public class GoodsClassificationController {
 
     /**
      * 商品分类修改
+     *
+     * @param request 请求参数
+     * @return 分类主键
      */
     @PutMapping("/classification/modify")
     public Response<Long> modify(@RequestBody GoodsClassificationSaveRequest request) {

@@ -7,10 +7,28 @@ package quick.pager.shop.job.enums;
  */
 public enum JobEnums {
 
-    EXECUTE, // 执行
-    PAUSE,   // 暂停
-    RESUME,  // 恢复
-    DELETE,  // 删除
-    MANUAL,  // 人工
-    EMPTY    // 默认空
+    /**
+     * 执行
+     */
+    EXECUTE,
+    /**
+     * 暂停
+     */
+    PAUSE,
+    /**
+     * 恢复
+     */
+    RESUME,
+    /**
+     * 删除
+     */
+    DELETE,
+    /**
+     * 人工
+     */
+    MANUAL,
+    /**
+     * 默认空
+     */
+    EMPTY
 }

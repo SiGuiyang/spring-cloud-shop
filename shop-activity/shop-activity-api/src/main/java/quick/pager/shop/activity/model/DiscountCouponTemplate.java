@@ -9,6 +9,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
+/**
+ * 优惠券模板
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)

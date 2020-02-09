@@ -157,6 +157,19 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>quick.pager</groupId>
+            <artifactId>shop-platform-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>quick.pager</groupId>
+            <artifactId>shop-platform-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

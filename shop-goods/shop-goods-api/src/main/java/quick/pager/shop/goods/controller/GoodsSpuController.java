@@ -1,7 +1,10 @@
 package quick.pager.shop.goods.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.goods.model.GoodsSpu;
 import quick.pager.shop.goods.request.spu.GoodsSpuPageRequest;
 import quick.pager.shop.goods.request.spu.GoodsSpuSaveRequest;
 import quick.pager.shop.goods.response.spu.GoodsSpuResponse;
 import quick.pager.shop.goods.service.GoodsSpuService;
 import quick.pager.shop.response.Response;
+import quick.pager.shop.utils.BeanCopier;
 
 /**
  * 商品spu
@@ -52,6 +57,17 @@ public class GoodsSpuController {
      */
     @PostMapping("/spu/page")
     public Response<List<GoodsSpuResponse>> queryPage(@RequestBody GoodsSpuPageRequest request) {
-        return goodsSpuService.queryPage(request);
+        Response<List<GoodsSpu>> listResponse = goodsSpuService.queryPage(request);
+
+        return Response.toResponse(Optional.ofNullable(listResponse.getData()).orElse(Collections.emptyList()).stream()
+                        .map(this::conv).collect(Collectors.toList())
+                , listResponse.getTotal());
+    }
+
+
+    private GoodsSpuResponse conv(GoodsSpu spu) {
+        GoodsSpuResponse response = new GoodsSpuResponse();
+        BeanCopier.create(spu, response).copy();
+        return response;
     }
 }

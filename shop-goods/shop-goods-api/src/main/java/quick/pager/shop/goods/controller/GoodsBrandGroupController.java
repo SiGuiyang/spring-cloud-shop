@@ -30,15 +30,21 @@ public class GoodsBrandGroupController {
 
     /**
      * 新建商品品牌组
+     *
+     * @param request 请求参数
+     * @return 品牌组主键
      */
     @PostMapping("/brand/group/create")
-    public Response create(@RequestBody GoodsBrandGroupSaveRequest request) {
+    public Response<Long> create(@RequestBody GoodsBrandGroupSaveRequest request) {
 
         return goodsBrandGroupService.create(request);
     }
 
     /**
      * 修改商品品牌组
+     *
+     * @param request 请求参数
+     * @return 品牌组主键
      */
     @PostMapping("/brand/group/modify")
     public Response<Long> modify(@RequestBody GoodsBrandGroupSaveRequest request) {

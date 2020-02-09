@@ -10,13 +10,13 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import quick.pager.shop.service.UserService;
+import quick.pager.shop.service.UserServiceImpl;
 
 @EnableWebSecurity
 @Order(6)
 public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -38,7 +38,7 @@ public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userServiceImpl).passwordEncoder(bCryptPasswordEncoder());
 
     }
 
