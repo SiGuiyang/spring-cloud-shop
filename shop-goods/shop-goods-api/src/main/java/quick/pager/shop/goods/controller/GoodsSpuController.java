@@ -54,6 +54,9 @@ public class GoodsSpuController {
 
     /**
      * 商品spu列表分页
+     *
+     * @param request 请求参数
+     * @return 数据响应
      */
     @PostMapping("/spu/page")
     public Response<List<GoodsSpuResponse>> queryPage(@RequestBody GoodsSpuPageRequest request) {

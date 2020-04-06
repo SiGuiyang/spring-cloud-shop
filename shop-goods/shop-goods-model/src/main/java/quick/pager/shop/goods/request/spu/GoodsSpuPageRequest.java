@@ -14,4 +14,9 @@ import quick.pager.shop.request.PageRequest;
 @Data
 public class GoodsSpuPageRequest extends PageRequest {
     private static final long serialVersionUID = -4144846306668353162L;
+
+    /**
+     * spu名称
+     */
+    private String spuName;
 }

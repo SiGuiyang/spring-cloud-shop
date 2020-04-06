@@ -59,8 +59,8 @@ public class GoodsBrandController {
     /**
      * 品牌列表
      */
-    @PostMapping("/brand/list")
-    public Response<List<GoodsBrandResponse>> list(@RequestBody GoodsBrandPageRequest request) {
+    @PostMapping("/brand/page")
+    public Response<List<GoodsBrandResponse>> page(@RequestBody GoodsBrandPageRequest request) {
         Response<List<GoodsBrand>> response = goodsBrandService.queryPage(request);
         return Response.toResponse(response.getData().stream().map(this::convert).collect(Collectors.toList())
                 , response.getTotal());

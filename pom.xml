@@ -61,7 +61,6 @@
     <modules>
         <module>shop-activity</module>
         <module>shop-auth</module>
-        <module>shop-auth-feign</module>
         <module>shop-common</module>
         <module>shop-dependencies</module>
         <module>shop-gateway</module>
@@ -75,6 +74,5 @@
         <module>shop-seller</module>
         <module>shop-task</module>
         <module>shop-user</module>
-        <module>shop-zuul</module>
     </modules>
 </project>

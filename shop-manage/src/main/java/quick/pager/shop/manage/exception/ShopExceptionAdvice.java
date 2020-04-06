@@ -18,7 +18,7 @@ public class ShopExceptionAdvice {
 
     @ExceptionHandler
     public Object doException(Exception e) {
-        log.error("统一异常处理机制，触发异常 msg = {}", e.getMessage());
+        log.error("统一异常处理机制，触发异常 msg = {}", e);
         if (e instanceof ShopException) {
             ShopException exception = (ShopException) e;
             return new Response<>(exception.getCode(), exception.getMessage());

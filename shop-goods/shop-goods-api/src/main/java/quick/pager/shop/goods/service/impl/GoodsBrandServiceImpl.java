@@ -15,20 +15,27 @@ import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
+/**
+ * GoodsBrandServiceImpl
+ *
+ * @author siguiyang
+ */
 @Service
 public class GoodsBrandServiceImpl extends ServiceImpl<GoodsBrandMapper, GoodsBrand> implements GoodsBrandService {
 
     @Override
     public Response<List<GoodsBrand>> queryPage(GoodsBrandPageRequest request) {
-        QueryWrapper<GoodsBrand> qw = new QueryWrapper<>();
-        qw.eq("delete_status", Boolean.FALSE);
+        GoodsBrand brand = new GoodsBrand();
+        brand.setDeleteStatus(Boolean.FALSE);
+
+        if (StringUtils.isNotBlank(request.getBrandCode())) {
+            brand.setBrandCode(request.getBrandCode());
+        }
+
+        QueryWrapper<GoodsBrand> qw = new QueryWrapper<>(brand);
 
         if (StringUtils.isNotBlank(request.getBrandName())) {
             qw.likeRight("brand_name", request.getBrandName());
-        }
-
-        if (StringUtils.isNotBlank(request.getBrandCode())) {
-            qw.eq("brand_code", request.getBrandCode());
         }
 
         if (!CollectionUtils.isEmpty(request.getDateTimes())) {

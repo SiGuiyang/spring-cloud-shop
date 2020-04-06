@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.goods.request.classification.GoodsClassificationRequest;
+import quick.pager.shop.goods.request.classification.GoodsClassificationPageRequest;
 import quick.pager.shop.goods.request.classification.GoodsClassificationSaveRequest;
 import quick.pager.shop.goods.response.classification.GoodsClassificationResponse;
 import quick.pager.shop.goods.service.GoodsClassService;
@@ -34,8 +34,8 @@ public class GoodsClassificationController {
      * @param request 请求参数
      * @return 分类列表
      */
-    @PostMapping("/classification/list")
-    public Response<List<GoodsClassificationResponse>> list(@RequestBody GoodsClassificationRequest request) {
+    @PostMapping("/classification/page")
+    public Response<List<GoodsClassificationResponse>> page(@RequestBody GoodsClassificationPageRequest request) {
         return goodsClassService.queryPage(request);
 
     }
@@ -67,6 +67,8 @@ public class GoodsClassificationController {
 
     /**
      * 商品分类树形结构
+     *
+     * @return 商品分类树形结构
      */
     @PostMapping("/classification/tree")
     public Response classificationTree() {

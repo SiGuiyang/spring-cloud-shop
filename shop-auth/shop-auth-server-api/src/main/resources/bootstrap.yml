@@ -1,0 +1,15 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: shop-auth
+  profiles:
+    active: dev
+  freemarker:
+    template-loader-path: classpath:/templates/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info

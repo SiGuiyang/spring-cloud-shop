@@ -20,14 +20,14 @@ import lombok.experimental.Accessors;
 @TableName("t_goods_property_group")
 public class GoodsPropertyGroup extends Model {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4742600039850343429L;
 
     /**
-     * 商品属性 t_goods_property id
+     * 商品属性组名称
      */
-    private Long propertyId;
-
     private String propertyGroupName;
+
+
 
 
 }

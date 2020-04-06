@@ -22,6 +22,14 @@ public class GoodsProperty extends Model {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 属性组主键
+     */
+    private Long propertyGroupId;
+
+    /**
+     * 属性名称
+     */
     private String propertyName;
 
 

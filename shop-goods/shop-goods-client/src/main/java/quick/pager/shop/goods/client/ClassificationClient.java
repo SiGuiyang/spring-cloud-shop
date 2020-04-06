@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.goods.fallback.ClassificationClientFallbackFactory;
-import quick.pager.shop.goods.request.classification.GoodsClassificationRequest;
+import quick.pager.shop.goods.request.classification.GoodsClassificationPageRequest;
 import quick.pager.shop.goods.request.classification.GoodsClassificationSaveRequest;
 import quick.pager.shop.goods.response.classification.GoodsClassificationResponse;
 import quick.pager.shop.response.Response;
@@ -27,7 +27,7 @@ public interface ClassificationClient {
      * @return 商品分类列表
      */
     @RequestMapping(value = "/classification/list", method = RequestMethod.POST)
-    Response<List<GoodsClassificationResponse>> list(@RequestBody GoodsClassificationRequest request);
+    Response<List<GoodsClassificationResponse>> list(@RequestBody GoodsClassificationPageRequest request);
 
     /**
      * 商品分类新增

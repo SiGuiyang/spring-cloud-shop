@@ -5,13 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 //import quick.pager.shop.activity.client.BannerClient;
 import quick.pager.shop.goods.model.GoodsClass;
 import quick.pager.shop.goods.mapper.GoodsClassMapper;
-import quick.pager.shop.goods.request.classification.GoodsClassificationRequest;
+import quick.pager.shop.goods.request.classification.GoodsClassificationPageRequest;
 import quick.pager.shop.goods.request.classification.GoodsClassificationSaveRequest;
 import quick.pager.shop.goods.response.classification.GoodsClassificationResponse;
 import quick.pager.shop.response.Response;
@@ -52,7 +53,7 @@ public class GoodsClassServiceImpl extends ServiceImpl<GoodsClassMapper, GoodsCl
     }
 
     @Override
-    public Response<List<GoodsClassificationResponse>> queryPage(GoodsClassificationRequest request) {
+    public Response<List<GoodsClassificationResponse>> queryPage(GoodsClassificationPageRequest request) {
         QueryWrapper<GoodsClass> qw = new QueryWrapper<>();
         qw.eq("delete_status", Boolean.FALSE);
 
@@ -99,7 +100,10 @@ public class GoodsClassServiceImpl extends ServiceImpl<GoodsClassMapper, GoodsCl
         gc.setDeleteStatus(Boolean.FALSE);
         gc.setParentId(id);
         List<GoodsClass> goodsClasses = this.baseMapper.selectList(new QueryWrapper<>(gc));
-        return goodsClasses.stream().map(this::convert).collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(goodsClasses)) {
+            return goodsClasses.stream().map(this::convert).collect(Collectors.toList());
+        }
+        return null;
 
     }
 

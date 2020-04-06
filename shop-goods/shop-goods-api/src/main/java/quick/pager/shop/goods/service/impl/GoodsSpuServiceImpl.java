@@ -2,6 +2,7 @@ package quick.pager.shop.goods.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.goods.mapper.GoodsSpuMapper;
 import quick.pager.shop.goods.model.GoodsSpu;
@@ -42,7 +43,14 @@ public class GoodsSpuServiceImpl extends ServiceImpl<GoodsSpuMapper, GoodsSpu> i
 
     @Override
     public Response<List<GoodsSpu>> queryPage(GoodsSpuPageRequest request) {
-        QueryWrapper<GoodsSpu> qw = new QueryWrapper<>();
+        GoodsSpu spu = new GoodsSpu();
+        spu.setDeleteStatus(Boolean.FALSE);
+
+        QueryWrapper<GoodsSpu> qw = new QueryWrapper<>(spu);
+
+        if (StringUtils.isNotBlank(request.getSpuName())) {
+            qw.likeRight("spu_name", request.getSpuName());
+        }
 
         return this.toPage(request.getPage(), request.getPageSize(), qw);
     }
