@@ -1,5 +1,6 @@
 package quick.pager.shop.activity.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.Collections;
@@ -7,10 +8,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import quick.pager.shop.activity.model.AssembleActivity;
 import quick.pager.shop.activity.model.AssembleActivityMember;
 import quick.pager.shop.activity.model.AssembleActivityRule;
@@ -45,20 +46,19 @@ public class AssembleServiceImpl extends ServiceImpl<AssembleMapper, AssembleAct
     @Override
     public Response<List<AssembleActivityResponse>> list(AssemblePageRequest request) {
 
-        QueryWrapper<AssembleActivity> qw = new QueryWrapper<>();
-
-        if (!StringUtils.isEmpty(request.getActivityName())) {
-            qw.likeRight("activity_name", request.getActivityName());
+        LambdaQueryWrapper<AssembleActivity> wrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(request.getActivityName())) {
+            wrapper.likeRight(AssembleActivity::getActivityName, request.getActivityName());
         }
 
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            qw.le("begin_time", request.getTimeRange().get(0));
-            qw.ge("end_time", request.getTimeRange().get(1));
+        if (CollectionUtils.isEmpty(request.getTimeRange())) {
+            wrapper.le(AssembleActivity::getBeginTime, request.getTimeRange().get(0));
+            wrapper.ge(AssembleActivity::getEndTime, request.getTimeRange().get(1));
         }
 
-        qw.orderByDesc("id");
+        wrapper.orderByDesc(AssembleActivity::getUpdateTime);
 
-        Response<List<AssembleActivity>> response = this.toPage(request.getPage(), request.getPageSize(), qw);
+        Response<List<AssembleActivity>> response = this.toPage(request.getPage(), request.getPageSize(), wrapper);
 
         return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
                         .map(this::convert)

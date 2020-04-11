@@ -24,6 +24,10 @@ spring:
           uri: lb://shop-manage
           predicates:
             - Path=/admin/**
+        - id: shop-platform
+          uri: lb://shop-platform
+          predicates:
+            - Path=/platform/**
         - id: shop-risk
           uri: lb://shop-risk
           predicates:

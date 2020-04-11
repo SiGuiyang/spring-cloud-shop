@@ -1,13 +1,13 @@
 package quick.pager.shop.activity.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import quick.pager.shop.activity.mapper.ExchangeActivityMapper;
 import quick.pager.shop.activity.model.ExchangeActivity;
 import quick.pager.shop.activity.request.exchange.ExchangeActivityPageRequest;
@@ -19,6 +19,11 @@ import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
+/**
+ * 满赠换购
+ *
+ * @author siguiyang
+ */
 @Service
 public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, ExchangeActivity> implements ExchangeService {
 
@@ -32,15 +37,15 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, Exc
     @Override
     public Response<List<ExchangeActivityResponse>> queryPage(ExchangeActivityPageRequest request) {
 
-        QueryWrapper<ExchangeActivity> qw = new QueryWrapper<>();
+        LambdaQueryWrapper<ExchangeActivity> qw = new LambdaQueryWrapper<>();
 
-        if (!StringUtils.isEmpty(request.getActivityName())) {
-            qw.likeRight("activity_name", request.getActivityName());
+        if (StringUtils.isNotEmpty(request.getActivityName())) {
+            qw.likeRight(ExchangeActivity::getActivityName, request.getActivityName());
         }
 
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            qw.le("begin_time", request.getTimeRange().get(0));
-            qw.ge("end_time", request.getTimeRange().get(1));
+        if (CollectionUtils.isNotEmpty(request.getTimeRange())) {
+            qw.le(ExchangeActivity::getBeginTime, request.getTimeRange().get(0));
+            qw.ge(ExchangeActivity::getEndTime, request.getTimeRange().get(1));
         }
 
         Response<List<ExchangeActivity>> response = this.toPage(request.getPage(), request.getPageSize(), qw);

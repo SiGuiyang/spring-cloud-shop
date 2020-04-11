@@ -34,6 +34,10 @@ public class BannerResponse extends BasicResponse {
      */
     private String bannerType;
     /**
+     * banner类型名称
+     */
+    private String bannerTypeName;
+    /**
      * 分享地址
      */
     private String shareUrl;
@@ -53,6 +57,10 @@ public class BannerResponse extends BasicResponse {
      * 分享渠道
      */
     private List<String> shareChannel;
+    /**
+     * 分享渠道名称
+     */
+    private String shareChannelName;
 
     /**
      * banner 状态

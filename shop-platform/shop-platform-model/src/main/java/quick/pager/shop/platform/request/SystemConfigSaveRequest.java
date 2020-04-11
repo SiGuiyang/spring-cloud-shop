@@ -22,10 +22,6 @@ public class SystemConfigSaveRequest extends Request {
 
     private String configType;
 
-    private String configValue;
-
-    private String module;
-
     private String description;
 
     private Boolean configStatus;

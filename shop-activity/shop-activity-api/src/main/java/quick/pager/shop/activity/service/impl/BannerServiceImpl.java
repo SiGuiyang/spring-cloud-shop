@@ -1,20 +1,26 @@
 package quick.pager.shop.activity.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.base.Joiner;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import quick.pager.shop.activity.mapper.BannerMapper;
 import quick.pager.shop.activity.model.Banner;
 import quick.pager.shop.activity.request.banner.BannerOtherRequest;
 import quick.pager.shop.activity.request.banner.BannerPageRequest;
 import quick.pager.shop.activity.request.banner.BannerSaveRequest;
+import quick.pager.shop.activity.response.banner.BannerResponse;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.activity.service.BannerService;
+import quick.pager.shop.service.RedisService;
 import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
@@ -28,38 +34,41 @@ import quick.pager.shop.utils.DateUtils;
 @Service
 public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> implements BannerService {
 
-    @Override
-    public Response<List<Banner>> queryPage(BannerPageRequest request) {
-        QueryWrapper<Banner> qw = toQuery(request.getTitle(), request.getBannerType(), null);
+    @Autowired
+    private RedisService redisService;
 
-        return this.toPage(request.getPage(), request.getPageSize(), qw);
+    @Override
+    public Response<List<BannerResponse>> queryPage(BannerPageRequest request) {
+        LambdaQueryWrapper<Banner> qw = toQuery(request.getTitle(), request.getBannerType(), null);
+        Response<List<Banner>> page = this.toPage(request.getPage(), request.getPageSize(), qw);
+        return Response.toResponse(page.getData().stream().map(this::convert).collect(Collectors.toList()), page.getTotal());
     }
 
     @Override
-    public List<Banner> queryList(BannerOtherRequest request) {
-        QueryWrapper<Banner> qw = toQuery(request.getTitle(), request.getBannerType(), request.getBannerStatus());
+    public Response<List<BannerResponse>> queryList(BannerOtherRequest request) {
+        LambdaQueryWrapper<Banner> qw = toQuery(request.getTitle(), request.getBannerType(), request.getBannerStatus());
 
-        return this.baseMapper.selectList(qw);
+        List<Banner> banners = this.baseMapper.selectList(qw);
+        return Response.toResponse(banners.stream().map(this::convert).collect(Collectors.toList()), 0L);
     }
 
-    private QueryWrapper<Banner> toQuery(String title, String bannerType, Boolean bannerStatus) {
-        Banner banner = new Banner();
+    private LambdaQueryWrapper<Banner> toQuery(String title, String bannerType, Boolean bannerStatus) {
+        LambdaQueryWrapper<Banner> wrapper = new LambdaQueryWrapper<>();
 
-        if (!StringUtils.isEmpty(title)) {
-            banner.setTitle(title);
+        if (StringUtils.isNotEmpty(title)) {
+            wrapper.likeRight(Banner::getTitle, title);
         }
         if (!StringUtils.isEmpty(bannerType)) {
-            banner.setBannerType(bannerType);
+            wrapper.eq(Banner::getBannerType, bannerType);
         }
 
         if (Objects.nonNull(bannerStatus)) {
-            banner.setBannerStatus(bannerStatus);
+            wrapper.eq(Banner::getBannerStatus, bannerStatus);
         }
 
-        QueryWrapper<Banner> qw = new QueryWrapper<>(banner);
-        qw.orderByDesc("id");
+        wrapper.orderByDesc(Banner::getUpdateTime);
 
-        return qw;
+        return wrapper;
     }
 
     @Override
@@ -89,5 +98,19 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         } else {
             banner.setShareChannel(Joiner.on(Constants.COMMA).join(shareChannel));
         }
+    }
+
+    /**
+     * Banner -> BannerResponse
+     */
+    private BannerResponse convert(Banner banner) {
+        BannerResponse response = new BannerResponse();
+        BeanCopier.create(banner, response).copy();
+        if (StringUtils.isNotBlank(banner.getShareChannel())) {
+            response.setShareChannel(
+                    Stream.of((String[]) ConvertUtils.convert(banner.getShareChannel().split(Constants.COMMA), String.class))
+                            .collect(Collectors.toList()));
+        }
+        return response;
     }
 }

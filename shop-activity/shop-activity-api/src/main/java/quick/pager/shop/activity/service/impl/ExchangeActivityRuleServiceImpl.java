@@ -20,6 +20,11 @@ import quick.pager.shop.activity.service.ExchangeActivityRuleService;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
+/**
+ * 满赠换购活动规则
+ *
+ * @author siguiyang
+ */
 @Service
 public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleService {
 

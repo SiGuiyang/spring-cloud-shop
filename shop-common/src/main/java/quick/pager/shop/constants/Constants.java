@@ -127,7 +127,7 @@ public interface Constants {
         // 订单类型
         String ORDER_TYPE = "orderType";
         // 优惠券类型
-        String COUPON_TYPE = "couponType";
+        String OFFER_TYPE = "offerType";
         // 订单状态
         String ORDER_STATUS = "orderStatus";
         // 模块类型

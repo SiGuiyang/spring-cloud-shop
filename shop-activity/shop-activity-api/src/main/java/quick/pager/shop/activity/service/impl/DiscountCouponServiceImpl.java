@@ -5,7 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.sax.Excel07SaxReader;
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
 import java.io.DataInputStream;
 import java.util.Collections;
@@ -16,10 +16,10 @@ import java.util.Optional;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import quick.pager.shop.activity.mapper.DiscountCouponTemplateMapper;
 import quick.pager.shop.activity.model.DiscountCoupon;
 import quick.pager.shop.activity.model.DiscountCouponTemplate;
@@ -39,6 +39,11 @@ import quick.pager.shop.user.response.UserInfoResponse;
 import quick.pager.shop.utils.DateUtils;
 import quick.pager.shop.utils.FileUtil;
 
+/**
+ * 优惠券
+ *
+ * @author siguiyang
+ */
 @Service
 @Slf4j
 public class DiscountCouponServiceImpl extends ServiceImpl<DiscountCouponMapper, DiscountCoupon> implements DiscountCouponService {
@@ -53,16 +58,16 @@ public class DiscountCouponServiceImpl extends ServiceImpl<DiscountCouponMapper,
     @Override
     public Response<List<DiscountCouponResponse>> queryPage(DiscountCouponPageRequest request) {
 
-        QueryWrapper<DiscountCoupon> qw = new QueryWrapper<>();
+        LambdaQueryWrapper<DiscountCoupon> qw = new LambdaQueryWrapper<>();
 
-        if (!StringUtils.isEmpty(request.getPhone())) {
-            qw.eq("phone", request.getPhone());
+        if (StringUtils.isNotEmpty(request.getPhone())) {
+            qw.eq(DiscountCoupon::getPhone, request.getPhone());
         }
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            qw.ge("create_time", request.getTimeRange().get(0));
-            qw.le("create_time", request.getTimeRange().get(1));
+        if (CollectionUtils.isNotEmpty(request.getTimeRange())) {
+            qw.ge(DiscountCoupon::getCreateTime, request.getTimeRange().get(0));
+            qw.le(DiscountCoupon::getCreateTime, request.getTimeRange().get(1));
         } else {
-            qw.le("DATE_SUB(CURDATE(), INTERVAL 30 DAY)", "create_time");
+            qw.apply("DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= create_time");
         }
 
         Response<List<DiscountCoupon>> response = this.toPage(request.getPage(), request.getPageSize(), qw);

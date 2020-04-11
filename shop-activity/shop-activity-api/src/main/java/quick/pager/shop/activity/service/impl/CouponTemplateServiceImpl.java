@@ -1,6 +1,6 @@
 package quick.pager.shop.activity.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
@@ -15,22 +15,27 @@ import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
+/**
+ * 优惠券模板
+ *
+ * @author siguiyang
+ */
 @Service
 public class CouponTemplateServiceImpl extends ServiceImpl<DiscountCouponTemplateMapper, DiscountCouponTemplate> implements CouponTemplateService {
     @Override
     public Response<List<DiscountCouponTemplate>> queryPage(DiscountCouponTemplatePageRequest request) {
 
-        QueryWrapper<DiscountCouponTemplate> qw = new QueryWrapper<>();
+        LambdaQueryWrapper<DiscountCouponTemplate> qw = new LambdaQueryWrapper<>();
 
         if (!StringUtils.isEmpty(request.getTemplateName())) {
-            qw.likeRight("template_name", request.getTemplateName());
+            qw.likeRight(DiscountCouponTemplate::getTemplateName, request.getTemplateName());
         }
 
         if (null != request.getTemplateType()) {
-            qw.eq("template_type", request.getTemplateType());
+            qw.eq(DiscountCouponTemplate::getTemplateType, request.getTemplateType());
         }
 
-        qw.orderByDesc("id");
+        qw.orderByDesc(DiscountCouponTemplate::getUpdateTime);
 
         return this.toPage(request.getPage(), request.getPageSize(), qw);
     }

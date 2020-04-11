@@ -82,6 +82,16 @@ public class SystemConfigController {
                 response.getTotal());
     }
 
+    /**
+     * 手动刷新系统配置redis缓存
+     */
+    @GetMapping("/config/refresh")
+    public Response<String> refresh() {
+
+        systemConfigService.executeTask();
+
+        return new Response<>();
+    }
 
     /**
      * SystemConfig -> SystemConfigResponse

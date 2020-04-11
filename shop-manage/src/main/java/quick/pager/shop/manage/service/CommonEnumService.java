@@ -29,7 +29,7 @@ public class CommonEnumService {
     public Response<Map<String, List<EnumResponse>>> getCommonEnumInfo() {
 
         Map<String, List<EnumResponse>> result = Maps.newHashMap();
-        result.putIfAbsent(Constants.Type.COUPON_TYPE, getCouponType());
+        result.putIfAbsent(Constants.Type.OFFER_TYPE, getOfferType());
         result.putIfAbsent(Constants.Type.GOODS_TYPE, getGoodsType());
         result.putIfAbsent(Constants.Type.ORDER_TYPE, getOrderType());
         result.putIfAbsent(Constants.Type.ORDER_STATUS, getOrderStatus());
@@ -41,12 +41,11 @@ public class CommonEnumService {
     /**
      * 优惠券
      */
-    private List<EnumResponse> getCouponType() {
-        String couponConfig = redisService.get("coupon_type");
+    private List<EnumResponse> getOfferType() {
+        String couponConfig = redisService.get("offer_type");
 
         if (StringUtils.isNotBlank(couponConfig)) {
-            List<SystemConfigDTO> systemConfigDTOS = JSON.parseArray(couponConfig, SystemConfigDTO.class);
-            return getCommonInteger(systemConfigDTOS);
+            return getCommonInteger(JSON.parseArray(couponConfig, SystemConfigDTO.class));
         }
 
         return Lists.newArrayList();
@@ -59,8 +58,7 @@ public class CommonEnumService {
         String goodsConfig = redisService.get("goods_type");
 
         if (StringUtils.isNotBlank(goodsConfig)) {
-            List<SystemConfigDTO> systemConfigDTOS = JSON.parseArray(goodsConfig, SystemConfigDTO.class);
-            return getCommonInteger(systemConfigDTOS);
+            return getCommonInteger(JSON.parseArray(goodsConfig, SystemConfigDTO.class));
         }
 
         return Lists.newArrayList();
@@ -74,8 +72,7 @@ public class CommonEnumService {
         String orderTypeConfig = redisService.get("order_type");
 
         if (StringUtils.isNotBlank(orderTypeConfig)) {
-            List<SystemConfigDTO> systemConfigDTOS = JSON.parseArray(orderTypeConfig, SystemConfigDTO.class);
-            return getCommonInteger(systemConfigDTOS);
+            return getCommonInteger(JSON.parseArray(orderTypeConfig, SystemConfigDTO.class));
         }
 
         return Lists.newArrayList();
@@ -89,8 +86,7 @@ public class CommonEnumService {
         String orderStatusConfig = redisService.get("order_status");
 
         if (StringUtils.isNotBlank(orderStatusConfig)) {
-            List<SystemConfigDTO> systemConfigDTOS = JSON.parseArray(orderStatusConfig, SystemConfigDTO.class);
-            return getCommonString(systemConfigDTOS);
+            return getCommonString(JSON.parseArray(orderStatusConfig, SystemConfigDTO.class));
         }
 
         return Lists.newArrayList();
@@ -101,11 +97,10 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getModuleType() {
 
-        String moduleConfig = redisService.get("module_type");
+        String moduleConfig = redisService.get("shop_module");
 
         if (StringUtils.isNotBlank(moduleConfig)) {
-            List<SystemConfigDTO> systemConfigDTOS = JSON.parseArray(moduleConfig, SystemConfigDTO.class);
-            return getCommonString(systemConfigDTOS);
+            return getCommonString(JSON.parseArray(moduleConfig, SystemConfigDTO.class));
         }
 
         return Lists.newArrayList();
@@ -116,7 +111,7 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getCommonString(List<SystemConfigDTO> systemConfigs) {
         return systemConfigs.stream()
-                .map(config -> new EnumResponse(config.getConfigValue(), config.getDescription()))
+                .map(config -> new EnumResponse(config.getConfigValue(), config.getConfigName()))
                 .collect(Collectors.toList());
     }
 
@@ -125,7 +120,7 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getCommonInteger(List<SystemConfigDTO> systemConfigs) {
         return systemConfigs.stream()
-                .map(config -> new EnumResponse(Integer.parseInt(config.getConfigValue()), config.getDescription()))
+                .map(config -> new EnumResponse(Integer.parseInt(config.getConfigValue()), config.getConfigName()))
                 .collect(Collectors.toList());
     }
 }

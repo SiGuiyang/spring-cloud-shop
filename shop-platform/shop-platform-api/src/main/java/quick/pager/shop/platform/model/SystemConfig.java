@@ -5,6 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.Model;
 
+/**
+ * 配置项
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("t_system_config")
@@ -14,10 +19,6 @@ public class SystemConfig extends Model {
     private String configName;
 
     private String configType;
-
-    private String configValue;
-
-    private String module;
 
     private String description;
 
