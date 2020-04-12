@@ -4,11 +4,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.param.Param;
 
+/**
+ * 菜单
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MenuParam extends Param {
+public class MenuSaveParam extends Param {
 
     private static final long serialVersionUID = 2086881622142051682L;
+
+    private Long id;
 
     private Long parentId;
 

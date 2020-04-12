@@ -1,6 +1,5 @@
 package quick.pager.shop.manage.response.system;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +34,7 @@ public class SysUserResponse extends BasicResponse {
 
     private String avatar;
 
-    @TableField(exist = false)
     private List<Role> roles = new ArrayList<>();
-    @TableField(exist = false)
-    private List<Long> roleIds = new ArrayList<>();
 
     private List<MenuResponse> routers = Lists.newArrayList();
 

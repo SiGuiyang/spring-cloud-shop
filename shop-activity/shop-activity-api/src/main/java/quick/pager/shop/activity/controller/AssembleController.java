@@ -36,9 +36,9 @@ public class AssembleController {
     /**
      * 拼团活动列表
      */
-    @PostMapping("/assemble/list")
-    public Response<List<AssembleActivityResponse>> list(@RequestBody AssemblePageRequest request) {
-        return assembleService.list(request);
+    @PostMapping("/assemble/page")
+    public Response<List<AssembleActivityResponse>> page(@RequestBody AssemblePageRequest request) {
+        return assembleService.queryPage(request);
     }
 
     /**

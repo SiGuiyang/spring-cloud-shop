@@ -77,7 +77,6 @@ public class SysUserServiceImpl implements SysUserService {
                         sysRoles.forEach(sysRole -> {
                             Role role = roleMapper.selectById(sysRole.getRoleId());
                             resp.getRoles().add(role);
-                            resp.getRoleIds().add(role.getId());
                         });
                         return resp;
                     }).collect(Collectors.toList());
@@ -193,7 +192,7 @@ public class SysUserServiceImpl implements SysUserService {
             MenuResponse.Meta meta = new MenuResponse.Meta(k.getName(), k.getIcon(), k.getHidden(), Lists.newArrayList(k.getPermission()));
             k.setMeta(meta);
             List<MenuResponse> menuList = Optional.ofNullable(childrenMap.get(k.getId())).orElse(Collections.emptyList()).stream()
-                    .filter(item -> 1 == item.getMenuType())
+                    .filter(MenuResponse::getRouter)
                     .collect(Collectors.toList());
             toTree(menuList, childrenMap);
             k.setChildren(menuList);

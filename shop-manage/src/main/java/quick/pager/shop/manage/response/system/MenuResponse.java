@@ -36,6 +36,8 @@ public class MenuResponse implements Serializable {
 
     private Boolean hidden;
 
+    private Boolean router;
+
     private List<MenuResponse> children;
 
     private MenuResponse.Meta meta;

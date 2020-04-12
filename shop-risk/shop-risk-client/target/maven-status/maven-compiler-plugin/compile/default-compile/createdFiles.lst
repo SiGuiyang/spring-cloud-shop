@@ -1,0 +1,6 @@
+quick/pager/shop/risk/request/BlackListPageRequest.class
+quick/pager/shop/risk/request/RiskRequest.class
+quick/pager/shop/risk/fallback/RiskClientFallbackFactory$1.class
+quick/pager/shop/risk/client/RiskClient.class
+quick/pager/shop/risk/fallback/RiskClientFallbackFactory.class
+quick/pager/shop/risk/request/BlackListSaveRequest.class

@@ -1,28 +1,35 @@
 package quick.pager.shop.manage.service.system.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.manage.mapper.MenuMapper;
-import quick.pager.shop.manage.param.system.MenuParam;
+import quick.pager.shop.manage.param.system.MenuOtherParam;
+import quick.pager.shop.manage.param.system.MenuSaveParam;
 import quick.pager.shop.manage.response.system.MenuResponse;
 import quick.pager.shop.manage.service.system.MenuService;
 import quick.pager.shop.manage.model.Menu;
 import quick.pager.shop.response.Response;
+import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
+/**
+ * MenuServiceImpl
+ *
+ * @author siguiyang
+ */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Override
-    public Response<Long> create(MenuParam param) {
+    public Response<Long> create(MenuSaveParam param) {
         Menu menu = new Menu();
         BeanCopier.create(param, menu).copy();
         menu.setMenuType(1);
@@ -33,7 +40,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Response<Long> modify(MenuParam param) {
+    public Response<Long> modify(MenuSaveParam param) {
         Menu menu = new Menu();
         BeanCopier.create(param, menu).copy();
         this.baseMapper.updateById(menu);
@@ -41,12 +48,17 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Response<List<MenuResponse>> queryList() {
+    public Response<List<MenuResponse>> queryList(MenuOtherParam param) {
 
-        Menu menu = new Menu();
-        menu.setDeleteStatus(Boolean.FALSE);
-        List<Menu> menus = this.baseMapper.selectList(new QueryWrapper<>(menu));
-
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Menu::getDeleteStatus, Boolean.FALSE);
+        if (StringUtils.isNotBlank(param.getName())) {
+            wrapper.likeRight(Menu::getName, param.getName());
+        }
+        if (Objects.nonNull(param.getMenuType())) {
+            wrapper.eq(Menu::getMenuType, param.getMenuType());
+        }
+        List<Menu> menus = this.baseMapper.selectList(wrapper);
         List<MenuResponse> parentResp = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream()
                 .filter(item -> Objects.isNull(item.getParentId()))
                 .map(this::conv)
@@ -59,7 +71,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 数据转换
         toTree(parentResp, childrenMap);
 
-        return new Response<>(parentResp);
+        return Response.toResponse(parentResp, 0L);
     }
 
     @Override

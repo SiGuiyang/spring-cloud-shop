@@ -1,7 +1,6 @@
 package quick.pager.shop.activity.request.exchange;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.request.Request;
@@ -28,8 +27,12 @@ public class ExchangeActivitySaveRequest extends Request {
     private String activityImg;
 
     /**
-     * 周期
+     * 开始时间
      */
-    private List<LocalDateTime> timeRange;
+    private LocalDateTime beginTime;
+    /**
+     * 结束时间
+     */
+    private LocalDateTime endTime;
 
 }

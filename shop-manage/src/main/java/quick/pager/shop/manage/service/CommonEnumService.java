@@ -34,6 +34,8 @@ public class CommonEnumService {
         result.putIfAbsent(Constants.Type.ORDER_TYPE, getOrderType());
         result.putIfAbsent(Constants.Type.ORDER_STATUS, getOrderStatus());
         result.putIfAbsent(Constants.Type.MODULE_TYPE, getModuleType());
+        result.putIfAbsent(Constants.Type.BANNER_TYPE, getBannerType());
+        result.putIfAbsent(Constants.Type.SHARE_CHANNEL, getBannerShareChannel());
 
         return new Response<>(result);
     }
@@ -101,6 +103,34 @@ public class CommonEnumService {
 
         if (StringUtils.isNotBlank(moduleConfig)) {
             return getCommonString(JSON.parseArray(moduleConfig, SystemConfigDTO.class));
+        }
+
+        return Lists.newArrayList();
+    }
+
+    /**
+     * Banner类型
+     */
+    private List<EnumResponse> getBannerType() {
+
+        String bannerType = redisService.get("banner_type");
+
+        if (StringUtils.isNotBlank(bannerType)) {
+            return getCommonString(JSON.parseArray(bannerType, SystemConfigDTO.class));
+        }
+
+        return Lists.newArrayList();
+    }
+
+    /**
+     * Banner分享渠道
+     */
+    private List<EnumResponse> getBannerShareChannel() {
+
+        String shareChannel = redisService.get("share_channel");
+
+        if (StringUtils.isNotBlank(shareChannel)) {
+            return getCommonString(JSON.parseArray(shareChannel, SystemConfigDTO.class));
         }
 
         return Lists.newArrayList();

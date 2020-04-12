@@ -7,6 +7,7 @@
         <result column="sequence" jdbcType="INTEGER" property="sequence"/>
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="router" jdbcType="BIT" property="router"/>
         <result column="hidden" jdbcType="BIT" property="hidden"/>
         <result column="component" jdbcType="VARCHAR" property="component"/>
         <result column="redirect" jdbcType="VARCHAR" property="redirect"/>
@@ -15,7 +16,7 @@
         <result column="permission" jdbcType="VARCHAR" property="permission"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, sequence, parent_id, path, hidden, component, redirect,icon,menu_type,permission
+    id, name, sequence, parent_id, path,router, hidden, component, redirect,icon,menu_type,permission
   </sql>
 
     <sql id="All_Column_BY_ALIAS">
@@ -25,6 +26,7 @@
         m.sequence,
         m.parent_id,
         m.path,
+        m.router,
         m.hidden,
         m.component,
         m.redirect,

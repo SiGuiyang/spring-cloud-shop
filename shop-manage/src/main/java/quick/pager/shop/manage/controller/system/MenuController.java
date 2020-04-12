@@ -1,6 +1,6 @@
 package quick.pager.shop.manage.controller.system;
 
-import javax.validation.Valid;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.manage.param.system.MenuParam;
+import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.manage.param.system.MenuOtherParam;
+import quick.pager.shop.manage.param.system.MenuSaveParam;
 import quick.pager.shop.manage.service.system.MenuService;
 import quick.pager.shop.response.Response;
 
@@ -33,26 +35,29 @@ public class MenuController {
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU')")
     @PostMapping("/menu/list")
-    public Response list() {
-        return menuService.queryList();
+    public Response list(@RequestBody MenuOtherParam param) {
+        return menuService.queryList(param);
     }
 
     /**
      * 新增
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU_CREATE')")
-    @PostMapping("/menu")
-    public Response create(@RequestBody MenuParam dto) {
-        return menuService.create(dto);
+    @PostMapping("/menu/create")
+    public Response create(@RequestBody MenuSaveParam param) {
+        return menuService.create(param);
     }
 
     /**
      * 修改
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU_MODIFY')")
-    @PutMapping("/menu")
-    public Response modify(@Valid @RequestBody MenuParam dto) {
-        return menuService.modify(dto);
+    @PutMapping("/menu/modify")
+    public Response<Long> modify(@RequestBody MenuSaveParam param) {
+        if (Objects.isNull(param.getId())) {
+            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+        }
+        return menuService.modify(param);
     }
 
     /**

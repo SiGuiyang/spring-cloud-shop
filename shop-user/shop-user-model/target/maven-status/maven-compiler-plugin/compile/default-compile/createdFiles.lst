@@ -1,0 +1,8 @@
+quick/pager/shop/user/response/StationLetterResponse.class
+quick/pager/shop/user/response/UserResponse.class
+quick/pager/shop/user/request/UserSaveRequest.class
+quick/pager/shop/user/request/UserRequest.class
+quick/pager/shop/user/response/UserInfoResponse.class
+quick/pager/shop/user/request/StationLetterRequest.class
+quick/pager/shop/user/request/UserAddressPageRequest.class
+quick/pager/shop/user/response/AddressResponse.class

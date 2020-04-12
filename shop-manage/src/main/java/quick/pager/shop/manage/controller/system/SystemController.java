@@ -47,7 +47,7 @@ public class SystemController {
      * 系统用户列表
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_USER')")
-    @PostMapping("/system/user")
+    @PostMapping("/system/user/page")
     public Response queryPage(@RequestBody SysUserPageParam param) {
         return sysUserService.queryPage(param);
     }

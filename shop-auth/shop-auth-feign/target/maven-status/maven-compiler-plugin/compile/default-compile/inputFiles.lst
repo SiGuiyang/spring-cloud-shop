@@ -1,0 +1,5 @@
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-auth/shop-auth-feign/src/main/java/quick/pager/shop/auth/feign/configuration/Oauth2ClientProperties.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-auth/shop-auth-feign/src/main/java/quick/pager/shop/auth/feign/interceptor/AuthFeignRequestInterceptor.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-auth/shop-auth-feign/src/main/java/quick/pager/shop/auth/feign/configuration/OAuth2FeignAutoConfiguration.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-auth/shop-auth-feign/src/main/java/quick/pager/shop/auth/feign/strategy/AuthHystrixConcurrencyStrategy.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-auth/shop-auth-feign/src/main/java/quick/pager/shop/auth/feign/package-info.java

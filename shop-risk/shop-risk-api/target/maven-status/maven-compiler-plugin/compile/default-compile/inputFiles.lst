@@ -1,0 +1,8 @@
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/RiskApplication.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/model/BlackList.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/service/BlackListService.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/controller/RiskController.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/mapper/BlackListMapper.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/controller/BlackListController.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/service/impl/BlackListServiceImpl.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-risk/shop-risk-api/src/main/java/quick/pager/shop/risk/mapper/package-info.java

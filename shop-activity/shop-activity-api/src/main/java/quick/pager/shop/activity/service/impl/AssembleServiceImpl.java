@@ -44,14 +44,14 @@ public class AssembleServiceImpl extends ServiceImpl<AssembleMapper, AssembleAct
     private AssembleActivityMemberMapper assembleActivityMemberMapper;
 
     @Override
-    public Response<List<AssembleActivityResponse>> list(AssemblePageRequest request) {
+    public Response<List<AssembleActivityResponse>> queryPage(AssemblePageRequest request) {
 
         LambdaQueryWrapper<AssembleActivity> wrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(request.getActivityName())) {
             wrapper.likeRight(AssembleActivity::getActivityName, request.getActivityName());
         }
 
-        if (CollectionUtils.isEmpty(request.getTimeRange())) {
+        if (CollectionUtils.isNotEmpty(request.getTimeRange())) {
             wrapper.le(AssembleActivity::getBeginTime, request.getTimeRange().get(0));
             wrapper.ge(AssembleActivity::getEndTime, request.getTimeRange().get(1));
         }
@@ -179,23 +179,14 @@ public class AssembleServiceImpl extends ServiceImpl<AssembleMapper, AssembleAct
     /**
      * AssembleSaveRequest -> AssembleActivity
      */
-    public AssembleActivity conv(AssembleSaveRequest request) {
-
-        AssembleActivity assembleActivity = new AssembleActivity();
-        BeanCopier.create(request, assembleActivity).copy();
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            assembleActivity.setBeginTime(request.getTimeRange().get(0));
-            assembleActivity.setEndTime(request.getTimeRange().get(1));
-        }
-        return assembleActivity;
+    private AssembleActivity conv(AssembleSaveRequest request) {
+        return BeanCopier.create(request, new AssembleActivity()).copy();
     }
 
     /**
      * activity -> AssembleActivityResponse
      */
     private AssembleActivityResponse convert(AssembleActivity activity) {
-        AssembleActivityResponse response = new AssembleActivityResponse();
-        BeanCopier.create(activity, response).copy();
-        return response;
+        return BeanCopier.create(activity, new AssembleActivityResponse()).copy();
     }
 }

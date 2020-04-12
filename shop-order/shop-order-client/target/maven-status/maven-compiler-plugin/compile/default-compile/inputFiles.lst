@@ -1,0 +1,5 @@
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-client/src/main/java/quick/pager/shop/order/client/UserOrderClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-client/src/main/java/quick/pager/shop/order/fallback/UserOrderClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-client/src/main/java/quick/pager/shop/order/fallback/SellerOrderClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-client/src/main/java/quick/pager/shop/order/package-info.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-client/src/main/java/quick/pager/shop/order/client/SellerOrderClient.java

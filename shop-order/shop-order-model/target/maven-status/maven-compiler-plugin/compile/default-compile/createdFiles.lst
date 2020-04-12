@@ -1,0 +1,6 @@
+quick/pager/shop/order/request/SellerOrderSaveRequest.class
+quick/pager/shop/order/request/UserOrderSaveRequest.class
+quick/pager/shop/order/request/OrderPageRequest.class
+quick/pager/shop/order/response/OrderResponse.class
+quick/pager/shop/order/request/UserOrderPageRequest.class
+quick/pager/shop/order/request/SellerOrderPageRequest.class

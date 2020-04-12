@@ -1,0 +1,11 @@
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/client/GoodsBrandGroupClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/fallback/GoodsSpuClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/fallback/ClassificationClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/client/ClassificationClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/client/GoodsSkuClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/fallback/GoodsBrandGroupClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/client/GoodsSpuClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/package-info.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/fallback/GoodsBrandClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/fallback/GoodsSkuClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-goods/shop-goods-client/src/main/java/quick/pager/shop/goods/client/GoodsBrandClient.java

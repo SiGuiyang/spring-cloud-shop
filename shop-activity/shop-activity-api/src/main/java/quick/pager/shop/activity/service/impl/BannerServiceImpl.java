@@ -2,6 +2,7 @@ package quick.pager.shop.activity.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -110,6 +111,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
             response.setShareChannel(
                     Stream.of((String[]) ConvertUtils.convert(banner.getShareChannel().split(Constants.COMMA), String.class))
                             .collect(Collectors.toList()));
+        } else {
+            response.setShareChannel(Lists.newArrayList());
         }
         return response;
     }

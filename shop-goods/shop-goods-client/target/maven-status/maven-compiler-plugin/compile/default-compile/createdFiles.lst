@@ -1,0 +1,10 @@
+quick/pager/shop/goods/fallback/GoodsBrandClientFallbackFactory.class
+quick/pager/shop/goods/fallback/GoodsSkuClientFallbackFactory.class
+quick/pager/shop/goods/client/GoodsSkuClient.class
+quick/pager/shop/goods/fallback/ClassificationClientFallbackFactory.class
+quick/pager/shop/goods/client/GoodsBrandGroupClient.class
+quick/pager/shop/goods/fallback/GoodsBrandGroupClientFallbackFactory.class
+quick/pager/shop/goods/client/GoodsSpuClient.class
+quick/pager/shop/goods/client/GoodsBrandClient.class
+quick/pager/shop/goods/fallback/GoodsSpuClientFallbackFactory.class
+quick/pager/shop/goods/client/ClassificationClient.class

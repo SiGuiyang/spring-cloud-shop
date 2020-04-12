@@ -1,6 +1,7 @@
 package quick.pager.shop.platform.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Maps;
 import java.util.List;
@@ -39,15 +40,16 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
 
     @Override
     public List<SystemConfig> queryList(SystemConfigOtherRequest request) {
-        QueryWrapper<SystemConfig> qw = this.toQueryWrapper(request.getConfigName(), request.getConfigType());
-
+        LambdaQueryWrapper<SystemConfig> qw = this.toQueryWrapper(request.getConfigName(), request.getConfigType());
+        qw.orderByDesc(SystemConfig::getUpdateTime);
         return this.baseMapper.selectList(qw);
     }
 
     @Override
     public Response<List<SystemConfig>> queryPage(SystemConfigPageRequest request) {
 
-        QueryWrapper<SystemConfig> qw = this.toQueryWrapper(request.getConfigName(), request.getConfigType());
+        LambdaQueryWrapper<SystemConfig> qw = this.toQueryWrapper(request.getConfigName(), request.getConfigType());
+        qw.orderByDesc(SystemConfig::getUpdateTime);
 
         return this.toPage(request.getPage(), request.getPageSize(), qw);
     }
@@ -56,6 +58,9 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
     public Response<Long> create(SystemConfigSaveRequest request) {
         SystemConfig systemConfig = this.convert(request);
         systemConfig.setCreateTime(DateUtils.dateTime());
+        systemConfig.setUpdateTime(DateUtils.dateTime());
+        systemConfig.setDeleteStatus(Boolean.FALSE);
+        systemConfig.setConfigStatus(Boolean.FALSE);
         this.baseMapper.insert(systemConfig);
         return new Response<>(systemConfig.getId());
     }
@@ -101,18 +106,17 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
      * @param configName 配置项名称
      * @param configType 配置类型
      */
-    private QueryWrapper<SystemConfig> toQueryWrapper(String configName, String configType) {
-        SystemConfig systemConfig = new SystemConfig();
-
-        systemConfig.setDeleteStatus(Boolean.FALSE);
+    private LambdaQueryWrapper<SystemConfig> toQueryWrapper(String configName, String configType) {
+        LambdaQueryWrapper<SystemConfig> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SystemConfig::getDeleteStatus, Boolean.FALSE);
 
         if (StringUtils.isNotBlank(configName)) {
-            systemConfig.setConfigName(configName);
+            wrapper.likeRight(SystemConfig::getConfigName, configName);
         }
         if (StringUtils.isNotBlank(configType)) {
-            systemConfig.setConfigType(configType);
+            wrapper.eq(SystemConfig::getConfigType, configType);
         }
-        return new QueryWrapper<>(systemConfig);
+        return wrapper;
     }
 
     /**

@@ -1,0 +1,9 @@
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/client/BannerClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/fallback/FightGroupClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/client/ExchangeClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/client/DiscountCouponClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/fallback/DiscountCouponClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/client/AssembleClient.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/fallback/BannerClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/fallback/ExchangeClientFallbackFactory.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-activity/shop-activity-client/src/main/java/quick/pager/shop/activity/package-info.java

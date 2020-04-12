@@ -132,6 +132,10 @@ public interface Constants {
         String ORDER_STATUS = "orderStatus";
         // 模块类型
         String MODULE_TYPE = "moduleType";
+        // banner 分享渠道
+        String SHARE_CHANNEL = "shareChannel";
+        // banner 类型
+        String BANNER_TYPE = "bannerType";
     }
 
     /**

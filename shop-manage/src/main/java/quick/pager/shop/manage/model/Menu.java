@@ -37,6 +37,8 @@ public class Menu extends Model {
 
     private String permission;
 
+    private Boolean router;
+
     private Boolean hidden;
 
 }

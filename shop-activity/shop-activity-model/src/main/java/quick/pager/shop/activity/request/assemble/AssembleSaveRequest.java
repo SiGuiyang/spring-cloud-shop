@@ -1,8 +1,6 @@
 package quick.pager.shop.activity.request.assemble;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.request.Request;
@@ -30,7 +28,11 @@ public class AssembleSaveRequest extends Request {
     private Long recordId;
 
     /**
-     * 周期
+     * 开始时间
      */
-    private List<LocalDateTime> timeRange;
+    private LocalDateTime beginTime;
+    /**
+     * 结束时间
+     */
+    private LocalDateTime endTime;
 }

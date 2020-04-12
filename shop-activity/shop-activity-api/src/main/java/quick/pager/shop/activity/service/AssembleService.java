@@ -23,7 +23,7 @@ public interface AssembleService {
      * @param request 请求参数
      * @return 拼团活动列表
      */
-    Response<List<AssembleActivityResponse>> list(AssemblePageRequest request);
+    Response<List<AssembleActivityResponse>> queryPage(AssemblePageRequest request);
 
     /**
      * 修改拼团活动

@@ -1,0 +1,29 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: shop-activity
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+
+feign:
+  sentinel:
+    enabled: true
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: quick.pager.shop.model.fallback
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info,hystrix.stream
+logging:
+  level:
+    com.alibaba.nacos: error

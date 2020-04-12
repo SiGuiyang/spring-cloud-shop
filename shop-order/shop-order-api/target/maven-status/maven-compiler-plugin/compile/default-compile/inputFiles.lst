@@ -1,0 +1,11 @@
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/mapper/SellerOrderMapper.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/controller/SellerOrderController.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/mapper/UserOrderMapper.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/model/UserOrder.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/service/SellerOrderService.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/controller/UserOrderController.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/OrderApplication.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/service/impl/SellerOrderServiceImpl.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/model/SellerOrder.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/service/UserOrderService.java
+/Users/siguiyang/IdeaProjects/spring-cloud-shop/shop-order/shop-order-api/src/main/java/quick/pager/shop/order/service/impl/UserOrderServiceImpl.java

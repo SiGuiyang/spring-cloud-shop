@@ -1,0 +1,4 @@
+quick/pager/shop/order/client/UserOrderClient.class
+quick/pager/shop/order/fallback/UserOrderClientFallbackFactory.class
+quick/pager/shop/order/client/SellerOrderClient.class
+quick/pager/shop/order/fallback/SellerOrderClientFallbackFactory.class

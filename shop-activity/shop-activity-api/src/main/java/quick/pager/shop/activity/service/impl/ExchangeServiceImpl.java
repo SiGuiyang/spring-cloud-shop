@@ -78,21 +78,10 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, Exc
     }
 
     private ExchangeActivity convert(ExchangeActivitySaveRequest request) {
-        ExchangeActivity exchangeActivity = new ExchangeActivity();
-
-        BeanCopier.create(request, exchangeActivity).copy();
-
-        if (!CollectionUtils.isEmpty(request.getTimeRange())) {
-            exchangeActivity.setBeginTime(request.getTimeRange().get(0));
-            exchangeActivity.setEndTime(request.getTimeRange().get(1));
-        }
-
-        return exchangeActivity;
+        return BeanCopier.create(request, new ExchangeActivity()).copy();
     }
 
     private ExchangeActivityResponse convert(ExchangeActivity activity) {
-        ExchangeActivityResponse response = new ExchangeActivityResponse();
-        BeanCopier.create(activity, response).copy();
-        return response;
+        return BeanCopier.create(activity, new ExchangeActivityResponse()).copy();
     }
 }
