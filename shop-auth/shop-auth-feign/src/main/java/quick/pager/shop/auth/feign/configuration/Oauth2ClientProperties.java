@@ -1,5 +1,6 @@
 package quick.pager.shop.auth.feign.configuration;
 
+import java.util.List;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -9,12 +10,27 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author siguiyang
  */
 @Data
-@ConfigurationProperties(prefix = "shop.oauth2.client")
+@ConfigurationProperties(prefix = "security.oauth2.client")
 public class Oauth2ClientProperties {
 
+    /**
+     * 服务名
+     */
     private String id;
-    private String accessTokenUrl;
+    /**
+     * token 访问地址
+     */
+    private String accessTokenUri;
+    /**
+     * 客户端访问Id
+     */
     private String clientId;
+    /**
+     * 客户端访问密钥
+     */
     private String clientSecret;
-    private String clientAuthenticationScheme;
+    /**
+     * scope 模型
+     */
+    private List<String> scopes;
 }

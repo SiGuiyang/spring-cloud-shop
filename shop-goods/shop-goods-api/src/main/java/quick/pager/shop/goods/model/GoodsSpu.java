@@ -25,7 +25,7 @@ public class GoodsSpu extends Model {
     /**
      * 分类 t_goods_class id 这个分类必须是二级分类，不可是顶级分类
      */
-    private Long classId;
+    private Long classificationId;
 
     /**
      * spu 名称

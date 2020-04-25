@@ -4,6 +4,7 @@ import java.util.List;
 import quick.pager.shop.goods.model.GoodsSpu;
 import quick.pager.shop.goods.request.spu.GoodsSpuPageRequest;
 import quick.pager.shop.goods.request.spu.GoodsSpuSaveRequest;
+import quick.pager.shop.goods.response.spu.GoodsSpuResponse;
 import quick.pager.shop.response.Response;
 
 /**
@@ -38,5 +39,5 @@ public interface GoodsSpuService {
      * @param request 请求参数
      * @return spu集
      */
-    Response<List<GoodsSpu>> queryPage(GoodsSpuPageRequest request);
+    Response<List<GoodsSpuResponse>> queryPage(GoodsSpuPageRequest request);
 }

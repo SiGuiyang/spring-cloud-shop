@@ -11,11 +11,14 @@ spring:
 feign:
   sentinel:
     enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
 management:
   endpoints:
     web:
       exposure:
         include: refresh,health,info,hystrix.stream
 mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: quick.pager.shop.seller.model

@@ -11,6 +11,7 @@ spring:
       discovery:
         locator:
           lower-case-service-id: true
+          enabled: true
       routes:
         - id: shop-auth
           uri: lb://shop-auth

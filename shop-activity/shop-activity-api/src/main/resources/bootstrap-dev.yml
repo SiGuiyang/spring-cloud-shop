@@ -5,3 +5,18 @@ spring:
         server-addr: 101.132.121.178:8848
       discovery:
         server-addr: 101.132.121.178:8848
+
+# 内部服务调用授权认证配置
+security:
+  oauth2:
+    client:
+      clientId: client8
+      clientSecret: 111111
+      user-authorization-uri: http://localhost:8095/oauth/authorize
+      access-token-uri: http://localhost:8095/oauth/token
+      scope: app
+    resource:
+      id: shop-activity
+      user-info-uri: http://shop-auth/oauth/principal
+      prefer-token-info: true
+      loadBalanced: true

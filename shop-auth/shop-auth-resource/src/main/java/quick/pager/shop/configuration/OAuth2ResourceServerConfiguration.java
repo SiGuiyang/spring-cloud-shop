@@ -1,10 +1,14 @@
 package quick.pager.shop.configuration;
 
+import com.alibaba.fastjson.JSON;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,6 +45,31 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
                 .csrf().disable()
                 .authorizeRequests().mvcMatchers(DEFAULT_MATCHERS).permitAll()
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint((request, response, ex) -> { // 匿名用户访问无权限返回
+                    response.setCharacterEncoding("UTF-8");
+                    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("code", 10000);
+                    result.put("msg", "您没有权限访问！");
+                    result.put("data", null);
+                    result.put("timestamp", System.currentTimeMillis());
+                    response.getWriter().println(JSON.toJSONString(result));
+
+                })
+                .accessDeniedHandler((request, response, ex) -> { // 具有访问资源的用户但无法访问某些资源返回无权限访问
+                    response.setCharacterEncoding("UTF-8");
+                    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("code", 10000);
+                    result.put("msg", "您没有权限访问！");
+                    result.put("data", null);
+                    result.put("timestamp", System.currentTimeMillis());
+                    response.getWriter().println(JSON.toJSONString(result));
+
+                }).and()
                 .authorizeRequests()
                 .anyRequest().authenticated();
     }

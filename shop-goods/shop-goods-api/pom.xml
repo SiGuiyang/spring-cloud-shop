@@ -119,6 +119,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>quick.pager</groupId>
+            <artifactId>shop-auth-feign</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security.oauth.boot</groupId>
+                    <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>quick.pager</groupId>

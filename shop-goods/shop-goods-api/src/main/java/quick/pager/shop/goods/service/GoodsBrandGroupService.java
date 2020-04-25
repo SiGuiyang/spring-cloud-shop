@@ -2,8 +2,10 @@ package quick.pager.shop.goods.service;
 
 import java.util.List;
 import quick.pager.shop.goods.model.GoodsBrandGroup;
+import quick.pager.shop.goods.request.brand.GoodsBrandGroupOtherRequest;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupPageRequest;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupSaveRequest;
+import quick.pager.shop.goods.response.brand.GoodsBrandGroupResponse;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.IService;
 
@@ -39,5 +41,13 @@ public interface GoodsBrandGroupService extends IService<GoodsBrandGroup> {
      * @param request 请求参数
      * @return 品牌组集
      */
-    Response<List<GoodsBrandGroup>> queryPage(GoodsBrandGroupPageRequest request);
+    Response<List<GoodsBrandGroupResponse>> queryPage(GoodsBrandGroupPageRequest request);
+
+    /**
+     * 商品品牌列表 无分页
+     *
+     * @param request 请求参数
+     * @return 品牌组集
+     */
+    Response<List<GoodsBrandGroupResponse>> queryList(GoodsBrandGroupOtherRequest request);
 }

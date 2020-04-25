@@ -60,17 +60,7 @@ public class GoodsSpuController {
      */
     @PostMapping("/spu/page")
     public Response<List<GoodsSpuResponse>> queryPage(@RequestBody GoodsSpuPageRequest request) {
-        Response<List<GoodsSpu>> listResponse = goodsSpuService.queryPage(request);
-
-        return Response.toResponse(Optional.ofNullable(listResponse.getData()).orElse(Collections.emptyList()).stream()
-                        .map(this::conv).collect(Collectors.toList())
-                , listResponse.getTotal());
+        return goodsSpuService.queryPage(request);
     }
 
-
-    private GoodsSpuResponse conv(GoodsSpu spu) {
-        GoodsSpuResponse response = new GoodsSpuResponse();
-        BeanCopier.create(spu, response).copy();
-        return response;
-    }
 }

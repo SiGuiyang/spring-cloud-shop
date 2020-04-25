@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.shop.activity.request.banner.BannerOtherRequest;
 import quick.pager.shop.activity.request.banner.BannerPageRequest;
 import quick.pager.shop.activity.request.banner.BannerSaveRequest;
@@ -21,6 +22,15 @@ import quick.pager.shop.response.Response;
  */
 @FeignClient(value = ConstantsClient.ACTIVITY_CLIENT, path = ConstantsClient.ACTIVITY, fallbackFactory = BannerClientFallbackFactory.class)
 public interface BannerClient {
+
+    /**
+     * 根据主键查询
+     *
+     * @param id 主键
+     * @return banner信息
+     */
+    @RequestMapping(value = "/banner/queryByPk", method = RequestMethod.GET)
+    Response<BannerResponse> queryByPk(@RequestParam("id") Long id);
 
     /**
      * 列表

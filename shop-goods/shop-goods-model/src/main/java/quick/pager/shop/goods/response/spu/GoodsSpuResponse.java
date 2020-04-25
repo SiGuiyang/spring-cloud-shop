@@ -21,7 +21,11 @@ public class GoodsSpuResponse extends BasicResponse {
     /**
      * 分类 t_goods_class id 这个分类必须是二级分类，不可是顶级分类
      */
-    private Long classId;
+    private Long classificationId;
+    /**
+     * 分类名称
+     */
+    private String classificationName;
 
     /**
      * spu 名称

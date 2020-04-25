@@ -8,6 +8,8 @@ import quick.pager.shop.model.Model;
 
 /**
  * 商品分类与商品品牌关联
+ *
+ * @author siguiyang
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

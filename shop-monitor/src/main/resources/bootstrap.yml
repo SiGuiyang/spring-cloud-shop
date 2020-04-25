@@ -17,8 +17,12 @@ spring:
   profiles:
     active: dev
 feign:
-  hystrix:
+  sentinel:
     enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
 #ribbon:
 #  ReadTimeout:  30000
 #  ConnectTimeout:  15000
@@ -30,7 +34,6 @@ hystrix:
           thread:
             timeoutInMilliseconds: 10000
 mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: quick.pager.shop.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

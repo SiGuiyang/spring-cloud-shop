@@ -1,14 +1,19 @@
 package quick.pager.shop.goods.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import quick.pager.shop.goods.mapper.GoodsBrandGroupMapper;
 import quick.pager.shop.goods.model.GoodsBrandGroup;
+import quick.pager.shop.goods.request.brand.GoodsBrandGroupOtherRequest;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupPageRequest;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupSaveRequest;
+import quick.pager.shop.goods.response.brand.GoodsBrandGroupResponse;
 import quick.pager.shop.goods.service.GoodsBrandGroupService;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.impl.ServiceImpl;
@@ -27,23 +32,39 @@ import quick.pager.shop.utils.DateUtils;
 public class GoodsBrandGroupServiceImpl extends ServiceImpl<GoodsBrandGroupMapper, GoodsBrandGroup> implements GoodsBrandGroupService {
 
     @Override
-    public Response<List<GoodsBrandGroup>> queryPage(GoodsBrandGroupPageRequest request) {
-        QueryWrapper<GoodsBrandGroup> qw = new QueryWrapper<>();
+    public Response<List<GoodsBrandGroupResponse>> queryPage(GoodsBrandGroupPageRequest request) {
 
-        qw.eq("delete_status", Boolean.FALSE);
-
-        if (!StringUtils.isEmpty(request.getBrandGroupName())) {
-            qw.likeRight("brand_group_name", request.getBrandGroupName());
+        LambdaQueryWrapper<GoodsBrandGroup> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(GoodsBrandGroup::getDeleteStatus, Boolean.FALSE);
+        if (StringUtils.isNotBlank(request.getBrandGroupName())) {
+            wrapper.likeRight(GoodsBrandGroup::getBrandGroupName, request.getBrandGroupName());
         }
 
-        if (!CollectionUtils.isEmpty(request.getDateTimes())) {
-            qw.ge("create_time", request.getDateTimes().get(0));
-            qw.le("create_time", request.getDateTimes().get(1));
+        if (CollectionUtils.isNotEmpty(request.getDateTimes())) {
+            wrapper.ge(GoodsBrandGroup::getUpdateTime, request.getDateTimes().get(0));
+            wrapper.le(GoodsBrandGroup::getUpdateTime, request.getDateTimes().get(1));
         }
 
-        qw.orderByDesc("sequence");
+        wrapper.orderByDesc(GoodsBrandGroup::getSequence);
 
-        return this.toPage(request.getPage(), request.getPageSize(), qw);
+        Response<List<GoodsBrandGroup>> response = this.toPage(request.getPage(), request.getPageSize(), wrapper);
+        return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
+                        .map(this::convert)
+                        .collect(Collectors.toList()),
+                response.getTotal());
+    }
+
+    @Override
+    public Response<List<GoodsBrandGroupResponse>> queryList(GoodsBrandGroupOtherRequest request) {
+        LambdaQueryWrapper<GoodsBrandGroup> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(GoodsBrandGroup::getDeleteStatus, Boolean.FALSE);
+        if (StringUtils.isNotBlank(request.getBrandGroupName())) {
+            wrapper.likeRight(GoodsBrandGroup::getBrandGroupName, request.getBrandGroupName());
+        }
+
+        wrapper.orderByDesc(GoodsBrandGroup::getSequence);
+        List<GoodsBrandGroup> brandGroups = this.baseMapper.selectList(wrapper);
+        return Response.toResponse(brandGroups.stream().map(this::convert).collect(Collectors.toList()), 0L);
     }
 
     @Override
@@ -64,11 +85,18 @@ public class GoodsBrandGroupServiceImpl extends ServiceImpl<GoodsBrandGroupMappe
     }
 
     /**
-     * DTO -> db model
+     * GoodsBrandGroupSaveRequest -> GoodsBrandGroup
      */
     private GoodsBrandGroup convert(GoodsBrandGroupSaveRequest request) {
-        GoodsBrandGroup group = new GoodsBrandGroup();
-        BeanCopier.create(request, group).copy();
-        return group;
+        return BeanCopier.create(request, new GoodsBrandGroup()).copy();
+    }
+
+    /**
+     * GoodsBrandGroup -> GoodsBrandGroupResponse
+     *
+     * @param brandGroup 品牌组
+     */
+    private GoodsBrandGroupResponse convert(GoodsBrandGroup brandGroup) {
+        return BeanCopier.create(brandGroup, new GoodsBrandGroupResponse()).copy();
     }
 }

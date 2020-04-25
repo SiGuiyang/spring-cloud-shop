@@ -12,10 +12,12 @@ spring:
 feign:
   sentinel:
     enabled: true
-
+  okhttp:
+    enabled: true
+  httpclient:
+      enabled: false
 mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: quick.pager.shop.model.fallback
+  type-aliases-package: quick.pager.shop.activity.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

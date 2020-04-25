@@ -1,13 +1,19 @@
 package quick.pager.shop.goods.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import quick.pager.shop.goods.mapper.GoodsClassMapper;
 import quick.pager.shop.goods.mapper.GoodsSpuMapper;
+import quick.pager.shop.goods.model.GoodsClass;
 import quick.pager.shop.goods.model.GoodsSpu;
 import quick.pager.shop.goods.request.spu.GoodsSpuPageRequest;
 import quick.pager.shop.goods.request.spu.GoodsSpuSaveRequest;
+import quick.pager.shop.goods.response.spu.GoodsSpuResponse;
 import quick.pager.shop.goods.service.GoodsSpuService;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.service.impl.ServiceImpl;
@@ -24,6 +30,9 @@ import quick.pager.shop.utils.DateUtils;
  */
 @Service
 public class GoodsSpuServiceImpl extends ServiceImpl<GoodsSpuMapper, GoodsSpu> implements GoodsSpuService {
+
+    @Autowired
+    private GoodsClassMapper goodsClassMapper;
 
     @Override
     public Response<Long> create(GoodsSpuSaveRequest request) {
@@ -42,23 +51,34 @@ public class GoodsSpuServiceImpl extends ServiceImpl<GoodsSpuMapper, GoodsSpu> i
     }
 
     @Override
-    public Response<List<GoodsSpu>> queryPage(GoodsSpuPageRequest request) {
-        GoodsSpu spu = new GoodsSpu();
-        spu.setDeleteStatus(Boolean.FALSE);
+    public Response<List<GoodsSpuResponse>> queryPage(GoodsSpuPageRequest request) {
 
-        QueryWrapper<GoodsSpu> qw = new QueryWrapper<>(spu);
+        LambdaQueryWrapper<GoodsSpu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(GoodsSpu::getDeleteStatus, Boolean.FALSE);
 
         if (StringUtils.isNotBlank(request.getSpuName())) {
-            qw.likeRight("spu_name", request.getSpuName());
+            wrapper.likeRight(GoodsSpu::getSpuName, request.getSpuName());
         }
+        Response<List<GoodsSpu>> response = this.toPage(request.getPage(), request.getPageSize(), wrapper);
 
-        return this.toPage(request.getPage(), request.getPageSize(), qw);
+        return Response.toResponse(response.getData().stream().map(this::conv).collect(Collectors.toList()), response.getTotal());
     }
 
     private GoodsSpu conv(GoodsSpuSaveRequest request) {
         GoodsSpu spu = new GoodsSpu();
         BeanCopier.create(request, spu).copy();
         return spu;
+    }
+
+
+    private GoodsSpuResponse conv(GoodsSpu spu) {
+        GoodsSpuResponse response = new GoodsSpuResponse();
+        BeanCopier.create(spu, response).copy();
+        if (Objects.nonNull(spu.getClassificationId())) {
+            GoodsClass goodsClass = goodsClassMapper.selectById(spu.getClassificationId());
+            response.setClassificationName(Objects.nonNull(goodsClass) ? goodsClass.getClassName() : null);
+        }
+        return response;
     }
 
 }

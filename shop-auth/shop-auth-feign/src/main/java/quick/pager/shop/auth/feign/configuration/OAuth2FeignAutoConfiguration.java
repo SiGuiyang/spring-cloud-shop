@@ -2,14 +2,19 @@ package quick.pager.shop.auth.feign.configuration;
 
 import feign.Logger;
 import feign.RequestInterceptor;
+import java.util.Collections;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
+import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 import org.springframework.security.oauth2.common.AuthenticationScheme;
+import org.springframework.util.CollectionUtils;
 import quick.pager.shop.auth.feign.interceptor.AuthFeignRequestInterceptor;
 
 /**
@@ -21,32 +26,35 @@ import quick.pager.shop.auth.feign.interceptor.AuthFeignRequestInterceptor;
 @EnableConfigurationProperties(Oauth2ClientProperties.class)
 public class OAuth2FeignAutoConfiguration {
 
-    private final Oauth2ClientProperties oauth2ClientProperties;
-
-    /**
-     * Instantiates a new O auth 2 feign auto configuration.
-     *
-     * @param oauth2ClientProperties the oauth 2 client properties
-     */
     @Autowired
-    public OAuth2FeignAutoConfiguration(Oauth2ClientProperties oauth2ClientProperties) {
-        this.oauth2ClientProperties = oauth2ClientProperties;
-    }
+    private Oauth2ClientProperties oauth2ClientProperties;
+    @Autowired
+    private OkHttpClient okHttpClient;
 
     /**
      * Resource details client credentials resource details.
      *
      * @return the client credentials resource details
      */
-    @Bean("clientCredentialsResourceDetails")
+    @Bean("resourceOwnerPasswordResourceDetails")
     public ClientCredentialsResourceDetails resourceDetails() {
         ClientCredentialsResourceDetails details = new ClientCredentialsResourceDetails();
-        details.setId(oauth2ClientProperties.getId());
-        details.setAccessTokenUri(oauth2ClientProperties.getAccessTokenUrl());
+        details.setAccessTokenUri(oauth2ClientProperties.getAccessTokenUri());
         details.setClientId(oauth2ClientProperties.getClientId());
         details.setClientSecret(oauth2ClientProperties.getClientSecret());
-        details.setAuthenticationScheme(AuthenticationScheme.valueOf(oauth2ClientProperties.getClientAuthenticationScheme()));
+        details.setClientAuthenticationScheme(AuthenticationScheme.header);
+        details.setScope(!CollectionUtils.isEmpty(oauth2ClientProperties.getScopes()) ? oauth2ClientProperties.getScopes() : Collections.singletonList("app"));
+
         return details;
+    }
+
+    @Bean
+    public OAuth2RestTemplate oAuth2RestTemplate() {
+        final OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(resourceDetails(), new DefaultOAuth2ClientContext());
+        oAuth2RestTemplate.setRequestFactory(new OkHttp3ClientHttpRequestFactory(okHttpClient));
+
+        return oAuth2RestTemplate;
+
     }
 
     /**

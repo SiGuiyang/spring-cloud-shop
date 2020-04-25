@@ -21,6 +21,14 @@ public class GoodsClassificationResponse extends BasicResponse {
      */
     private Long parentId;
     /**
+     * banner 主键
+     */
+    private Long bannerId;
+    /**
+     * banner名称
+     */
+    private String bannerName;
+    /**
      * 分类名称
      */
     private String className;
