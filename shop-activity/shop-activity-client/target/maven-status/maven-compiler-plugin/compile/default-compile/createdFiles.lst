@@ -1,8 +1,0 @@
-quick/pager/shop/activity/client/ExchangeClient.class
-quick/pager/shop/activity/fallback/BannerClientFallbackFactory.class
-quick/pager/shop/activity/fallback/ExchangeClientFallbackFactory.class
-quick/pager/shop/activity/client/AssembleClient.class
-quick/pager/shop/activity/client/BannerClient.class
-quick/pager/shop/activity/fallback/DiscountCouponClientFallbackFactory.class
-quick/pager/shop/activity/fallback/FightGroupClientFallbackFactory.class
-quick/pager/shop/activity/client/DiscountCouponClient.class

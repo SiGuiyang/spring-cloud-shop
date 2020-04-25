@@ -1,5 +1,0 @@
-quick/pager/shop/auth/feign/configuration/OAuth2FeignAutoConfiguration.class
-quick/pager/shop/auth/feign/strategy/AuthHystrixConcurrencyStrategy$HystrixContextWrapper.class
-quick/pager/shop/auth/feign/interceptor/AuthFeignRequestInterceptor.class
-quick/pager/shop/auth/feign/configuration/Oauth2ClientProperties.class
-quick/pager/shop/auth/feign/strategy/AuthHystrixConcurrencyStrategy.class
