@@ -119,6 +119,16 @@
         </dependency>
         <dependency>
             <groupId>quick.pager</groupId>
+            <artifactId>shop-platform-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>quick.pager</groupId>
+            <artifactId>shop-platform-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>quick.pager</groupId>
             <artifactId>shop-auth-resource</artifactId>
             <version>${project.version}</version>
             <exclusions>
