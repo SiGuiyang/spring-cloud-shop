@@ -1,6 +1,7 @@
 package quick.pager.shop.configuration;
 
 import com.alibaba.fastjson.JSON;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,6 +4,7 @@ import java.util.List;
 import quick.pager.shop.goods.model.GoodsBrand;
 import quick.pager.shop.goods.request.brand.GoodsBrandPageRequest;
 import quick.pager.shop.goods.request.brand.GoodsBrandSaveRequest;
+import quick.pager.shop.goods.response.brand.GoodsBrandResponse;
 import quick.pager.shop.response.Response;
 
 /**
@@ -19,7 +20,7 @@ public interface GoodsBrandService {
      * @param request 分页请求参数
      * @return 数据响应
      */
-    Response<List<GoodsBrand>> queryPage(GoodsBrandPageRequest request);
+    Response<List<GoodsBrandResponse>> queryPage(GoodsBrandPageRequest request);
 
     /**
      * 新增

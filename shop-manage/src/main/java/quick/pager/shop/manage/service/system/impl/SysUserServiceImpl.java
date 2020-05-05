@@ -1,9 +1,10 @@
 package quick.pager.shop.manage.service.system.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.manage.helper.MenuHelper;
 import quick.pager.shop.manage.mapper.MenuMapper;
 import quick.pager.shop.manage.mapper.RoleMapper;
 import quick.pager.shop.manage.model.Menu;
@@ -53,33 +55,24 @@ public class SysUserServiceImpl implements SysUserService {
     private RoleMapper roleMapper;
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private MenuHelper menuHelper;
 
     @Override
     public Response<List<SysUserResponse>> queryPage(SysUserPageParam param) {
 
-
-        QueryWrapper<SysUser> qw = new QueryWrapper<>();
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
         if (!StringUtils.isEmpty(param.getPhone())) {
-            qw.eq("phone", param.getPhone());
+            wrapper.eq(SysUser::getPhone, param.getPhone());
         }
 
-        int total = sysUserMapper.selectCount(qw);
+        int total = sysUserMapper.selectCount(wrapper);
         List<SysUserResponse> responseList = Collections.emptyList();
         if (total > 0) {
 
-            IPage<SysUser> page = sysUserMapper.selectPage(new Page<>(param.getPage(), param.getPageSize(), false), qw);
-            responseList = Optional.ofNullable(page.getRecords()).orElse(Collections.emptyList()).stream()
-                    .map(item -> {
-                        SysUserResponse resp = new SysUserResponse();
-                        BeanCopier.create(item, resp).copy();
-
-                        List<SysRole> sysRoles = sysRoleMapper.selectBySysUserId(item.getId());
-                        sysRoles.forEach(sysRole -> {
-                            Role role = roleMapper.selectById(sysRole.getRoleId());
-                            resp.getRoles().add(role);
-                        });
-                        return resp;
-                    }).collect(Collectors.toList());
+            List<SysUser> list = sysUserMapper.selectPage(new Page<>(param.getPage(), param.getPageSize(), false), wrapper).getRecords();
+            responseList = Optional.ofNullable(list).orElse(Collections.emptyList()).stream()
+                    .map(this::convert).collect(Collectors.toList());
         }
 
         return Response.toResponse(responseList, total);
@@ -89,22 +82,22 @@ public class SysUserServiceImpl implements SysUserService {
     public Response<Long> create(SysUserParam param) {
 
         SysUser sysUser = new SysUser();
-        BeanCopier.create(param, sysUser);
+        BeanCopier.copy(param, sysUser);
 
         sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
         sysUser.setCreateTime(DateUtils.dateTime());
         sysUser.setDeleteStatus(Boolean.FALSE);
         sysUserMapper.insert(sysUser);
-        modifySysUser(param, sysUser);
+        modifySysUser(param.getRoleIds(), sysUser);
         return new Response<>(sysUser.getId());
     }
 
     @Override
     public Response<Long> modify(SysUserParam param) {
         SysUser sysUser = new SysUser();
-        BeanCopier.create(param, sysUser);
+        BeanCopier.copy(param, sysUser);
         sysUserMapper.updateById(sysUser);
-        modifySysUser(param, sysUser);
+        modifySysUser(param.getRoleIds(), sysUser);
         return new Response<>(sysUser.getId());
     }
 
@@ -127,16 +120,16 @@ public class SysUserServiceImpl implements SysUserService {
         List<String> permissions = authorities.stream().map(GrantedAuthority::getAuthority).distinct().collect(Collectors.toList());
 
         // 所有访问菜单的路由
-        List<Menu> menus = menuMapper.selectMenuBySysUserId(sysUser.getId());
+        List<Menu> menus = menuHelper.selectMenuBySysUserId(sysUser.getId());
         // 父级菜单
         List<MenuResponse> topMenu = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream()
                 .filter(menu -> Objects.isNull(menu.getParentId()))
-                .map(this::conv)
+                .map(this::convert)
                 .collect(Collectors.toList());
         // 这种写法是查出所有的菜单，移除顶级菜单，剩余的菜单就不是顶级菜单也就是parentId 都是不为null
         Map<Long, List<MenuResponse>> childrenMap = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream()
                 .filter(item -> Objects.nonNull(item.getParentId()))
-                .map(this::conv)
+                .map(this::convert)
                 .collect(Collectors.groupingBy(MenuResponse::getParentId, Collectors.toList()));
         // 整合成父子结构
         toTree(topMenu, childrenMap);
@@ -151,29 +144,31 @@ public class SysUserServiceImpl implements SysUserService {
     /**
      * 新增|修改
      */
-    private void modifySysUser(SysUserParam param, SysUser sysUser) {
+    private void modifySysUser(List<Long> roleIds, SysUser sysUser) {
 
-        param.getRoleIds().forEach(id -> {
-            SysRole queryRole = new SysRole();
-            queryRole.setRoleId(id);
-            queryRole.setSysUserId(sysUser.getId());
+        roleIds.forEach(id -> {
+            // 查询系统用户与角色关系
+            LambdaQueryWrapper<SysRole> sysRoleWrapper = new LambdaQueryWrapper<>();
+            sysRoleWrapper.eq(SysRole::getDeleteStatus, Boolean.FALSE);
+            sysRoleWrapper.eq(SysRole::getSysUserId, sysUser.getId());
+            List<SysRole> sysRoles = sysRoleMapper.selectList(sysRoleWrapper);
 
-            List<SysRole> sysRoles = sysRoleMapper.selectList(new QueryWrapper<>(queryRole));
-            Optional.ofNullable(sysRoles).orElse(Collections.emptyList())
-                    .forEach(item -> {
-                        SysRole sysRole = new SysRole();
-                        sysRole.setRoleId(id);
-                        sysRole.setSysUserId(sysUser.getId());
-                        sysRole.setCreateTime(DateUtils.dateTime());
-                        sysRole.setDeleteStatus(Boolean.FALSE);
-                        sysRoleMapper.insert(sysRole);
-                    });
+            LocalDateTime time = DateUtils.dateTime();
+            sysRoles.forEach(item -> {
+                SysRole sysRole = new SysRole();
+                sysRole.setRoleId(id);
+                sysRole.setSysUserId(sysUser.getId());
+                sysRole.setCreateTime(time);
+                sysRole.setUpdateTime(time);
+                sysRole.setDeleteStatus(Boolean.FALSE);
+                sysRoleMapper.insert(sysRole);
+            });
         });
     }
 
-    private MenuResponse conv(Menu menu) {
+    private MenuResponse convert(Menu menu) {
         MenuResponse resp = new MenuResponse();
-        BeanCopier.create(menu, resp).copy();
+        BeanCopier.copy(menu, resp);
         resp.setLabel(menu.getName());
         if (Objects.isNull(menu.getParentId())) {
             resp.setComponent("Layout");
@@ -197,5 +192,28 @@ public class SysUserServiceImpl implements SysUserService {
             toTree(menuList, childrenMap);
             k.setChildren(menuList);
         });
+    }
+
+    /**
+     * 数据转换
+     *
+     * @param user 系统用户
+     * @return SysUserResponse
+     */
+    private SysUserResponse convert(SysUser user) {
+        SysUserResponse resp = new SysUserResponse();
+        BeanCopier.copy(user, resp);
+
+        // 查询系统用户与角色关系
+        LambdaQueryWrapper<SysRole> sysRoleWrapper = new LambdaQueryWrapper<>();
+        sysRoleWrapper.eq(SysRole::getDeleteStatus, Boolean.FALSE);
+        sysRoleWrapper.eq(SysRole::getSysUserId, user.getId());
+        List<SysRole> sysRoles = sysRoleMapper.selectList(sysRoleWrapper);
+
+        sysRoles.forEach(sysRole -> {
+            Role role = roleMapper.selectById(sysRole.getRoleId());
+            resp.getRoles().add(role);
+        });
+        return resp;
     }
 }

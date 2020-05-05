@@ -19,6 +19,8 @@ import quick.pager.shop.response.Response;
 
 /**
  * 权限
+ *
+ * @author siguiyang
  */
 @RestController
 @RequestMapping(Constants.Module.MANAGE)

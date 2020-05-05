@@ -15,11 +15,11 @@ public interface PermissionService {
     /**
      * 授权
      *
-     * @param permissionIds 权限主键集
+     * @param permission 权限code集
      * @param roleId        角色主键
      * @return 返回授权成功的提示信息
      */
-    Response grant(List<Long> permissionIds, Long roleId);
+    Response grant(List<Long> permission, Long roleId);
 
     /**
      * 根据主键查询parentId 的非路由级权限

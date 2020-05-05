@@ -3,6 +3,7 @@ package quick.pager.shop.activity.service;
 import java.util.List;
 import quick.pager.shop.activity.request.assemble.AssembleMemberPageRequest;
 import quick.pager.shop.activity.request.assemble.AssemblePageRequest;
+import quick.pager.shop.activity.request.assemble.AssembleRecordPageRequest;
 import quick.pager.shop.activity.request.assemble.AssembleRuleSaveRequest;
 import quick.pager.shop.activity.request.assemble.AssembleSaveRequest;
 import quick.pager.shop.activity.response.assemble.AssembleMemberResponse;
@@ -40,22 +41,6 @@ public interface AssembleService {
      * @return 活动主键
      */
     Response<Long> create(AssembleSaveRequest request);
-
-    /**
-     * 拼团活动规则
-     *
-     * @param activityId 活动主键
-     * @return 拼团活动内容
-     */
-    Response<AssembleResponse> ruleInfo(Long activityId);
-
-    /**
-     * 修改规则
-     *
-     * @param request 请求参数
-     * @return 拼团规则主键
-     */
-    Response<Long> modifyRule(AssembleRuleSaveRequest request);
 
     /**
      * 设置拼团商品

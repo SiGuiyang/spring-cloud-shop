@@ -66,17 +66,6 @@ public class GoodsSkuController {
      */
     @PostMapping("/sku/page")
     public Response<List<GoodsSkuResponse>> queryPage(@RequestBody GoodsSkuPageRequest request) {
-        Response<List<GoodsSku>> listResponse = goodsSkuService.queryPage(request);
-
-        return Response.toResponse(Optional.ofNullable(listResponse.getData()).orElse(Collections.emptyList()).stream()
-                        .map(this::conv).collect(Collectors.toList())
-                , listResponse.getTotal());
-    }
-
-
-    private GoodsSkuResponse conv(GoodsSku sku) {
-        GoodsSkuResponse response = new GoodsSkuResponse();
-        BeanCopier.create(sku, response).copy();
-        return response;
+        return goodsSkuService.queryPage(request);
     }
 }

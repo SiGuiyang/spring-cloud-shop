@@ -12,4 +12,8 @@ public class AssembleMemberPageRequest extends PageRequest {
      * 活动主键
      */
     private Long activityId;
+    /**
+     * 手机号码
+     */
+    private String phone;
 }

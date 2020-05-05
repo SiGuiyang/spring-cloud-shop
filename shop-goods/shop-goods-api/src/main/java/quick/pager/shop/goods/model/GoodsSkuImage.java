@@ -23,6 +23,10 @@ public class GoodsSkuImage extends Model {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 商品主表主键
+     */
+    private Long goodsId;
+    /**
      * 商品t_goods_sku id
      */
     private Long skuId;

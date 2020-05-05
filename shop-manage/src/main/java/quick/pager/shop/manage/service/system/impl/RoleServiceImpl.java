@@ -1,5 +1,6 @@
 package quick.pager.shop.manage.service.system.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import quick.pager.shop.manage.helper.MenuHelper;
 import quick.pager.shop.manage.mapper.MenuMapper;
 import quick.pager.shop.manage.mapper.RoleMapper;
 import quick.pager.shop.manage.param.system.RoleOtherParam;
@@ -40,18 +42,19 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private MenuHelper menuHelper;
 
     @Override
     public Response<List<RoleResponse>> queryPage(RolePageParam param) {
-        Role role = new Role();
-        role.setDeleteStatus(param.getDeleteStatus());
+        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Role::getDeleteStatus, Boolean.FALSE);
+
         if (StringUtils.isNotBlank(param.getRoleName())) {
-
-            role.setRoleName(param.getRoleName());
+            wrapper.likeRight(Role::getRoleName, param.getRoleName());
         }
-        QueryWrapper<Role> qw = new QueryWrapper<>(role);
 
-        Response<List<Role>> response = this.toPage(param.getPage(), param.getPageSize(), qw);
+        Response<List<Role>> response = this.toPage(param.getPage(), param.getPageSize(), wrapper);
 
         return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
                         .map(item -> BeanCopier.create(item, new RoleResponse()).copy()).collect(Collectors.toList())
@@ -61,13 +64,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public Response<List<RoleResponse>> queryList(RoleOtherParam param) {
 
-        Role role = new Role();
-        role.setDeleteStatus(Boolean.FALSE);
+        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Role::getDeleteStatus, Boolean.FALSE);
 
         if (StringUtils.isNotEmpty(param.getRoleName())) {
-            role.setRoleName(param.getRoleName());
+            wrapper.eq(Role::getRoleName, param.getRoleName());
         }
-        List<Role> roles = this.list(new QueryWrapper<>(role));
+        List<Role> roles = this.list(wrapper);
 
         return new Response<>(roles.stream().map(item -> BeanCopier.create(item, new RoleResponse()).copy()).collect(Collectors.toList()));
     }
@@ -120,7 +123,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         // 组装数据
         toTree(parentResp, childrenMap, parentIds);
         // 所有用户访问菜单的路由
-        List<Menu> allMenus = menuMapper.selectMenuByRoleId(roleId);
+        List<Menu> allMenus = menuHelper.selectMenuByRoleId(roleId);
         List<Long> routerPermissions = Optional.ofNullable(allMenus).orElse(Collections.emptyList()).stream()
                 .filter(item -> 1 == item.getMenuType())
                 .map(Menu::getId).distinct().collect(Collectors.toList());

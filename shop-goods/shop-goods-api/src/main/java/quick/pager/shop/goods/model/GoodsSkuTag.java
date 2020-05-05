@@ -22,8 +22,17 @@ public class GoodsSkuTag extends Model {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 商品主表主键
+     */
+    private Long goodsId;
+    /**
+     * 商品t_goods_sku id
+     */
     private Long skuId;
-
-    private String skuTagName;
+    /**
+     * 标签名称
+     */
+    private String name;
 
 }

@@ -1,10 +1,8 @@
 package quick.pager.shop.activity.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import java.util.Collections;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +15,7 @@ import quick.pager.shop.activity.response.exchange.ExchangeActivityRuleResponse;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.activity.service.ExchangeActivityRuleService;
+import quick.pager.shop.service.impl.ServiceImpl;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
@@ -26,10 +25,8 @@ import quick.pager.shop.utils.DateUtils;
  * @author siguiyang
  */
 @Service
-public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleService {
+public class ExchangeActivityRuleServiceImpl extends ServiceImpl<ExchangeActivityRuleMapper, ExchangeActivityRule> implements ExchangeActivityRuleService {
 
-    @Autowired
-    private ExchangeActivityRuleMapper exchangeActivityRuleMapper;
     @Autowired
     private ExchangeActivityMapper exchangeActivityMapper;
 
@@ -42,12 +39,12 @@ public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleServ
             return new Response<>(ResponseStatus.Code.FAIL_CODE, "不存在此活动");
         }
 
-        ExchangeActivityRule exchangeActivityRule = new ExchangeActivityRule();
-        exchangeActivityRule.setActivityId(activityId);
-        List<ExchangeActivityRule> rules = exchangeActivityRuleMapper.selectList(new QueryWrapper<>(exchangeActivityRule));
+        LambdaQueryWrapper<ExchangeActivityRule> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ExchangeActivityRule::getDeleteStatus, Boolean.FALSE);
+        wrapper.eq(ExchangeActivityRule::getActivityId, activityId);
+        List<ExchangeActivityRule> rules = this.baseMapper.selectList(wrapper);
 
-
-        return new Response<>(Optional.ofNullable(rules).orElse(Collections.emptyList()).stream()
+        return new Response<>(rules.stream()
                 .map(item -> {
                     ExchangeActivityRuleResponse response = new ExchangeActivityRuleResponse();
                     response.setId(item.getId());
@@ -57,6 +54,9 @@ public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleServ
                     response.setRuleName(item.getRuleName());
                     response.setServerStatus(item.getServerStatus());
                     response.setCreateTime(item.getCreateTime());
+                    response.setUpdateTime(item.getUpdateTime());
+                    response.setCreateUser(item.getCreateUser());
+                    response.setUpdateUser(item.getUpdateUser());
                     return response;
                 }).collect(Collectors.toList()));
     }
@@ -66,7 +66,8 @@ public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleServ
         ExchangeActivityRule rule = this.convert(request);
         rule.setDeleteStatus(Boolean.FALSE);
         rule.setCreateTime(DateUtils.dateTime());
-        exchangeActivityRuleMapper.insert(rule);
+        rule.setUpdateTime(DateUtils.dateTime());
+        this.baseMapper.insert(rule);
 
         return new Response<>(rule.getId());
     }
@@ -75,7 +76,8 @@ public class ExchangeActivityRuleServiceImpl implements ExchangeActivityRuleServ
     public Response<Long> modify(ExchangeActivityRuleSaveRequest request) {
 
         ExchangeActivityRule rule = this.convert(request);
-        exchangeActivityRuleMapper.updateById(rule);
+        rule.setUpdateTime(DateUtils.dateTime());
+        this.baseMapper.updateById(rule);
 
         return new Response<>(rule.getId());
     }

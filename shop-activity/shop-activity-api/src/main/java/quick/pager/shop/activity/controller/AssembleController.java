@@ -3,7 +3,6 @@ package quick.pager.shop.activity.controller;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.activity.request.assemble.AssembleMemberPageRequest;
 import quick.pager.shop.activity.request.assemble.AssemblePageRequest;
-import quick.pager.shop.activity.request.assemble.AssembleRuleSaveRequest;
 import quick.pager.shop.activity.request.assemble.AssembleSaveRequest;
 import quick.pager.shop.activity.response.assemble.AssembleActivityResponse;
-import quick.pager.shop.activity.response.assemble.AssembleResponse;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.response.Response;
@@ -62,22 +59,6 @@ public class AssembleController {
     }
 
     /**
-     * 规则详情
-     */
-    @GetMapping("/assemble/{activityId}/rule")
-    public Response<AssembleResponse> rule(@PathVariable("activityId") Long activityId) {
-        return assembleService.ruleInfo(activityId);
-    }
-
-    /**
-     * 拼团活动规则新增修改
-     */
-    @PutMapping("/assemble/rule/modify")
-    public Response<Long> modifyRule(@RequestBody AssembleRuleSaveRequest request) {
-        return assembleService.modifyRule(request);
-    }
-
-    /**
      * 拼团活动商品详情
      */
     @PostMapping("/assemble/{activityId}/goods")
@@ -95,6 +76,8 @@ public class AssembleController {
 
     /**
      * 参与拼团的成员
+     *
+     * @param request 请求参数
      */
     @PostMapping("/assemble/members")
     public Response members(@RequestBody AssembleMemberPageRequest request) {

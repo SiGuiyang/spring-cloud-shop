@@ -10,6 +10,6 @@ import quick.pager.shop.activity.model.AssembleActivity;
  * @author siguiyang
  */
 @Mapper
-public interface AssembleMapper extends BaseMapper<AssembleActivity> {
+public interface AssembleActivityMapper extends BaseMapper<AssembleActivity> {
 
 }

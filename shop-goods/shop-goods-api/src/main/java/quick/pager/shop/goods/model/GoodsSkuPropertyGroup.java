@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 /**
  * <p>
  * 商品sku与商品属性组property_group 关联表
-多对多关系
+ * 多对多关系
  * </p>
  *
  * @author Siguiyang
@@ -23,8 +23,18 @@ public class GoodsSkuPropertyGroup extends Model {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 商品主表主键
+     */
+    private Long goodsId;
+    /**
+     * 商品t_goods_sku id
+     */
     private Long skuId;
 
+    /**
+     * 商品属性组主键
+     */
     private Long propertyGroupId;
 
 }

@@ -30,11 +30,6 @@ public class AssembleResponse extends BasicResponse {
 
     private Long recordId;
 
-    private Integer purchaseLimit;
-
-    private Integer assembleCount;
-
-    private String description;
     /**
      * 周期
      */

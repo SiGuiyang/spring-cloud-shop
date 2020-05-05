@@ -23,8 +23,13 @@ public class GoodsSku extends Model {
 
     private static final long serialVersionUID = 1L;
 
-    private Long spuId;
-
+    /**
+     * 商品主表主键
+     */
+    private Long goodsId;
+    /**
+     * sku名称
+     */
     private String skuName;
     /**
      * sku 编码
@@ -35,21 +40,16 @@ public class GoodsSku extends Model {
      */
     private BigDecimal skuAmount;
     /**
+     * 折扣价格
+     */
+    private BigDecimal discountAmount;
+    /**
      * 默认的sku，显示在列表的主sku商品 true, false
      */
     private Boolean defaultSku;
     /**
-     * 商品状态 0 未上架 1 上架申请 2 上架 3 已下架
+     * 入库量，库存量
      */
-    private Integer skuStatus;
-    /**
-     * 商品重量
-     */
-    private BigDecimal weight;
-    /**
-     * 商品单位，比如kg
-     */
-    private String unit;
-
+    private Integer inventory;
 
 }

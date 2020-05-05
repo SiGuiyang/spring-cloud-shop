@@ -8,6 +8,7 @@ import quick.pager.shop.model.Model;
 
 /**
  * 系统角色
+ *
  * @author siguiyang
  */
 @EqualsAndHashCode(callSuper = true)
@@ -23,8 +24,8 @@ public class Role extends Model {
      */
     private String roleName;
     /**
-     * 是否是超级管理员
+     * MASTER 表示是超级管理员，ADMIN 表示普通系统管理员，ROLE 普通用户
      */
-    private Boolean master;
+    private String master;
 
 }

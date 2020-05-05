@@ -15,7 +15,7 @@
     <properties>
         <shop.version>cloud-1.0</shop.version>
         <junit.version>4.12</junit.version>
-        <hutool.version>4.1.12</hutool.version>
+        <hutool.version>4.1.14</hutool.version>
         <poi.version>3.17</poi.version>
         <xerces.version>2.11.0</xerces.version>
         <fastjson.version>1.2.47</fastjson.version>

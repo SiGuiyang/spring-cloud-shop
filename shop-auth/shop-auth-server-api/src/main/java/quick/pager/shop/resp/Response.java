@@ -1,6 +1,7 @@
 package quick.pager.shop.resp;
 
 import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 数据响应类<br />
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @param <T>
  * @author siguiyang
  */
+@Data
 public class Response<T> implements Serializable {
 
     private static final long serialVersionUID = 473372815866107289L;
@@ -28,6 +30,11 @@ public class Response<T> implements Serializable {
      */
     private T data;
 
+    /**
+     * 总数
+     */
+    private long total;
+
     private long timestamp = System.currentTimeMillis();
 
     public Response() {
@@ -36,42 +43,5 @@ public class Response<T> implements Serializable {
     public Response(int code, String msg) {
         this.code = code;
         this.msg = msg;
-    }
-
-    public Response(T data) {
-        this.data = data;
-    }
-
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
     }
 }

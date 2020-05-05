@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.client.AuthClient;
-import quick.pager.shop.resp.Response;
 import quick.pager.shop.dto.UserDTO;
+import quick.pager.shop.resp.Response;
 
 /**
  * 查询用户权限

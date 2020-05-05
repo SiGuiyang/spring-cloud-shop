@@ -7,8 +7,10 @@ import lombok.experimental.Accessors;
 import quick.pager.shop.model.Model;
 
 /**
-* @author siguiyang
-*/
+ * 参与满赠换购的人员
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)

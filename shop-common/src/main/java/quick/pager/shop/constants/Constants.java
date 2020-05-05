@@ -142,54 +142,7 @@ public interface Constants {
      * 商品状态
      */
     enum GoodsStatus {
-        UPPER_SHELF(1, "上架"),
-        LOWER_SHELF(2, "下架");
-        private int status;
 
-        private String name;
-
-        GoodsStatus(int status, String name) {
-            this.status = status;
-            this.name = name;
-        }
-
-        public int getStatus() {
-            return status;
-        }
-
-
-        public String getName() {
-            return name;
-        }
-
-    }
-
-    /**
-     * 商品类型
-     */
-    enum GoodsType {
-        NORMAL(1, "普通商品"),
-        SPECIAL(2, "特价商品"),
-        FIGHT_GROUP(3, "拼团商品"),
-        SECOND_KILL(4, "秒杀商品"),
-        EXCHANGE(5, "满赠换购商品");
-
-
-        private int type;
-        private String name;
-
-        GoodsType(int type, String name) {
-            this.type = type;
-            this.name = name;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public String getName() {
-            return name;
-        }
 
     }
 

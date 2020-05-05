@@ -26,7 +26,6 @@ public class LoginController {
     @Autowired
     private SysUserClientService sysUserClientService;
 
-
     /**
      * 获取系统用户
      */

@@ -58,6 +58,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (Objects.nonNull(param.getMenuType())) {
             wrapper.eq(Menu::getMenuType, param.getMenuType());
         }
+        wrapper.orderByAsc(Menu::getSequence);
         List<Menu> menus = this.baseMapper.selectList(wrapper);
         List<MenuResponse> parentResp = Optional.ofNullable(menus).orElse(Collections.emptyList()).stream()
                 .filter(item -> Objects.isNull(item.getParentId()))

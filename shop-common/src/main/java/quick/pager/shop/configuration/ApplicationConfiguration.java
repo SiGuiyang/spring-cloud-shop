@@ -3,10 +3,6 @@ package quick.pager.shop.configuration;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -21,10 +17,10 @@ import org.springframework.http.MediaType;
  * @author siguiyang
  */
 @Configuration
-public class ApplicationConfig {
+@ConditionalOnClass(FastJsonHttpMessageConverter.class)
+public class ApplicationConfiguration {
 
     @Bean
-    @ConditionalOnClass(FastJsonHttpMessageConverter.class)
     public HttpMessageConverters fastJsonConfigure() {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
@@ -52,21 +48,5 @@ public class ApplicationConfig {
         supportedMediaTypes.add(MediaType.TEXT_XML);
         converter.setSupportedMediaTypes(supportedMediaTypes);
         return new HttpMessageConverters(converter);
-    }
-
-    @Bean
-    public ObjectMapper serializingObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.registerModule(new JavaTimeModule());
-        return objectMapper;
-    }
-
-    /**
-     * 分页插件
-     */
-    @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        return new PaginationInterceptor();
     }
 }

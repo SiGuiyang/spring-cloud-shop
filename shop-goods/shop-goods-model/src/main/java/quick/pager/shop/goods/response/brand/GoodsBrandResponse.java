@@ -15,6 +15,10 @@ import quick.pager.shop.response.BasicResponse;
 public class GoodsBrandResponse extends BasicResponse {
     private static final long serialVersionUID = 5556556044921225757L;
     /**
+     * 主键
+     */
+    private Long id;
+    /**
      * 品牌名称
      */
     private String brandName;
