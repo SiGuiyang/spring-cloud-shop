@@ -3,6 +3,7 @@ package quick.pager.shop.client;
 import feign.hystrix.FallbackFactory;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +42,7 @@ public interface AuthClient {
      *
      * @author siguiyang
      */
+    @Component
     class AuthClientFactory implements FallbackFactory<AuthClient> {
 
         @Override

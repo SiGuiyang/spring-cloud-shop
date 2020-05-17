@@ -19,9 +19,9 @@ public class SMSTemplateResponse implements Serializable {
     /**
      * 模板标识
      */
-    private String smsTemplateCode;
+    private String templateCode;
     /**
      * 模板内容
      */
-    private String smsTemplateContent;
+    private String templateContent;
 }

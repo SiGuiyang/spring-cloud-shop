@@ -31,7 +31,11 @@ public class Auth2SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().logoutUrl("/logout").permitAll().clearAuthentication(true)
                 .and()
+                .authorizeRequests().mvcMatchers("/oauth/**").permitAll()
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
+                .and()
+                .httpBasic()
                 .and()
                 .csrf().disable();
     }

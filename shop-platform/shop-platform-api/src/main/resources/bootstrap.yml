@@ -12,6 +12,11 @@ spring:
     host: 101.132.121.178
     port: 6379
     password: abc+123
+
+shop:
+  oauth:
+    permissions:
+      - /platform/sms/send
 management:
   endpoints:
     web:

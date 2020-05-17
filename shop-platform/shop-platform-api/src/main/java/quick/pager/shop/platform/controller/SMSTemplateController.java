@@ -43,7 +43,7 @@ public class SMSTemplateController {
      */
     @PostMapping("/sms/create")
     public Response<Long> create(@RequestBody SMSTemplateSaveRequest request) {
-        return new Response<>(smsTemplateService.create(request));
+        return smsTemplateService.create(request);
     }
 
     /**
@@ -57,7 +57,7 @@ public class SMSTemplateController {
         if (Objects.isNull(request.getId())) {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
-        return new Response<>(smsTemplateService.modify(request));
+        return smsTemplateService.modify(request);
     }
 
     /**
@@ -68,12 +68,7 @@ public class SMSTemplateController {
      */
     @GetMapping("/sms/page")
     public Response<List<SMSTemplateResponse>> page(SMSTemplatePageRequest request) {
-
-        Response<List<SMSTemplate>> listResponse = smsTemplateService.queryPage(request);
-
-        return Response.toResponse(Optional.ofNullable(listResponse.getData()).orElse(Collections.emptyList()).stream()
-                        .map(this::convert).collect(Collectors.toList())
-                , listResponse.getTotal());
+        return smsTemplateService.queryPage(request);
     }
 
 
@@ -85,12 +80,7 @@ public class SMSTemplateController {
      */
     @GetMapping("/sms/{smsTemplateCode}/info")
     public Response<SMSTemplateResponse> sms(@PathVariable("smsTemplateCode") String smsTemplateCode) {
-        SMSTemplate smsTemplate = smsTemplateService.sms(smsTemplateCode);
-        return new Response<>(this.convert(smsTemplate));
-    }
-
-    private SMSTemplateResponse convert(SMSTemplate smsTemplate) {
-        return BeanCopier.create(smsTemplate, new SMSTemplateResponse()).copy();
+        return smsTemplateService.sms(smsTemplateCode);
     }
 
 }

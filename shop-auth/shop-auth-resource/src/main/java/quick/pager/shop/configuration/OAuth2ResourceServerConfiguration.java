@@ -1,9 +1,13 @@
 package quick.pager.shop.configuration;
 
 import com.alibaba.fastjson.JSON;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +24,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.util.CollectionUtils;
 
 /**
  * 资源服务器配置
@@ -35,16 +40,26 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
     /**
      * 默认无权限路由配置
      */
-    private static final String[] DEFAULT_MATCHERS = new String[]{"/actuator/**", "/druid/**", "/css/**", "/admin/permit/**"};
+    private static final String[] DEFAULT_MATCHERS = new String[]{"/oauth/**", "/actuator/**", "/druid/**", "/css/**", "/admin/permit/**"};
+    @Autowired
+    private OAuth2Properties oAuth2Properties;
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
+        // 获取不拦截的权限地址
+        List<String> permissions = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(oAuth2Properties.getPermissions())) {
+            permissions.addAll(oAuth2Properties.getPermissions());
+        }
+        permissions.addAll(Stream.of(DEFAULT_MATCHERS).collect(Collectors.toList()));
+
         http
                 .csrf().disable()
-                .authorizeRequests().mvcMatchers(DEFAULT_MATCHERS).permitAll()
+                .authorizeRequests().mvcMatchers(permissions.toArray(new String[0])).permitAll()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, ex) -> { // 匿名用户访问无权限返回
@@ -68,6 +83,7 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
                     result.put("msg", "您没有权限访问！");
                     result.put("data", null);
                     result.put("timestamp", System.currentTimeMillis());
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.getWriter().println(JSON.toJSONString(result));
 
                 }).and()
