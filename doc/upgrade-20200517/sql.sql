@@ -1,0 +1,1 @@
+update `oauth_client_details` set `authorized_grant_types`='authorization_code,password,sms,refresh_token', `web_server_redirect_uri`='http://127.0.0.1:9527', `scope`='app' where `client_id`='client7';
