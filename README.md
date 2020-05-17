@@ -8,7 +8,7 @@
     风控中心: pager-risk 
     授权中心: pager-auth
     分布式定时任务采用xxl-job方式实现
-    后台登陆采用oauth2.0密码模式登陆
+    后台登陆采用oauth2.0授权，支持密码登陆，授权码登陆，短信验证码登陆
     注册中心与配置中心已使用alibaba nacos
 # 在线demo地址 [Spring Cloud Shop](http://106.54.251.32) 每周休息日停止在线服务，周一恢复
     1. 仅提供访问，预览
