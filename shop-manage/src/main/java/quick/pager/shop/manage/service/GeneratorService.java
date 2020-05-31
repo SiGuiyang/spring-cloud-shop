@@ -1,6 +1,7 @@
 package quick.pager.shop.manage.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -27,6 +28,9 @@ import quick.pager.shop.manage.model.Columns;
 import quick.pager.shop.manage.model.Tables;
 import quick.pager.shop.response.Response;
 
+/**
+ * @author siguiyang
+ */
 @Service
 @Slf4j
 public class GeneratorService {
@@ -47,7 +51,8 @@ public class GeneratorService {
             qw.eq("TABLE_NAME", dto.getTableName());
         }
 
-        return Response.toResponse(generatorMapper.selectTables(new Page<>(dto.getPage(), dto.getPageSize()), qw));
+        IPage<Tables> page = generatorMapper.selectTables(new Page<>(dto.getPage(), dto.getPageSize()), qw);
+        return Response.toResponse(page.getRecords(), page.getTotal());
     }
 
     /**
