@@ -50,6 +50,18 @@ spring:
           uri: lb://shop-goods
           predicates:
             - Path=/goods/**
+        - id: shop-oss
+          uri: lb://shop-oss
+          predicates:
+            - Path=/oss/**
+        - id: shop-cart
+          uri: lb://shoop-cart
+          predicates:
+            - Path=/cart/**
+        - id: shop-settlement
+          uri: lb://shop-settlement
+          predicates:
+            - Path=/settlement/**
 management:
   endpoints:
     web:

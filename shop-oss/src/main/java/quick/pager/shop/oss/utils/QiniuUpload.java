@@ -1,4 +1,4 @@
-package quick.pager.shop.upload;
+package quick.pager.shop.oss.utils;
 
 import java.io.File;
 import java.io.InputStream;

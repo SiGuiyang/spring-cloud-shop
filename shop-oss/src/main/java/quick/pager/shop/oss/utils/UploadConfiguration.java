@@ -1,10 +1,10 @@
-package quick.pager.shop.upload;
+package quick.pager.shop.oss.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
+import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
@@ -38,7 +38,7 @@ class UploadConfiguration {
      * 获取设置的UploadManager配置中心
      */
     private static UploadManager getUploadManager() {
-        Configuration configuration = new Configuration(Zone.autoZone());
+        Configuration configuration = new Configuration(Region.region0());
         return new UploadManager(configuration);
     }
 

@@ -1,0 +1,26 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: shop-oss
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info
+logging:
+  level:
+    com.alibaba.nacos: error
