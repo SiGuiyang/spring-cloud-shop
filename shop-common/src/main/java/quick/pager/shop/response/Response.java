@@ -1,6 +1,5 @@
 package quick.pager.shop.response;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import java.util.List;
 import lombok.Data;
 import quick.pager.shop.constants.ResponseStatus;
@@ -47,13 +46,6 @@ public class Response<T> implements Serializable {
 
     public Response(T data) {
         this.data = data;
-    }
-
-    public static <T> Response<List<T>> toResponse(IPage<T> page) {
-        Response<List<T>> response = new Response<>();
-        response.setTotal(page.getTotal());
-        response.setData(page.getRecords());
-        return response;
     }
 
     public static <T> Response<List<T>> toResponse(List<T> data, long total) {

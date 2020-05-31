@@ -10,6 +10,11 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.lang.NonNull;
 
+/**
+ * redis template
+ *
+ * @author siguiyang
+ */
 public class ShopRedisTemplate extends RedisTemplate<String, Serializable> {
 
 

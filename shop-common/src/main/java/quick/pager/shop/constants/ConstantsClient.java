@@ -39,6 +39,14 @@ public interface ConstantsClient {
      */
     String JOB_CLIENT = "shop-job";
     /**
+     * 购物车服务
+     */
+    String CART_CLIENT = "shop-cart";
+    /**
+     * 清结算服务
+     */
+    String SETTLEMENT_CLIENT = "shop-settlement";
+    /**
      * 活动请求前缀
      */
     String ACTIVITY = "/activity";
@@ -74,4 +82,12 @@ public interface ConstantsClient {
      * 定时任务前缀
      */
     String JOB = "/job";
+    /**
+     * 购物车
+     */
+    String CART = "/cart";
+    /**
+     * 清结算
+     */
+    String SETTLEMENT = "/settlement";
 }

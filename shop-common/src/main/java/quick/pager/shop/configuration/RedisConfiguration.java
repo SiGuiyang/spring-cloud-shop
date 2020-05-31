@@ -7,6 +7,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import quick.pager.shop.service.RedisService;
 
+/**
+ * redis 配置
+ *
+ * @author siguiyang
+ */
 @Configuration
 @ConditionalOnClass({RedisTemplate.class, RedisConnectionFactory.class})
 public class RedisConfiguration {

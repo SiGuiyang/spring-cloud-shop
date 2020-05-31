@@ -40,6 +40,7 @@ public interface Constants {
         String USER = "/user";
         String RISK = "/risk";
         String PLATFORM = "/platform";
+        String OSS = "/oss";
     }
 
     /**
@@ -85,21 +86,6 @@ public interface Constants {
     interface SMS_MODULE {
         String SELLER = "seller";
         String USER = "user";
-    }
-
-    /**
-     * 短信模板code
-     */
-    interface SMS {
-        // 登陆短信验证码
-        String LOGIN_SMS = "1000";
-        // 注册发送短信验证码
-        String REGISTER_SMS = "1001";
-        // 忘记密码短信验证码
-        String FORGET_SMS = "1002";
-        // 发送初始密码短信验证码
-        String INITIAL_CIPHER_SMS = "1003";
-
     }
 
     /**
