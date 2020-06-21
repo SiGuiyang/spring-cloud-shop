@@ -1,33 +1,36 @@
 package quick.pager.shop.goods.enums;
 
+import quick.pager.shop.enums.IEnum;
+
 /**
  * 商品状态
  *
  * @author siguiyang
  */
-public enum GoodsPublishStatusEnum {
+public enum GoodsPublishStatusEnum implements IEnum<Integer> {
 
     NONE_SHELF(0, "上架申请"),
     REFUSE(1, "拒绝申请"),
     UPPER_SHELF(2, "上架"),
     LOWER_SHELF(3, "下架");
 
-    private int code;
+    private Integer code;
 
-    private String name;
+    private String desc;
 
-    GoodsPublishStatusEnum(int code, String name) {
+    GoodsPublishStatusEnum(int code, String desc) {
         this.code = code;
-        this.name = name;
+        this.desc = desc;
     }
 
-    public int getCode() {
-        return code;
+    @Override
+    public Integer getCode() {
+        return this.code;
     }
 
-
-    public String getName() {
-        return name;
+    @Override
+    public String getDesc() {
+        return this.desc;
     }
 
     public static GoodsPublishStatusEnum parse(int code) {

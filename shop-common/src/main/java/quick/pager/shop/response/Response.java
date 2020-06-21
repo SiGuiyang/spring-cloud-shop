@@ -54,4 +54,10 @@ public class Response<T> implements Serializable {
         response.setData(data);
         return response;
     }
+
+    public static <T> Response<T> toResponse(T data) {
+        Response<T> response = new Response<>();
+        response.setData(data);
+        return response;
+    }
 }

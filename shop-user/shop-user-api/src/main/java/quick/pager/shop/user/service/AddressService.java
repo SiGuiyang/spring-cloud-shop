@@ -16,12 +16,11 @@ public interface AddressService {
     /**
      * 地址列表分页
      *
-     * @param userId   用户主键
-     * @param page     页码
-     * @param pageSize 页数
+     * @param userId 用户主键
+     * @param page   页码
      * @return 地址列表
      */
-    Response<List<AddressResponse>> queryPage(Long userId, Integer page, Integer pageSize);
+    Response<List<AddressResponse>> queryPage(Long userId, Integer page);
 
     /**
      * 新增

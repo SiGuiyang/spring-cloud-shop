@@ -4,14 +4,16 @@ import java.math.BigDecimal;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.AppDTO;
+import quick.pager.shop.param.Param;
 
 /**
  * 用户订单
+ *
+ * @author siguiyang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserOrderParam extends AppDTO {
+public class UserOrderParam extends Param {
     private static final long serialVersionUID = -5822489513088258957L;
 
     /**
@@ -40,7 +42,6 @@ public class UserOrderParam extends AppDTO {
      * 是否是当天配送 <br />
      * 1 当天配送
      * 0 次日配送
-     *
      */
     private String current;
 

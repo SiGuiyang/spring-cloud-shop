@@ -2,11 +2,16 @@ package quick.pager.shop.order.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.BaseDTO;
+import quick.pager.shop.request.PageRequest;
 
+/**
+ * 用户订单列表分页请求参数
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserOrderPageRequest extends BaseDTO {
+public class UserOrderPageRequest extends PageRequest {
     private static final long serialVersionUID = 3403409533500804139L;
 
     /**

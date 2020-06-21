@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import quick.pager.shop.activity.enums.CouponTypeEnums;
 import quick.pager.shop.activity.model.DiscountCouponTemplate;
 import quick.pager.shop.activity.request.coupon.DiscountCouponTemplatePageRequest;
 import quick.pager.shop.activity.request.coupon.DiscountCouponTemplateSaveRequest;
@@ -59,7 +60,7 @@ public class CouponTemplateController {
     public Response create(@RequestBody DiscountCouponTemplateSaveRequest request) {
         if (null != request.getTemplateType() && null != request.getDiscountStrength()) {
             // 如果是折扣券
-            if (Constants.CouponType.DISCOUNT.getType() == request.getTemplateType()) {
+            if (CouponTypeEnums.DISCOUNT.getCode().equals(request.getTemplateType())) {
                 BigDecimal hundred = new BigDecimal("100");
 
                 if (hundred.compareTo(request.getDiscountStrength()) <= 0) {
@@ -86,7 +87,7 @@ public class CouponTemplateController {
         }
         if (null != request.getTemplateType() && null != request.getDiscountStrength()) {
             // 如果是折扣券
-            if (Constants.CouponType.DISCOUNT.getType() == request.getTemplateType()) {
+            if (CouponTypeEnums.DISCOUNT.getCode().equals(request.getTemplateType())) {
                 BigDecimal hundred = new BigDecimal("100");
 
                 if (hundred.compareTo(request.getDiscountStrength()) <= 0) {

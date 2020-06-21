@@ -1,12 +1,13 @@
 package quick.pager.shop.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import quick.pager.shop.constants.IConsts;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.user.mapper.AddressMapper;
 import quick.pager.shop.user.model.Address;
@@ -29,18 +30,17 @@ public class AddressServiceImpl implements AddressService {
 
 
     @Override
-    public Response<List<AddressResponse>> queryPage(Long userId, Integer page, Integer pageSize) {
-        Address address = new Address();
-        address.setUserId(userId);
-        QueryWrapper<Address> qw = new QueryWrapper<>(address);
+    public Response<List<AddressResponse>> queryPage(Long userId, Integer page) {
+        LambdaQueryWrapper<Address> qw = new LambdaQueryWrapper<Address>()
+                .eq(Address::getDeleteStatus, Boolean.FALSE)
+                .eq(Address::getUserId, userId);
 
         int total = addressMapper.selectCount(qw);
 
         List<AddressResponse> list = Collections.emptyList();
         if (0 < total) {
-            List<Address> addressList = addressMapper.selectPage(new Page<>(page, pageSize), qw).getRecords();
+            List<Address> addressList = addressMapper.selectPage(new Page<>(page, IConsts.TEN), qw).getRecords();
             list = addressList.stream().map(this::convert).collect(Collectors.toList());
-
         }
 
         return Response.toResponse(list, total);
@@ -76,7 +76,7 @@ public class AddressServiceImpl implements AddressService {
      * @return AddressResponse
      */
     private AddressResponse convert(Address address) {
-        return BeanCopier.create(address, new AddressResponse()).copy();
+        return BeanCopier.copy(address, new AddressResponse());
     }
 
     /**
@@ -86,6 +86,6 @@ public class AddressServiceImpl implements AddressService {
      * @return Address
      */
     private Address convert(UserAddressSaveParam param) {
-        return BeanCopier.create(param, new Address()).copy();
+        return BeanCopier.copy(param, new Address());
     }
 }

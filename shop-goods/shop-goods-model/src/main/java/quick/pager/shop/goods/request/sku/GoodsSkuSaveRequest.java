@@ -29,6 +29,10 @@ public class GoodsSkuSaveRequest extends Request {
      */
     private String skuCode;
     /**
+     * 说明
+     */
+    private String description;
+    /**
      * 商品价格
      */
     private BigDecimal skuAmount;

@@ -27,7 +27,7 @@ public class BannerClientFallbackFactory implements FallbackFactory<BannerClient
             @Override
             public Response<BannerResponse> queryByPk(Long id) {
                 log.error(cause.getMessage());
-                return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return new Response<BannerResponse>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override

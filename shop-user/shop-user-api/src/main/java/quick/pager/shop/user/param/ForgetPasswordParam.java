@@ -3,14 +3,16 @@ package quick.pager.shop.user.param;
 import javax.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.AppDTO;
+import quick.pager.shop.param.Param;
 
 /**
+ * 忘记密码
+ *
  * @author siguiyang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ForgetPasswordParam extends AppDTO {
+public class ForgetPasswordParam extends Param {
     private static final long serialVersionUID = -43319194565812207L;
 
     /**

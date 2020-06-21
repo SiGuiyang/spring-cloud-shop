@@ -36,6 +36,10 @@ public class GoodsSkuResponse extends BasicResponse {
      */
     private String skuCode;
     /**
+     * 说明
+     */
+    private String description;
+    /**
      * 商品价格
      */
     private BigDecimal skuAmount;

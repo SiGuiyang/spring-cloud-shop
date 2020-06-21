@@ -2,11 +2,16 @@ package quick.pager.shop.goods.param;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.dto.BaseDTO;
+import quick.pager.shop.param.Param;
 
+/**
+ * 商品分类
+ *
+ * @author siguiyang
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ClassificationParam extends BaseDTO {
+public class ClassificationParam extends Param {
     private static final long serialVersionUID = 5354597172629077750L;
 
     /**

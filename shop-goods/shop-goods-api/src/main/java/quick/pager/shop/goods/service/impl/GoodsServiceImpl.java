@@ -132,10 +132,10 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
         GoodsTypeEnum typeEnum = GoodsTypeEnum.parse(goods.getGoodsType());
         response.setGoodsType(goods.getGoodsType());
         response.setGoodsTypeName(null != typeEnum ? typeEnum.getName() : null);
-
+        // 商品状态
         GoodsPublishStatusEnum statusEnum = GoodsPublishStatusEnum.parse(goods.getPublishStatus());
         response.setPublishStatus(goods.getPublishStatus());
-        response.setPublishStatusName(null != statusEnum ? statusEnum.getName() : null);
+        response.setPublishStatusName(null != statusEnum ? statusEnum.getDesc() : null);
 
         if (Objects.nonNull(goods.getBrandId())) {
             GoodsBrand brand = goodsBrandMapper.selectById(goods.getBrandId());

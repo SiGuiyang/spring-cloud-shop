@@ -2,9 +2,15 @@ package quick.pager.shop.user.response;
 
 import java.io.Serializable;
 import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInfoResponse implements Serializable {
     private static final long serialVersionUID = -4170663634334464488L;
 
@@ -20,7 +26,7 @@ public class UserInfoResponse implements Serializable {
 
     private Boolean gender;
 
-    private Byte age;
+    private Integer age;
 
     private String email;
 

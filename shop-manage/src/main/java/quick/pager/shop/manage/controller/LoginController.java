@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.manage.param.LoginDTO;
 import quick.pager.shop.manage.model.SysUser;
 import quick.pager.shop.response.Response;
 import quick.pager.shop.manage.service.system.impl.SysUserClientService;
