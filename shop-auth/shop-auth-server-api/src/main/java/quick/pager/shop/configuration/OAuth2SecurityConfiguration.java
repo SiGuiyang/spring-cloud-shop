@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
@@ -84,6 +85,7 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
                                                 ClientDetailsService clientDetailsService,
                                                 OAuth2RequestFactory requestFactory) {
         return Stream.of(
+                new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, requestFactory),
                 new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, clientDetailsService, requestFactory),
                 new PhonePasswordTokenGranter(authenticationManager, tokenServices, clientDetailsService, requestFactory),
                 new AuthorizationCodeTokenGranter(tokenServices, authorizationCodeServices, clientDetailsService, requestFactory),
