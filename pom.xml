@@ -75,7 +75,6 @@
         <module>shop-risk</module>
         <module>shop-seller</module>
         <module>shop-settlement</module>
-        <module>shop-task</module>
         <module>shop-user</module>
     </modules>
 </project>
