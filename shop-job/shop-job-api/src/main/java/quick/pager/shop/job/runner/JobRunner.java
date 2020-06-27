@@ -1,18 +1,21 @@
 package quick.pager.shop.job.runner;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import java.util.Collections;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 import quick.pager.shop.context.ShopSpringContext;
+import quick.pager.shop.job.enums.JobEnums;
+import quick.pager.shop.job.enums.JobStatusEnums;
+import quick.pager.shop.job.helper.JobHelper;
 import quick.pager.shop.job.mapper.JobInfoMapper;
+import quick.pager.shop.job.model.DTO;
 import quick.pager.shop.job.model.JobInfo;
 import quick.pager.shop.job.trigger.JobTrigger;
 
@@ -32,15 +35,34 @@ public class JobRunner implements CommandLineRunner {
     public void run(String... args) throws Exception {
         log.info("开始加载job任务....");
         JobInfoMapper jobInfoMapper = ShopSpringContext.getBean(JobInfoMapper.class);
-        List<JobInfo> jobInfos = jobInfoMapper.selectList(Wrappers.emptyWrapper());
+        List<JobInfo> jobInfos = jobInfoMapper.selectList(new LambdaQueryWrapper<JobInfo>().eq(JobInfo::getJobStatus, JobStatusEnums.NORMAL.getCode()));
 
-        Optional.ofNullable(jobInfos).orElse(Collections.emptyList()).forEach(item -> {
-            CronTrigger cronTrigger = JobTrigger.getCronTrigger(scheduler, item.getJobName(), item.getJobGroup());
+        jobInfos.forEach(item -> {
+            CronTrigger cronTrigger = null;
+            try {
+                cronTrigger = JobTrigger.getCronTrigger(scheduler, item.getJobName(), item.getJobGroup());
+            } catch (SchedulerException e) {
+                log.error("获取job任务定时器失败 jobName = {}, jobGroup = {}", item.getJobName(), item.getJobGroup());
+            }
 
-            if (ObjectUtils.isEmpty(cronTrigger)) {
-                JobTrigger.createJob(scheduler, item);
+            if (Objects.nonNull(cronTrigger)) {
+                DTO dto = DTO.builder()
+                        .jobId(item.getId())
+                        .jobName(item.getJobName())
+                        .jobGroup(item.getJobGroup())
+                        .cron(item.getCron())
+                        .jobEnums(JobEnums.UPDATE)
+                        .build();
+                JobHelper.execute(dto);
             } else {
-                JobTrigger.updateJob(scheduler, item);
+                DTO dto = DTO.builder()
+                        .jobId(item.getId())
+                        .jobName(item.getJobName())
+                        .jobGroup(item.getJobGroup())
+                        .cron(item.getCron())
+                        .jobEnums(JobEnums.CREATE)
+                        .build();
+                JobHelper.execute(dto);
             }
 
         });

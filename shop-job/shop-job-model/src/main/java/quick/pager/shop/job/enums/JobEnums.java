@@ -27,6 +27,8 @@ public enum JobEnums {
      * 人工
      */
     MANUAL,
+    CREATE,
+    UPDATE,
     /**
      * 默认空
      */

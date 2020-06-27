@@ -17,6 +17,10 @@ public class JobSaveRequest implements Serializable {
      * 主键
      */
     private Long id;
+    /**
+     * job任务组主键
+     */
+    private Long jobGroupId;
 
     /**
      * 任务名称
@@ -42,19 +46,23 @@ public class JobSaveRequest implements Serializable {
      */
     private String description;
     /**
-     * 任务执行时调用哪个类的方法 包名+类名
+     * 任务执行时调用服务名称
      */
-    private String className;
+    private String serviceName;
     /**
-     * spring bean
+     * 请求访问资源路径
      */
-    private String springId;
+    private String serviceMethod;
     /**
-     * 任务调用的方法名
+     * 创建时间
      */
-    private String methodName;
+    private LocalDateTime updateTime;
     /**
      * 创建时间
      */
     private LocalDateTime createTime;
+    /**
+     * 描述
+     */
+    private String updateUser;
 }

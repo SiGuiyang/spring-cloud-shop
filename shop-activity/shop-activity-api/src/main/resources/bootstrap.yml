@@ -20,12 +20,13 @@ mybatis-plus:
   type-aliases-package: quick.pager.shop.activity.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+  global-config:
+    db-config:
+      id-type: auto
 management:
   endpoints:
     web:
       exposure:
         include: refresh,health,info,hystrix.stream
 logging:
-  level:
-    com.alibaba.nacos: error
+  config: classpath:logback.xml

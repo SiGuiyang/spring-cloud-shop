@@ -16,7 +16,7 @@ public interface IHandler {
      * @return true 支持， false 不支持
      * @see quick.pager.shop.job.enums.JobEnums
      */
-    boolean support(JobEnums jobEnums);
+    boolean support(final JobEnums jobEnums);
 
     /**
      * 前置记录日志
@@ -25,20 +25,20 @@ public interface IHandler {
      * @param jobGroupId     任务组主键
      * @param executorsParam 执行参数
      */
-    Long preLog(Long jobId, Long jobGroupId, String executorsParam);
+    Long preLog(final Long jobId, final Long jobGroupId, final String executorsParam);
 
     /**
      * 执行job业务
      *
-     * @param jobId   定时任务主键
-     * @param jobName 全局定时任务唯一名称
+     * @param jobName  全局定时任务唯一名称
+     * @param jobGroup 全局定时任务唯一名称组
      */
-    void execute(Long jobId, String jobName);
+    void execute(final String jobName, final String jobGroup);
 
     /**
      * 后置记录日志
      *
      * @param jobLogId 记录日志主键
      */
-    void postLog(Long jobLogId);
+    void postLog(final Long jobLogId);
 }

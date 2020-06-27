@@ -28,6 +28,14 @@ public class DTO implements Serializable {
      */
     private String jobName;
     /**
+     * 任务组
+     */
+    private String jobGroup;
+    /**
+     * cron 表达式
+     */
+    private String cron;
+    /**
      * 执行参数
      */
     private String params;

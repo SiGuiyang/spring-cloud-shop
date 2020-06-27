@@ -23,3 +23,6 @@ management:
 
 mybatis-plus:
   type-aliases-package: quick.pager.shop.risk.model
+  global-config:
+    db-config:
+      id-type: auto

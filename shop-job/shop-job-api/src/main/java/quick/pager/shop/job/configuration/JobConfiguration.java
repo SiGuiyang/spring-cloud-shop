@@ -1,12 +1,9 @@
 package quick.pager.shop.job.configuration;
 
-import javax.sql.DataSource;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -17,24 +14,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class JobConfiguration {
 
-    @Bean
-    public SchedulerFactoryBean getSchedulerFactoryBean(DataSource dataSource) {
-
-        SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
-        schedulerFactory.setDataSource(dataSource);
-        // 自动启动
-        schedulerFactory.setAutoStartup(true);
-        // 延时启动，应用启动成功后在启动
-        schedulerFactory.setStartupDelay(20);
-        // 覆盖DB中JOB：true、以数据库中已经存在的为准：false
-        schedulerFactory.setOverwriteExistingJobs(true);
-        schedulerFactory.setApplicationContextSchedulerContextKey("applicationContext");
-        schedulerFactory.setConfigLocation(new ClassPathResource("quartz.properties"));
-
-        return schedulerFactory;
-    }
-
-    @Bean
+    @Bean("restTemplate")
     @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder().build();

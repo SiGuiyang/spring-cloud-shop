@@ -1,6 +1,5 @@
 package quick.pager.shop.user.service.impl;
 
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +43,6 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     @Override
-    @GlobalTransactional
     public Response createOrder() {
 //
 //        String key = RedisKeys.UserKeys.SHOP_ORDER_ + dto.getUserId();

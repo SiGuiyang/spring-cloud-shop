@@ -62,6 +62,10 @@ spring:
           uri: lb://shop-settlement
           predicates:
             - Path=/settlement/**
+        - id: shop-job
+          uri: lb://shop-job
+          predicates:
+            - Path=/job/**
 management:
   endpoints:
     web:

@@ -1,9 +1,11 @@
 package quick.pager.shop.job.trigger;
 
-import com.alibaba.fastjson.JSON;
-
 import com.google.common.collect.Lists;
+import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
 import org.quartz.CronScheduleBuilder;
@@ -12,7 +14,6 @@ import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -25,7 +26,7 @@ import java.util.Set;
 import quick.pager.shop.job.enums.JobEnums;
 import quick.pager.shop.job.enums.JobStatusEnums;
 import quick.pager.shop.job.model.JobInfo;
-import quick.pager.shop.job.schedule.JobQuartzJobBean;
+import quick.pager.shop.job.quartz.JobQuartzJobBean;
 
 /**
  * 任务调度工具类
@@ -33,7 +34,7 @@ import quick.pager.shop.job.schedule.JobQuartzJobBean;
  * @author siguiyang
  */
 @Slf4j
-public class JobTrigger {
+public final class JobTrigger {
     /**
      * 根据job名称和job组名称获取触发key
      *
@@ -51,15 +52,9 @@ public class JobTrigger {
      * @param jobName   job名称
      * @param jobGroup  job组
      */
-    public static CronTrigger getCronTrigger(Scheduler scheduler, String jobName, String jobGroup) {
-        TriggerKey key = getTriggerKey(jobName, jobGroup);
-        CronTrigger trigger = null;
-        try {
-            trigger = (CronTrigger) scheduler.getTrigger(key);
-        } catch (SchedulerException e) {
-            log.error("获取定时任务CronTrigger出现异常 jobName = {}, jobGroup = {}", jobName, jobGroup);
-        }
-        return trigger;
+    public static CronTrigger getCronTrigger(Scheduler scheduler, String jobName, String jobGroup) throws SchedulerException {
+        log.info("执行的定时任务 JobName = {}, JobGroup = {}", jobName, jobGroup);
+        return (CronTrigger) scheduler.getTrigger(getTriggerKey(jobName, jobGroup));
     }
 
     /**
@@ -69,7 +64,7 @@ public class JobTrigger {
      * @param job       job
      * @param params    params
      */
-    public static void createJob(Scheduler scheduler, JobInfo job, Map<String, Object> params) {
+    public static void createJob(Scheduler scheduler, JobInfo job, Map<String, Object> params) throws SchedulerException {
         Class<? extends Job> jobClass = JobQuartzJobBean.class;
 
         // 构建job信息
@@ -80,12 +75,7 @@ public class JobTrigger {
         Trigger trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
                 .withSchedule(scheduleBuilder).build();
 
-        try {
-            scheduler.scheduleJob(jobDetail, trigger);
-        } catch (SchedulerException e) {
-            log.error("创建定时任务失败，错误信息：{}", e);
-        }
-
+        scheduler.scheduleJob(jobDetail, trigger);
     }
 
     /**
@@ -94,64 +84,66 @@ public class JobTrigger {
      * @param scheduler scheduler
      * @param job       job
      */
-    public static void createJob(Scheduler scheduler, JobInfo job) {
+    public static void createJob(Scheduler scheduler, JobInfo job) throws SchedulerException {
 
         Class<? extends Job> jobClass = JobQuartzJobBean.class;
 
         TriggerKey key = getTriggerKey(job.getJobName(), job.getJobGroup());
-
-        try {
-            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(key);
-            if (null == trigger) {
-                // 构建job信息
-                JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(job.getJobName(), job.getJobGroup())
-                        .build();
-                // 表达式调度构建器
-                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCron());
-                // 按新的cron表达式构建一个新的trigger
-                trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
-                        .withSchedule(scheduleBuilder).build();
-                scheduler.scheduleJob(jobDetail, trigger);
-            } else {
-                CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCron());
-                trigger = TriggerBuilder.newTrigger().withIdentity(key).withSchedule(scheduleBuilder).build();
-                scheduler.rescheduleJob(key, trigger);
-            }
-        } catch (SchedulerException e) {
-            log.error("创建定时任务失败，错误信息：{}", e);
+        CronTrigger trigger = (CronTrigger) scheduler.getTrigger(key);
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("jobId", job.getId());
+        jobDataMap.put("jobGroupId", job.getJobGroupId());
+        jobDataMap.put("jobName", job.getJobName());
+        jobDataMap.put("params", job.getParams());
+        jobDataMap.put("jobEnums", JobEnums.EXECUTE);
+        if (null == trigger) {
+            // 构建job信息
+            JobDetail jobDetail = JobBuilder.newJob(jobClass)
+                    .withIdentity(job.getJobName(), job.getJobGroup())
+                    .usingJobData(jobDataMap)
+                    .build();
+            // 表达式调度构建器
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCron());
+            // 按新的cron表达式构建一个新的trigger
+            trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup())
+                    .withSchedule(scheduleBuilder).build();
+            scheduler.scheduleJob(jobDetail, trigger);
+        } else {
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCron());
+            trigger = TriggerBuilder.newTrigger()
+                    .withIdentity(key)
+                    .usingJobData(jobDataMap)
+                    .withSchedule(scheduleBuilder)
+                    .build();
+            scheduler.rescheduleJob(key, trigger);
         }
     }
 
     /**
      * 获取所有job任务
      */
-    public static List<JobInfo> getJobs(Scheduler scheduler) {
+    public static List<JobInfo> getJobs(Scheduler scheduler) throws SchedulerException {
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
 
         List<JobInfo> jobs = Lists.newArrayList();
-        try {
-            Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
+        Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
 
-            for (JobKey jobKey : jobKeys) {
-                List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
-                for (Trigger trigger : triggers) {
+        for (JobKey jobKey : jobKeys) {
+            List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
+            for (Trigger trigger : triggers) {
 
-                    JobInfo event = new JobInfo();
-                    event.setJobName(jobKey.getName());
-                    event.setJobGroup(jobKey.getGroup());
-                    event.setDescription("触发器：" + trigger.getKey());
-                    Trigger.TriggerState state = scheduler.getTriggerState(trigger.getKey());
-                    event.setJobStatus(EnumUtils.getEnum(JobStatusEnums.class, state.name()).getStatus());
-                    if (trigger instanceof CronTrigger) {
-                        CronTrigger cronTrigger = (CronTrigger) trigger;
-                        event.setCron(cronTrigger.getCronExpression());
-                    }
+                JobInfo event = new JobInfo();
+                event.setJobName(jobKey.getName());
+                event.setJobGroup(jobKey.getGroup());
+                event.setDescription(String.format("触发器 ======== %s", trigger.getKey()));
+                Trigger.TriggerState state = scheduler.getTriggerState(trigger.getKey());
+                event.setJobStatus(EnumUtils.getEnum(JobStatusEnums.class, state.name()).getCode());
+                if (trigger instanceof CronTrigger) {
+                    CronTrigger cronTrigger = (CronTrigger) trigger;
+                    event.setCron(cronTrigger.getCronExpression());
                     jobs.add(event);
                 }
             }
-            log.info("获取所有计划中的任务列表——————————{}", JSON.toJSONString(jobs));
-        } catch (SchedulerException e) {
-            log.error("获取所有定时任务失败");
         }
         return jobs;
     }
@@ -161,35 +153,28 @@ public class JobTrigger {
      *
      * @param scheduler scheduler
      */
-    public static List<JobInfo> getRunningJobs(Scheduler scheduler) {
-
-        try {
-            List<JobExecutionContext> contexts = scheduler.getCurrentlyExecutingJobs();
-            List<JobInfo> jobs = Lists.newArrayListWithCapacity(contexts.size());
-
-            for (JobExecutionContext context : contexts) {
-                JobInfo event = new JobInfo();
-                JobDetail jobDetail = context.getJobDetail();
-                JobKey jobKey = jobDetail.getKey();
-                Trigger trigger = context.getTrigger();
-                event.setJobName(jobKey.getName());
-                event.setJobGroup(jobKey.getGroup());
-                event.setDescription("触发器 ======== {}" + trigger.getKey());
+    public static List<JobInfo> getRunningJobs(Scheduler scheduler) throws SchedulerException {
+        return Optional.ofNullable(scheduler.getCurrentlyExecutingJobs()).orElse(Collections.emptyList()).stream().map(context -> {
+            JobDetail jobDetail = context.getJobDetail();
+            Trigger trigger = context.getTrigger();
+            JobKey jobKey = jobDetail.getKey();
+            JobInfo job = new JobInfo();
+            job.setJobName(jobKey.getName());
+            job.setJobGroup(jobKey.getGroup());
+            job.setDescription(String.format("触发器 ======== %s", trigger.getKey()));
+            try {
                 Trigger.TriggerState state = scheduler.getTriggerState(trigger.getKey());
-                event.setJobStatus(EnumUtils.getEnum(JobStatusEnums.class, state.name()).getStatus());
+                job.setJobStatus(EnumUtils.getEnum(JobStatusEnums.class, state.name()).getCode());
                 if (trigger instanceof CronTrigger) {
                     CronTrigger cronTrigger = (CronTrigger) trigger;
-                    event.setCron(cronTrigger.getCronExpression());
+                    job.setCron(cronTrigger.getCronExpression());
+                    return job;
                 }
-                jobs.add(event);
+            } catch (SchedulerException e) {
+                e.printStackTrace();
             }
-
-            log.info("所有正在运行的job任务 ======== {}", JSON.toJSONString(jobs));
-            return jobs;
-        } catch (SchedulerException e) {
-            log.error("未找到运行中的job任务：{}", e);
-        }
-        return null;
+            return null;
+        }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     /**
@@ -199,13 +184,9 @@ public class JobTrigger {
      * @param jobName   jobName
      * @param jobGroup  jobGroup
      */
-    public static void runOnce(Scheduler scheduler, String jobName, String jobGroup) {
+    public static void runOnce(Scheduler scheduler, String jobName, String jobGroup) throws SchedulerException {
         JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
-        try {
-            scheduler.triggerJob(jobKey);
-        } catch (SchedulerException e) {
-            log.error("运行一次定时任务失败 ======== {}", e);
-        }
+        scheduler.triggerJob(jobKey);
     }
 
     /**
@@ -215,14 +196,11 @@ public class JobTrigger {
      * @param jobName   jobName
      * @param jobGroup  jobGroup
      */
-    public static void pauseJob(Scheduler scheduler, String jobName, String jobGroup) {
+    public static void pauseJob(Scheduler scheduler, String jobName, String jobGroup) throws SchedulerException {
 
+        log.info("暂定定时任务 jobName = {}, jobGroup = {}", jobName, jobGroup);
         JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
-        try {
-            scheduler.pauseJob(jobKey);
-        } catch (SchedulerException e) {
-            log.error("暂停定时任务失败 ======== ", e);
-        }
+        scheduler.pauseJob(jobKey);
     }
 
     /**
@@ -232,14 +210,11 @@ public class JobTrigger {
      * @param jobName   jobName
      * @param jobGroup  jobGroup
      */
-    public static void resumeJob(Scheduler scheduler, String jobName, String jobGroup) {
+    public static void resumeJob(Scheduler scheduler, String jobName, String jobGroup) throws SchedulerException {
 
+        log.info("恢复定时任务 jobName = {}, jobGroup = {}", jobName, jobGroup);
         JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
-        try {
-            scheduler.resumeJob(jobKey);
-        } catch (SchedulerException e) {
-            log.error("暂停定时任务失败 ======== ", e);
-        }
+        scheduler.resumeJob(jobKey);
     }
 
     /**
@@ -259,7 +234,7 @@ public class JobTrigger {
      *
      * @param scheduler the scheduler
      */
-    public static void updateJob(Scheduler scheduler, JobInfo job) {
+    public static void updateJob(Scheduler scheduler, JobInfo job) throws SchedulerException {
         updateJob(scheduler, job.getJobName(), job.getJobGroup(), job.getCron(), job);
     }
 
@@ -272,38 +247,33 @@ public class JobTrigger {
      * @param cronExpression the cron expression
      * @param param          the param
      */
-    private static void updateJob(Scheduler scheduler, String jobName, String jobGroup, String cronExpression, Object param) {
+    private static void updateJob(Scheduler scheduler, String jobName, String jobGroup, String cronExpression, Object param) throws SchedulerException {
 
         // 同步或异步
         Class<? extends Job> jobClass = JobQuartzJobBean.class;
+        JobDetail jobDetail = scheduler.getJobDetail(getJobKey(jobName, jobGroup));
 
-        try {
-            JobDetail jobDetail = scheduler.getJobDetail(getJobKey(jobName, jobGroup));
+        jobDetail = jobDetail.getJobBuilder().ofType(jobClass).build();
 
-            jobDetail = jobDetail.getJobBuilder().ofType(jobClass).build();
+        // 更新参数 实际测试中发现无法更新
+        JobDataMap jobDataMap = jobDetail.getJobDataMap();
+        jobDataMap.put("JobAdapter", param);
+        jobDetail.getJobBuilder().usingJobData(jobDataMap);
 
-            // 更新参数 实际测试中发现无法更新
-            JobDataMap jobDataMap = jobDetail.getJobDataMap();
-            jobDataMap.put("JobAdapter", param);
-            jobDetail.getJobBuilder().usingJobData(jobDataMap);
+        TriggerKey triggerKey = getTriggerKey(jobName, jobGroup);
 
-            TriggerKey triggerKey = getTriggerKey(jobName, jobGroup);
+        // 表达式调度构建器
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
 
-            // 表达式调度构建器
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
+        CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
-            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-
-            // 按新的cronExpression表达式重新构建trigger
-            trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-            Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
-            // 忽略状态为PAUSED的任务，解决集群环境中在其他机器设置定时任务为PAUSED状态后，集群环境启动另一台主机时定时任务全被唤醒的bug
-            if (!JobEnums.PAUSE.name().equalsIgnoreCase(triggerState.name())) {
-                // 按新的trigger重新设置job执行
-                scheduler.rescheduleJob(triggerKey, trigger);
-            }
-        } catch (SchedulerException e) {
-            log.error("更新定时任务失败——————————————————", e);
+        // 按新的cronExpression表达式重新构建trigger
+        trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+        Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
+        // 忽略状态为PAUSED的任务，解决集群环境中在其他机器设置定时任务为PAUSED状态后，集群环境启动另一台主机时定时任务全被唤醒的bug
+        if (!JobEnums.PAUSE.name().equalsIgnoreCase(triggerState.name())) {
+            // 按新的trigger重新设置job执行
+            scheduler.rescheduleJob(triggerKey, trigger);
         }
     }
 
@@ -314,19 +284,8 @@ public class JobTrigger {
      * @param jobName   jobName
      * @param jobGroup  jobGroup
      */
-    public static void deleteJob(Scheduler scheduler, String jobName, String jobGroup) {
-        try {
-            scheduler.deleteJob(getJobKey(jobName, jobGroup));
-        } catch (SchedulerException e) {
-            log.error("删除定时任务失败————————————————", e);
-        }
-    }
-
-    /**
-     * 通过反射执行定时任务的方法
-     *
-     * @param params job执行的参数
-     */
-    public static void invoke(Map<String, Object> params) {
+    public static void deleteJob(Scheduler scheduler, String jobName, String jobGroup) throws SchedulerException {
+        log.info("删除定时任务 jobName = {}, jobGroup = {}", jobName, jobGroup);
+        scheduler.deleteJob(getJobKey(jobName, jobGroup));
     }
 }

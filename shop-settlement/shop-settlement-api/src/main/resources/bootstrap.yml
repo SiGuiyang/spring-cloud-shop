@@ -25,6 +25,8 @@ mybatis-plus:
   type-aliases-package: quick.pager.shop.model.goods
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
 logging:
-  level:
-    com.alibaba.nacos: error
+  config: classpath:logback.xml

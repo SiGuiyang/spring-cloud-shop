@@ -19,6 +19,10 @@ public class JobResponse implements Serializable {
     private Long id;
 
     /**
+     * job任务组主键
+     */
+    private Long jobGroupId;
+    /**
      * 任务名称
      */
     private String jobName;
@@ -33,6 +37,14 @@ public class JobResponse implements Serializable {
      * 2：正常<br />
      */
     private String jobStatus;
+
+    /**
+     * 任务状态<br />
+     * 0：暂停<br />
+     * 1：删除<br />
+     * 2：正常<br />
+     */
+    private String jobStatusName;
     /**
      * cron表达式
      */
@@ -42,19 +54,23 @@ public class JobResponse implements Serializable {
      */
     private String description;
     /**
-     * 任务执行时调用哪个类的方法 包名+类名
+     * 任务执行时调用服务名称
      */
-    private String className;
+    private String serviceName;
     /**
-     * spring bean
+     * 请求访问资源路径
      */
-    private String springId;
+    private String serviceMethod;
     /**
-     * 任务调用的方法名
+     * 创建时间
      */
-    private String methodName;
+    private LocalDateTime updateTime;
     /**
      * 创建时间
      */
     private LocalDateTime createTime;
+    /**
+     * 描述
+     */
+    private String updateUser;
 }

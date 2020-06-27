@@ -1,5 +1,6 @@
 package quick.pager.shop.job.handler.core;
 
+import lombok.extern.slf4j.Slf4j;
 import quick.pager.shop.job.enums.JobEnums;
 import quick.pager.shop.job.handler.AbstractHandler;
 
@@ -8,15 +9,17 @@ import quick.pager.shop.job.handler.AbstractHandler;
  *
  * @author siguiyang
  */
+@Slf4j
 public class ManualHandler extends AbstractHandler {
 
     @Override
-    public boolean support(JobEnums jobEnums) {
+    public boolean support(final JobEnums jobEnums) {
         return JobEnums.MANUAL.equals(jobEnums);
     }
 
     @Override
-    public void execute(Long jobId, String jobName) {
+    public void execute(final String jobName, final String jobGroup) {
 
+        log.info("人工执行任务 jobName = {}, jobGroup = {}", jobName, jobGroup);
     }
 }

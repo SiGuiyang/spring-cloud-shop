@@ -30,3 +30,8 @@ management:
 
 mybatis-plus:
   type-aliases-package: quick.pager.shop.user.model
+  global-config:
+    db-config:
+      id-type: auto
+logging:
+  config: classpath:logback.xml

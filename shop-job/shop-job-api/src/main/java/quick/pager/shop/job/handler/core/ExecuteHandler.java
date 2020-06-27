@@ -2,11 +2,16 @@ package quick.pager.shop.job.handler.core;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import quick.pager.shop.context.ShopSpringContext;
@@ -25,43 +30,39 @@ import quick.pager.shop.job.model.JobInfo;
 public class ExecuteHandler extends AbstractHandler {
 
     @Override
-    public boolean support(JobEnums jobEnums) {
+    public boolean support(final JobEnums jobEnums) {
         return JobEnums.EXECUTE.equals(jobEnums);
     }
 
     @Override
-    public void execute(Long jobId, String jobName) {
+    public void execute(final String jobName, final String jobGroup) {
 
         // 1. 获取数据库执行的job任务
         JobInfoMapper jobInfoMapper = ShopSpringContext.getBean(JobInfoMapper.class);
         JobInfo jobInfo = new JobInfo();
         jobInfo.setJobName(jobName);
-        jobInfo.setJobStatus(JobStatusEnums.NORMAL.getStatus());
+        jobInfo.setJobStatus(JobStatusEnums.NORMAL.getCode());
         JobInfo selectJobInfo = jobInfoMapper.selectOne(new QueryWrapper<>(jobInfo));
         // 访问的资源请求地址
-        String request;
         if (Objects.nonNull(selectJobInfo)) {
-            Map<String, String> paramMap = new HashMap<>(8);
-            StringBuilder builder = new StringBuilder("http://" + jobInfo.getServiceName() + jobInfo.getServiceMethod());
+            Map<String, String> paramMap = new ConcurrentHashMap<>();
+            String url = "http://" + selectJobInfo.getServiceName() + selectJobInfo.getServiceMethod();
             if (!StringUtils.isEmpty(selectJobInfo.getParams())) {
-                paramMap = JSON.parseObject(selectJobInfo.getParams(), Map.class);
-                builder.append("?");
-                for (Map.Entry<String, String> me : paramMap.entrySet()) {
-                    String key = me.getKey();
-                    builder.append(key).append("=").append("{").append(key).append("}").append("&");
-                }
-
-                request = builder.toString();
-                // 如果是& 结尾，则取出& 之前的字符串
-                if (request.endsWith("&")) {
-                    request = request.substring(0, request.length() - 1);
-                }
-            } else {
-                request = builder.toString();
+                paramMap.putAll(JSON.parseObject(selectJobInfo.getParams(), Map.class));
             }
-            RestTemplate template = ShopSpringContext.getBean(RestTemplate.class);
-            ResponseEntity<String> responseEntity = template.getForEntity(request, String.class, paramMap);
+            OAuth2RestTemplate template = ShopSpringContext.getBean(OAuth2RestTemplate.class);
+            // 得到服务鉴权访问token
+            OAuth2AccessToken accessToken = template.getAccessToken();
+            // 设置请求消息头
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+            headers.setBearerAuth(accessToken.toString());
+            // 得到 RestTemplate 访问的负载均衡对象
+            RestTemplate restTemplate = ShopSpringContext.getBean("restTemplate", RestTemplate.class);
+            ResponseEntity<Object> responseEntity = restTemplate.postForEntity(url, new HttpEntity<>(paramMap, headers), Object.class);
             log.info("执行服务调用结束，返回结果 result = {}", JSON.toJSONString(responseEntity));
+        } else {
+            log.error("未找到执行的定时任务 jobName = {}, jobGroup = {}", jobName, jobGroup);
         }
     }
 }

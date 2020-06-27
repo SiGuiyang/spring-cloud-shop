@@ -2,6 +2,8 @@ package quick.pager.shop.job.controller;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.job.enums.JobEnums;
+import quick.pager.shop.job.enums.JobStatusEnums;
+import quick.pager.shop.job.request.JobGroupSaveRequest;
 import quick.pager.shop.job.request.JobPageRequest;
 import quick.pager.shop.job.request.JobRequest;
 import quick.pager.shop.job.request.JobSaveRequest;
+import quick.pager.shop.job.response.JobGroupResponse;
 import quick.pager.shop.job.response.JobResponse;
+import quick.pager.shop.job.response.JobStatusResponse;
 import quick.pager.shop.job.service.JobService;
 import quick.pager.shop.response.Response;
 
@@ -49,6 +56,40 @@ public class JobController {
     }
 
     /**
+     * 查询任务状态列表
+     */
+    @GetMapping("/status/list")
+    public Response<List<JobStatusResponse>> list() {
+
+        return new Response<>(Stream.of(JobStatusEnums.values()).map(item -> {
+            JobStatusResponse response = new JobStatusResponse();
+            response.setCode(item.getCode());
+            response.setDesc(item.getDesc());
+            return response;
+        }).collect(Collectors.toList()));
+    }
+
+    /**
+     * 查询任务组列表
+     *
+     * @param jobGroup 任务组名称
+     */
+    @GetMapping("/group/list")
+    public Response<List<JobGroupResponse>> list(@RequestParam(required = false) String jobGroup) {
+        return jobService.queryGroupList(jobGroup);
+    }
+
+    /**
+     * 新增任务组
+     *
+     * @param request 任务组
+     */
+    @PostMapping("/group/create")
+    public Response<Long> create(@RequestBody JobGroupSaveRequest request) {
+        return jobService.create(request);
+    }
+
+    /**
      * 更新job信息
      */
     @PutMapping("/modify")
@@ -72,7 +113,7 @@ public class JobController {
      */
     @DeleteMapping("/delete/{jobId}")
     public Response delete(@PathVariable("jobId") Long jobId) {
-        return jobService.doJob(jobId, JobEnums.DELETE);
+        return jobService.doJob(jobId, null, JobEnums.DELETE);
     }
 
     /**
@@ -81,8 +122,8 @@ public class JobController {
      * @param jobId job任务主键
      */
     @GetMapping("/execute/{jobId}")
-    public Response execute(@PathVariable("jobId") Long jobId) {
-        return jobService.doJob(jobId, JobEnums.EXECUTE);
+    public Response execute(@PathVariable("jobId") Long jobId, @RequestBody String params) {
+        return jobService.doJob(jobId, params, JobEnums.EXECUTE);
     }
 
     /**
@@ -92,7 +133,7 @@ public class JobController {
      */
     @GetMapping("/resume/{jobId}")
     public Response resume(@PathVariable("jobId") Long jobId) {
-        return jobService.doJob(jobId, JobEnums.RESUME);
+        return jobService.doJob(jobId, null, JobEnums.RESUME);
     }
 
     /**
@@ -102,7 +143,7 @@ public class JobController {
      */
     @GetMapping("/pause/{jobId}")
     public Response pause(@PathVariable("jobId") Long jobId) {
-        return jobService.doJob(jobId, JobEnums.PAUSE);
+        return jobService.doJob(jobId, null, JobEnums.PAUSE);
     }
 
     /**

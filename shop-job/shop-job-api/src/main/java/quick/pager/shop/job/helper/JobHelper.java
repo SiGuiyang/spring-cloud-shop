@@ -3,11 +3,13 @@ package quick.pager.shop.job.helper;
 import com.google.common.collect.Lists;
 import java.util.List;
 import quick.pager.shop.job.handler.IHandler;
+import quick.pager.shop.job.handler.core.CreateJobHandler;
 import quick.pager.shop.job.handler.core.DeleteHandler;
 import quick.pager.shop.job.handler.core.ExecuteHandler;
 import quick.pager.shop.job.handler.core.ManualHandler;
 import quick.pager.shop.job.handler.core.PauseHandler;
 import quick.pager.shop.job.handler.core.ResumeHandler;
+import quick.pager.shop.job.handler.core.UpdateJobHandler;
 import quick.pager.shop.job.model.DTO;
 
 /**
@@ -15,12 +17,13 @@ import quick.pager.shop.job.model.DTO;
  *
  * @author siguiyang
  */
-public class JobHelper {
+public final class JobHelper {
 
     private static final List<IHandler> HANDLER = Lists.newArrayList();
 
     static {
-
+        HANDLER.add(new CreateJobHandler());
+        HANDLER.add(new UpdateJobHandler());
         HANDLER.add(new DeleteHandler());
         HANDLER.add(new ExecuteHandler());
         HANDLER.add(new ManualHandler());
@@ -31,12 +34,12 @@ public class JobHelper {
     /**
      * 执行核心job任务器
      */
-    public static void execute(DTO dto) {
+    public static void execute(final DTO dto) {
 
         for (IHandler handler : HANDLER) {
             if (handler.support(dto.getJobEnums())) {
                 Long jobLogId = handler.preLog(dto.getJobId(), dto.getJobGroupId(), dto.getParams());
-                handler.execute(dto.getJobId(), dto.getJobName());
+                handler.execute(dto.getJobName(), dto.getJobGroup());
                 handler.postLog(jobLogId);
             }
         }

@@ -1,6 +1,10 @@
 feign:
   sentinel:
     enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
 
 management:
   endpoints:
@@ -15,3 +19,8 @@ spring:
     name: shop-job
   profiles:
     active: dev
+  quartz:
+    startup-delay: 10s
+logging:
+  config: classpath:logback.xml
+

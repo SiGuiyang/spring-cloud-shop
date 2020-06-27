@@ -27,10 +27,16 @@ public class JobInfo implements Serializable {
     private Long id;
 
     /**
+     * 任务组主键
+     */
+    private Long jobGroupId;
+
+    /**
      * 任务状态<br />
      * 0：暂停<br />
      * 1：删除<br />
      * 2：正常<br />
+     * @see quick.pager.shop.job.enums.JobStatusEnums
      */
     private Integer jobStatus;
     /**
@@ -64,5 +70,13 @@ public class JobInfo implements Serializable {
     /**
      * 创建时间
      */
+    private LocalDateTime updateTime;
+    /**
+     * 创建时间
+     */
     private LocalDateTime createTime;
+    /**
+     * 描述
+     */
+    private String updateUser;
 }

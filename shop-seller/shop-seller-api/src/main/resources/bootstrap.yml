@@ -22,3 +22,8 @@ management:
         include: refresh,health,info,hystrix.stream
 mybatis-plus:
   type-aliases-package: quick.pager.shop.seller.model
+  global-config:
+    db-config:
+      id-type: auto
+logging:
+  config: classpath:logback.xml

@@ -15,7 +15,7 @@ import quick.pager.shop.job.model.JobLog;
 public abstract class AbstractHandler implements IHandler {
 
     @Override
-    public Long preLog(Long jobId, Long jobGroupId, String executorsParam) {
+    public final Long preLog(final Long jobId, final Long jobGroupId, final String executorsParam) {
         JobInfoMapper jobInfoMapper = ShopSpringContext.getBean(JobInfoMapper.class);
         JobLogMapper jobLogMapper = ShopSpringContext.getBean(JobLogMapper.class);
 
@@ -32,7 +32,7 @@ public abstract class AbstractHandler implements IHandler {
     }
 
     @Override
-    public void postLog(Long jobLogId) {
+    public final void postLog(final Long jobLogId) {
         JobLogMapper jobLogMapper = ShopSpringContext.getBean(JobLogMapper.class);
         JobLog updateJobLog = new JobLog();
         updateJobLog.setId(jobLogId);
