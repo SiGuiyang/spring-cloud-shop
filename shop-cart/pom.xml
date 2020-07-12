@@ -16,7 +16,7 @@
     <artifactId>shop-cart</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-goods</name>
+    <name>shop-cart</name>
     <description>购物车服务</description>
 
     <properties>

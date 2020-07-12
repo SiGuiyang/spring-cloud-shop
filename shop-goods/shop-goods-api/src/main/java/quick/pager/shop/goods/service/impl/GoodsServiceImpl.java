@@ -19,6 +19,7 @@ import quick.pager.shop.goods.model.GoodsBrand;
 import quick.pager.shop.goods.model.GoodsClass;
 import quick.pager.shop.goods.model.GoodsPropertyGroup;
 import quick.pager.shop.goods.model.GoodsSpu;
+import quick.pager.shop.goods.repository.ESGoodsRepository;
 import quick.pager.shop.goods.request.GoodsPageRequest;
 import quick.pager.shop.goods.request.GoodsSaveRequest;
 import quick.pager.shop.goods.response.GoodsResponse;
@@ -44,6 +45,8 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     private GoodsSpuMapper goodsSpuMapper;
     @Autowired
     private GoodsPropertyGroupMapper goodsPropertyGroupMapper;
+    @Autowired
+    private ESGoodsRepository goodsRepository;
 
     @Override
     public Response<Long> create(GoodsSaveRequest request) {
