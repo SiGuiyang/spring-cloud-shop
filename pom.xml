@@ -44,6 +44,13 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -68,7 +75,6 @@
         <module>shop-goods</module>
         <module>shop-job</module>
         <module>shop-manage</module>
-        <module>shop-monitor</module>
         <module>shop-order</module>
         <module>shop-oss</module>
         <module>shop-platform</module>
