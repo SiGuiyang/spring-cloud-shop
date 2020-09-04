@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.seller.fallback.SellerFallbackFactory;
-import quick.pager.shop.response.Response;
-import quick.pager.shop.seller.response.SellerInfoResponse;
+import quick.pager.shop.user.response.Response;
+import quick.pager.shop.response.SellerInfoResponse;
 
 /**
  * 商家服务

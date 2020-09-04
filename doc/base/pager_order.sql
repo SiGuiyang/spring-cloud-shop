@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : dev
+ Source Server         : prod
  Source Server Type    : MySQL
- Source Server Version : 50724
- Source Host           : localhost
+ Source Server Version : 50646
+ Source Host           : 101.132.121.178
  Source Database       : pager_order
 
  Target Server Type    : MySQL
- Target Server Version : 50724
+ Target Server Version : 50646
  File Encoding         : utf-8
 
- Date: 12/22/2019 15:54:03 PM
+ Date: 09/04/2020 15:28:10 PM
 */
 
 SET NAMES utf8;
@@ -23,16 +23,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `t_order_item`;
 CREATE TABLE `t_order_item` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户主键',
+  `seller_id` bigint(20) DEFAULT NULL COMMENT 't_seller 商户主键',
   `user_order_id` bigint(20) DEFAULT NULL COMMENT 't_user_order 主键',
   `seller_order_id` bigint(20) DEFAULT NULL COMMENT 't_seller_order 商户主订单主键',
   `goods_sku_id` bigint(20) DEFAULT NULL COMMENT 't_goods_sku 主键',
-  `seller_id` bigint(20) DEFAULT NULL COMMENT 't_seller 商户主键',
   `purchase_amount` decimal(10,0) DEFAULT NULL COMMENT '购买商品时的价格',
-  `purchase_count` int(11) DEFAULT NULL COMMENT '购买商品数量',
+  `purchase_quantity` int(11) DEFAULT NULL COMMENT '购买商品数量',
   `create_user` varchar(63) DEFAULT NULL,
   `update_user` varchar(63) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `update_time` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单明细表';
@@ -47,13 +48,15 @@ CREATE TABLE `t_seller_order` (
   `coupon_id` bigint(20) DEFAULT NULL COMMENT 't_discount_coupon 优惠券主键 只有商户型优惠券与折扣券才会有值',
   `delivery_address_id` bigint(20) DEFAULT NULL COMMENT '配送地址',
   `order_amount` decimal(10,2) DEFAULT NULL COMMENT '支付给商户的金额',
-  `discount_amount` decimal(10,0) DEFAULT NULL COMMENT '折扣价格',
+  `discount_amount` decimal(10,2) DEFAULT NULL COMMENT '折扣价格',
+  `order_type` int(11) DEFAULT NULL COMMENT '订单类型',
+  `pay_type` int(11) DEFAULT NULL COMMENT '支付方式',
   `order_code` varchar(127) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '商户订单号',
   `order_status` varchar(11) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '商户订单状态',
   `create_user` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL,
   `update_user` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL COMMENT '下单时间',
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '下单时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `delete_status` bit(1) DEFAULT NULL COMMENT '逻辑删除标志',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='商户主订单表';
@@ -70,8 +73,8 @@ CREATE TABLE `t_seller_order_flow` (
   `discount_amount` decimal(10,0) DEFAULT NULL COMMENT '优惠减免金额',
   `create_user` varchar(63) DEFAULT NULL,
   `update_user` varchar(63) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `update_time` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
@@ -96,8 +99,8 @@ CREATE TABLE `t_user_order` (
   `self` tinyint(1) DEFAULT NULL COMMENT '是否自提 1:自提 0:否',
   `create_user` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL,
   `update_user` varchar(63) COLLATE utf8mb4_bin DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin ROW_FORMAT=DYNAMIC COMMENT='用户订单主表';
@@ -123,8 +126,8 @@ CREATE TABLE `t_user_order_flow` (
   `discount_amount` decimal(10,0) DEFAULT NULL COMMENT '优惠减免金额',
   `create_user` varchar(63) DEFAULT NULL,
   `update_user` varchar(63) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `update_time` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `delete_status` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;

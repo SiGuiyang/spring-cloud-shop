@@ -10,7 +10,7 @@ import quick.pager.shop.goods.fallback.GoodsBrandGroupClientFallbackFactory;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupPageRequest;
 import quick.pager.shop.goods.request.brand.GoodsBrandGroupSaveRequest;
 import quick.pager.shop.goods.response.brand.GoodsBrandGroupResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 商品组对外服务

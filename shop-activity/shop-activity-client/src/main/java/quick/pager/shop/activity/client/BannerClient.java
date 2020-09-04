@@ -12,7 +12,7 @@ import quick.pager.shop.activity.request.banner.BannerSaveRequest;
 import quick.pager.shop.activity.response.banner.BannerResponse;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.activity.fallback.BannerClientFallbackFactory;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * banner 服务Client

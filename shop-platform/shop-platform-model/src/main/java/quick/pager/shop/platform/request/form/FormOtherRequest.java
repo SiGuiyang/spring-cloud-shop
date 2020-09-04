@@ -2,7 +2,7 @@ package quick.pager.shop.platform.request.form;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.Request;
 
 /**
  * FormOtherRequest

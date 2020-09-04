@@ -1,6 +1,16 @@
+
+server:
+  port: 9988
+spring:
+  application:
+    name: shop-job
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+  profiles:
+    active: dev
+  quartz:
+    startup-delay: 10s
 feign:
-  sentinel:
-    enabled: true
   okhttp:
     enabled: true
   httpclient:
@@ -11,16 +21,6 @@ management:
     web:
       exposure:
         include: refresh,health,info
-
-server:
-  port: 9988
-spring:
-  application:
-    name: shop-job
-  profiles:
-    active: dev
-  quartz:
-    startup-delay: 10s
 logging:
-  config: classpath:logback.xml
+  config: classpath:logback-spring.xml
 

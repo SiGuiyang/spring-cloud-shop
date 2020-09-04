@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * 优惠券模板Response

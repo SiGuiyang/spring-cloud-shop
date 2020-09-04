@@ -3,7 +3,7 @@ package quick.pager.shop.activity.response.exchange;
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * 满赠换购规则

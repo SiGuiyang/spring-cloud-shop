@@ -2,7 +2,7 @@ package quick.pager.shop.goods.response.brand;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * 品牌组

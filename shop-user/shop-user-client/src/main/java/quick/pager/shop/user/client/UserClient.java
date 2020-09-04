@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.ConstantsClient;
-import quick.pager.shop.response.Response;
 import quick.pager.shop.user.fallback.UserFallbackFactory;
-import quick.pager.shop.user.request.StationLetterRequest;
 import quick.pager.shop.user.request.UserRequest;
 import quick.pager.shop.user.response.AddressResponse;
-import quick.pager.shop.user.response.StationLetterResponse;
-import quick.pager.shop.user.response.UserInfoResponse;
+import quick.pager.shop.user.response.Response;
+import quick.pager.shop.user.response.UserProfileResponse;
 
 /**
  * 用户模块
@@ -29,25 +27,19 @@ public interface UserClient {
      * @param userId 用户Id
      */
     @RequestMapping(value = "/getUser/{userId}", method = RequestMethod.POST)
-    Response<UserInfoResponse> getUser(@PathVariable("userId") Long userId);
+    Response<UserProfileResponse> getUser(@PathVariable("userId") Long userId);
 
     /**
      * 批量获取用户信息
      */
     @RequestMapping(value = "/batchUser/profile", method = RequestMethod.POST)
-    Response<List<UserInfoResponse>> getBatchUser(@RequestBody UserRequest request);
+    Response<List<UserProfileResponse>> getBatchUser(@RequestBody UserRequest request);
 
     /**
      * 批量判断用户是否存在
      */
     @RequestMapping(value = "/isExists", method = RequestMethod.POST)
-    Response<List<UserInfoResponse>> isExists(@RequestBody UserRequest request);
-
-    /**
-     * 查询站内信列表
-     */
-    @RequestMapping(value = "/queryStationLetter", method = RequestMethod.POST)
-    Response<List<StationLetterResponse>> queryStationLetter(@RequestBody StationLetterRequest request);
+    Response<List<UserProfileResponse>> isExists(@RequestBody UserRequest request);
 
     /**
      * 批量获取用户信息

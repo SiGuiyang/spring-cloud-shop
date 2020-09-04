@@ -4,31 +4,40 @@ server:
 spring:
   application:
     name: shop-platform
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
   main:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
-  redis:
-    host: 101.132.121.178
-    port: 6379
-    password: abc+123
+
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
 
 shop:
   oauth:
     permissions:
       - /platform/sms/send
+
 management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info,
+        include: refresh,health,info
+
 mybatis-plus:
-  type-aliases-package: quick.pager.shop.platform.model
+  type-aliases-package: quick.pager.shop.model
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto
+
 logging:
   level:
     com.alibaba.nacos: error

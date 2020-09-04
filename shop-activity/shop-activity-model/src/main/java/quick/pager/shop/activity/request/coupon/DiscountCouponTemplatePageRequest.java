@@ -3,7 +3,7 @@ package quick.pager.shop.activity.request.coupon;
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * 优惠券模板PageRequest

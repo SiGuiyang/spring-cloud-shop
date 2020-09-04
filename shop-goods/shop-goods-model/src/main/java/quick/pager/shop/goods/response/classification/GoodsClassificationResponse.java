@@ -3,7 +3,7 @@ package quick.pager.shop.goods.response.classification;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * 商品分类响应对象

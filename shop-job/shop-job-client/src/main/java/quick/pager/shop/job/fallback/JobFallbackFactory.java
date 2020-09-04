@@ -9,7 +9,7 @@ import quick.pager.shop.job.request.JobPageRequest;
 import quick.pager.shop.job.request.JobRequest;
 import quick.pager.shop.job.request.JobSaveRequest;
 import quick.pager.shop.job.response.JobResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 @Component
 @Slf4j

@@ -6,7 +6,8 @@ spring:
     name: shop-risk
   profiles:
     active: dev
-
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
 feign:
   sentinel:
     enabled: true

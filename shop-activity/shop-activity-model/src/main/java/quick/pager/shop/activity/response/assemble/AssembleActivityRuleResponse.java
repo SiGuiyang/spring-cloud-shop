@@ -2,7 +2,7 @@ package quick.pager.shop.activity.response.assemble;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * 拼团规则

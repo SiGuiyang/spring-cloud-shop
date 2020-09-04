@@ -14,8 +14,8 @@
     <description>Shop 中台</description>
     <modules>
         <module>shop-platform-api</module>
-        <module>shop-platform-model</module>
         <module>shop-platform-client</module>
+        <module>shop-platform-model</module>
     </modules>
 
     <build>

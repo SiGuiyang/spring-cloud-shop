@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.ConstantsClient;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 商品服务测试定时任务

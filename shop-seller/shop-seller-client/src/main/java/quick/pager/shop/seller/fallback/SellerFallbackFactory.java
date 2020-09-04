@@ -4,9 +4,9 @@ import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 import quick.pager.shop.seller.client.SellerClient;
-import quick.pager.shop.seller.response.SellerInfoResponse;
+import quick.pager.shop.response.SellerInfoResponse;
 
 @Slf4j
 @Component

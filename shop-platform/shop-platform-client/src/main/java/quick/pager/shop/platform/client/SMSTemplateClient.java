@@ -12,7 +12,7 @@ import quick.pager.shop.platform.fallback.SMSTemplateFallback;
 import quick.pager.shop.platform.request.sms.SMSTemplatePageRequest;
 import quick.pager.shop.platform.request.sms.SMSTemplateSaveRequest;
 import quick.pager.shop.platform.response.SMSTemplateResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 短信模板对外开放接口

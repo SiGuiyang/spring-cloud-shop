@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.ImageModel;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.Request;
 
 /**
  * 商品sku

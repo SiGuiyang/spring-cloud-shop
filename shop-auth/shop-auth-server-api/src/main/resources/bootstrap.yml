@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: shop-auth
+  autoconfigure:
+    exclude: quick.pager.shop.configuration.ApplicationConfiguration
   profiles:
     active: dev
   freemarker:

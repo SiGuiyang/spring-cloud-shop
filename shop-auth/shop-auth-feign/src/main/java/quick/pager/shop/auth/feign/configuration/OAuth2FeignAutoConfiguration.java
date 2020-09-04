@@ -43,7 +43,7 @@ public class OAuth2FeignAutoConfiguration {
         details.setClientId(oauth2ClientProperties.getClientId());
         details.setClientSecret(oauth2ClientProperties.getClientSecret());
         details.setClientAuthenticationScheme(AuthenticationScheme.header);
-        details.setScope(!CollectionUtils.isEmpty(oauth2ClientProperties.getScopes()) ? oauth2ClientProperties.getScopes() : Collections.singletonList("app"));
+        details.setScope(!CollectionUtils.isEmpty(oauth2ClientProperties.getScope()) ? oauth2ClientProperties.getScope() : Collections.singletonList("app"));
 
         return details;
     }

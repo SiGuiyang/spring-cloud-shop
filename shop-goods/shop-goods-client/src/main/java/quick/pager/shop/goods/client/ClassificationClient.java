@@ -10,7 +10,7 @@ import quick.pager.shop.goods.fallback.ClassificationClientFallbackFactory;
 import quick.pager.shop.goods.request.classification.GoodsClassificationPageRequest;
 import quick.pager.shop.goods.request.classification.GoodsClassificationSaveRequest;
 import quick.pager.shop.goods.response.classification.GoodsClassificationResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 商品 -> 分类服务

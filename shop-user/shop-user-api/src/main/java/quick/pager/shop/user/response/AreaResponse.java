@@ -1,7 +1,6 @@
 package quick.pager.shop.user.response;
 
 import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 //import quick.pager.shop.model.Area;
 //import quick.pager.shop.model.City;

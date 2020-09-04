@@ -20,4 +20,8 @@ public class ImageModel implements Serializable {
      * 图片名称
      */
     private String name;
+    /**
+     * 主图是true，反之亦然
+     */
+    private Boolean master;
 }

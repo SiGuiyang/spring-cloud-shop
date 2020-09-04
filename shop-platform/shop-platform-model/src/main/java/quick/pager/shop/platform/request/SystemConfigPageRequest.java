@@ -2,7 +2,7 @@ package quick.pager.shop.platform.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * 系统配置Page

@@ -1,0 +1,5 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+quick.pager.shop.configuration.ApplicationConfiguration,\
+quick.pager.shop.configuration.ObjectMapperConfiguration,\
+quick.pager.shop.configuration.PaginationInterceptorConfiguration

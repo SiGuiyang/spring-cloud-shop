@@ -2,7 +2,7 @@ package quick.pager.shop.platform.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * @author siguiyang

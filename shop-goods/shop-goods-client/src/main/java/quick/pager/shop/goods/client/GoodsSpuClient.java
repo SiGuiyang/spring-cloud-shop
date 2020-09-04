@@ -10,7 +10,7 @@ import quick.pager.shop.goods.fallback.GoodsSpuClientFallbackFactory;
 import quick.pager.shop.goods.request.spu.GoodsSpuPageRequest;
 import quick.pager.shop.goods.request.spu.GoodsSpuSaveRequest;
 import quick.pager.shop.goods.response.spu.GoodsSpuResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 商品spu服务

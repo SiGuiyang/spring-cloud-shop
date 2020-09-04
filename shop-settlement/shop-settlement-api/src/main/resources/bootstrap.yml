@@ -3,11 +3,15 @@ server:
 
 spring:
   application:
-    name: shop-goods
+    name: shop-settlement
   main:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+
 feign:
   sentinel:
     enabled: true
@@ -20,13 +24,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh,health,info,
-mybatis-plus:
-  type-aliases-package: quick.pager.shop.model.goods
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      id-type: auto
+        include: refresh,health,info
+
 logging:
-  config: classpath:logback.xml
+  config: classpath:logback-spring.xml

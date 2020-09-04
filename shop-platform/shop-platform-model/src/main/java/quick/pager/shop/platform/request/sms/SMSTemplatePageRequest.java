@@ -2,8 +2,7 @@ package quick.pager.shop.platform.request.sms;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * 短信模板 PageRequest

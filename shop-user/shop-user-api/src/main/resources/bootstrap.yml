@@ -4,16 +4,13 @@ server:
 spring:
   application:
     name: shop-user
-  cloud:
-    alibaba:
-      seata:
-        tx-service-group: shop_tx_group
   main:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+    exclude:
+      - org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
 
 feign:
   sentinel:
@@ -34,4 +31,4 @@ mybatis-plus:
     db-config:
       id-type: auto
 logging:
-  config: classpath:logback.xml
+  config: classpath:logback-spring.xml

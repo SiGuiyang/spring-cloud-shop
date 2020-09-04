@@ -14,7 +14,7 @@ import quick.pager.shop.activity.response.coupon.DiscountCouponResponse;
 import quick.pager.shop.activity.response.coupon.DiscountCouponTemplateResponse;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.activity.fallback.DiscountCouponClientFallbackFactory;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 优惠券服务Client

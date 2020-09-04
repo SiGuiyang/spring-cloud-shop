@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.goods.fallback.GoodsSkuClientFallbackFactory;
+import quick.pager.shop.goods.request.sku.GoodsSkuOtherRequest;
 import quick.pager.shop.goods.request.sku.GoodsSkuPageRequest;
 import quick.pager.shop.goods.request.sku.GoodsSkuSaveRequest;
 import quick.pager.shop.goods.response.sku.GoodsSkuResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 商品sku服务
@@ -47,4 +48,13 @@ public interface GoodsSkuClient {
      */
     @RequestMapping(value = "/sku/page", method = RequestMethod.POST)
     Response<List<GoodsSkuResponse>> queryPage(@RequestBody GoodsSkuPageRequest request);
+
+    /**
+     * 商品sku集
+     *
+     * @param request 请求参数
+     * @return 商品sku集
+     */
+    @RequestMapping(value = "sku/list", method = RequestMethod.POST)
+    Response<List<GoodsSkuResponse>> queryList(@RequestBody GoodsSkuOtherRequest request);
 }

@@ -9,7 +9,7 @@ import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.order.fallback.SellerOrderClientFallbackFactory;
 import quick.pager.shop.order.request.SellerOrderPageRequest;
 import quick.pager.shop.order.request.SellerOrderSaveRequest;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 商户订单模块

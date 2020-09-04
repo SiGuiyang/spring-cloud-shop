@@ -6,7 +6,8 @@ spring:
     name: shop-order
   profiles:
     active: dev
-
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
 feign:
   sentinel:
     enabled: true
@@ -20,9 +21,9 @@ management:
       exposure:
         include: refresh,health,info,hystrix.stream
 mybatis-plus:
-  type-aliases-package: quick.pager.shop.order.model
+  type-aliases-package: quick.pager.shop.model
   global-config:
     db-config:
       id-type: auto
 logging:
-  config: classpath:logback.xml
+  config: classpath:logback-spring.xml

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : dev
+ Source Server         : prod
  Source Server Type    : MySQL
- Source Server Version : 50724
- Source Host           : localhost
+ Source Server Version : 50646
+ Source Host           : 101.132.121.178
  Source Database       : pager_risk
 
  Target Server Type    : MySQL
- Target Server Version : 50724
+ Target Server Version : 50646
  File Encoding         : utf-8
 
- Date: 12/22/2019 15:54:14 PM
+ Date: 09/04/2020 15:28:32 PM
 */
 
 SET NAMES utf8;

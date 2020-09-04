@@ -10,7 +10,7 @@ import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.platform.fallback.DynamicFormClientFallback;
 import quick.pager.shop.platform.request.DynamicFormSaveRequest;
 import quick.pager.shop.platform.response.DynamicFormResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * feignClient 对外服务

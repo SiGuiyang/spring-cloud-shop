@@ -3,7 +3,7 @@ package quick.pager.shop.activity.request.coupon;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.Request;
 
 /**
  * 优惠券SaveRequest

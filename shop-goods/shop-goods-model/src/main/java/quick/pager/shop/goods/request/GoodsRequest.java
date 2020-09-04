@@ -3,7 +3,7 @@ package quick.pager.shop.goods.request;
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.Request;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -32,5 +32,5 @@ public class Oauth2ClientProperties {
     /**
      * scope 模型
      */
-    private List<String> scopes;
+    private List<String> scope;
 }

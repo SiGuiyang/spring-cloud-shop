@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.risk.fallback.RiskClientFallbackFactory;
-import quick.pager.shop.response.Response;
 import quick.pager.shop.risk.request.BlackListPageRequest;
 import quick.pager.shop.risk.request.BlackListSaveRequest;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 风控服务

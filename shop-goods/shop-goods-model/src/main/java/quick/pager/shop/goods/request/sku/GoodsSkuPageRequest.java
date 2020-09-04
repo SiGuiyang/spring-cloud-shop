@@ -1,9 +1,8 @@
 package quick.pager.shop.goods.request.sku;
 
-import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * 商品sku 分页

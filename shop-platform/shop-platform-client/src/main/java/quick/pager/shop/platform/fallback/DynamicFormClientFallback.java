@@ -8,7 +8,7 @@ import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.platform.client.DynamicFormClient;
 import quick.pager.shop.platform.request.DynamicFormSaveRequest;
 import quick.pager.shop.platform.response.DynamicFormResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 @Component
 @Slf4j

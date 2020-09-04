@@ -2,7 +2,6 @@ package quick.pager.shop.user.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
 
 /**
  * 用户信息

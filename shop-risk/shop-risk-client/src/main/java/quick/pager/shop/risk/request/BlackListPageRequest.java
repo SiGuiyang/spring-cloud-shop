@@ -2,7 +2,7 @@ package quick.pager.shop.risk.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.Request;
 
 /**
  * 黑名单SaveRequest

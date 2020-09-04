@@ -15,12 +15,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import quick.pager.shop.client.AuthClient;
-import quick.pager.shop.client.UserClient;
+import quick.pager.shop.user.client.AuthClient;
+import quick.pager.shop.user.client.UserClient;
 import quick.pager.shop.configuration.ShopRedisTemplate;
 import quick.pager.shop.dto.UserDTO;
 import quick.pager.shop.exception.OAuth2SmsInvalidException;
-import quick.pager.shop.resp.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 查询用户权限
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserDetailsService {
      * @param phone   手机号码
      * @param smsCode 短信验证码
      * @return 授权人
-     * @throws UsernameNotFoundException
+     * @throws UsernameNotFoundException 未找到用户
      */
     public Collection<? extends GrantedAuthority> loadUserBySMS(String phone, String smsCode) throws UsernameNotFoundException {
 

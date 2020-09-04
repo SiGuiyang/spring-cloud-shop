@@ -7,18 +7,11 @@ spring:
   autoconfigure:
     exclude:
      - org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
-  cloud:
-    alibaba:
-      seata:
-        tx-service-group: shop_tx_group
+     - org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
   main:
     allow-bean-definition-overriding: true
   profiles:
     active: dev
-  redis:
-    host: 101.132.121.178
-    port: 6379
-    password: abc+123
 feign:
   sentinel:
     enabled: true

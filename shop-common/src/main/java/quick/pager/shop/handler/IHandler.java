@@ -1,6 +1,6 @@
 package quick.pager.shop.handler;
 
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 策略模式顶级接口

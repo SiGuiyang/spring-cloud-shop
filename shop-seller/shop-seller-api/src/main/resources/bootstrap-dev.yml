@@ -2,9 +2,27 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 101.132.121.178:8848
+        group: shop
+        namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 101.132.121.178:8848
+        group: shop
+        namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
+    sentinel:
+      enabled: true
+      transport:
+        dashboard: 127.0.0.1:8080
+      filter:
+        enabled: true
+
+seata:
+  service:
+    vgroup-mapping:
+      shop-seller-seata-service-group: default
+    grouplist:
+      default: 101.132.121.178:8091
+    disable-global-transaction: false
 
 # 内部服务调用授权认证配置
 security:

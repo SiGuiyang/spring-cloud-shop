@@ -17,7 +17,7 @@ import quick.pager.shop.activity.response.ExchangeMemberResponse;
 import quick.pager.shop.activity.response.exchange.ExchangeActivityResponse;
 import quick.pager.shop.activity.response.exchange.ExchangeActivityRuleResponse;
 import quick.pager.shop.constants.ConstantsClient;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 活动模块Client

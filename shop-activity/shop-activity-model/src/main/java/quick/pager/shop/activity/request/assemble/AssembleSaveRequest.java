@@ -3,7 +3,7 @@ package quick.pager.shop.activity.request.assemble;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.Request;
+import quick.pager.shop.user.request.Request;
 
 /**
  * 拼团SaveRequest

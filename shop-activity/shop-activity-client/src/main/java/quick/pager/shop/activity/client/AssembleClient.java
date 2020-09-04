@@ -16,7 +16,7 @@ import quick.pager.shop.activity.response.assemble.AssembleMemberResponse;
 import quick.pager.shop.activity.response.assemble.AssembleResponse;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.activity.fallback.FightGroupClientFallbackFactory;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 拼团活动Client

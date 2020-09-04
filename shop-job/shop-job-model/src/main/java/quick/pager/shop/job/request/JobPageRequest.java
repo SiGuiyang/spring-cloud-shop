@@ -2,7 +2,7 @@ package quick.pager.shop.job.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * Job 分页请求

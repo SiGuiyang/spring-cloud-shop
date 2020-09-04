@@ -10,7 +10,7 @@ import quick.pager.shop.activity.request.banner.BannerPageRequest;
 import quick.pager.shop.activity.request.banner.BannerSaveRequest;
 import quick.pager.shop.activity.response.banner.BannerResponse;
 import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * banner模块熔断工厂

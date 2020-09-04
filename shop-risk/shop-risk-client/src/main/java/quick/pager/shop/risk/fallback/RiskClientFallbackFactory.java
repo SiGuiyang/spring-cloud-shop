@@ -2,10 +2,10 @@ package quick.pager.shop.risk.fallback;
 
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
+import quick.pager.shop.risk.request.BlackListPageRequest;
 import quick.pager.shop.risk.client.RiskClient;
 import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.response.Response;
-import quick.pager.shop.risk.request.BlackListPageRequest;
+import quick.pager.shop.user.response.Response;
 import quick.pager.shop.risk.request.BlackListSaveRequest;
 
 /**

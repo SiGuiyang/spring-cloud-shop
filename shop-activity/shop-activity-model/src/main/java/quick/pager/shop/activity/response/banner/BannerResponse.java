@@ -3,7 +3,7 @@ package quick.pager.shop.activity.response.banner;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 /**
  * banner 数据响应对象

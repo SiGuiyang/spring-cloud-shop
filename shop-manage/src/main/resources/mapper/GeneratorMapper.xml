@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="quick.pager.shop.manage.mapper.GeneratorMapper">
-    <resultMap id="ColumnResultMap" type="quick.pager.shop.manage.model.Columns">
+<mapper namespace="quick.pager.shop.mapper.GeneratorMapper">
+    <resultMap id="ColumnResultMap" type="quick.pager.shop.model.Columns">
         <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema" />
         <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
         <result column="COLUMN_NAME" jdbcType="VARCHAR" property="columnName" />
@@ -11,7 +11,7 @@
         <result column="COLUMN_COMMENT" jdbcType="VARCHAR" property="columnComment" />
     </resultMap>
 
-    <resultMap id="TableResultMap" type="quick.pager.shop.manage.model.Tables">
+    <resultMap id="TableResultMap" type="quick.pager.shop.model.Tables">
         <result column="TABLE_SCHEMA" jdbcType="VARCHAR" property="tableSchema" />
         <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
         <result column="TABLE_COMMENT" jdbcType="VARCHAR" property="tableComment" />

@@ -1,11 +1,10 @@
 package quick.pager.shop.activity.response.assemble;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.response.BasicResponse;
+import quick.pager.shop.user.response.BasicResponse;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

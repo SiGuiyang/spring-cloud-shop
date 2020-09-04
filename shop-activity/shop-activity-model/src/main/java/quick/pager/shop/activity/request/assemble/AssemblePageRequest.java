@@ -1,11 +1,10 @@
 package quick.pager.shop.activity.request.assemble;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * 拼团PageRequest

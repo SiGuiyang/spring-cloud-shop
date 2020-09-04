@@ -14,7 +14,7 @@ import quick.pager.shop.job.request.JobPageRequest;
 import quick.pager.shop.job.request.JobRequest;
 import quick.pager.shop.job.request.JobSaveRequest;
 import quick.pager.shop.job.response.JobResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 @FeignClient(value = ConstantsClient.JOB_CLIENT, path = ConstantsClient.JOB, fallbackFactory = JobFallbackFactory.class)
 public interface JobClient {

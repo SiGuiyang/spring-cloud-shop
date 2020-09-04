@@ -2,7 +2,7 @@ package quick.pager.shop.activity.request.exchange;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.request.PageRequest;
+import quick.pager.shop.user.request.PageRequest;
 
 /**
  * 满赠换购分页参数

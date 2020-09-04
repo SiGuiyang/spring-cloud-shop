@@ -11,7 +11,7 @@ import quick.pager.shop.platform.request.SystemConfigOtherRequest;
 import quick.pager.shop.platform.request.SystemConfigPageRequest;
 import quick.pager.shop.platform.request.SystemConfigSaveRequest;
 import quick.pager.shop.platform.response.SystemConfigResponse;
-import quick.pager.shop.response.Response;
+import quick.pager.shop.user.response.Response;
 
 /**
  * 暴露服务系统配置
