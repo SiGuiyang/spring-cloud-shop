@@ -20,6 +20,10 @@ public class SysUserResponse extends BasicResponse {
 
     private static final long serialVersionUID = 6313168677365244170L;
     /**
+     * 主键
+     */
+    private Long id;
+    /**
      * 登陆用户名
      */
     private String username;

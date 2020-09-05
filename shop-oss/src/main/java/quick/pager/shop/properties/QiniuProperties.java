@@ -18,4 +18,6 @@ public class QiniuProperties {
     private String secretKey;
 
     private String bucket;
+
+    private String endpoint;
 }

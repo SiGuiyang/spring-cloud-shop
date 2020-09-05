@@ -57,4 +57,12 @@ public interface SConsts {
      * 空字符
      */
     String EMPTY = "";
+    /**
+     * 斜杠
+     */
+    String SLASH = "/";
+    /**
+     * 点
+     */
+    String POINT = ".";
 }

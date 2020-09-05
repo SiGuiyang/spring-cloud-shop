@@ -13,18 +13,22 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.constants.SConsts;
 import quick.pager.shop.helper.MenuHelper;
 import quick.pager.shop.mapper.RoleMapper;
 import quick.pager.shop.model.Menu;
 import quick.pager.shop.model.Role;
+import quick.pager.shop.param.system.SysUserOtherParam;
 import quick.pager.shop.param.system.SysUserPageParam;
 import quick.pager.shop.response.system.MenuResponse;
+import quick.pager.shop.response.system.SysUserDownloadResponse;
 import quick.pager.shop.response.system.SysUserResponse;
 import quick.pager.shop.service.system.SysUserService;
 import quick.pager.shop.utils.PrincipalUtils;
@@ -73,6 +77,46 @@ public class SysUserServiceImpl implements SysUserService {
         }
 
         return Response.toResponse(responseList, total);
+    }
+
+    @Override
+    public Response<List<SysUserResponse>> queryList(SysUserOtherParam param) {
+
+        List<SysUser> sysUsers = sysUserMapper.selectList(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getDeleteStatus, Boolean.FALSE)
+                .eq(!StringUtils.isEmpty(param.getPhone()), SysUser::getPhone, param.getPhone())
+                .in(CollectionUtils.isNotEmpty(param.getIds()), SysUser::getId, param.getIds())
+        );
+
+        return Response.toResponse(sysUsers.stream().map(this::convert).collect(Collectors.toList()));
+    }
+
+    @Override
+    public List<SysUserDownloadResponse> queryDownload(List<Long> ids) {
+
+        List<SysUser> sysUsers = sysUserMapper.selectList(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getDeleteStatus, Boolean.FALSE)
+                .in(CollectionUtils.isNotEmpty(ids), SysUser::getId, ids));
+
+        return sysUsers.stream().map(item -> {
+            SysUserDownloadResponse response = new SysUserDownloadResponse();
+            response.setUsername(item.getUsername());
+            response.setPhone(item.getPhone());
+            response.setAdmin(item.getBeAdmin() ? "是" : "否");
+            response.setCreateTime(item.getCreateTime());
+
+            List<SysRole> sysRoles = sysRoleMapper.selectList(new LambdaQueryWrapper<SysRole>()
+                    .eq(SysRole::getDeleteStatus, Boolean.FALSE)
+                    .eq(SysRole::getSysUserId, item.getId()));
+
+            List<String> roleNames = sysRoles.stream().map(it -> {
+                Role role = roleMapper.selectById(it.getRoleId());
+                return role.getRoleName();
+            }).collect(Collectors.toList());
+
+            response.setRole(String.join(SConsts.EN_COMMA, roleNames));
+            return response;
+        }).collect(Collectors.toList());
     }
 
     @Override

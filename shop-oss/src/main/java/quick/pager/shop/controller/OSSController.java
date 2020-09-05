@@ -3,7 +3,6 @@ package quick.pager.shop.controller;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.URLUtil;
 import com.google.common.collect.Maps;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.enmus.OSSTypeEnum;
-import quick.pager.shop.service.UploadService;
+import quick.pager.shop.service.OSSService;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.utils.FileUtil;
 
@@ -33,9 +32,9 @@ import quick.pager.shop.utils.FileUtil;
 @Slf4j
 @RestController
 @RequestMapping("/oss")
-public class UploadController {
+public class OSSController {
     @Autowired
-    private Map<String, UploadService> uploadService;
+    private Map<String, OSSService> uploadService;
 
     /**
      * 上传服务
@@ -44,12 +43,12 @@ public class UploadController {
      * @param ossType 上传云服务器类型
      */
     @PostMapping("/upload")
-    public Response<Map<String, String>> qiniuUpload(@RequestParam MultipartFile file, @RequestParam(required = false) String ossType) throws IOException {
+    public Response<Map<String, String>> upload(@RequestParam MultipartFile file, @RequestParam(required = false) String ossType) throws IOException {
 
         if (StringUtils.isEmpty(ossType)) {
             ossType = OSSTypeEnum.ALIYUN.getCode();
         }
-        if (this.uploadService.containsKey(ossType)) {
+        if (!this.uploadService.containsKey(ossType)) {
             return new Response<>(ResponseStatus.Code.FAIL_CODE, "未找到可用的云服务器");
         }
 
@@ -66,24 +65,31 @@ public class UploadController {
     /**
      * 下载文件服务
      *
-     * @param downloadFile     下载的文件路径
-     * @param downloadFilename 下载文件的名称
+     * @param ossKey     下载的文件路径
+     * @param fileName 下载文件的名称
+     * @param ossType 上传云服务器类型
      * @param response         响应流
      */
     @GetMapping("/download")
-    public void download(@RequestParam String downloadFile, @RequestParam String downloadFilename, HttpServletResponse response) throws Exception {
+    public void download(@RequestParam(required = false) String ossKey,
+                         @RequestParam(required = false) String fileName,
+                         @RequestParam(required = false) String ossType,
+                         HttpServletResponse response) throws Exception {
 
         //得到要下载的文件
-        String suffix = downloadFile.substring(downloadFile.lastIndexOf("."));
-        String transFilename = DateUtil.formatDate(new Date()) + "-" + downloadFilename + suffix;
+        String suffix = ossKey.substring(ossKey.lastIndexOf("."));
+        String transFilename = DateUtil.formatDate(new Date()) + "-" + fileName + suffix;
 
         //设置响应头，控制浏览器下载该文件
         response.setContentType("application/octet-stream");
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("UTF-8");
         response.setHeader("content-disposition", "attachment;filename=" + URLUtil.encode(transFilename, "UTF-8"));
 
+        if (!this.uploadService.containsKey(ossType)) {
+            ossType = OSSTypeEnum.ALIYUN.getCode();
+        }
         // 文件输入流
-        DataInputStream in = FileUtil.getRemoteFile(downloadFile);
+        InputStream in = this.uploadService.get(ossType).download(ossKey);
         //创建输出流
         OutputStream out = response.getOutputStream();
 

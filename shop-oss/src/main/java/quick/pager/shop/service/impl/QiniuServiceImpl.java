@@ -6,16 +6,20 @@ import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import com.qiniu.util.StringUtils;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.properties.QiniuProperties;
-import quick.pager.shop.service.UploadService;
+import quick.pager.shop.service.OSSService;
 import quick.pager.shop.utils.DateUtils;
+import quick.pager.shop.utils.FileUtil;
 
 /**
  * 七牛云OSS
@@ -23,8 +27,9 @@ import quick.pager.shop.utils.DateUtils;
  * @author siguiyang
  */
 @Service("QINIU")
+@Slf4j
 @EnableConfigurationProperties(QiniuProperties.class)
-public class QiniuServiceImpl implements UploadService {
+public class QiniuServiceImpl implements OSSService {
 
     @Autowired(required = false)
     private UploadManager uploadManager;
@@ -51,25 +56,15 @@ public class QiniuServiceImpl implements UploadService {
     }
 
     @Override
-    public String uploadFile(File file, String folder) {
+    public String uploadFile(File file, String fileName) {
 
         if (!file.exists()) {
             throw new RuntimeException("上传的文件不存在");
         }
-        StringBuilder builder = new StringBuilder();
-        if (!StringUtils.isNullOrEmpty(folder)) {
-            builder.append(folder);
-        }
-        builder.append(file.getName());
-
         try {
-            Response response = uploadManager.put(file, builder.toString(), this.getToken());
-            if (response.isOK()) {
-                return JSON.parseObject(response.bodyString(), DefaultPutRet.class).key;
-            }
-
-        } catch (QiniuException e) {
-            throw new RuntimeException("上传文件失败");
+            return this.uploadStream(new FileInputStream(file), fileName);
+        } catch (FileNotFoundException e) {
+            log.error("文件不存在");
         }
         return null;
     }
@@ -85,6 +80,21 @@ public class QiniuServiceImpl implements UploadService {
             }
         } catch (QiniuException e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public InputStream download(String ossKey) {
+
+        try {
+            String encodedFileName = URLEncoder.encode(ossKey, "utf-8").replace("+", "%20");
+            String publicUrl = String.format("%s/%s", qiniuProperties.getEndpoint(), encodedFileName);
+            String url = auth.privateDownloadUrl(publicUrl, 3600); //1小时，可以自定义链接过期时间
+
+            return FileUtil.getRemoteFile(url);
+        } catch (Exception e) {
+            log.error("获取文件流失败");
         }
         return null;
     }
