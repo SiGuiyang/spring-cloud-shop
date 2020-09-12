@@ -71,6 +71,7 @@
         <module>shop-cart</module>
         <module>shop-common</module>
         <module>shop-dependencies</module>
+        <module>shop-elasticsearch</module>
         <module>shop-gateway</module>
         <module>shop-goods</module>
         <module>shop-job</module>

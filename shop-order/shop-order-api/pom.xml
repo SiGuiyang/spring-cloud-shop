@@ -62,11 +62,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-elasticsearch</artifactId>
-        </dependency>
         <!-- end spring boot -->
 
         <!-- start database -->
@@ -101,6 +96,11 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>quick.pager</groupId>
+            <artifactId>shop-elasticsearch-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

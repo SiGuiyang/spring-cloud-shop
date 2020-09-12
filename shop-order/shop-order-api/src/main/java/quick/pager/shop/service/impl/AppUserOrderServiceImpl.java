@@ -2,9 +2,9 @@ package quick.pager.shop.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import quick.pager.shop.elasticsearch.client.ESUserOrderClient;
 import quick.pager.shop.mapper.UserOrderMapper;
 import quick.pager.shop.param.AppUserOrderEvaluateParam;
-import quick.pager.shop.repository.UserOrderRepository;
 import quick.pager.shop.order.response.UserOrderQuantityResponse;
 import quick.pager.shop.service.AppUserOrderService;
 import quick.pager.shop.user.response.Response;
@@ -18,7 +18,7 @@ import quick.pager.shop.user.response.Response;
 public class AppUserOrderServiceImpl implements AppUserOrderService {
 
     @Autowired
-    private UserOrderRepository userOrderRepository;
+    private ESUserOrderClient esUserOrderClient;
 
     @Autowired
     private UserOrderMapper userOrderMapper;

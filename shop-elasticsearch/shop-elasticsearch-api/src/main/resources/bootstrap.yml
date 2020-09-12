@@ -1,0 +1,22 @@
+server:
+  port: 11200
+
+spring:
+  application:
+    name: shop-elasticsearch
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,info
+
+logging:
+  level:
+    com.alibaba.nacos: error

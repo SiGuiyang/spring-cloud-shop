@@ -1,4 +1,4 @@
-package quick.pager.shop.model.es;
+package quick.pager.shop.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

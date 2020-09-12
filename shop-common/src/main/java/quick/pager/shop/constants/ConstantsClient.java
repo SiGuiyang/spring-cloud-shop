@@ -47,6 +47,10 @@ public interface ConstantsClient {
      */
     String SETTLEMENT_CLIENT = "shop-settlement";
     /**
+     * ES服务
+     */
+    String ELASTICSEARCH_CLIENT = "shop-elasticsearch";
+    /**
      * 活动请求前缀
      */
     String ACTIVITY = "/activity";
@@ -90,4 +94,8 @@ public interface ConstantsClient {
      * 清结算
      */
     String SETTLEMENT = "/settlement";
+    /**
+     * ES服务
+     */
+    String ELASTICSEARCH = "/elasticsearch";
 }

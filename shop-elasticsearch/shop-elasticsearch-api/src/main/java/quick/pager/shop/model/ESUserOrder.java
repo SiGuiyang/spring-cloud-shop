@@ -1,9 +1,8 @@
-package quick.pager.shop.model.es;
+package quick.pager.shop.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.elasticsearch.annotations.Document;
-import quick.pager.shop.model.Model;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 101.132.121.178:8848
+        group: shop
+        namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
+      discovery:
+        server-addr: 101.132.121.178:8848
+        group: shop
+        namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 192.168.199.101:9200

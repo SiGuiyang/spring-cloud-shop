@@ -60,4 +60,11 @@ public class Response<T> implements Serializable {
         response.setData(data);
         return response;
     }
+
+    /**
+     * 验证code是否成功
+     */
+    public boolean check() {
+        return ResponseStatus.Code.SUCCESS == this.code;
+    }
 }

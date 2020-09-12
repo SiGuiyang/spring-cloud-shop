@@ -1,5 +1,5 @@
 server:
-  port: 9999
+  port: 11450
 
 spring:
   application:
@@ -10,13 +10,6 @@ spring:
     active: dev
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
-feign:
-  sentinel:
-    enabled: true
-  okhttp:
-    enabled: true
-  httpclient:
-    enabled: false
 
 management:
   endpoints:

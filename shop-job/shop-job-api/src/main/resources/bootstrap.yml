@@ -1,6 +1,6 @@
 
 server:
-  port: 9988
+  port: 11300
 spring:
   application:
     name: shop-job

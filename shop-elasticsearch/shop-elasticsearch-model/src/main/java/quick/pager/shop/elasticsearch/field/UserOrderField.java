@@ -1,4 +1,4 @@
-package quick.pager.shop.order.field;
+package quick.pager.shop.elasticsearch.field;
 
 /**
  * 用户订单字段
