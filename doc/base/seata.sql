@@ -4,14 +4,14 @@
  Source Server         : prod
  Source Server Type    : MySQL
  Source Server Version : 50646
- Source Host           : 106.54.251.32
+ Source Host           : 101.132.121.178
  Source Database       : seata
 
  Target Server Type    : MySQL
  Target Server Version : 50646
  File Encoding         : utf-8
 
- Date: 09/04/2020 15:28:50 PM
+ Date: 11/11/2020 21:01:58 PM
 */
 
 SET NAMES utf8;

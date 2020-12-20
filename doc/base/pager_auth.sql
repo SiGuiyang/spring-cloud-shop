@@ -4,14 +4,14 @@
  Source Server         : prod
  Source Server Type    : MySQL
  Source Server Version : 50646
- Source Host           : 106.54.251.32
+ Source Host           : 101.132.121.178
  Source Database       : pager_auth
 
  Target Server Type    : MySQL
  Target Server Version : 50646
  File Encoding         : utf-8
 
- Date: 09/04/2020 15:27:39 PM
+ Date: 11/11/2020 21:00:58 PM
 */
 
 SET NAMES utf8;
@@ -93,7 +93,7 @@ CREATE TABLE `oauth_client_details` (
 --  Records of `oauth_client_details`
 -- ----------------------------
 BEGIN;
-INSERT INTO `oauth_client_details` VALUES ('client', null, 'secret', 'app', 'authorization_code', 'http://172.16.11.55:8095', null, null, null, null, null), ('client2', null, '{bcrypt}secret', 'app', 'authorization_code', 'http://172.16.11.55:9527', null, null, null, null, null), ('client3', null, '{bcrypt}secret', 'app', 'authorization_code', 'http://127.0.0.1:8099/oauth/home', null, null, null, null, null), ('client4', null, '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'app', 'authorization_code,password', 'http://127.0.0.1:8095', null, null, null, null, null), ('client5', null, '{bcrypt}secret', 'app', 'authorization_code', 'http://127.0.0.1:9527', null, null, null, null, null), ('client6', null, '{bcrypt}secret', 'app', 'password', 'http://127.0.0.1:9527', null, null, null, null, null), ('client7', null, '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'app', 'authorization_code,password,sms,refresh_token', 'http://106.54.251.32', null, null, null, null, null), ('client8', null, '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'app', 'authorization_code,password,client_credentials,refresh_token', 'http://106.54.251.32:8080', null, null, null, null, null);
+INSERT INTO `oauth_client_details` VALUES ('client', null, 'secret', 'app', 'authorization_code', 'http://172.16.11.55:8095', null, null, null, null, null), ('client2', null, '{bcrypt}secret', 'app', 'authorization_code', 'http://172.16.11.55:9527', null, null, null, null, null), ('client3', null, '{bcrypt}secret', 'app', 'authorization_code', 'http://127.0.0.1:8099/oauth/home', null, null, null, null, null), ('client4', null, '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'app', 'authorization_code,password', 'http://127.0.0.1:8095', null, null, null, null, null), ('client5', null, '{bcrypt}secret', 'app', 'authorization_code', 'http://127.0.0.1:9527', null, null, null, null, null), ('client6', null, '{bcrypt}secret', 'app', 'password', 'http://127.0.0.1:9527', null, null, null, null, null), ('client7', null, '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'app', 'authorization_code,password,sms,refresh_token', 'http://106.54.251.32', null, null, null, null, null), ('client8', null, '$2a$10$5l0.t/a4oc9hmd92OQLQLe/ZgDaFF22PwrCitlblVeyXibiPGeVQ6', 'app', 'authorization_code,password,client_credentials,refresh_token', 'http://106.54.251.32:8080', null, null, null, null, null), ('shop', null, '$2a$10$y4DGITaMZSpoJqfkf5Bj/.zoT9njqVCJzEMjjFUwCt.wzom7vdraC', 'app', 'authorization_code,password,sms,refresh_token', 'http://106.54.251.32', null, null, null, null, null);
 COMMIT;
 
 -- ----------------------------

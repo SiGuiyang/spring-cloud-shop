@@ -10,7 +10,7 @@
     后台登陆采用oauth2.0授权，支持密码登陆，授权码登陆，短信验证码登陆
     注册中心与配置中心已使用alibaba nacos
 # 最近在深度学习ELK，项目更新会迟缓，月底将会集成ELK相关功能，尽情期待！    
-# 在线demo地址 [Spring Cloud Shop](http://106.54.251.32) 每周休息日停止在线服务，周一恢复
+# 在线demo地址 [Spring Cloud Shop](http://106.54.251.32) 服务器到期，暂不提供
 # 脚本升级
 ```
     自2020年02月07日起，spring-cloud-shop项目提供脚本升级方案，基础脚本存放在doc/base目录中，升级脚本存放在doc/upgrade中。
