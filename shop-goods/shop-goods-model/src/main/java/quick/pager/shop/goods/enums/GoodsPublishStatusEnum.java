@@ -10,9 +10,8 @@ import quick.pager.shop.enums.IEnum;
 public enum GoodsPublishStatusEnum implements IEnum<Integer> {
 
     NONE_SHELF(0, "上架申请"),
-    REFUSE(1, "拒绝申请"),
-    UPPER_SHELF(2, "上架"),
-    LOWER_SHELF(3, "下架");
+    PASS(1, "审核通过"),
+    REFUSE(2, "审核拒绝");
 
     private Integer code;
 

@@ -10,7 +10,6 @@ spring:
     active: dev
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration
-
 feign:
   sentinel:
     enabled: true
@@ -31,4 +30,19 @@ management:
       exposure:
         include: refresh,health,info,hystrix.stream
 logging:
-  config: classpath:logback-spring.xml
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${spring.application.name}] [traceId:%X{X-B3-TraceId}][spanId:%X{X-B3-SpanId}][parentSpanId:%X{X-B3-ParentSpanId}] --- [%t] - [%class:%method: %line] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [${spring.application.name}] [traceId:%X{X-B3-TraceId}][spanId:%X{X-B3-SpanId}][parentSpanId:%X{X-B3-ParentSpanId}] --- [%t] - [%class:%method: %line] - %msg%n"
+  level:
+    org.springframework: error
+    com.alibaba: error
+    org.apache.ibatis: error
+    io.seata: error
+  file:
+    path: ./logs/${spring.application.name}
+    max-size: 50MB
+    name: ${spring.application.name}
+
+shop:
+  oauth:
+    permissions: /activity/app/**

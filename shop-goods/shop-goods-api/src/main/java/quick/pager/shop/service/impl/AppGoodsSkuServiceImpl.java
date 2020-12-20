@@ -29,9 +29,9 @@ public class AppGoodsSkuServiceImpl implements AppGoodsSkuService {
         request.setKeyword(param.getKeyword());
         request.setSort(param.getSort());
 
-        Response<List<ESGoodsResponse>> pageRes = esGoodsClient.queryPage(request);
+        Response<List<ESGoodsResponse>> pageRes = this.esGoodsClient.queryPage(request);
         if (!pageRes.check()) {
-            return new Response<>(pageRes.getCode(), pageRes.getMsg());
+            return Response.toError(pageRes.getCode(), pageRes.getMsg());
         }
         return Response.toResponse(pageRes.getData().stream().map(this::conv).collect(Collectors.toList()), pageRes.getTotal());
     }
@@ -39,7 +39,7 @@ public class AppGoodsSkuServiceImpl implements AppGoodsSkuService {
     /**
      * 商品转换
      */
-    private GoodsResponse conv(ESGoodsResponse goods) {
+    private GoodsResponse conv(final ESGoodsResponse goods) {
         return new GoodsResponse();
     }
 }

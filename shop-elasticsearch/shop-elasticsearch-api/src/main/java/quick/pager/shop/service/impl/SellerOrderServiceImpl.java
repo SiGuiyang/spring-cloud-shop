@@ -22,6 +22,6 @@ public class SellerOrderServiceImpl implements SellerOrderService {
 
     @Override
     public Response<List<ESSellerOrderResponse>> queryPage(final ESSellerOrderPageRequest request) {
-        return new Response<>();
+        return null;
     }
 }

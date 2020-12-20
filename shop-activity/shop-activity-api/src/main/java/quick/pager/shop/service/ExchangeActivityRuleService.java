@@ -18,19 +18,28 @@ public interface ExchangeActivityRuleService extends IService<ExchangeActivityRu
      *
      * @param activityId 活动主键
      */
-    Response<List<ExchangeActivityRuleResponse>> queryList(Long activityId);
+    Response<List<ExchangeActivityRuleResponse>> queryList(final Long activityId);
 
     /**
      * 新增
      *
      * @return 规则主键
      */
-    Response<Long> create(ExchangeActivityRuleSaveRequest request);
+    Response<Long> create(final ExchangeActivityRuleSaveRequest request);
 
     /**
      * 修改
      *
      * @return 规则主键
      */
-    Response<Long> modify(ExchangeActivityRuleSaveRequest request);
+    Response<Long> modify(final ExchangeActivityRuleSaveRequest request);
+
+    /**
+     * 删除规则
+     *
+     * @param id         规则主键
+     * @param activityId 活动主键
+     * @return 规则主键
+     */
+    Response<Long> delete(final Long id, final Long activityId);
 }

@@ -29,26 +29,28 @@ import quick.pager.shop.utils.DateUtils;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Override
-    public Response<Long> create(MenuSaveParam param) {
+    public Response<Long> create(final MenuSaveParam param) {
         Menu menu = new Menu();
         BeanCopier.create(param, menu).copy();
         menu.setMenuType(1);
         menu.setCreateTime(DateUtils.dateTime());
+        menu.setUpdateTime(DateUtils.dateTime());
         menu.setDeleteStatus(Boolean.FALSE);
         this.baseMapper.insert(menu);
-        return new Response<>(menu.getId());
+        return Response.toResponse(menu.getId());
     }
 
     @Override
-    public Response<Long> modify(MenuSaveParam param) {
+    public Response<Long> modify(final MenuSaveParam param) {
         Menu menu = new Menu();
-        BeanCopier.create(param, menu).copy();
+        BeanCopier.copy(param, menu);
+        menu.setUpdateTime(DateUtils.dateTime());
         this.baseMapper.updateById(menu);
-        return new Response<>(menu.getId());
+        return Response.toResponse(menu.getId());
     }
 
     @Override
-    public Response<List<MenuResponse>> queryList(MenuOtherParam param) {
+    public Response<List<MenuResponse>> queryList(final MenuOtherParam param) {
 
         LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Menu::getDeleteStatus, Boolean.FALSE);
@@ -76,11 +78,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public Response<Long> delete(Long id) {
-        Menu menu = new Menu();
-        menu.setDeleteStatus(Boolean.TRUE);
-        this.baseMapper.updateById(menu);
-        return new Response<>(id);
+    public Response<Long> delete(final Long id) {
+        this.baseMapper.deleteById(id);
+        return Response.toResponse(id);
     }
 
     /**
@@ -89,7 +89,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
      * @param parentResp  顶级菜单
      * @param childrenMap 孩子节点
      */
-    private void toTree(List<MenuResponse> parentResp, Map<Long, List<MenuResponse>> childrenMap) {
+    private void toTree(final List<MenuResponse> parentResp, final Map<Long, List<MenuResponse>> childrenMap) {
         parentResp.forEach(item -> {
             List<MenuResponse> list = childrenMap.get(item.getId());
             toTree(Optional.ofNullable(list).orElse(Collections.emptyList()), childrenMap);
@@ -97,7 +97,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         });
     }
 
-    private MenuResponse conv(Menu menu) {
+    private MenuResponse conv(final Menu menu) {
         MenuResponse resp = new MenuResponse();
         BeanCopier.create(menu, resp).copy();
         resp.setLabel(menu.getName());

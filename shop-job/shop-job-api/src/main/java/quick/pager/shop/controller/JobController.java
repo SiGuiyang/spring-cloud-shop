@@ -61,7 +61,7 @@ public class JobController {
     @GetMapping("/status/list")
     public Response<List<JobStatusResponse>> list() {
 
-        return new Response<>(Stream.of(JobStatusEnums.values()).map(item -> {
+        return Response.toResponse(Stream.of(JobStatusEnums.values()).map(item -> {
             JobStatusResponse response = new JobStatusResponse();
             response.setCode(item.getCode());
             response.setDesc(item.getDesc());
@@ -95,7 +95,7 @@ public class JobController {
     @PutMapping("/modify")
     public Response<Long> modify(@RequestBody JobSaveRequest request) {
         if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         return jobService.modify(request);
     }

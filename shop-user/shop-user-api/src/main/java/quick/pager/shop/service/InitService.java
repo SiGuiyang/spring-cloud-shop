@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.constants.RedisKeys;
-import quick.pager.shop.service.RedisService;
 
 /**
  * 项目初始化配置库入redis <br />
@@ -22,7 +22,7 @@ public class InitService {
 //    @Autowired
 //    private SmsTemplateMapper smsTemplateMapper;
     @Autowired
-    private RedisService redisService;
+    private RedisTemplate<String,Object> redisTemplate;
 
     @PostConstruct
     public void init() {

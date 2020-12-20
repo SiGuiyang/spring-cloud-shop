@@ -16,6 +16,6 @@ public class InviteController {
     @GetMapping("/testJob")
     public Response<String> testJob() {
 
-        return new Response<>("Hello World");
+        return Response.toResponse("Hello World");
     }
 }

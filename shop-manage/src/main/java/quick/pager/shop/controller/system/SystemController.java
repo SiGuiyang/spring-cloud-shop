@@ -18,9 +18,9 @@ import quick.pager.shop.param.system.SysUserPageParam;
 import quick.pager.shop.response.system.SysUserDownloadResponse;
 import quick.pager.shop.response.system.SysUserResponse;
 import quick.pager.shop.service.system.SysUserService;
-import quick.pager.shop.param.system.SysUserParam;
+import quick.pager.shop.param.system.SysUserSaveParam;
 import quick.pager.shop.user.response.Response;
-import quick.pager.shop.utils.PrincipalUtils;
+import quick.pager.shop.util.AuthUtils;
 
 /**
  * 系统管理
@@ -40,7 +40,7 @@ public class SystemController {
      */
     @PostMapping("/system/adminInfo")
     public Response sysUserInfo() {
-        return sysUserService.adminInfo(PrincipalUtils.getPrincipal().getName());
+        return sysUserService.adminInfo(AuthUtils.getPrincipal().getName());
     }
 
     /**
@@ -48,7 +48,7 @@ public class SystemController {
      */
     @PostMapping("/logout")
     public Response logout() {
-        return new Response();
+        return Response.toResponse();
     }
 
     /**
@@ -56,7 +56,7 @@ public class SystemController {
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_USER')")
     @PostMapping("/system/user/page")
-    public Response<List<SysUserResponse>> queryPage(@RequestBody SysUserPageParam param) {
+    public Response<List<SysUserResponse>> page(@RequestBody SysUserPageParam param) {
         return sysUserService.queryPage(param);
     }
 
@@ -65,7 +65,7 @@ public class SystemController {
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_USER_CREATE')")
     @PostMapping("/system/user/create")
-    public Response<Long> create(@RequestBody SysUserParam param) {
+    public Response<Long> create(@RequestBody SysUserSaveParam param) {
 
         return sysUserService.create(param);
     }
@@ -75,7 +75,7 @@ public class SystemController {
      */
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_USER_MODIFY')")
     @PutMapping("/system/user/modify")
-    public Response<Long> modify(@RequestBody SysUserParam dto) {
+    public Response<Long> modify(@RequestBody SysUserSaveParam dto) {
 
         return sysUserService.modify(dto);
     }

@@ -11,12 +11,6 @@
 
     <artifactId>shop-order-api</artifactId>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <!-- start spring cloud alibaba -->
         <dependency>
@@ -45,6 +39,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
         <!-- end spring cloud -->
 
         <!-- start spring boot -->
@@ -55,16 +57,28 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- end spring boot -->
 
         <!-- start database -->
+
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.apache.shardingsphere</groupId>-->
+            <!--<artifactId>sharding-transaction-base-seata-at</artifactId>-->
+            <!--<version>4.0.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>quick.pager</groupId>-->
+            <!--<artifactId>sharding-transaction-base-seata-at</artifactId>-->
+            <!--<version>${project.version}</version>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -77,12 +91,6 @@
         <!-- end database -->
 
         <!-- start 客户端授权-->
-        <dependency>
-            <groupId>quick.pager</groupId>
-            <artifactId>shop-auth-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-auth-resource</artifactId>
@@ -99,6 +107,11 @@
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-elasticsearch-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>quick.pager</groupId>
+            <artifactId>shop-user-client</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

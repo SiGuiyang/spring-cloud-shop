@@ -1,7 +1,11 @@
 package quick.pager.shop.goods.response;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import quick.pager.shop.goods.dto.UploadDTO;
 import quick.pager.shop.user.response.BasicResponse;
 
 /**
@@ -14,43 +18,46 @@ import quick.pager.shop.user.response.BasicResponse;
 public class GoodsResponse extends BasicResponse {
     private static final long serialVersionUID = 6556034472603049318L;
 
+    /**
+     * 商品主表主键
+     */
     private Long id;
     /**
-     * 品牌主键
+     * sku主键
      */
-    private Long brandId;
-    /**
-     * 品牌名称
-     */
-    private String brandName;
+    private Long skuId;
     /**
      * 商品二级分类主键
      */
-    private Long gcsId;
+    private List<Long> goodsClassId;
+    /**
+     * sku图片集
+     */
+    private List<UploadDTO> images;
     /**
      * 商品分类名称
      */
-    private String gcsName;
+    private String skuName;
     /**
-     * 商品属性组主键
-     */
-    private Long goodsPropertyGroupId;
-    /**
-     * spu 主键
-     */
-    private Long spuId;
-    /**
-     * spu名称
+     * spu分类名称
      */
     private String spuName;
     /**
-     * 商品属性组名称
+     * sku 编码
      */
-    private String goodsPropertyGroupName;
+    private String skuCode;
     /**
-     * 商品主表名称
+     * 含重量
      */
-    private String name;
+    private BigDecimal weight;
+    /**
+     * 商品价格
+     */
+    private BigDecimal skuAmount;
+    /**
+     * 折扣价格
+     */
+    private BigDecimal discountAmount;
     /**
      * 商品状态 0 未上架 1 上架申请 2 上架 3 已下架
      */
@@ -64,13 +71,21 @@ public class GoodsResponse extends BasicResponse {
      */
     private Integer goodsType;
     /**
+     * 商品库存
+     */
+    private Integer stock;
+    /**
      * 商品类型名称
      */
     private String goodsTypeName;
     /**
-     * 新品状态:0->不是新品；1->新品
+     * 新品状态:0 下架；1->上架
      */
     private Boolean state;
+    /**
+     * 新品状态:0->不是新品；1->新品
+     */
+    private Boolean goodsState;
     /**
      * 新品状态名称
      */
@@ -87,6 +102,14 @@ public class GoodsResponse extends BasicResponse {
      * 商品单位
      */
     private String unit;
+    /**
+     * 开始时间
+     */
+    private LocalDate beginTime;
+    /**
+     * 结束时间（过期时间）
+     */
+    private LocalDate endTime;
     /**
      * 商品描述
      */

@@ -87,5 +87,14 @@ public interface DiscountCouponClient {
      * @return 优惠券内容
      */
     @RequestMapping(value = "/coupon/{couponId}", method = RequestMethod.GET)
-    Response<DiscountCouponResponse> userCoupons(@PathVariable("couponId") Long couponId);
+    Response<DiscountCouponResponse> detail(@PathVariable("couponId") Long couponId);
+
+
+    /**
+     * 用户未使用，未过期的优惠券列表
+     *
+     * @param userId 用户主键
+     */
+    @RequestMapping(value = "/coupon/{userId}/list", method = RequestMethod.POST)
+    Response<List<DiscountCouponResponse>> list(@PathVariable("userId") Long userId);
 }

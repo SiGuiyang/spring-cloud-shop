@@ -76,6 +76,7 @@
         <module>shop-goods</module>
         <module>shop-job</module>
         <module>shop-manage</module>
+        <module>shop-mq</module>
         <module>shop-order</module>
         <module>shop-oss</module>
         <module>shop-platform</module>
@@ -83,5 +84,6 @@
         <module>shop-seller</module>
         <module>shop-settlement</module>
         <module>shop-user</module>
+        <module>sharding-transaction-base-seata-at</module>
     </modules>
 </project>

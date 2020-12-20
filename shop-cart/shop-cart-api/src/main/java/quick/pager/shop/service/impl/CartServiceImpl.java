@@ -3,29 +3,33 @@ package quick.pager.shop.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
-import java.math.BigDecimal;
+import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.mapper.GoodsCartMapper;
-import quick.pager.shop.model.GoodsCart;
-import quick.pager.shop.param.CartParam;
-import quick.pager.shop.cart.response.GoodsCartDetailResponse;
-import quick.pager.shop.cart.response.GoodsCartResponse;
-import quick.pager.shop.service.CartService;
+import org.springframework.transaction.annotation.Transactional;
+import quick.pager.shop.cart.constants.CartRedisKeys;
+import quick.pager.shop.cart.request.CartOtherRequest;
 import quick.pager.shop.constants.IConsts;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.goods.client.GoodsSkuClient;
 import quick.pager.shop.goods.request.sku.GoodsSkuOtherRequest;
 import quick.pager.shop.goods.response.sku.GoodsSkuResponse;
-import quick.pager.shop.model.ImageModel;
+import quick.pager.shop.mapper.GoodsCartMapper;
+import quick.pager.shop.model.GoodsCart;
+import quick.pager.shop.cart.request.CartRequest;
+import quick.pager.shop.cart.response.GoodsCartResponse;
+import quick.pager.shop.service.CartService;
 import quick.pager.shop.user.response.Response;
-import quick.pager.shop.seller.client.SellerClient;
-import quick.pager.shop.response.SellerInfoResponse;
 import quick.pager.shop.utils.DateUtils;
 
 /**
@@ -34,17 +38,22 @@ import quick.pager.shop.utils.DateUtils;
  * @author siguiyang
  */
 @Service
+@Slf4j
 public class CartServiceImpl implements CartService {
 
     @Autowired
     private GoodsCartMapper goodsCartMapper;
     @Autowired
-    private SellerClient sellerClient;
-    @Autowired
     private GoodsSkuClient goodsSkuClient;
+    @Autowired
+    private RedissonClient redissonClient;
+    @Value("${spring.profiles.active}")
+    private String env;
+
 
     @Override
-    public Response<List<GoodsCartResponse>> list(final Long userId, final Integer page) {
+    public Response<List<GoodsCartResponse>> page(final Long userId, final Integer page) {
+
         LambdaQueryWrapper<GoodsCart> wrapper = new LambdaQueryWrapper<GoodsCart>()
                 .eq(GoodsCart::getDeleteStatus, Boolean.FALSE)
                 .eq(GoodsCart::getUserId, userId);
@@ -55,106 +64,125 @@ public class CartServiceImpl implements CartService {
 
         if (total > IConsts.ZERO) {
             List<GoodsCart> goodsCarts = goodsCartMapper.selectPage(new Page<>(page, IConsts.TEN, Boolean.FALSE), wrapper).getRecords();
-
-            Map<Long, List<GoodsCart>> listMap = goodsCarts.stream().collect(Collectors.groupingBy(GoodsCart::getSellerId));
-
-            listMap.forEach((k, v) -> {
-                GoodsCartResponse goodsCart = new GoodsCartResponse();
-                goodsCart.setId(k);
-                // 1. 处理商户
-                Response<SellerInfoResponse> sellerInfoResp = sellerClient.querySeller(k);
-                if (ResponseStatus.Code.SUCCESS == sellerInfoResp.getCode()) {
-                    goodsCart.setName(sellerInfoResp.getData().getSellerName());
-                    goodsCart.setLogo(sellerInfoResp.getData().getLogo());
-                }
-                // 2. 处理购物车商品
-                List<Long> skuIds = v.stream().map(GoodsCart::getSkuId).collect(Collectors.toList());
-                GoodsSkuOtherRequest skuOtherReq = new GoodsSkuOtherRequest();
-                skuOtherReq.setIds(skuIds);
-                Response<List<GoodsSkuResponse>> skuOtherRes = goodsSkuClient.queryList(skuOtherReq);
-                if (ResponseStatus.Code.SUCCESS == skuOtherRes.getCode()) {
-                    goodsCart.setDetails(skuOtherRes.getData().stream().map(item -> {
-                        GoodsCartDetailResponse goodsCartDetail = new GoodsCartDetailResponse();
-                        goodsCartDetail.setSkuId(item.getId());
-                        goodsCartDetail.setSkuName(item.getSkuName());
-                        item.getImages().stream()
-                                .filter(ImageModel::getMaster)
-                                .findFirst()
-                                .ifPresent(it -> goodsCartDetail.setSkuLogo(it.getUrl()));
-
-                        v.stream()
-                                .filter(it -> IConsts.ZERO == item.getId().compareTo(it.getSkuId()))
-                                .findFirst()
-                                .ifPresent(it -> {
-                                    goodsCartDetail.setQuantity(it.getQuantity());
-                                    goodsCartDetail.setGoodsCartId(it.getId());
-                                    goodsCartDetail.setSkuAmount(item.getSkuAmount().multiply(new BigDecimal(it.getQuantity())));
-                                });
-                        return goodsCartDetail;
-                    }).collect(Collectors.toList()));
-                }
-            });
+            result = this.convert(goodsCarts);
         }
 
         return Response.toResponse(result, total);
     }
 
     @Override
-    public Response<String> add(final CartParam param) {
+    public Response<List<GoodsCartResponse>> list(final CartOtherRequest request) {
 
-        final Long id = param.getId();
-        final Long skuId = param.getSkuId();
-        final Integer quantity = param.getQuantity();
-        final Long userId = param.getUserId();
-        final Long sellerId = param.getSellerId();
+        List<GoodsCart> goodsCarts = goodsCartMapper.selectList(new LambdaQueryWrapper<GoodsCart>()
+                .in(CollectionUtils.isNotEmpty(request.getGoodsCartIds()), GoodsCart::getId, request.getGoodsCartIds()));
 
-        // 购物车的主键不存在，则认为是新增的购物车条目
-        // 有一种情况，是在商品详情页时，重复添加购物车，此时前端获取不到购物车的主键
-        // 则，后端需要重新处理
-        if (Objects.isNull(id)) {
-
-            List<GoodsCart> goodsCarts = goodsCartMapper.selectList(new LambdaQueryWrapper<GoodsCart>()
-                    .eq(GoodsCart::getDeleteStatus, Boolean.FALSE)
-                    .eq(GoodsCart::getUserId, userId)
-                    .eq(GoodsCart::getSkuId, skuId));
-            if (CollectionUtils.isEmpty(goodsCarts)) {
-                GoodsCart goodsCart = new GoodsCart();
-                goodsCart.setUserId(userId);
-                goodsCart.setSkuId(skuId);
-                goodsCart.setQuantity(quantity);
-                goodsCart.setSellerId(sellerId);
-                goodsCart.setUpdateTime(DateUtils.dateTime());
-                goodsCart.setCreateTime(DateUtils.dateTime());
-                goodsCart.setDeleteStatus(Boolean.FALSE);
-                goodsCartMapper.insert(goodsCart);
-            } else {
-                // 此时这种情况，需要更新购物车的数量
-                goodsCarts.forEach(goodsCart -> {
-                    GoodsCart updateGoodsCart = new GoodsCart();
-                    updateGoodsCart.setId(goodsCart.getId());
-                    updateGoodsCart.setQuantity(quantity + goodsCart.getQuantity());
-                    updateGoodsCart.setUpdateTime(DateUtils.dateTime());
-                    goodsCartMapper.updateById(goodsCart);
-                });
-            }
-        } else {
-            GoodsCart goodsCart = new GoodsCart();
-            goodsCart.setId(id);
-            goodsCart.setQuantity(quantity);
-            goodsCart.setUpdateTime(DateUtils.dateTime());
-            goodsCartMapper.updateById(goodsCart);
-        }
-
-        return new Response<>();
+        return Response.toResponse(this.convert(goodsCarts));
     }
 
     @Override
-    public Response<String> delete(final List<Long> ids) {
+    @Transactional(rollbackFor = Exception.class)
+    public Response<Long> create(final CartRequest request) {
 
-        GoodsCart goodsCart = new GoodsCart();
-        goodsCart.setDeleteStatus(Boolean.TRUE);
-        goodsCart.setUpdateTime(DateUtils.dateTime());
-        goodsCartMapper.update(goodsCart, new LambdaQueryWrapper<GoodsCart>().in(GoodsCart::getId, ids));
-        return Response.toResponse("删除成功");
+        final String key = env.concat(CartRedisKeys.APP_GOODS_CART_ADD_PREFIX)
+                .concat(String.valueOf(request.getUserId()))
+                .concat(":").concat(String.valueOf(request.getSkuId()));
+        RLock lock = redissonClient.getLock(key);
+        try {
+            if (lock.tryLock(300, TimeUnit.MILLISECONDS)) {
+                GoodsCart goodsCart = this.goodsCartMapper.selectOne(new LambdaQueryWrapper<GoodsCart>()
+                        .eq(GoodsCart::getUserId, request.getUserId())
+                        .eq(GoodsCart::getSkuId, request.getSkuId()));
+
+
+                if (Objects.isNull(goodsCart)) {
+                    goodsCart = new GoodsCart();
+                    goodsCart.setUserId(request.getUserId());
+                    goodsCart.setSkuId(request.getSkuId());
+                    goodsCart.setQuantity(IConsts.ONE);
+                    goodsCart.setSellerId(request.getSellerId());
+                    goodsCart.setUpdateTime(DateUtils.dateTime());
+                    goodsCart.setCreateTime(DateUtils.dateTime());
+                    goodsCart.setDeleteStatus(Boolean.FALSE);
+                    this.goodsCartMapper.insert(goodsCart);
+                } else {
+                    GoodsCart updateGoodsCart = new GoodsCart();
+                    updateGoodsCart.setId(goodsCart.getId());
+                    updateGoodsCart.setQuantity(goodsCart.getQuantity() + IConsts.ONE);
+                    updateGoodsCart.setUpdateTime(DateUtils.dateTime());
+                    this.goodsCartMapper.updateById(updateGoodsCart);
+                }
+            } else {
+                return Response.toError(ResponseStatus.Code.FAIL_CODE, "您操作太快，请稍后重试");
+            }
+        } catch (InterruptedException e) {
+            log.error("添加购物车加锁失败 userId = {}, skuId = {}", request.getUserId(), request.getSkuId());
+            e.printStackTrace();
+        } finally {
+            if (Objects.nonNull(lock) && lock.isLocked()) {
+                lock.unlock();
+            }
+        }
+
+        return Response.toResponse();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response<Long> delete(final Long id) {
+
+        GoodsCart goodsCart = this.goodsCartMapper.selectById(id);
+        if (Objects.isNull(goodsCart)) {
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "当前购物车栏不存在");
+        }
+
+        int delete = this.goodsCartMapper.deleteById(id);
+
+        if (delete > 0) {
+            return Response.toResponse(id);
+        }
+        return Response.toError(ResponseStatus.Code.FAIL_CODE, "删除购物车失败");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Response<List<Long>> deleteBatch(final List<Long> ids) {
+        int delete = goodsCartMapper.deleteBatchIds(ids);
+
+        if (delete > 0) {
+            return Response.toResponse(ids);
+        }
+        return Response.toError(ResponseStatus.Code.FAIL_CODE, "删除购物车失败");
+    }
+
+
+    /**
+     * 数据转换
+     *
+     * @param goodsCarts 商品购物车信息
+     */
+    private List<GoodsCartResponse> convert(final List<GoodsCart> goodsCarts) {
+        //1. 从商品服务查询商品sku信息
+        GoodsSkuOtherRequest skuOtherReq = new GoodsSkuOtherRequest();
+        skuOtherReq.setIds(goodsCarts.stream().map(GoodsCart::getSkuId).collect(Collectors.toList()));
+        Response<List<GoodsSkuResponse>> skuOtherRes = goodsSkuClient.queryList(skuOtherReq);
+        Map<Long, List<GoodsSkuResponse>> skuMap = Maps.newHashMap();
+        if (skuOtherRes.check()) {
+            skuMap.putAll(skuOtherRes.getData().stream().collect(Collectors.groupingBy(GoodsSkuResponse::getId)));
+        }
+
+        return goodsCarts.stream().map(item -> {
+            GoodsCartResponse goodsCart = new GoodsCartResponse();
+            goodsCart.setId(item.getId());
+            goodsCart.setQuantity(item.getQuantity());
+            goodsCart.setSkuId(item.getSkuId());
+            skuMap.get(item.getSkuId()).stream().findFirst().ifPresent(sku -> {
+                goodsCart.setSkuName(sku.getSkuName());
+                goodsCart.setSkuImage(sku.getImages().get(0).getUrl());
+                goodsCart.setExpire(sku.getExpire());
+                goodsCart.setDiscountAmount(sku.getDiscountAmount());
+                goodsCart.setSkuAmount(sku.getSkuAmount());
+            });
+            return goodsCart;
+        }).collect(Collectors.toList());
     }
 }

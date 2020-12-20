@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
+import quick.pager.shop.enmus.OSSTypeEnum;
 import quick.pager.shop.properties.QiniuProperties;
 import quick.pager.shop.service.OSSService;
 import quick.pager.shop.utils.DateUtils;
@@ -37,6 +38,11 @@ public class QiniuServiceImpl implements OSSService {
     private Auth auth;
     @Autowired(required = false)
     private QiniuProperties qiniuProperties;
+
+    @Override
+    public boolean support(final OSSTypeEnum ossType) {
+        return OSSTypeEnum.QINIU.equals(ossType);
+    }
 
     @Override
     public String uploadStream(InputStream is, String fileName) {

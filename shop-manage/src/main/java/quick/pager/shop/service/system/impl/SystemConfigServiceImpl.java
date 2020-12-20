@@ -20,7 +20,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
     private SystemConfigClient systemConfigClient;
 
     @Override
-    public Response<List<SystemConfigResponse>> queryPage(SystemConfigParam param) {
+    public Response<List<SystemConfigResponse>> queryPage(final SystemConfigParam param) {
 
         SystemConfigPageRequest request = new SystemConfigPageRequest();
         BeanCopier.create(param, request).copy();
@@ -30,14 +30,14 @@ public class SystemConfigServiceImpl implements SystemConfigService {
     }
 
     @Override
-    public Response<List<SystemConfigResponse>> queryList(SystemConfigParam param) {
+    public Response<List<SystemConfigResponse>> queryList(final SystemConfigParam param) {
         SystemConfigOtherRequest request = new SystemConfigOtherRequest();
         BeanCopier.create(param, request).copy();
         return systemConfigClient.queryList(request);
     }
 
     @Override
-    public Response<Long> create(SystemConfigParam param) {
+    public Response<Long> create(final SystemConfigParam param) {
 
         SystemConfigSaveRequest request = new SystemConfigSaveRequest();
         BeanCopier.create(param, request).copy();
@@ -46,7 +46,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
     }
 
     @Override
-    public Response<Long> modify(SystemConfigParam param) {
+    public Response<Long> modify(final SystemConfigParam param) {
         SystemConfigSaveRequest request = new SystemConfigSaveRequest();
         BeanCopier.create(param, request).copy();
 
@@ -54,7 +54,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
     }
 
     @Override
-    public Response<Long> delete(Long id) {
+    public Response<Long> delete(final Long id) {
         SystemConfigSaveRequest request = new SystemConfigSaveRequest();
         request.setId(id);
         request.setDeleteStatus(Boolean.TRUE);

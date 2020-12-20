@@ -1,14 +1,10 @@
 package quick.pager.shop.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.google.common.collect.Maps;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.platform.dto.SystemConfigDTO;
 import quick.pager.shop.mapper.SystemConfigDetailMapper;
@@ -20,7 +16,6 @@ import quick.pager.shop.platform.request.SystemConfigPageRequest;
 import quick.pager.shop.platform.request.SystemConfigSaveRequest;
 import quick.pager.shop.service.SystemConfigService;
 import quick.pager.shop.user.response.Response;
-import quick.pager.shop.service.RedisService;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
@@ -35,7 +30,7 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
     @Autowired
     private SystemConfigDetailMapper systemConfigDetailMapper;
     @Autowired
-    private RedisService redisService;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public List<SystemConfig> queryList(SystemConfigOtherRequest request) {
@@ -61,42 +56,35 @@ public class SystemConfigServiceImpl extends ServiceImpl<SystemConfigMapper, Sys
         systemConfig.setDeleteStatus(Boolean.FALSE);
         systemConfig.setConfigStatus(Boolean.FALSE);
         this.baseMapper.insert(systemConfig);
-        return new Response<>(systemConfig.getId());
+        return Response.toResponse(systemConfig.getId());
     }
 
     @Override
     public Response<Long> modify(SystemConfigSaveRequest request) {
         SystemConfig systemConfig = this.convert(request);
         this.baseMapper.updateById(systemConfig);
-        return new Response<>(systemConfig.getId());
+        return Response.toResponse(systemConfig.getId());
     }
 
     @Override
     public void executeTask() {
-        SystemConfig systemConfig = new SystemConfig();
-        systemConfig.setDeleteStatus(Boolean.FALSE);
-        systemConfig.setConfigStatus(Boolean.FALSE);
-        List<SystemConfig> systemConfigs = this.baseMapper.selectList(new QueryWrapper<>(systemConfig));
+        List<SystemConfig> systemConfigs = this.baseMapper.selectList(new LambdaQueryWrapper<SystemConfig>().eq(SystemConfig::getConfigStatus, Boolean.FALSE));
 
-        Map<String, List<SystemConfigDTO>> listMap = Maps.newHashMap();
         for (SystemConfig config : systemConfigs) {
-            SystemConfigDetail detail = new SystemConfigDetail();
-            detail.setDeleteStatus(Boolean.FALSE);
-            detail.setConfigStatus(Boolean.FALSE);
-            detail.setConfigKey(config.getConfigType());
+            List<SystemConfigDetail> systemConfigDetails = systemConfigDetailMapper.selectList(new LambdaQueryWrapper<SystemConfigDetail>()
+                    .eq(SystemConfigDetail::getConfigStatus, Boolean.FALSE)
+                    .eq(SystemConfigDetail::getConfigKey, config.getConfigType()));
 
-            List<SystemConfigDetail> systemConfigDetails = systemConfigDetailMapper.selectList(new QueryWrapper<>(detail));
-            List<SystemConfigDTO> dtos = systemConfigDetails.stream().map(detailItem -> {
+            redisTemplate.delete(config.getConfigType());
+            systemConfigDetails.forEach(item -> {
                 SystemConfigDTO dto = new SystemConfigDTO();
-                dto.setConfigType(detailItem.getConfigType());
-                dto.setConfigValue(detailItem.getConfigValue());
-                dto.setConfigName(detailItem.getConfigName());
-                return dto;
-            }).collect(Collectors.toList());
-            listMap.put(config.getConfigType(), dtos);
+                dto.setConfigType(item.getConfigType());
+                dto.setConfigValue(item.getConfigValue());
+                dto.setConfigName(item.getConfigName());
+                redisTemplate.opsForList().leftPush(config.getConfigType(), dto);
+            });
         }
 
-        listMap.forEach((k, v) -> redisService.set(k, new ArrayList<>(v), 24 * 60 * 60L * 2));
     }
 
     /**

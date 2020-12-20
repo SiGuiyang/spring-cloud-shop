@@ -35,7 +35,7 @@ public class DynamicFormServiceImpl implements DynamicFormService {
             dynamicFormClient.create(request);
         });
 
-        return new Response<>();
+        return Response.toResponse();
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DynamicFormServiceImpl implements DynamicFormService {
             dynamicFormClient.modify(request);
         });
 
-        return new Response<>();
+        return Response.toResponse();
     }
 
     @Override

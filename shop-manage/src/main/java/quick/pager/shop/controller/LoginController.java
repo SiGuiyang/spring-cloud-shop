@@ -26,6 +26,8 @@ public class LoginController {
 
     /**
      * 获取系统用户
+     *
+     * @param phone 手机号码
      */
     @PostMapping("/permit/sysUser")
     public Response<SysUser> getSysUser(@RequestParam("phone") String phone) {

@@ -1,19 +1,21 @@
 package quick.pager.shop.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.activity.constants.RedisKeys;
+import quick.pager.shop.activity.constants.ActivityRedisKeys;
 import quick.pager.shop.mapper.BannerMapper;
 import quick.pager.shop.model.Banner;
 import quick.pager.shop.activity.request.banner.BannerOtherRequest;
@@ -22,7 +24,6 @@ import quick.pager.shop.activity.request.banner.BannerSaveRequest;
 import quick.pager.shop.activity.response.banner.BannerChannelResponse;
 import quick.pager.shop.activity.response.banner.BannerResponse;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.constants.SConsts;
 import quick.pager.shop.platform.client.SystemConfigDetailClient;
 import quick.pager.shop.platform.dto.SystemConfigDTO;
@@ -30,7 +31,7 @@ import quick.pager.shop.platform.request.SystemConfigDetailOtherRequest;
 import quick.pager.shop.platform.response.SystemConfigDetailResponse;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.service.BannerService;
-import quick.pager.shop.service.RedisService;
+import quick.pager.shop.utils.Assert;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
@@ -44,7 +45,7 @@ import quick.pager.shop.utils.DateUtils;
 public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> implements BannerService {
 
     @Autowired
-    private RedisService redisService;
+    private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private SystemConfigDetailClient systemConfigDetailClient;
 
@@ -72,7 +73,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         banner.setDeleteStatus(Boolean.FALSE);
         banner.setCreateTime(DateUtils.dateTime());
         this.baseMapper.insert(banner);
-        return new Response<>(banner.getId());
+        return Response.toResponse(banner.getId());
     }
 
     @Override
@@ -80,27 +81,27 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         Banner banner = BeanCopier.create(request, new Banner()).copy();
         doChannel(banner, request.getShareChannel());
         this.baseMapper.updateById(banner);
-        return new Response<>(banner.getId());
+        return Response.toResponse(banner.getId());
     }
 
     @Override
     public Response<List<BannerResponse>> banners(Long userId, String lat, String lng) {
 
-        // 缓存存在则直接返回
-        List<BannerResponse> result = redisService.get(RedisKeys.APP_BANNER_PREFIX);
+        Long size = redisTemplate.opsForList().size(ActivityRedisKeys.APP_BANNER_PREFIX);
+        if (Objects.nonNull(size)) {
+            // 缓存存在则直接返回
+            List<Object> result = redisTemplate.opsForList().range(ActivityRedisKeys.APP_BANNER_PREFIX, 0, size);
 
-        if (CollectionUtils.isNotEmpty(result)) {
-            return Response.toResponse(result);
+            if (CollectionUtils.isNotEmpty(result)) {
+                return Response.toResponse(JSON.parseArray(JSON.toJSONString(result), BannerResponse.class));
+            }
         }
 
         List<Banner> banners = this.baseMapper.selectList(new LambdaQueryWrapper<Banner>()
                 .eq(Banner::getDeleteStatus, Boolean.FALSE)
                 .eq(Banner::getBannerStatus, Boolean.FALSE));
 
-        result = banners.stream().map(this::convert).collect(Collectors.toList());
-
-        // 添加缓存
-        redisService.set(RedisKeys.APP_BANNER_PREFIX, new ArrayList<>(result), 30 * 24 * 60 * 60L);
+        List<BannerResponse> result = banners.stream().map(this::convert).collect(Collectors.toList());
 
         return Response.toResponse(result);
     }
@@ -110,22 +111,19 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
 
         Banner banner = this.baseMapper.selectById(id);
 
-        if (Objects.isNull(banner)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "banner 不存在！");
-        }
+        Assert.isTrue(Objects.nonNull(banner), () -> "banner 不存在！");
 
-        if (StringUtils.isBlank(banner.getShareChannel())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "渠道不存在！");
-        }
+        Assert.isTrue(StringUtils.isNotEmpty(banner.getShareChannel()), () -> "渠道不存在！");
+
         List<String> shareChannels = Stream.of(banner.getShareChannel().split(SConsts.EN_COMMA)).collect(Collectors.toList());
+        Long size = redisTemplate.opsForList().size(ActivityRedisKeys.BANNER_SHARE_CHANNEL);
 
-        List<SystemConfigDTO> configDTOS = redisService.get(RedisKeys.BANNER_SHARE_CHANNEL);
-
-        if (CollectionUtils.isEmpty(configDTOS)) {
+        List<SystemConfigDTO> configDTOS = null;
+        if (Objects.isNull(size)) {
             SystemConfigDetailOtherRequest systemConfigDetailOtherReq = new SystemConfigDetailOtherRequest();
-            systemConfigDetailOtherReq.setConfigKey(RedisKeys.BANNER_SHARE_CHANNEL);
+            systemConfigDetailOtherReq.setConfigKey(ActivityRedisKeys.BANNER_SHARE_CHANNEL);
             Response<List<SystemConfigDetailResponse>> systemConfigDetailOtherRes = systemConfigDetailClient.queryList(systemConfigDetailOtherReq);
-            if (ResponseStatus.Code.SUCCESS == systemConfigDetailOtherRes.getCode()) {
+            if (systemConfigDetailOtherRes.check()) {
                 configDTOS = systemConfigDetailOtherRes.getData().stream().map(item -> {
                     SystemConfigDTO dto = new SystemConfigDTO();
                     dto.setConfigType(item.getConfigType());
@@ -134,9 +132,12 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
                     return dto;
                 }).collect(Collectors.toList());
             }
+        } else {
+            List<Object> result = redisTemplate.opsForList().range(ActivityRedisKeys.BANNER_SHARE_CHANNEL, 0, size);
+            configDTOS = JSON.parseArray(JSON.toJSONString(result), SystemConfigDTO.class);
         }
 
-        return Response.toResponse(configDTOS.stream()
+        return Response.toResponse(Optional.ofNullable(configDTOS).orElse(Lists.newArrayList()).stream()
                 .filter(item -> shareChannels.contains(item.getConfigValue()))
                 .map(item -> {
                     BannerChannelResponse response = new BannerChannelResponse();
@@ -168,6 +169,8 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         } else {
             response.setShareChannel(Lists.newArrayList());
         }
+        // 添加缓存
+        redisTemplate.opsForList().leftPush(ActivityRedisKeys.APP_BANNER_PREFIX, response);
         return response;
     }
 

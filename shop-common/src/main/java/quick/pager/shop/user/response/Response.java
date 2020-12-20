@@ -19,11 +19,11 @@ public class Response<T> implements Serializable {
     /**
      * 数据响应吗
      */
-    private int code = ResponseStatus.Code.SUCCESS;
+    private int code;
     /**
      * 响应消息
      */
-    private String msg = ResponseStatus.SUCCESS_MSG;
+    private String msg;
     /**
      * 响应数据
      */
@@ -36,10 +36,10 @@ public class Response<T> implements Serializable {
      */
     private long total;
 
-    public Response() {
+    private Response() {
     }
 
-    public Response(int code, String msg) {
+    private Response(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -50,6 +50,8 @@ public class Response<T> implements Serializable {
 
     public static <T> Response<List<T>> toResponse(List<T> data, long total) {
         Response<List<T>> response = new Response<>();
+        response.setCode(ResponseStatus.Code.SUCCESS);
+        response.setMsg(ResponseStatus.SUCCESS_MSG);
         response.setTotal(total);
         response.setData(data);
         return response;
@@ -57,14 +59,31 @@ public class Response<T> implements Serializable {
 
     public static <T> Response<T> toResponse(T data) {
         Response<T> response = new Response<>();
+        response.setCode(ResponseStatus.Code.SUCCESS);
+        response.setMsg(ResponseStatus.SUCCESS_MSG);
         response.setData(data);
         return response;
+    }
+
+    public static <T> Response<T> toResponse() {
+        Response<T> response = new Response<>();
+        response.setCode(ResponseStatus.Code.SUCCESS);
+        response.setMsg(ResponseStatus.SUCCESS_MSG);
+        return response;
+    }
+
+    public static <T> Response<T> toError(int code, String msg) {
+        return new Response<>(code, msg);
+    }
+
+    public static <T> Response<T> toError(String msg) {
+        return toError(ResponseStatus.Code.EXCEPTION_CODE, msg);
     }
 
     /**
      * 验证code是否成功
      */
     public boolean check() {
-        return ResponseStatus.Code.SUCCESS == this.code;
+        return ResponseStatus.Code.SUCCESS == this.getCode();
     }
 }

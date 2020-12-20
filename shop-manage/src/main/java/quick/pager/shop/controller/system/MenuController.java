@@ -16,6 +16,7 @@ import quick.pager.shop.param.system.MenuOtherParam;
 import quick.pager.shop.param.system.MenuSaveParam;
 import quick.pager.shop.service.system.MenuService;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 菜单管理
@@ -54,9 +55,7 @@ public class MenuController {
     @PreAuthorize("hasAuthority('PAGER_SYSTEM_MENU_MODIFY')")
     @PutMapping("/menu/modify")
     public Response<Long> modify(@RequestBody MenuSaveParam param) {
-        if (Objects.isNull(param.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(Objects.nonNull(param.getId()), () -> ResponseStatus.PARAMS_EXCEPTION);
         return menuService.modify(param);
     }
 

@@ -30,6 +30,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import quick.pager.shop.granter.PhonePasswordTokenGranter;
 import quick.pager.shop.granter.SmsTokenGranter;
 import quick.pager.shop.service.UserServiceImpl;
+import quick.pager.shop.translator.DefaultWebResponseExceptionTranslator;
 
 /**
  * OAuth security 配置
@@ -50,6 +51,8 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
     private AuthorizationCodeServices authorizationCodeServices;
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
+    @Autowired
+    private DefaultWebResponseExceptionTranslator webResponseExceptionTranslator;
 
 
     @Override
@@ -70,6 +73,7 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
         endpoints
                 .authenticationManager(authenticationManager)
                 .authorizationCodeServices(authorizationCodeServices)
+                .exceptionTranslator(webResponseExceptionTranslator)
                 .tokenStore(tokenStore())
                 .userDetailsService(userServiceImpl)
                 .tokenGranter(new CompositeTokenGranter(getTokenGranters(endpoints.getAuthorizationCodeServices(), endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory())))

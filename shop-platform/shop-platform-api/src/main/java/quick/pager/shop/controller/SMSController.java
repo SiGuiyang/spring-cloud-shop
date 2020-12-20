@@ -1,14 +1,12 @@
 package quick.pager.shop.controller;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.ConstantsClient;
-import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.platform.request.sms.SMSRequest;
+import quick.pager.shop.platform.client.SMSClient;
 import quick.pager.shop.service.SMSService;
 import quick.pager.shop.user.response.Response;
 
@@ -19,7 +17,7 @@ import quick.pager.shop.user.response.Response;
  */
 @RestController
 @RequestMapping(ConstantsClient.PLATFORM)
-public class SMSController {
+public class SMSController implements SMSClient {
 
     @Autowired
     private SMSService smsService;
@@ -27,15 +25,13 @@ public class SMSController {
     /**
      * 发送短信验证码
      *
-     * @param request 请求参数
+     * @param phone  手机号码
+     * @param source 事件源
      * @return 验证码
      */
     @PostMapping("/sms/send")
-    public Response<String> sendSms(@RequestBody SMSRequest request) {
-        if (StringUtils.isEmpty(request.getPhone()) || StringUtils.isEmpty(request.getEvent())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
-
-        return smsService.sendSms(request.getPhone(), request.getEvent());
+    @Override
+    public Response<String> sendSms(@RequestParam("phone") final String phone, @RequestParam("source") final String source) {
+        return smsService.sendSms(phone, source);
     }
 }

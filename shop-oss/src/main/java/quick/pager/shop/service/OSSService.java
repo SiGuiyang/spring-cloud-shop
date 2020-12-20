@@ -2,6 +2,7 @@ package quick.pager.shop.service;
 
 import java.io.File;
 import java.io.InputStream;
+import quick.pager.shop.enmus.OSSTypeEnum;
 
 /**
  * 上传服务
@@ -9,6 +10,14 @@ import java.io.InputStream;
  * @author siguiyang
  */
 public interface OSSService {
+
+    /**
+     * 支持ossType 类型
+     *
+     * @param ossType OSSType枚举
+     * @return true 支持
+     */
+    boolean support(final OSSTypeEnum ossType);
 
     /**
      * 上传文件

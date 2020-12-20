@@ -8,12 +8,7 @@
         <version>cloud-1.0</version>
     </parent>
     <artifactId>shop-gateway</artifactId>
-    <name>shop-gateway</name>
     <description>Gateway服务网关</description>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -52,12 +47,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>17.0.0</version>
         </dependency>
 
         <dependency>

@@ -13,7 +13,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -61,32 +60,6 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
                 .csrf().disable()
                 .authorizeRequests().mvcMatchers(permissions.toArray(new String[0])).permitAll()
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, ex) -> { // 匿名用户访问无权限返回
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-
-                    Map<String, Object> result = new HashMap<>();
-                    result.put("code", 10000);
-                    result.put("msg", "您没有权限访问！");
-                    result.put("data", null);
-                    result.put("timestamp", System.currentTimeMillis());
-                    response.getWriter().println(JSON.toJSONString(result));
-
-                })
-                .accessDeniedHandler((request, response, ex) -> { // 具有访问资源的用户但无法访问某些资源返回无权限访问
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-
-                    Map<String, Object> result = new HashMap<>();
-                    result.put("code", 10000);
-                    result.put("msg", "您没有权限访问！");
-                    result.put("data", null);
-                    result.put("timestamp", System.currentTimeMillis());
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.getWriter().println(JSON.toJSONString(result));
-
-                }).and()
                 .authorizeRequests()
                 .anyRequest().authenticated();
     }
@@ -95,6 +68,19 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
 
         resources
+                .authenticationEntryPoint((request, response, ex) -> { // 匿名用户访问无权限返回
+                    response.setCharacterEncoding("UTF-8");
+                    response.setHeader("Content-Type", "application/json;charset=UTF-8");
+                    response.getWriter().println(JSON.toJSONString(this.toResponse("登录过期！")));
+
+                })
+                .accessDeniedHandler((request, response, ex) -> { // 具有访问资源的用户但无法访问某些资源返回无权限访问
+                    response.setCharacterEncoding("UTF-8");
+                    response.setHeader("Content-Type", "application/json;charset=UTF-8");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.getWriter().println(JSON.toJSONString(this.toResponse("您没有访问权限！")));
+
+                })
                 .tokenServices(tokenServices())
                 .resourceId("users-info");
     }
@@ -114,5 +100,20 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 定义数据返回
+     *
+     * @param msg 消息提醒内容
+     * @return 数据返回
+     */
+    private Map<String, Object> toResponse(final String msg) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 10000);
+        result.put("msg", msg);
+        result.put("data", msg);
+        result.put("timestamp", System.currentTimeMillis());
+        return result;
     }
 }

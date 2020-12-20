@@ -22,11 +22,6 @@ public class GoodsSpu extends Model {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 分类 t_goods_class id 这个分类必须是二级分类，不可是顶级分类
-     */
-    private Long classificationId;
-
-    /**
      * spu 名称
      */
     private String spuName;

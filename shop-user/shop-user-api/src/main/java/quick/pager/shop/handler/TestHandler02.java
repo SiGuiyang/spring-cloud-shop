@@ -10,7 +10,7 @@ public class TestHandler02 extends AbstractHandler<Object> {
 
     @Override
     public Response<Object> doHandler(Object obj) {
-        Response<Object> response = new Response<>(ResponseStatus.Code.SUCCESS, ResponseStatus.SUCCESS_MSG);
+        Response<Object> response = Response.toResponse();
         System.out.println(JSON.toJSONString(response));
         System.out.println(obj);
 

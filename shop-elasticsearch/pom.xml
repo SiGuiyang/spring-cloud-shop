@@ -16,7 +16,6 @@
     <artifactId>shop-elasticsearch</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-elasticsearch</name>
     <description>Shop elasticsearch 服务</description>
 
     <properties>

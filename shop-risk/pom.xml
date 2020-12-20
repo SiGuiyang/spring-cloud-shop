@@ -16,7 +16,6 @@
     <artifactId>shop-risk</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-risk</name>
     <description>风控服务</description>
 
     <properties>

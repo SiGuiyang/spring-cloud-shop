@@ -16,7 +16,6 @@
     <artifactId>shop-user</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-user</name>
     <description>消费者APP服务</description>
 
     <properties>

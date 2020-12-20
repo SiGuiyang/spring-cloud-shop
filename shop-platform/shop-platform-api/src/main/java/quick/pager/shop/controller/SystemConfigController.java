@@ -50,7 +50,7 @@ public class SystemConfigController {
     @PutMapping("/config/modify")
     public Response<Long> modify(@RequestBody SystemConfigSaveRequest request) {
         if (Objects.isNull(request)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
 
         return systemConfigService.modify(request);
@@ -63,7 +63,7 @@ public class SystemConfigController {
     public Response<List<SystemConfigResponse>> queryList(SystemConfigOtherRequest request) {
         List<SystemConfig> systemConfigs = systemConfigService.queryList(request);
 
-        return new Response<>(Optional.ofNullable(systemConfigs).orElse(Collections.emptyList()).stream()
+        return Response.toResponse(Optional.ofNullable(systemConfigs).orElse(Collections.emptyList()).stream()
                 .map(this::convert)
                 .collect(Collectors.toList()));
     }
@@ -90,7 +90,7 @@ public class SystemConfigController {
 
         systemConfigService.executeTask();
 
-        return new Response<>();
+        return Response.toResponse();
     }
 
     /**

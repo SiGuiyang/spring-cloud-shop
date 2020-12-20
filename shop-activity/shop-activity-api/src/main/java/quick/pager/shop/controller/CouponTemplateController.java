@@ -18,9 +18,9 @@ import quick.pager.shop.activity.request.coupon.DiscountCouponTemplateSaveReques
 import quick.pager.shop.activity.response.coupon.DiscountCouponTemplateResponse;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.exception.ShopException;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.service.CouponTemplateService;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 优惠券模板管理
@@ -57,9 +57,7 @@ public class CouponTemplateController {
      */
     @PutMapping("/coupon/template/modify")
     public Response<Long> modify(@RequestBody DiscountCouponTemplateSaveRequest request) {
-        if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(Objects.nonNull(request.getId()), () -> ResponseStatus.PARAMS_EXCEPTION);
         this.doRequest(request);
         return couponTemplateService.modify(request);
     }
@@ -69,7 +67,7 @@ public class CouponTemplateController {
      */
     @GetMapping("/coupon/template/{templateId}")
     public Response<DiscountCouponTemplateResponse> info(@PathVariable("templateId") Long templateId) {
-        return new Response<>(couponTemplateService.info(templateId));
+        return Response.toResponse(couponTemplateService.info(templateId));
     }
 
 
@@ -84,11 +82,9 @@ public class CouponTemplateController {
             if (CouponTypeEnums.DISCOUNT.getCode().equals(request.getTemplateType())) {
                 BigDecimal hundred = new BigDecimal("100");
 
-                if (hundred.compareTo(request.getDiscountStrength()) <= 0) {
-                    throw new ShopException(ResponseStatus.Code.FAIL_CODE, "折扣力度不能必须小于100");
-                } else if (BigDecimal.ZERO.compareTo(request.getDiscountStrength()) >= 0) {
-                    throw new ShopException(ResponseStatus.Code.FAIL_CODE, "折扣力度必须是整数");
-                }
+                Assert.isTrue(hundred.compareTo(request.getDiscountStrength()) > 0, () -> "折扣力度不能必须小于100");
+                Assert.isTrue(BigDecimal.ZERO.compareTo(request.getDiscountStrength()) < 0, () -> "折扣力度必须是整数");
+
                 request.setDiscountStrength(request.getDiscountStrength().divide(new BigDecimal("100"), RoundingMode.HALF_UP));
             }
         }

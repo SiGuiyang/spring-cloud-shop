@@ -19,12 +19,12 @@ public class GoodsClassificationSaveRequest extends Request {
      */
     private String className;
     /**
-     * 父级主键
+     * spu主键
      */
-    private Long parentId;
+    private Long spuId;
     /**
-     * banner主键
+     * 序号
      */
-    private Long bannerId;
+    private Integer sequence;
 
 }

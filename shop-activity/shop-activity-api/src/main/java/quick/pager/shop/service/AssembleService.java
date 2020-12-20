@@ -16,30 +16,6 @@ import quick.pager.shop.user.response.Response;
 public interface AssembleService {
 
     /**
-     * 拼团活动列表
-     *
-     * @param request 请求参数
-     * @return 拼团活动列表
-     */
-    Response<List<AssembleActivityResponse>> queryPage(AssemblePageRequest request);
-
-    /**
-     * 修改拼团活动
-     *
-     * @param request 拼团参数
-     * @return 活动主键
-     */
-    Response<Long> modify(AssembleSaveRequest request);
-
-    /**
-     * 新增拼团活动
-     *
-     * @param request 拼团参数
-     * @return 活动主键
-     */
-    Response<Long> create(AssembleSaveRequest request);
-
-    /**
      * 设置拼团商品
      */
 //    Response assembleGoods(AssemblePageRequest request);

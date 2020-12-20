@@ -1,12 +1,17 @@
 package quick.pager.shop.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
+import com.google.common.collect.ImmutableMap;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.EnumUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.configuration.ShopRedisTemplate;
+import quick.pager.shop.constants.RedisKeys;
 import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.mq.PlatformMQ;
 import quick.pager.shop.platform.enums.SMSCodeEnums;
 import quick.pager.shop.platform.response.SMSTemplateResponse;
 import quick.pager.shop.service.SMSService;
@@ -24,27 +29,34 @@ public class SMSServiceImpl implements SMSService {
     @Autowired
     private SMSTemplateService smsTemplateService;
     @Autowired
-    private ShopRedisTemplate shopRedisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private PlatformMQ platformMQ;
 
     @Override
-    public Response<String> sendSms(String phone, String event) {
+    public Response<String> sendSms(final String phone, final String event) {
 
         SMSCodeEnums smsCodeEnums = EnumUtils.getEnum(SMSCodeEnums.class, event);
 
         if (Objects.isNull(smsCodeEnums)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "未找到短信发送渠道");
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "未找到短信发送渠道");
         }
 
         Response<SMSTemplateResponse> templateResponse = smsTemplateService.sms(smsCodeEnums.getCode());
 
         // 模板查询未成功
-        if (ResponseStatus.Code.SUCCESS != templateResponse.getCode()) {
-            return new Response<>(templateResponse.getCode(), templateResponse.getMsg());
+        if (!templateResponse.check()) {
+            return Response.toError(templateResponse.getCode(), templateResponse.getMsg());
         }
 
         String content = templateResponse.getData().getTemplateContent();
 
-        return new Response<>(getContent(smsCodeEnums, content, phone));
+        String smsContent = getContent(smsCodeEnums, content, phone);
+
+        // 发送消息队列
+        platformMQ.sendSMS().send(MessageBuilder.withPayload(ImmutableMap.of("phone", phone, "smsContent", smsContent)).build());
+
+        return Response.toResponse(smsContent);
     }
 
 
@@ -61,7 +73,7 @@ public class SMSServiceImpl implements SMSService {
         switch (smsCodeEnums) {
             case LOGIN_SMS:
                 String code = RandomUtil.randomString(RandomUtil.BASE_NUMBER, 6);
-                shopRedisTemplate.opsForValue().set("sms:login:code" + phone, code, 10 * 60);
+                redisTemplate.opsForValue().set(RedisKeys.REDIS_SMS_LOGIN_PREFIX + phone, code, 10, TimeUnit.MINUTES);
                 content = String.format(content, code);
                 break;
             case REGISTER_SMS:

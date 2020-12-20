@@ -18,22 +18,22 @@ public interface MenuService extends IService<Menu> {
     /**
      * 查询列表无分页
      */
-    Response<List<MenuResponse>> queryList(MenuOtherParam param);
+    Response<List<MenuResponse>> queryList(final MenuOtherParam param);
 
     /**
      * 新增
      */
-    Response<Long> create(MenuSaveParam param);
+    Response<Long> create(final MenuSaveParam param);
 
     /**
      * 修改
      */
-    Response<Long> modify(MenuSaveParam param);
+    Response<Long> modify(final MenuSaveParam param);
 
     /**
      * 删除
      *
      * @param id 主键
      */
-    Response<Long> delete(Long id);
+    Response<Long> delete(final Long id);
 }

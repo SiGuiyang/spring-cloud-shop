@@ -4,7 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-        <module>shop-auth-feign</module>
         <module>shop-auth-resource</module>
         <module>shop-auth-server-api</module>
     </modules>
@@ -16,15 +15,7 @@
     <artifactId>shop-auth</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-auth</name>
     <description>授权服务</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
 
     <build>
         <plugins>

@@ -16,6 +16,7 @@ import quick.pager.shop.param.system.AuthorizationParam;
 import quick.pager.shop.response.system.MenuResponse;
 import quick.pager.shop.service.system.PermissionService;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 权限
@@ -38,9 +39,7 @@ public class PermissionController {
     @PostMapping("/grant")
     public Response grant(@RequestBody AuthorizationParam param) {
 
-        if (Objects.isNull(param.getRoleId())) {
-            return new Response(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(Objects.nonNull(param.getRoleId()), () -> ResponseStatus.PARAMS_EXCEPTION);
 
         return permissionService.grant(param.getPermissions(), param.getRoleId());
     }

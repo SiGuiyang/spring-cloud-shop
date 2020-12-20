@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("t_goods_stock")
+@TableName("t_goods_sku_stock")
 public class GoodsSkuStock extends Model {
 
     private static final long serialVersionUID = 1L;

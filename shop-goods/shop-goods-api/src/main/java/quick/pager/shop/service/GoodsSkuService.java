@@ -2,8 +2,6 @@ package quick.pager.shop.service;
 
 import java.util.List;
 import quick.pager.shop.goods.request.sku.GoodsSkuOtherRequest;
-import quick.pager.shop.goods.request.sku.GoodsSkuPageRequest;
-import quick.pager.shop.goods.request.sku.GoodsSkuSaveRequest;
 import quick.pager.shop.goods.response.sku.GoodsSkuResponse;
 import quick.pager.shop.user.response.Response;
 
@@ -18,25 +16,19 @@ import quick.pager.shop.user.response.Response;
 public interface GoodsSkuService {
 
     /**
-     * 新增
-     */
-    Response<Long> create(final GoodsSkuSaveRequest request);
-
-    /**
-     * 编辑修改
-     */
-    Response<Long> modify(final GoodsSkuSaveRequest request);
-
-    /**
-     * 列表分页
-     */
-    Response<List<GoodsSkuResponse>> queryPage(final GoodsSkuPageRequest request);
-
-    /**
      * 商品sku集
      *
      * @param request 请求参数
      * @return 商品sku集
      */
     Response<List<GoodsSkuResponse>> queryList(final GoodsSkuOtherRequest request);
+
+    /**
+     * 通过sku主键或者sku编码 查询sku商品
+     *
+     * @param skuId   sku主键
+     * @param skuCode skuCode sku编号
+     * @return sku商品
+     */
+    Response<GoodsSkuResponse> querySku(final Long skuId, final String skuCode);
 }

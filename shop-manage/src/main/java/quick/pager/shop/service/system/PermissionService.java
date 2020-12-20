@@ -19,7 +19,7 @@ public interface PermissionService {
      * @param roleId        角色主键
      * @return 返回授权成功的提示信息
      */
-    Response grant(List<Long> permission, Long roleId);
+    Response grant(final List<Long> permission, final Long roleId);
 
     /**
      * 根据主键查询parentId 的非路由级权限
@@ -27,5 +27,5 @@ public interface PermissionService {
      * @param id 权限主键
      * @return 按钮权限列表
      */
-    Response<List<MenuResponse>> permission(Long id);
+    Response<List<MenuResponse>> permission(final Long id);
 }

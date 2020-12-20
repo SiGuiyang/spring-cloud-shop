@@ -1,6 +1,7 @@
 package quick.pager.shop.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.time.LocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,27 +16,13 @@ import lombok.EqualsAndHashCode;
 public class Goods extends Model {
     private static final long serialVersionUID = -7898238729483065751L;
     /**
-     * 品牌主键
-     */
-    private Long brandId;
-    /**
      * 商品二级分类主键
      */
-    private Long gcsId;
-    /**
-     * 商品属性组主键
-     */
-    private Long goodsPropertyGroupId;
-    /**
-     * spu 主键
-     */
-    private Long spuId;
-    /**
-     * 商品主表名称
-     */
-    private String name;
+    private Long goodsClassId;
     /**
      * 商品状态 0 未上架 1 上架申请 2 上架 3 已下架
+     *
+     * @see quick.pager.shop.goods.enums.GoodsPublishStatusEnum
      */
     private Integer publishStatus;
     /**
@@ -45,11 +32,19 @@ public class Goods extends Model {
     /**
      * 新品状态:0->不是新品；1->新品
      */
-    private Boolean state;
+    private Boolean goodsState;
     /**
      * 推荐状态；0->不推荐；1->推荐
      */
     private Boolean recommend;
+    /**
+     * 开始时间
+     */
+    private LocalDate beginTime;
+    /**
+     * 结束时间（过期时间）
+     */
+    private LocalDate endTime;
     /**
      * 商品单位
      */

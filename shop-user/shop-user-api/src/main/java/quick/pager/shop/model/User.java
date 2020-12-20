@@ -1,5 +1,6 @@
 package quick.pager.shop.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.model.Model;
@@ -11,6 +12,7 @@ import quick.pager.shop.model.Model;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@TableName("t_user")
 public class User extends Model {
 
     private static final long serialVersionUID = 6874571522967825468L;

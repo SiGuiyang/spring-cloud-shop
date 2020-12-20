@@ -44,7 +44,7 @@ public class FormServiceImpl extends ServiceImpl<FormMapper, Form> implements Fo
         form.setCreateTime(DateUtils.dateTime());
         form.setUpdateTime(DateUtils.dateTime());
         this.baseMapper.insert(form);
-        return new Response<>(form.getId());
+        return Response.toResponse(form.getId());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class FormServiceImpl extends ServiceImpl<FormMapper, Form> implements Fo
         Form form = this.convert(request);
         form.setUpdateTime(DateUtils.dateTime());
         this.baseMapper.updateById(form);
-        return new Response<>(form.getId());
+        return Response.toResponse(form.getId());
     }
 
     @Override
@@ -96,7 +96,7 @@ public class FormServiceImpl extends ServiceImpl<FormMapper, Form> implements Fo
             wrapper.eq(Form::getName, request.getName());
         }
         List<Form> list = this.baseMapper.selectList(wrapper);
-        return new Response<>(list.stream().map(this::convert).collect(Collectors.toList()));
+        return Response.toResponse(list.stream().map(this::convert).collect(Collectors.toList()));
     }
 
     @Override

@@ -16,7 +16,6 @@
     <artifactId>shop-job</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-job</name>
     <description>xxl-job调度定制化服务</description>
 
     <properties>

@@ -1,5 +1,6 @@
 package quick.pager.shop.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +44,14 @@ public class DateUtils {
      * 标准日期格式：yyyyMMdd
      */
     public final static String PURE_DATE_PATTERN = "yyyyMMdd";
+    /**
+     * 标准日期格式：yyyyMM
+     */
+    public final static String PURE_MONTH_PATTERN = "yyyyMM";
+    /**
+     * 标准日期格式：mm:ss
+     */
+    public final static String PURE_MINUTES_PATTERN = "mm:ss";
 
     /**
      * 标准日期格式：HHmmss
@@ -142,6 +151,20 @@ public class DateUtils {
 
     /**
      * 转换时间
+     */
+    public static LocalDateTime parseLocalDateTime(final Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    /**
+     * 转换时间
+     */
+    public static LocalDate parseLocalDate(final Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    /**
+     * 转换时间
      *
      * @param parseTime 时间内容
      */
@@ -155,92 +178,107 @@ public class DateUtils {
     /**
      * 加 年
      */
-    public static Date plusYears(final LocalDateTime dateTime, final long years) {
-        return Date.from(dateTime.plusYears(years).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime plusYears(final LocalDateTime dateTime, final long years) {
+        return dateTime.plusYears(years).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 加 月
      */
-    public static Date plusMonths(final LocalDateTime dateTime, final long months) {
-        return Date.from(dateTime.plusMonths(months).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime plusMonths(final LocalDateTime dateTime, final long months) {
+        return dateTime.plusMonths(months).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
+
+    /**
+     * 加 月
+     */
+    public static LocalDate plusMonths(final LocalDate localDate, final long months) {
+        return localDate.plusMonths(months);
+    }
+
 
     /**
      * 加 周
      */
-    public static Date plusWeeks(final LocalDateTime dateTime, final long weeks) {
-        return Date.from(dateTime.plusWeeks(weeks).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime plusWeeks(final LocalDateTime dateTime, final long weeks) {
+        return dateTime.plusWeeks(weeks).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 加 天
      */
-    public static Date plusDays(final LocalDateTime dateTime, final long days) {
-        return Date.from(dateTime.plusDays(days).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime plusDays(final LocalDateTime dateTime, final long days) {
+        return dateTime.plusDays(days).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 加 秒
      */
-    public static Date plusSeconds(final LocalDateTime dateTime, final long seconds) {
-        return Date.from(dateTime.plusSeconds(seconds).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime plusSeconds(final LocalDateTime dateTime, final long seconds) {
+        return dateTime.plusSeconds(seconds).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 加 分
      */
-    public static Date plusMinutes(final LocalDateTime dateTime, final long minutes) {
-        return Date.from(dateTime.plusMinutes(minutes).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime plusMinutes(final LocalDateTime dateTime, final long minutes) {
+        return dateTime.plusMinutes(minutes).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 减 年
      */
-    public static Date minusYears(final LocalDateTime dateTime, final long years) {
-        return Date.from(dateTime.minusYears(years).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusYears(final LocalDateTime dateTime, final long years) {
+        return dateTime.minusYears(years).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 减 月
      */
-    public static Date minusMonths(final LocalDateTime dateTime, final long months) {
-        return Date.from(dateTime.minusMonths(months).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusMonths(final LocalDateTime dateTime, final long months) {
+        return dateTime.minusMonths(months).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    /**
+     * 减 月
+     */
+    public static LocalDate minusMonths(final LocalDate localDate, final long months) {
+        return localDate.minusMonths(months);
     }
 
     /**
      * 减 周
      */
-    public static Date minusWeeks(final LocalDateTime dateTime, final long weeks) {
-        return Date.from(dateTime.minusWeeks(weeks).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusWeeks(final LocalDateTime dateTime, final long weeks) {
+        return dateTime.minusWeeks(weeks).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 减 天
      */
-    public static Date minusDays(final LocalDateTime dateTime, final long days) {
-        return Date.from(dateTime.minusDays(days).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusDays(final LocalDateTime dateTime, final long days) {
+        return dateTime.minusDays(days).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 减 时
      */
-    public static Date minusHours(final LocalDateTime dateTime, final long hours) {
-        return Date.from(dateTime.minusHours(hours).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusHours(final LocalDateTime dateTime, final long hours) {
+        return dateTime.minusHours(hours).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 减 分
      */
-    public static Date minusMinutes(final LocalDateTime dateTime, final long minutes) {
-        return Date.from(dateTime.minusMinutes(minutes).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusMinutes(final LocalDateTime dateTime, final long minutes) {
+        return dateTime.minusMinutes(minutes).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     /**
      * 减 秒
      */
-    public static Date minusSeconds(final LocalDateTime dateTime, final long seconds) {
-        return Date.from(dateTime.minusSeconds(seconds).atZone(ZoneId.systemDefault()).toInstant());
+    public static LocalDateTime minusSeconds(final LocalDateTime dateTime, final long seconds) {
+        return dateTime.minusSeconds(seconds).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     public static void main(String[] args) {

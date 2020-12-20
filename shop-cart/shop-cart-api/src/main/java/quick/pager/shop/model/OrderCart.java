@@ -1,6 +1,7 @@
 package quick.pager.shop.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -40,4 +41,12 @@ public class OrderCart extends Model {
      * 购买数量
      */
     private Integer quantity;
+    /**
+     * 商品价格
+     */
+    private BigDecimal skuAmount;
+    /**
+     * 折扣价格
+     */
+    private BigDecimal discountAmount;
 }

@@ -5,9 +5,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.Constants;
 import quick.pager.shop.platform.dto.SystemConfigDTO;
@@ -23,7 +25,7 @@ import quick.pager.shop.response.EnumResponse;
 public class CommonEnumService {
 
     @Autowired
-    private RedisService redisService;
+    private RedisTemplate<String, Object> redisTemplate;
 
     public Response<Map<String, List<EnumResponse>>> getCommonEnumInfo() {
 
@@ -36,17 +38,17 @@ public class CommonEnumService {
         result.putIfAbsent(Constants.Type.BANNER_TYPE, getBannerType());
         result.putIfAbsent(Constants.Type.SHARE_CHANNEL, getBannerShareChannel());
 
-        return new Response<>(result);
+        return Response.toResponse(result);
     }
 
     /**
      * 优惠券
      */
     private List<EnumResponse> getOfferType() {
-        String couponConfig = redisService.get("offer_type");
+        Long size = redisTemplate.opsForList().size("offer_type");
 
-        if (StringUtils.isNotBlank(couponConfig)) {
-            return getCommonInteger(JSON.parseArray(couponConfig, SystemConfigDTO.class));
+        if (Objects.nonNull(size)) {
+            return getCommonInteger(redisTemplate.opsForList().range("offer_type", 0, size));
         }
 
         return Lists.newArrayList();
@@ -56,10 +58,11 @@ public class CommonEnumService {
      * 商品类型
      */
     private List<EnumResponse> getGoodsType() {
-        String goodsConfig = redisService.get("goods_type");
 
-        if (StringUtils.isNotBlank(goodsConfig)) {
-            return getCommonInteger(JSON.parseArray(goodsConfig, SystemConfigDTO.class));
+        Long size = redisTemplate.opsForList().size("goods_type");
+
+        if (Objects.nonNull(size)) {
+            return getCommonInteger(redisTemplate.opsForList().range("goods_type", 0, size));
         }
 
         return Lists.newArrayList();
@@ -70,10 +73,11 @@ public class CommonEnumService {
      * 订单类型
      */
     private List<EnumResponse> getOrderType() {
-        String orderTypeConfig = redisService.get("order_type");
 
-        if (StringUtils.isNotBlank(orderTypeConfig)) {
-            return getCommonInteger(JSON.parseArray(orderTypeConfig, SystemConfigDTO.class));
+        Long size = redisTemplate.opsForList().size("order_type");
+
+        if (Objects.nonNull(size)) {
+            return getCommonInteger(redisTemplate.opsForList().range("order_type", 0, size));
         }
 
         return Lists.newArrayList();
@@ -84,10 +88,10 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getOrderStatus() {
 
-        String orderStatusConfig = redisService.get("order_status");
+        Long size = redisTemplate.opsForList().size("order_status");
 
-        if (StringUtils.isNotBlank(orderStatusConfig)) {
-            return getCommonString(JSON.parseArray(orderStatusConfig, SystemConfigDTO.class));
+        if (Objects.nonNull(size)) {
+            return getCommonString(redisTemplate.opsForList().range("order_status", 0, size));
         }
 
         return Lists.newArrayList();
@@ -98,10 +102,10 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getModuleType() {
 
-        String moduleConfig = redisService.get("shop_module");
+        Long size = redisTemplate.opsForList().size("shop_module");
 
-        if (StringUtils.isNotBlank(moduleConfig)) {
-            return getCommonString(JSON.parseArray(moduleConfig, SystemConfigDTO.class));
+        if (Objects.nonNull(size)) {
+            return getCommonString(redisTemplate.opsForList().range("shop_module", 0, size));
         }
 
         return Lists.newArrayList();
@@ -112,10 +116,10 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getBannerType() {
 
-        String bannerType = redisService.get("banner_type");
+        Long size = redisTemplate.opsForList().size("banner_type");
 
-        if (StringUtils.isNotBlank(bannerType)) {
-            return getCommonString(JSON.parseArray(bannerType, SystemConfigDTO.class));
+        if (Objects.nonNull(size)) {
+            return getCommonString(redisTemplate.opsForList().range("banner_type", 0, size));
         }
 
         return Lists.newArrayList();
@@ -126,10 +130,10 @@ public class CommonEnumService {
      */
     private List<EnumResponse> getBannerShareChannel() {
 
-        String shareChannel = redisService.get("share_channel");
+        Long size = redisTemplate.opsForList().size("share_channel");
 
-        if (StringUtils.isNotBlank(shareChannel)) {
-            return getCommonString(JSON.parseArray(shareChannel, SystemConfigDTO.class));
+        if (Objects.nonNull(size)) {
+            return getCommonString(redisTemplate.opsForList().range("share_channel", 0, size));
         }
 
         return Lists.newArrayList();
@@ -138,8 +142,9 @@ public class CommonEnumService {
     /**
      * SystemConfig configValue 配置使用String型
      */
-    private List<EnumResponse> getCommonString(List<SystemConfigDTO> systemConfigs) {
-        return systemConfigs.stream()
+    private List<EnumResponse> getCommonString(final List<Object> result) {
+        List<SystemConfigDTO> systemConfigs = JSON.parseArray(JSON.toJSONString(result), SystemConfigDTO.class);
+        return Optional.ofNullable(systemConfigs).orElse(Lists.newArrayList()).stream()
                 .map(config -> new EnumResponse(config.getConfigValue(), config.getConfigName()))
                 .collect(Collectors.toList());
     }
@@ -147,8 +152,9 @@ public class CommonEnumService {
     /**
      * SystemConfig configValue 配置使用int型
      */
-    private List<EnumResponse> getCommonInteger(List<SystemConfigDTO> systemConfigs) {
-        return systemConfigs.stream()
+    private List<EnumResponse> getCommonInteger(List<Object> result) {
+        List<SystemConfigDTO> systemConfigs = JSON.parseArray(JSON.toJSONString(result), SystemConfigDTO.class);
+        return Optional.ofNullable(systemConfigs).orElse(Lists.newArrayList()).stream()
                 .map(config -> new EnumResponse(Integer.parseInt(config.getConfigValue()), config.getConfigName()))
                 .collect(Collectors.toList());
     }

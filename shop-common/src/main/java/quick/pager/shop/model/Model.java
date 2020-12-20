@@ -2,6 +2,7 @@ package quick.pager.shop.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -42,5 +43,6 @@ public class Model implements Serializable {
      * 1: 删除
      * 0: 未删除
      */
+    @TableLogic(value = "false", delval = "true")
     private Boolean deleteStatus;
 }

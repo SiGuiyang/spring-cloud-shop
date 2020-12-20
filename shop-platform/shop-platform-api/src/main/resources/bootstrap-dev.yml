@@ -2,11 +2,11 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 101.132.121.178:8848
+        server-addr: 106.54.251.32:8848
         group: shop
         namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
       discovery:
-        server-addr: 101.132.121.178:8848
+        server-addr: 106.54.251.32:8848
         group: shop
         namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
     sentinel:
@@ -21,5 +21,19 @@ seata:
     vgroup-mapping:
       shop-platform-seata-service-group: default
     grouplist:
-      default: 101.132.121.178:8091
+      default: 106.54.251.32:8091
     disable-global-transaction: false
+
+security:
+  oauth2:
+    client:
+      clientId: shop-client
+      clientSecret: shop-client
+      user-authorization-uri: http://localhost:8095/oauth/authorize
+      access-token-uri: http://localhost:8095/oauth/token
+      scope: app
+    resource:
+      id: shop-platform
+      user-info-uri: http://shop-auth/oauth/principal
+      prefer-token-info: true
+      loadBalanced: true

@@ -30,13 +30,19 @@ public class SellerOrder extends Model {
     /**
      * 配送地址
      */
-    private Long deliveryAddressId;
+    private Long addrId;
     /**
      * 商户订单号
      */
     private String orderCode;
     /**
+     * 配送时间
+     */
+    private String deliveryTime;
+    /**
      * 订单状态
+     *
+     * @see quick.pager.shop.order.enums.OrderStatusEnums
      */
     private Integer orderStatus;
     /**
@@ -47,6 +53,8 @@ public class SellerOrder extends Model {
      * 支付方式
      * 0：支付宝
      * 1：微信
+     *
+     * @see quick.pager.shop.order.enums.PayTypeEnums
      */
     private Integer payType;
     /**

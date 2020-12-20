@@ -1,22 +1,34 @@
 package quick.pager.shop.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.activity.client.BannerClient;
-import quick.pager.shop.activity.response.banner.BannerResponse;
-import quick.pager.shop.constants.ResponseStatus;
-import quick.pager.shop.mapper.GoodsClassBannerMapper;
+import quick.pager.shop.constants.IConsts;
+import quick.pager.shop.goods.constants.GoodsRedisKeys;
+import quick.pager.shop.goods.dto.GoodsSkuDTO;
+import quick.pager.shop.goods.dto.UploadDTO;
+import quick.pager.shop.goods.enums.GoodsPublishStatusEnum;
+import quick.pager.shop.goods.response.sku.AppGoodsSkuResponse;
 import quick.pager.shop.mapper.GoodsClassMapper;
+import quick.pager.shop.mapper.GoodsMapper;
+import quick.pager.shop.mapper.GoodsSkuImageMapper;
+import quick.pager.shop.mapper.GoodsSkuMapper;
 import quick.pager.shop.mapper.GoodsSpuMapper;
+import quick.pager.shop.model.Goods;
 import quick.pager.shop.model.GoodsClass;
-import quick.pager.shop.model.GoodsClassBanner;
+import quick.pager.shop.model.GoodsSku;
+import quick.pager.shop.model.GoodsSkuImage;
 import quick.pager.shop.model.GoodsSpu;
-import quick.pager.shop.goods.response.classification.AppGoodsBannerResponse;
-import quick.pager.shop.goods.response.classification.AppGoodsClassificationDetailResponse;
-import quick.pager.shop.goods.response.classification.AppGoodsClassificationResponse;
 import quick.pager.shop.service.AppClassificationService;
 import quick.pager.shop.user.response.CommonResponse;
 import quick.pager.shop.user.response.Response;
@@ -27,75 +39,147 @@ public class AppClassificationServiceImpl implements AppClassificationService {
     @Autowired
     private GoodsClassMapper goodsClassMapper;
     @Autowired
-    private GoodsClassBannerMapper goodsClassBannerMapper;
-    @Autowired
     private GoodsSpuMapper goodsSpuMapper;
     @Autowired
-    private BannerClient bannerClient;
+    private GoodsMapper goodsMapper;
+    @Autowired
+    private GoodsSkuMapper goodsSkuMapper;
+    @Autowired
+    private GoodsSkuImageMapper goodsSkuImageMapper;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
 
     @Override
-    public Response<List<CommonResponse>> classifications() {
+    public Response<List<CommonResponse>> spus() {
 
-        List<GoodsClass> goodsClasses = goodsClassMapper.selectList(new LambdaQueryWrapper<GoodsClass>()
-                .eq(GoodsClass::getDeleteStatus, Boolean.FALSE)
-                .isNull(GoodsClass::getParentId));
+        final String key = GoodsRedisKeys.REDIS_SPU_PREFIX;
 
-        return Response.toResponse(goodsClasses.stream().map(item -> {
+        Boolean hasKey = redisTemplate.hasKey(key);
+        ListOperations<String, Object> opsForList = redisTemplate.opsForList();
+
+        if (Objects.nonNull(hasKey) && hasKey) {
+            Long size = opsForList.size(key);
+            if (Objects.nonNull(size)) {
+                List<Object> result = opsForList.range(key, 0L, size);
+
+                if (CollectionUtils.isNotEmpty(result)) {
+                    return Response.toResponse(result.stream().map(item -> (CommonResponse) item).collect(Collectors.toList()));
+                }
+            }
+        }
+
+        List<GoodsSpu> goodsSpus = goodsSpuMapper.selectList(new LambdaQueryWrapper<GoodsSpu>().orderByAsc(GoodsSpu::getSequence));
+        // 数据转换分类数据
+        List<CommonResponse> list = goodsSpus.stream().map(item -> {
             CommonResponse response = new CommonResponse();
             response.setId(item.getId());
-            response.setName(item.getClassName());
-            response.setIcon(item.getIcon());
+            response.setName(item.getSpuName());
+            response.setIcon(item.getSpuImage());
+            // 添加缓存
+            opsForList.rightPush(key, response);
             return response;
-        }).collect(Collectors.toList()));
+        }).collect(Collectors.toList());
+
+        return Response.toResponse(list);
     }
 
     @Override
-    public Response<AppGoodsClassificationResponse> detail(Long classificationId) {
+    public Response<List<AppGoodsSkuResponse>> classification(final Long spuId) {
 
-        AppGoodsClassificationResponse response = new AppGoodsClassificationResponse();
-        // 1. 查询分类推荐的banner
-        List<GoodsClassBanner> goodsClassBanners = goodsClassBannerMapper.selectList(new LambdaQueryWrapper<GoodsClassBanner>()
-                .eq(GoodsClassBanner::getDeleteStatus, Boolean.FALSE)
-                .eq(GoodsClassBanner::getClassificationId, classificationId));
-        response.setGoodsBanners(goodsClassBanners.stream().map(item -> {
-            AppGoodsBannerResponse appGoodsBannerResp = new AppGoodsBannerResponse();
-            appGoodsBannerResp.setId(item.getId());
+        final String key = GoodsRedisKeys.REDIS_CLASSIFICATION_PREFIX;
 
-            Response<BannerResponse> bannerRes = bannerClient.queryByPk(item.getBannerId());
+        HashOperations<String, Object, Object> opsForHash = redisTemplate.opsForHash();
 
-            if (ResponseStatus.Code.SUCCESS == bannerRes.getCode()) {
-                BannerResponse data = bannerRes.getData();
-                appGoodsBannerResp.setName(data.getTitle());
-                appGoodsBannerResp.setBannerUrl(data.getBannerUrl());
+        // 如果缓存存在
+        if (opsForHash.hasKey(key, spuId)) {
+            List<AppGoodsSkuResponse> result = (List<AppGoodsSkuResponse>) opsForHash.get(key, spuId);
+            if (CollectionUtils.isNotEmpty(result)) {
+                return Response.toResponse(result);
             }
-            return appGoodsBannerResp;
-        }).collect(Collectors.toList()));
+        }
 
-        // 2. 分类详情
         List<GoodsClass> goodsClasses = goodsClassMapper.selectList(new LambdaQueryWrapper<GoodsClass>()
-                .eq(GoodsClass::getDeleteStatus, Boolean.FALSE)
-                .eq(GoodsClass::getParentId, classificationId));
+                .eq(GoodsClass::getSpuId, spuId)
+                .orderByAsc(GoodsClass::getSequence)
+                .select(GoodsClass::getId, GoodsClass::getClassName)
+        );
+        // 找不到分类，直接返回
+        if (CollectionUtils.isEmpty(goodsClasses)) {
+            return Response.toResponse();
+        }
 
-        response.setDetails(goodsClasses.stream().map(item -> {
-            AppGoodsClassificationDetailResponse detailResp = new AppGoodsClassificationDetailResponse();
-            detailResp.setId(item.getId());
-            detailResp.setClassificationId(classificationId);
-            detailResp.setName(item.getClassName());
+        // 数据转换分类数据
+        List<AppGoodsSkuResponse> list = goodsClasses.stream().map(item -> {
+            AppGoodsSkuResponse response = new AppGoodsSkuResponse();
+            response.setId(item.getId());
+            response.setName(item.getClassName());
+            // 查询商品
+            LambdaQueryWrapper<Goods> wrapper = new LambdaQueryWrapper<Goods>()
+                    .eq(Goods::getPublishStatus, GoodsPublishStatusEnum.PASS.getCode())
+                    .eq(Goods::getGoodsClassId, item.getId());
+            wrapper.le(Goods::getBeginTime, LocalDate.now());
+            wrapper.ge(Goods::getEndTime, LocalDate.now());
+            List<Goods> goods = this.goodsMapper.selectList(wrapper);
 
-            List<GoodsSpu> spus = goodsSpuMapper.selectList(new LambdaQueryWrapper<GoodsSpu>()
-                    .eq(GoodsSpu::getDeleteStatus, Boolean.FALSE)
-                    .eq(GoodsSpu::getClassificationId, item.getId()));
+            if (CollectionUtils.isNotEmpty(goods)) {
 
-            detailResp.setSpus(spus.stream().map(spu -> {
-                CommonResponse commonResp = new CommonResponse();
-                commonResp.setId(spu.getId());
-                commonResp.setName(spu.getSpuName());
-                commonResp.setIcon(spu.getSpuImage());
-                return commonResp;
-            }).collect(Collectors.toList()));
-            return detailResp;
-        }).collect(Collectors.toList()));
+                List<Long> goodsIds = goods.stream().map(Goods::getId).collect(Collectors.toList());
 
-        return Response.toResponse(response);
+                // 商品sku
+                List<GoodsSku> goodsSkus = this.goodsSkuMapper.selectList(new LambdaQueryWrapper<GoodsSku>()
+                        .eq(GoodsSku::getState, Boolean.TRUE)
+                        .in(GoodsSku::getGoodsId, goodsIds));
+
+                // 商品sku图片
+                List<GoodsSkuImage> goodsSkuImages = this.goodsSkuImageMapper.selectList(new LambdaQueryWrapper<GoodsSkuImage>()
+                        .in(GoodsSkuImage::getGoodsId, goodsIds)
+                        .select(GoodsSkuImage::getSkuId, GoodsSkuImage::getImages));
+                // 商品sku图片分组
+                Map<Long, List<GoodsSkuImage>> goodsSkuImageMap = goodsSkuImages.stream().collect(Collectors.groupingBy(GoodsSkuImage::getSkuId));
+
+                response.setSkus(goodsSkus.stream().map(sku -> this.convert(sku, goodsSkuImageMap.get(sku.getId()), item.getId())).collect(Collectors.toList()));
+            }
+
+            return response;
+        }).collect(Collectors.toList());
+
+
+        // 加入缓存
+        opsForHash.put(key, spuId, list);
+
+        return Response.toResponse(list);
     }
+
+    /**
+     * 数据转换
+     *
+     * @param sku            sku商品
+     * @param goodsSkuImages sku图片
+     * @param goodsClassId   sku分类
+     * @return 返回数据
+     */
+    private GoodsSkuDTO convert(final GoodsSku sku, final List<GoodsSkuImage> goodsSkuImages, final Long goodsClassId) {
+
+        String skuImage = null;
+        // 查询获取图片
+        if (CollectionUtils.isNotEmpty(goodsSkuImages)) {
+            GoodsSkuImage goodsSkuImage = goodsSkuImages.get(IConsts.ZERO);
+            String images = goodsSkuImage.getImages();
+            List<UploadDTO> uploadDTOS = JSON.parseArray(images, UploadDTO.class);
+            skuImage = uploadDTOS.get(IConsts.ZERO).getUrl();
+        }
+
+        return GoodsSkuDTO.builder()
+                .skuId(sku.getId())
+                .goodsClassId(goodsClassId)
+                .skuName(sku.getSkuName())
+                .description(sku.getDescription())
+                .skuAmount(sku.getSkuAmount())
+                .discountAmount(sku.getDiscountAmount())
+                .skuImage(skuImage)
+                .build();
+    }
+
+
 }

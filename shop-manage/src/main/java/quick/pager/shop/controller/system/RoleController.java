@@ -2,6 +2,7 @@ package quick.pager.shop.controller.system;
 
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import quick.pager.shop.param.system.RoleSaveParam;
 import quick.pager.shop.response.PermissionResponse;
 import quick.pager.shop.service.system.RoleService;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 角色管理
@@ -60,10 +62,18 @@ public class RoleController {
      */
     @PutMapping("/role/modify")
     public Response<Long> modify(@RequestBody RoleSaveParam param) {
-        if (Objects.isNull(param.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(Objects.nonNull(param.getId()), () -> ResponseStatus.PARAMS_EXCEPTION);
         return roleService.modify(param);
+    }
+
+    /**
+     * 删除角色
+     *
+     * @param id 角色主键
+     */
+    @DeleteMapping("/role/delete/{id}")
+    public Response<Long> delete(@PathVariable("id") Long id) {
+        return roleService.delete(id);
     }
 
     /**

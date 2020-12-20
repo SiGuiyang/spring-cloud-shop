@@ -19,6 +19,7 @@ import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.service.BannerService;
+import quick.pager.shop.utils.Assert;
 import quick.pager.shop.utils.BeanCopier;
 
 /**
@@ -36,7 +37,7 @@ public class BannerController {
     @GetMapping(value = "/banner/queryByPk")
     public Response<BannerResponse> queryByPk(@RequestParam("id") Long id) {
         Banner banner = bannerService.getById(id);
-        return new Response<>(BeanCopier.create(banner, new BannerResponse()).copy());
+        return Response.toResponse(BeanCopier.copy(banner, new BannerResponse()));
     }
 
     /**
@@ -69,9 +70,7 @@ public class BannerController {
      */
     @PutMapping("/banner/modify")
     public Response<Long> modify(@RequestBody BannerSaveRequest request) {
-        if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(Objects.nonNull(request.getId()), () -> ResponseStatus.PARAMS_EXCEPTION);
         return bannerService.modify(request);
     }
 

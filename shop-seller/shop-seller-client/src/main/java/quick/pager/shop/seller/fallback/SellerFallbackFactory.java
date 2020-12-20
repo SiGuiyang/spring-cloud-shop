@@ -16,7 +16,7 @@ public class SellerFallbackFactory implements FallbackFactory<SellerClient> {
         return new SellerClient() {
             @Override
             public Response<SellerInfoResponse> querySeller(Long sellerId) {
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
         };
     }

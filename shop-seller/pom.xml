@@ -16,7 +16,6 @@
     <artifactId>shop-seller</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-seller</name>
     <description>商家服务</description>
 
     <properties>

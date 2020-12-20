@@ -13,5 +13,5 @@ public interface SettlementRedisKeys {
     /**
      * 订单提交幂等性前缀
      */
-    String APP_SUBMIT_ORDER = "app:submit:order:";
+    String APP_SUBMIT_ORDER = ":app:submit:order:";
 }

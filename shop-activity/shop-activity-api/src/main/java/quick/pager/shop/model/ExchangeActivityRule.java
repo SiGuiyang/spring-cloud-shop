@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 public class ExchangeActivityRule extends Model {
     private static final long serialVersionUID = -6238358371738961355L;
     /**
-     * t_exchange_activity id
+     * t_activity id
      */
     private Long activityId;
     /**
@@ -27,6 +27,8 @@ public class ExchangeActivityRule extends Model {
      * 购买商品满足的金额条件下限
      */
     private BigDecimal orderAmount;
-
-    private Boolean serverStatus;
+    /**
+     * true 禁用 false 启用
+     */
+    private Boolean state;
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import quick.pager.shop.constants.IConsts;
 import quick.pager.shop.constants.SConsts;
+import quick.pager.shop.enmus.OSSTypeEnum;
 import quick.pager.shop.service.OSSService;
 import quick.pager.shop.utils.DateUtils;
 import quick.pager.shop.utils.FileUtil;
@@ -33,6 +34,11 @@ public class AliyunServiceImpl implements OSSService {
     private OSS oss;
     @Value("${alibaba.cloud.bucket}")
     private String bucket;
+
+    @Override
+    public boolean support(final OSSTypeEnum ossType) {
+        return OSSTypeEnum.ALIYUN.equals(ossType);
+    }
 
     @Override
     public String uploadStream(final InputStream is, final String fileName) {

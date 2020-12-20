@@ -1,5 +1,6 @@
 package quick.pager.shop.controller;
 
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.activity.request.assemble.AssembleRuleSaveRequest;
 import quick.pager.shop.activity.response.assemble.AssembleActivityRuleResponse;
+import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.service.AssembleRuleService;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 拼团规则
@@ -43,6 +46,8 @@ public class AssembleRuleController {
      */
     @PutMapping("/assemble/rule/modify")
     public Response<Long> modifyRule(@RequestBody AssembleRuleSaveRequest request) {
+
+        Assert.isTrue(Objects.nonNull(request.getId()) && Objects.nonNull(request.getActivityId()), () -> ResponseStatus.PARAMS_EXCEPTION);
         return assembleRuleService.rule(request);
     }
 }

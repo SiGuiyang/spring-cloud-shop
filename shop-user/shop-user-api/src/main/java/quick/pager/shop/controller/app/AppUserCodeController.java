@@ -1,20 +1,18 @@
 package quick.pager.shop.controller.app;
 
-import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
+import cn.hutool.core.lang.Validator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.constants.Constants;
-import quick.pager.shop.constants.RedisKeys;
-import quick.pager.shop.param.SendParam;
+import quick.pager.shop.user.request.SmsRequest;
 import quick.pager.shop.user.response.Response;
-import quick.pager.shop.service.RedisService;
 import quick.pager.shop.service.SMSCodeService;
-import quick.pager.shop.utils.VerifyCodeUtils;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 用户验证码方面的接口
@@ -26,41 +24,21 @@ import quick.pager.shop.utils.VerifyCodeUtils;
 public class AppUserCodeController {
 
     @Autowired
-    private RedisService redisService;
-    @Autowired
     private SMSCodeService smsCodeService;
 
     /**
      * 发送短信验证码
-     */
-    @RequestMapping(value = "/app/send/code/sms", method = RequestMethod.POST)
-    public Response sendSMS(@RequestBody SendParam param) {
-
-
-        return smsCodeService.send(param);
-    }
-
-
-    /**
-     * 发送图形验证码
      *
-     * @param phone    手机号码
-     * @param response response
+     * @param request 请求参数
      */
-    @RequestMapping(value = "/app/send/code/graphic", method = RequestMethod.GET)
-    public void sendGraphic(@RequestParam String phone, HttpServletResponse response) throws IOException {
-        // 设置响应的类型格式为图片格式
-        response.setContentType("image/jpeg");
-        // 禁止图像缓存。
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setDateHeader("Expires", 0);
-        //实例生成验证码对象
-        VerifyCodeUtils instance = new VerifyCodeUtils();
-        //将验证码存入session
-        redisService.set(RedisKeys.UserKeys.SHOP_GRAPHICS_CODE + phone, instance.getCode(), 2 * 60);
-        //向页面输出验证码图片
-        instance.write(response.getOutputStream());
+    @PostMapping("/app/send/code/sms")
+    public Response sendSMS(@RequestBody SmsRequest request) {
 
+        Assert.isTrue(StringUtils.isNoneEmpty(request.getPhone()), () -> "手机号不能为空");
+        Assert.isTrue(Validator.isMobile(request.getPhone()), () -> "手机号码不正确");
+
+        Assert.isTrue(StringUtils.isNoneEmpty(request.getSource()), () -> "事件源不能为空");
+
+        return smsCodeService.send(request);
     }
 }

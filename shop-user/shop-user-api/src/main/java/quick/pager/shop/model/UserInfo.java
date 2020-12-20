@@ -1,6 +1,7 @@
 package quick.pager.shop.model;
 
-import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.time.LocalDate;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import quick.pager.shop.model.Model;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@TableName("t_user_info")
 public class UserInfo extends Model {
 
     private static final long serialVersionUID = 788660856242390694L;
@@ -31,17 +33,9 @@ public class UserInfo extends Model {
      */
     private Boolean gender;
     /**
-     * 年龄
-     */
-    private Integer age;
-    /**
-     * 邮箱地址
-     */
-    private String email;
-    /**
      * 生日
      */
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     /**
      * 头像地址
      */

@@ -35,7 +35,7 @@ public class ExchangeActivityRuleResponse extends BasicResponse {
      */
     private BigDecimal orderAmount;
     /**
-     * 状态
+     * true 禁用 false 启用
      */
-    private Boolean serverStatus;
+    private Boolean state;
 }

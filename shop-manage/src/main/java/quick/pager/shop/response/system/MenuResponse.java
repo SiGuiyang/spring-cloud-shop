@@ -1,11 +1,13 @@
 package quick.pager.shop.response.system;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
 /**
  * 菜单响应对象
+ *
  * @author siguiyang
  */
 @Data
@@ -37,6 +39,10 @@ public class MenuResponse implements Serializable {
     private Boolean hidden;
 
     private Boolean router;
+
+    private String updateUser;
+
+    private LocalDateTime updateTime;
 
     private List<MenuResponse> children;
 

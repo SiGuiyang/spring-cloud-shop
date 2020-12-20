@@ -70,7 +70,7 @@ public class GeneratorService {
             qw.eq("TABLE_NAME", tableName);
         }
         List<Columns> columns = generatorMapper.selectColumns(qw);
-        return new Response<>(columns);
+        return Response.toResponse(columns);
     }
 
     /**
@@ -140,6 +140,6 @@ public class GeneratorService {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
 
-        return new Response();
+        return Response.toResponse();
     }
 }

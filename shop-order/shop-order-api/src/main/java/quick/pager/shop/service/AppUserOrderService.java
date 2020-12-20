@@ -1,5 +1,7 @@
 package quick.pager.shop.service;
 
+import quick.pager.shop.order.request.SubmitOrderRequest;
+import quick.pager.shop.order.response.AppUserOrderResponse;
 import quick.pager.shop.param.AppUserOrderEvaluateParam;
 import quick.pager.shop.order.response.UserOrderQuantityResponse;
 import quick.pager.shop.user.response.Response;
@@ -22,9 +24,9 @@ public interface AppUserOrderService {
      *
      * @param userId    当前用户登陆主键
      * @param page      页码
-     * @param orderType 订单类型
+     * @param order 订单类型
      */
-    Response orders(final Long userId, final Integer page, final String orderType);
+    Response<AppUserOrderResponse> orders(final Long userId, final Integer page, final String order);
 
     /**
      * 订单详情
@@ -66,4 +68,12 @@ public interface AppUserOrderService {
      * @param orderId 订单主键
      */
     Response confirm(final Long userId, final Long orderId);
+
+    /**
+     * 用户提交订单
+     *
+     * @param request 请求对象
+     * @return 响应对象
+     */
+    Response submit(final SubmitOrderRequest request);
 }

@@ -45,7 +45,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     private MenuHelper menuHelper;
 
     @Override
-    public Response<List<RoleResponse>> queryPage(RolePageParam param) {
+    public Response<List<RoleResponse>> queryPage(final RolePageParam param) {
         LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<Role>()
                 .eq(Role::getDeleteStatus, Boolean.FALSE)
                 .likeRight(StringUtils.isNotBlank(param.getRoleName()), Role::getRoleName, param.getRoleName());
@@ -58,7 +58,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public Response<List<RoleResponse>> queryList(RoleOtherParam param) {
+    public Response<List<RoleResponse>> queryList(final RoleOtherParam param) {
 
         LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<Role>()
                 .eq(Role::getDeleteStatus, Boolean.FALSE)
@@ -66,38 +66,35 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
         List<Role> roles = this.list(wrapper);
 
-        return new Response<>(roles.stream().map(item -> BeanCopier.create(item, new RoleResponse()).copy()).collect(Collectors.toList()));
+        return Response.toResponse(roles.stream().map(item -> BeanCopier.create(item, new RoleResponse()).copy()).collect(Collectors.toList()));
     }
 
     @Override
-    public Response<Long> create(RoleSaveParam param) {
+    public Response<Long> create(final RoleSaveParam param) {
         Role role = new Role();
         BeanCopier.create(param, role).copy();
         role.setDeleteStatus(Boolean.FALSE);
         role.setCreateTime(DateUtils.dateTime());
         this.baseMapper.insert(role);
-        return new Response<>(role.getId());
+        return Response.toResponse(role.getId());
     }
 
     @Override
-    public Response<Long> modify(RoleSaveParam param) {
+    public Response<Long> modify(final RoleSaveParam param) {
         Role role = new Role();
         BeanCopier.create(param, role).copy();
         this.baseMapper.updateById(role);
-        return new Response<>(role.getId());
+        return Response.toResponse(role.getId());
     }
 
     @Override
-    public Response<Long> delete(Long id) {
-        Role role = new Role();
-        role.setId(id);
-        role.setDeleteStatus(Boolean.TRUE);
-        this.baseMapper.updateById(role);
-        return new Response<>(id);
+    public Response<Long> delete(final Long id) {
+        this.baseMapper.deleteById(id);
+        return Response.toResponse(id);
     }
 
     @Override
-    public Response<PermissionResponse> queryRolePermission(Long roleId) {
+    public Response<PermissionResponse> queryRolePermission(final Long roleId) {
 
         List<Menu> menus = menuMapper.selectList(new LambdaQueryWrapper<Menu>().eq(Menu::getDeleteStatus, Boolean.FALSE));
         // 得到顶级菜单
@@ -129,7 +126,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         response.setBtnPermission(btnPermissions);
         response.setRouters(parentResp);
 
-        return new Response<>(response);
+        return Response.toResponse(response);
     }
 
     /**
@@ -139,7 +136,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
      * @param childrenMap 孩子节点
      * @param parentId    记录所有具有孩子节点的Id
      */
-    private void toTree(List<MenuResponse> parentResp, Map<Long, List<MenuResponse>> childrenMap, List<Long> parentId) {
+    private void toTree(final List<MenuResponse> parentResp, final Map<Long, List<MenuResponse>> childrenMap, final List<Long> parentId) {
         parentResp.forEach(item -> {
             List<MenuResponse> list = childrenMap.get(item.getId());
             toTree(Optional.ofNullable(list).orElse(Collections.emptyList()), childrenMap, parentId);
@@ -150,7 +147,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         });
     }
 
-    private MenuResponse conv(Menu menu) {
+    private MenuResponse conv(final Menu menu) {
         MenuResponse resp = new MenuResponse();
         BeanCopier.create(menu, resp).copy();
         resp.setMeta(new MenuResponse.Meta(menu.getName(), menu.getIcon(), false, null));

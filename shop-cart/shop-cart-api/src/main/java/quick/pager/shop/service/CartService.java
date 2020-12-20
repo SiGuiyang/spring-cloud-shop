@@ -1,7 +1,8 @@
 package quick.pager.shop.service;
 
 import java.util.List;
-import quick.pager.shop.param.CartParam;
+import quick.pager.shop.cart.request.CartOtherRequest;
+import quick.pager.shop.cart.request.CartRequest;
 import quick.pager.shop.cart.response.GoodsCartResponse;
 import quick.pager.shop.user.response.Response;
 
@@ -17,7 +18,15 @@ public interface CartService {
      * @param userId 当前登陆人主键
      * @param page   页码
      */
-    Response<List<GoodsCartResponse>> list(final Long userId, final Integer page);
+    Response<List<GoodsCartResponse>> page(final Long userId, final Integer page);
+
+    /**
+     * 购物车列表
+     *
+     * @param request 购物车列表信息
+     */
+    Response<List<GoodsCartResponse>> list(final CartOtherRequest request);
+
 
     /**
      * 添加修改购物车
@@ -30,14 +39,23 @@ public interface CartService {
      * 针对商品数量时，前端传入的数量值为最新的购买数量
      * </p>
      *
-     * @param param 参数
+     * @param request 参数
      */
-    Response<String> add(final CartParam param);
+    Response<Long> create(final CartRequest request);
 
     /**
-     * 删除购物车
+     * 购物车删除
      *
-     * @param ids 购物车主键集
+     * @param id 购物车主键
+     * @return 主键
      */
-    Response<String> delete(final List<Long> ids);
+    Response<Long> delete(final Long id);
+
+    /**
+     * 购物车批量删除
+     *
+     * @param ids 购物车主键
+     * @return 主键
+     */
+    Response<List<Long>> deleteBatch(final List<Long> ids);
 }

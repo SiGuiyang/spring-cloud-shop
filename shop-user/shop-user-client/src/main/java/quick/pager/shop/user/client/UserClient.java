@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.user.fallback.UserFallbackFactory;
 import quick.pager.shop.user.request.UserRequest;
-import quick.pager.shop.user.response.AddressResponse;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.user.response.UserProfileResponse;
 
@@ -26,24 +26,23 @@ public interface UserClient {
      *
      * @param userId 用户Id
      */
-    @RequestMapping(value = "/getUser/{userId}", method = RequestMethod.POST)
-    Response<UserProfileResponse> getUser(@PathVariable("userId") Long userId);
+    @RequestMapping(value = "/profile/{userId}", method = RequestMethod.POST)
+    Response<UserProfileResponse> profile(@PathVariable("userId") Long userId);
+
+    /**
+     * 根据手机号码查询用户信息
+     *
+     * @param phone 手机号码
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/profile/{phone}/info", method = RequestMethod.POST)
+    Response<UserProfileResponse> profileInfo(@PathVariable("phone") String phone);
 
     /**
      * 批量获取用户信息
+     *
+     * @param request 请求参数
      */
-    @RequestMapping(value = "/batchUser/profile", method = RequestMethod.POST)
-    Response<List<UserProfileResponse>> getBatchUser(@RequestBody UserRequest request);
-
-    /**
-     * 批量判断用户是否存在
-     */
-    @RequestMapping(value = "/isExists", method = RequestMethod.POST)
-    Response<List<UserProfileResponse>> isExists(@RequestBody UserRequest request);
-
-    /**
-     * 批量获取用户信息
-     */
-    @RequestMapping(value = "/address/{addressId}", method = RequestMethod.POST)
-    Response<AddressResponse> address(@PathVariable("addressId") Long addressId);
+    @RequestMapping(value = "/batch/profile", method = RequestMethod.POST)
+    Response<List<UserProfileResponse>> batchProfile(@RequestBody UserRequest request);
 }

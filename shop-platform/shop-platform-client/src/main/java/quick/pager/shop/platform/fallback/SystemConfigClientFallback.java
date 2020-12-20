@@ -27,25 +27,25 @@ public class SystemConfigClientFallback implements FallbackFactory<SystemConfigC
             @Override
             public Response<Long> create(SystemConfigSaveRequest request) {
                 log.error("SystemConfigClient.create 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<Long> modify(SystemConfigSaveRequest request) {
                 log.error("SystemConfigClient.modify 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<SystemConfigResponse>> queryList(SystemConfigOtherRequest request) {
                 log.error("SystemConfigClient.queryList 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<SystemConfigResponse>> queryPage(SystemConfigPageRequest request) {
                 log.error("SystemConfigClient.queryPage 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
         };
     }

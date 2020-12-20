@@ -37,5 +37,7 @@ public class MenuSaveParam extends Param {
 
     private String permissionName;
 
+    private Boolean router;
+
     private Boolean hidden;
 }

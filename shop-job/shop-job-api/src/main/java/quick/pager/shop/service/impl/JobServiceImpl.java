@@ -91,7 +91,7 @@ public class JobServiceImpl implements JobService {
 
         JobGroup jobGroup = jobGroupMapper.selectById(request.getJobGroupId());
         if (Objects.isNull(jobGroup)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "任务组不存在");
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "任务组不存在");
         }
         JobInfo jobInfo = this.convert(request);
         jobInfo.setJobGroup(jobGroup.getGroupName());
@@ -106,7 +106,7 @@ public class JobServiceImpl implements JobService {
                 .cron(jobInfo.getCron())
                 .jobEnums(JobEnums.CREATE)
                 .build());
-        return new Response<>(jobInfo.getId());
+        return Response.toResponse(jobInfo.getId());
     }
 
     @Override
@@ -117,31 +117,31 @@ public class JobServiceImpl implements JobService {
         jobGroup.setSequence(jobGroupMapper.selectMaxSequence());
         jobGroupMapper.insert(jobGroup);
 
-        return new Response<>(jobGroup.getId());
+        return Response.toResponse(jobGroup.getId());
     }
 
     @Override
     public Response<Long> modify(final JobSaveRequest request) {
         JobInfo jobInfo = this.convert(request);
         jobInfoMapper.updateById(jobInfo);
-        return new Response<>(jobInfo.getId());
+        return Response.toResponse(jobInfo.getId());
     }
 
 
     @Override
     public Response<JobResponse> info(final Long jobId) {
         JobInfo jobInfo = jobInfoMapper.selectById(jobId);
-        return new Response<>(this.convert(jobInfo));
+        return Response.toResponse(this.convert(jobInfo));
     }
 
     @Override
     public Response<String> doJob(final Long jobId, final String params, final JobEnums jobEnums) {
         JobInfo jobInfo = jobInfoMapper.selectById(jobId);
         if (Objects.isNull(jobInfo)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "未找到任务");
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "未找到任务");
         }
         JobHelper.execute(DTO.builder().jobId(jobId).jobName(jobInfo.getJobName()).jobGroup(jobInfo.getJobGroup()).params(params).jobEnums(jobEnums).build());
-        return new Response<>();
+        return Response.toResponse();
     }
 
     private LambdaQueryWrapper<JobInfo> toQuery(String jobName, String jobGroup, Integer jobStatus) {

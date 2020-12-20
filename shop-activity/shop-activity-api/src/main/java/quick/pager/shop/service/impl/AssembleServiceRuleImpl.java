@@ -5,16 +5,16 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.mapper.AssembleActivityMapper;
+import quick.pager.shop.mapper.ActivityMapper;
 import quick.pager.shop.mapper.AssembleActivityRuleMapper;
-import quick.pager.shop.model.AssembleActivity;
+import quick.pager.shop.model.Activity;
 import quick.pager.shop.model.AssembleActivityRule;
 import quick.pager.shop.activity.request.assemble.AssembleRuleSaveRequest;
 import quick.pager.shop.activity.response.assemble.AssembleActivityRuleResponse;
 
 import quick.pager.shop.service.AssembleRuleService;
-import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
 
@@ -27,19 +27,16 @@ import quick.pager.shop.utils.DateUtils;
 public class AssembleServiceRuleImpl extends ServiceImpl<AssembleActivityRuleMapper, AssembleActivityRule> implements AssembleRuleService {
 
     @Autowired
-    private AssembleActivityMapper assembleActivityMapper;
+    private ActivityMapper activityMapper;
 
     @Override
     public Response<AssembleActivityRuleResponse> info(Long activityId) {
 
-        AssembleActivity assembleActivity = this.assembleActivityMapper.selectById(activityId);
+        Activity activity = this.activityMapper.selectById(activityId);
 
-        if (Objects.isNull(assembleActivity) || assembleActivity.getServerStatus() || assembleActivity.getDeleteStatus()) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "活动已过期");
-        }
+        Assert.isTrue(Objects.nonNull(activity), () -> "活动不存在");
 
         LambdaQueryWrapper<AssembleActivityRule> wrapper = new LambdaQueryWrapper<AssembleActivityRule>()
-                .eq(AssembleActivityRule::getDeleteStatus, Boolean.FALSE)
                 .eq(AssembleActivityRule::getActivityId, activityId);
         AssembleActivityRule updateRule = this.baseMapper.selectOne(wrapper);
 
@@ -56,19 +53,22 @@ public class AssembleServiceRuleImpl extends ServiceImpl<AssembleActivityRuleMap
         response.setUpdateTime(time);
 
         response.setActivityId(activityId);
-        response.setActivityName(assembleActivity.getActivityName());
-        return new Response<>(response);
+        response.setActivityName(activity.getActivityName());
+        return Response.toResponse(response);
     }
 
     @Override
     public Response<Long> rule(AssembleRuleSaveRequest request) {
+        Activity activity = this.activityMapper.selectById(request.getActivityId());
+
+        Assert.isTrue(Objects.nonNull(activity), () -> "活动不存在");
+
         LambdaQueryWrapper<AssembleActivityRule> wrapper = new LambdaQueryWrapper<AssembleActivityRule>()
-                .eq(AssembleActivityRule::getDeleteStatus, request.getDeleteStatus())
-                .eq(Objects.nonNull(request.getActivityId()), AssembleActivityRule::getActivityId, request.getActivityId());
+                .eq(AssembleActivityRule::getActivityId, request.getActivityId());
         AssembleActivityRule rule = this.baseMapper.selectOne(wrapper);
 
         AssembleActivityRule activityRule = new AssembleActivityRule();
-        BeanCopier.create(request, activityRule).copy();
+        BeanCopier.copy(request, activityRule);
         // 不存在则新增
         if (Objects.isNull(rule)) {
             activityRule.setServerStatus(Boolean.FALSE);
@@ -79,6 +79,6 @@ public class AssembleServiceRuleImpl extends ServiceImpl<AssembleActivityRuleMap
             this.baseMapper.updateById(activityRule);
         }
 
-        return new Response<>(activityRule.getId());
+        return Response.toResponse(activityRule.getId());
     }
 }

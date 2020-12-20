@@ -1,9 +1,6 @@
 package quick.pager.shop.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,15 +30,17 @@ public class SysUser extends Model {
     private String password;
 
     /**
+     * 0 ：正常 1：禁用
+     */
+    private Boolean state;
+
+    /**
      * true 超级管理员
      */
     private Boolean beAdmin;
-
+    /**
+     * 头像
+     */
     private String avatar;
-
-    @TableField(exist = false)
-    private List<Role> roles = new ArrayList<>();
-    @TableField(exist = false)
-    private List<Long> roleIds = new ArrayList<>();
 
 }

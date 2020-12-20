@@ -24,7 +24,7 @@ public class SellerController {
      */
     @PostMapping("/login")
     public Response login(SellerLoginParam param) {
-        return new Response();
+        return Response.toResponse();
     }
 
     /**
@@ -42,6 +42,6 @@ public class SellerController {
      */
     @PostMapping("/info/{sellerId}")
     public Response<SellerInfo> querySeller(@PathVariable("sellerId") Long sellerId) {
-        return new Response<>();
+        return Response.toResponse();
     }
 }

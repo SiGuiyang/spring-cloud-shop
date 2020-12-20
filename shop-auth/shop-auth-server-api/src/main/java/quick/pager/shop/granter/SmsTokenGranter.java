@@ -1,9 +1,8 @@
 package quick.pager.shop.granter;
 
-import java.util.Collection;
+import com.google.common.collect.Lists;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -12,6 +11,7 @@ import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import quick.pager.shop.model.LoginUser;
 import quick.pager.shop.service.UserServiceImpl;
 
 /**
@@ -47,8 +47,8 @@ public class SmsTokenGranter extends AbstractTokenGranter {
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
         String phone = parameters.get("phone");
         String smsCode = parameters.get("smsCode");
-        Collection<? extends GrantedAuthority> grantedAuthorities = userService.loadUserBySMS(phone, smsCode);
-        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(phone, null, grantedAuthorities);
+        LoginUser loginUser = userService.loadUserBySMS(phone, smsCode);
+        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(loginUser, null, Lists.newArrayList());
         authentication.setDetails(parameters);
         return new OAuth2Authentication(this.requestFactory.createOAuth2Request(client, tokenRequest), authentication);
     }
@@ -66,7 +66,7 @@ public class SmsTokenGranter extends AbstractTokenGranter {
         return userService;
     }
 
-    public void setUserService(UserServiceImpl userService) {
+    public void setLoginService(UserServiceImpl userService) {
         this.userService = userService;
     }
 }

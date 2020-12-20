@@ -36,7 +36,7 @@ import quick.pager.shop.mapper.SysRoleMapper;
 import quick.pager.shop.mapper.SysUserMapper;
 import quick.pager.shop.model.SysRole;
 import quick.pager.shop.model.SysUser;
-import quick.pager.shop.param.system.SysUserParam;
+import quick.pager.shop.param.system.SysUserSaveParam;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.utils.BeanCopier;
 import quick.pager.shop.utils.DateUtils;
@@ -120,26 +120,30 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public Response<Long> create(SysUserParam param) {
+    public Response<Long> create(SysUserSaveParam param) {
 
         SysUser sysUser = new SysUser();
         BeanCopier.copy(param, sysUser);
-
+        sysUser.setState(Boolean.FALSE);
         sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
         sysUser.setCreateTime(DateUtils.dateTime());
+        sysUser.setUpdateTime(DateUtils.dateTime());
         sysUser.setDeleteStatus(Boolean.FALSE);
         sysUserMapper.insert(sysUser);
         modifySysUser(param.getRoleIds(), sysUser);
-        return new Response<>(sysUser.getId());
+        return Response.toResponse(sysUser.getId());
     }
 
     @Override
-    public Response<Long> modify(SysUserParam param) {
+    public Response<Long> modify(SysUserSaveParam param) {
         SysUser sysUser = new SysUser();
         BeanCopier.copy(param, sysUser);
+        sysUser.setUpdateTime(DateUtils.dateTime());
         sysUserMapper.updateById(sysUser);
-        modifySysUser(param.getRoleIds(), sysUser);
-        return new Response<>(sysUser.getId());
+        if (CollectionUtils.isNotEmpty(param.getRoleIds())) {
+            modifySysUser(param.getRoleIds(), sysUser);
+        }
+        return Response.toResponse(sysUser.getId());
     }
 
     @Override
@@ -151,7 +155,7 @@ public class SysUserServiceImpl implements SysUserService {
         SysUser sysUser = sysUserMapper.selectOne(new QueryWrapper<>(queryUser));
 
         if (Objects.isNull(sysUser)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_PHONE_NOT_EXISTS);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.USER_PHONE_NOT_EXISTS);
         }
 
         SysUserResponse sysUserResponse = new SysUserResponse();
@@ -179,7 +183,7 @@ public class SysUserServiceImpl implements SysUserService {
         sysUserResponse.setRouters(topMenu);
         sysUserResponse.setPermissions(permissions);
 
-        return new Response<>(sysUserResponse);
+        return Response.toResponse(sysUserResponse);
     }
 
     /**
@@ -245,6 +249,7 @@ public class SysUserServiceImpl implements SysUserService {
         SysUserResponse resp = new SysUserResponse();
         BeanCopier.copy(user, resp);
 
+        resp.setPassword(null);
         // 查询系统用户与角色关系
         LambdaQueryWrapper<SysRole> sysRoleWrapper = new LambdaQueryWrapper<SysRole>()
                 .eq(SysRole::getDeleteStatus, Boolean.FALSE)

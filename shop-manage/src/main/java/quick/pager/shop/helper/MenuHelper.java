@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import quick.pager.shop.mapper.MenuMapper;
-import quick.pager.shop.mapper.RoleMapper;
 import quick.pager.shop.mapper.RoleMenuMapper;
 import quick.pager.shop.mapper.SysRoleMapper;
 import quick.pager.shop.model.Menu;
@@ -26,8 +25,6 @@ public class MenuHelper {
 
     @Autowired
     private SysRoleMapper sysRoleMapper;
-    @Autowired
-    private RoleMapper roleMapper;
     @Autowired
     private RoleMenuMapper roleMenuMapper;
     @Autowired
@@ -72,7 +69,7 @@ public class MenuHelper {
      * @param roleIds 角色主键集
      * @return 菜单集
      */
-    public List<Menu> selectMenuByRoleIds(final List<Long> roleIds) {
+    private List<Menu> selectMenuByRoleIds(final List<Long> roleIds) {
         // 角色所属权限编码
         LambdaQueryWrapper<RoleMenu> roleMenuWrapper = new LambdaQueryWrapper<>();
         roleMenuWrapper.eq(RoleMenu::getDeleteStatus, Boolean.FALSE);

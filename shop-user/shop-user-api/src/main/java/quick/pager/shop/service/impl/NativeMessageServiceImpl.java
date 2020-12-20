@@ -44,7 +44,7 @@ public class NativeMessageServiceImpl extends ServiceImpl<NativeMessageMapper, N
     public Response<NativeMessageResponse> info(final Long id) {
         NativeMessage message = this.baseMapper.selectById(id);
         if (Objects.isNull(message) || message.getDeleteStatus()) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "消息不存在！");
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "消息不存在！");
         }
 
         if (IConsts.ZERO.equals(message.getStatus())) {
@@ -79,7 +79,7 @@ public class NativeMessageServiceImpl extends ServiceImpl<NativeMessageMapper, N
                 .eq(NativeMessage::getUserId, userId)
                 .eq(NativeMessage::getStatus, IConsts.ZERO)
                 .in(NativeMessage::getId, messageIds));
-        return new Response();
+        return Response.toResponse();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class NativeMessageServiceImpl extends ServiceImpl<NativeMessageMapper, N
         this.baseMapper.update(nativeMessage, new LambdaQueryWrapper<NativeMessage>()
                 .eq(NativeMessage::getDeleteStatus, Boolean.FALSE)
                 .in(NativeMessage::getId, messageIds));
-        return new Response();
+        return Response.toResponse();
     }
 
     private NativeMessageResponse convert(final NativeMessage nativeMessage) {

@@ -34,21 +34,19 @@ public class PermissionServiceImpl implements PermissionService {
     private RoleMenuMapper roleMenuMapper;
 
     @Override
-    public Response grant(List<Long> permission, Long roleId) {
+    public Response grant(final List<Long> permission, final Long roleId) {
         // 此角色历史权限
         List<Menu> menus = menuHelper.selectMenuByRoleId(roleId);
         // 剩余下值是取消的权限
-        for (Menu menu : menus) {
-            if (!permission.contains(menu.getId())) {
-                LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
-                wrapper.eq(RoleMenu::getRoleId, roleId);
-                wrapper.eq(RoleMenu::getPermission, menu.getPermission());
-                // 删除角色权限
-                RoleMenu roleMenu = new RoleMenu();
-                roleMenu.setDeleteStatus(Boolean.TRUE);
-                roleMenuMapper.update(roleMenu, wrapper);
-            }
-        }
+        menus.stream().filter(menu -> !permission.contains(menu.getId())).forEach(menu -> {
+            LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(RoleMenu::getRoleId, roleId);
+            wrapper.eq(RoleMenu::getPermission, menu.getPermission());
+            // 删除角色权限
+            RoleMenu roleMenu = new RoleMenu();
+            roleMenu.setDeleteStatus(Boolean.TRUE);
+            roleMenuMapper.update(roleMenu, wrapper);
+        });
 
         // 剩下的值是新增的权限
         for (Long perm : permission) {
@@ -65,11 +63,11 @@ public class PermissionServiceImpl implements PermissionService {
                 }
             }
         }
-        return new Response();
+        return Response.toResponse();
     }
 
     @Override
-    public Response<List<MenuResponse>> permission(Long id) {
+    public Response<List<MenuResponse>> permission(final Long id) {
 
         Menu menu = new Menu();
         menu.setMenuType(2);
@@ -84,7 +82,7 @@ public class PermissionServiceImpl implements PermissionService {
                 0);
     }
 
-    private MenuResponse convert(Menu menu) {
+    private MenuResponse convert(final Menu menu) {
         MenuResponse resp = new MenuResponse();
         resp.setId(menu.getId());
         resp.setName(menu.getName());

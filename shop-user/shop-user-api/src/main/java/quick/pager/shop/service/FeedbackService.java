@@ -2,7 +2,7 @@ package quick.pager.shop.service;
 
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.model.Feedback;
-import quick.pager.shop.param.FeedbackParam;
+import quick.pager.shop.user.request.FeedbackRequest;
 
 /**
  * 意见反馈
@@ -17,5 +17,5 @@ public interface FeedbackService extends IService<Feedback> {
      * @param userId 用户主键
      * @param param  保存内容
      */
-    Response<Long> create(final Long userId, final FeedbackParam param);
+    Response<Long> create(final Long userId, final FeedbackRequest param);
 }

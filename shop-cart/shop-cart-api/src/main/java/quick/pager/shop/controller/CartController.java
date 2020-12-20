@@ -1,18 +1,17 @@
 package quick.pager.shop.controller;
 
 import java.util.List;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import quick.pager.shop.param.CartParam;
+import quick.pager.shop.cart.request.CartOtherRequest;
+import quick.pager.shop.cart.request.CartRequest;
 import quick.pager.shop.cart.response.GoodsCartResponse;
 import quick.pager.shop.service.CartService;
 import quick.pager.shop.constants.ConstantsClient;
-import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.user.response.Response;
 
 /**
@@ -33,32 +32,58 @@ public class CartController {
      * @param userId 用户主键
      * @param page   页码
      */
-    @PostMapping("/app/user/{userId}/{page}/list")
-    public Response<List<GoodsCartResponse>> list(@PathVariable("userId") Long userId, @PathVariable("page") Integer page) {
+    @PostMapping("/app/user/{userId}/{page}/page")
+    public Response<List<GoodsCartResponse>> page(@PathVariable("userId") Long userId, @PathVariable("page") Integer page) {
 
-        return cartService.list(userId, page);
+        return cartService.page(userId, page);
+    }
+
+
+    /**
+     * 用户购物车列表信息
+     *
+     * @param request 请求参数
+     */
+    @PostMapping("/app/user/list")
+    public Response<List<GoodsCartResponse>> list(@RequestBody CartOtherRequest request) {
+
+        return cartService.list(request);
     }
 
     /**
-     * 添加购物车
+     * 购物车添加
+     *
+     * @param request 请求参数
+     * @return 主键
      */
-    @PostMapping("/app/user/add")
-    public Response<String> add(@RequestBody CartParam param) {
+    @PostMapping("/app/cart/create")
+    public Response<Long> create(@RequestBody CartRequest request) {
 
-        return cartService.add(param);
+        return cartService.create(request);
+    }
+
+
+    /**
+     * 购物车删除
+     *
+     * @param id 购物车主键
+     * @return 主键
+     */
+    @PostMapping("/app/cart/delete/{id}")
+    public Response<Long> delete(@PathVariable Long id) {
+
+        return cartService.delete(id);
     }
 
     /**
-     * 删除购物车
+     * 购物车批量删除
+     *
+     * @param ids 购物车主键
+     * @return 主键
      */
-    @PostMapping("/app/user/delete")
-    public Response<String> delete(@RequestBody CartParam param) {
+    @PostMapping("/app/cart/delete/batch")
+    public Response<List<Long>> deleteBatch(@RequestBody List<Long> ids) {
 
-        if (CollectionUtils.isEmpty(param.getIds())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
-
-        return cartService.delete(param.getIds());
+        return cartService.deleteBatch(ids);
     }
-
 }

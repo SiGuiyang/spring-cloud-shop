@@ -16,27 +16,27 @@ public interface SystemConfigService {
     /**
      * 配置列表
      */
-    Response<List<SystemConfigResponse>> queryPage(SystemConfigParam param);
+    Response<List<SystemConfigResponse>> queryPage(final SystemConfigParam param);
 
     /**
      * 配置列表
      */
-    Response<List<SystemConfigResponse>> queryList(SystemConfigParam param);
+    Response<List<SystemConfigResponse>> queryList(final SystemConfigParam param);
 
     /**
      * 新增
      */
-    Response<Long> create(SystemConfigParam param);
+    Response<Long> create(final SystemConfigParam param);
 
     /**
      * 修改
      */
-    Response<Long> modify(SystemConfigParam param);
+    Response<Long> modify(final SystemConfigParam param);
 
     /**
      * 删除
      *
      * @param id 主键
      */
-    Response<Long> delete(Long id);
+    Response<Long> delete(final Long id);
 }

@@ -50,7 +50,7 @@ public class SMSTemplateController {
     @PutMapping("/sms/modify")
     public Response<Long> modify(@RequestBody SMSTemplateSaveRequest request) {
         if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         return smsTemplateService.modify(request);
     }

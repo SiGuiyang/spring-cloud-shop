@@ -20,19 +20,19 @@ public class DynamicFormClientFallback implements FallbackFactory<DynamicFormCli
             @Override
             public Response<Long> create(DynamicFormSaveRequest request) {
                 log.error("DynamicFormClient.create 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<Long> modify(DynamicFormSaveRequest request) {
                 log.error("DynamicFormClient.modify 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<DynamicFormResponse>> get(String bizType) {
                 log.error("DynamicFormClient.get 进入熔断措施 msg = {}", cause.getMessage());
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
             }
         };
     }

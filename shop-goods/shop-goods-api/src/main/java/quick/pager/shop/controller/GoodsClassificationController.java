@@ -3,6 +3,8 @@ package quick.pager.shop.controller;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,18 +31,6 @@ public class GoodsClassificationController {
     private GoodsClassService goodsClassService;
 
     /**
-     * 商品分类列表
-     *
-     * @param request 请求参数
-     * @return 分类列表
-     */
-    @PostMapping("/classification/page")
-    public Response<List<GoodsClassificationResponse>> page(@RequestBody GoodsClassificationPageRequest request) {
-        return goodsClassService.queryPage(request);
-
-    }
-
-    /**
      * 新增商品分类
      *
      * @param request 请求参数
@@ -60,20 +50,32 @@ public class GoodsClassificationController {
     @PutMapping("/classification/modify")
     public Response<Long> modify(@RequestBody GoodsClassificationSaveRequest request) {
         if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         return goodsClassService.modify(request);
     }
 
     /**
-     * 商品分类树形结构
+     * 商品分类修改
      *
-     * @return 商品分类树形结构
+     * @param id 主键
+     * @return 分类主键
      */
-    @PostMapping("/classification/tree")
-    public Response classificationTree() {
-        return goodsClassService.classificationTree();
+    @DeleteMapping("/classification/delete/{id}")
+    public Response<Long> delete(@PathVariable("id") Long id) {
+        return goodsClassService.delete(id);
     }
 
+    /**
+     * 商品分类列表
+     *
+     * @param spuId 请求参数
+     * @return 分类列表
+     */
+    @PostMapping("/classification/{spuId}")
+    public Response<List<GoodsClassificationResponse>> list(@PathVariable("spuId") Long spuId) {
+        return goodsClassService.queryBySpuId(spuId);
+
+    }
 
 }

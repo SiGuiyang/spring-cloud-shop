@@ -20,14 +20,22 @@ public interface GoodsClassService {
      * 新增
      *
      * @param request 请求参数
-     * @return
+     * @return 数据响应
      */
-    Response<Long> create(GoodsClassificationSaveRequest request);
+    Response<Long> create(final GoodsClassificationSaveRequest request);
 
     /**
      * 编辑
      */
-    Response<Long> modify(GoodsClassificationSaveRequest request);
+    Response<Long> modify(final GoodsClassificationSaveRequest request);
+
+    /**
+     * 删除
+     *
+     * @param id 主键
+     * @return 数据响应
+     */
+    Response<Long> delete(final Long id);
 
     /**
      * 获取分类列表分页
@@ -35,10 +43,13 @@ public interface GoodsClassService {
      * @param request 请求参数
      * @return 数据响应
      */
-    Response<List<GoodsClassificationResponse>> queryPage(GoodsClassificationPageRequest request);
+    Response<List<GoodsClassificationResponse>> queryPage(final GoodsClassificationPageRequest request);
 
     /**
-     * 商品树形结构
+     * 根据spuId查询商品分类
+     *
+     * @param spuId spu主键
+     * @return 数据响应
      */
-    Response<List<GoodsClassificationResponse>> classificationTree();
+    Response<List<GoodsClassificationResponse>> queryBySpuId(final Long spuId);
 }

@@ -17,14 +17,7 @@
     <artifactId>shop-activity</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-activity</name>
     <description>营销活动服务</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <build>
         <plugins>

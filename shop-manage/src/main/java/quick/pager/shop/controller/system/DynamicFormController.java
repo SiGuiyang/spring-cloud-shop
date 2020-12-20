@@ -16,6 +16,7 @@ import quick.pager.shop.param.system.DynamicFormOtherSaveParam;
 import quick.pager.shop.service.system.DynamicFormService;
 import quick.pager.shop.platform.response.DynamicFormResponse;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 自定义表单
@@ -37,9 +38,7 @@ public class DynamicFormController {
     @PostMapping("/dynamic/form/create")
     public Response<Long> create(@RequestBody DynamicFormOtherSaveParam param) {
 
-        if (StringUtils.isBlank(param.getBizType())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(StringUtils.isNotEmpty(param.getBizType()), () -> ResponseStatus.PARAMS_EXCEPTION);
 
         return dynamicFormService.create(param);
     }
@@ -51,9 +50,7 @@ public class DynamicFormController {
     @PostMapping("/dynamic/form/modify")
     public Response modify(@RequestBody DynamicFormOtherSaveParam param) {
 
-        if (StringUtils.isBlank(param.getBizType())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
-        }
+        Assert.isTrue(StringUtils.isNotEmpty(param.getBizType()), () -> ResponseStatus.PARAMS_EXCEPTION);
 
         return dynamicFormService.modify(param);
     }

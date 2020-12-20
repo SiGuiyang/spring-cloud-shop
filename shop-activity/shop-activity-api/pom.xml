@@ -39,17 +39,20 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
         <!-- end spring cloud -->
 
         <!-- start spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
@@ -73,17 +76,15 @@
         <!-- start 客户端授权-->
         <dependency>
             <groupId>quick.pager</groupId>
-            <artifactId>shop-auth-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>quick.pager</groupId>
             <artifactId>shop-auth-resource</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- end 客户端授权-->
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-user-client</artifactId>

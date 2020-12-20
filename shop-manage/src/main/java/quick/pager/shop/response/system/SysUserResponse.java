@@ -36,6 +36,11 @@ public class SysUserResponse extends BasicResponse {
      */
     private String password;
 
+    /**
+     * 0 ：正常 1：禁用
+     */
+    private Boolean state;
+
     private String avatar;
 
     private List<Role> roles = new ArrayList<>();

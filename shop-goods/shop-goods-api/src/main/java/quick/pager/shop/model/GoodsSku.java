@@ -39,6 +39,14 @@ public class GoodsSku extends Model {
      */
     private String description;
     /**
+     * 商品状态 0 未上架 1 上架
+     */
+    private Boolean state;
+    /**
+     * 含重量
+     */
+    private BigDecimal weight;
+    /**
      * 商品价格
      */
     private BigDecimal skuAmount;
@@ -46,13 +54,5 @@ public class GoodsSku extends Model {
      * 折扣价格
      */
     private BigDecimal discountAmount;
-    /**
-     * 默认的sku，显示在列表的主sku商品 true, false
-     */
-    private Boolean defaultSku;
-    /**
-     * 入库量，库存量
-     */
-    private Integer inventory;
 
 }

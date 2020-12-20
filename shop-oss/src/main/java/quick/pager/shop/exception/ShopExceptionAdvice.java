@@ -20,8 +20,8 @@ public class ShopExceptionAdvice {
         log.error("统一异常处理机制，触发异常 msg = {}", e);
         if (e instanceof OSSException) {
             OSSException exception = (OSSException) e;
-            return new Response<>(exception.getCode(), exception.getMessage());
+            return Response.toError(exception.getCode(), exception.getMessage());
         }
-        return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
+        return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.PARAMS_EXCEPTION);
     }
 }

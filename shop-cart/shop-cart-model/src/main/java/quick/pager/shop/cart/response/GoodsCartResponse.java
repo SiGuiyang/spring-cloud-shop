@@ -1,7 +1,7 @@
 package quick.pager.shop.cart.response;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 import lombok.Data;
 
 /**
@@ -14,19 +14,36 @@ public class GoodsCartResponse implements Serializable {
     private static final long serialVersionUID = 1660182360445628070L;
 
     /**
-     * 商户主键
+     * 购物车主键
      */
     private Long id;
     /**
-     * 商户名称
+     * 商品sku主键
      */
-    private String name;
+    private Long skuId;
     /**
-     * 商户Logo
+     * 商品名称
      */
-    private String logo;
+    private String skuName;
     /**
-     * 购物车商品条目
+     * 商品图片名称
      */
-    private List<GoodsCartDetailResponse> details;
+    private String skuImage;
+    /**
+     * 购买数量
+     */
+    private Integer quantity;
+    /**
+     * sku原价
+     */
+    private BigDecimal skuAmount;
+    /**
+     * 折扣价格
+     */
+    private BigDecimal discountAmount;
+    /**
+     * false 表示sku未失效
+     * true 表示sku失效
+     */
+    private Boolean expire;
 }

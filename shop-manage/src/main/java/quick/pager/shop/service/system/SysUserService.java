@@ -3,7 +3,7 @@ package quick.pager.shop.service.system;
 import java.util.List;
 import quick.pager.shop.param.system.SysUserOtherParam;
 import quick.pager.shop.param.system.SysUserPageParam;
-import quick.pager.shop.param.system.SysUserParam;
+import quick.pager.shop.param.system.SysUserSaveParam;
 import quick.pager.shop.response.system.SysUserDownloadResponse;
 import quick.pager.shop.response.system.SysUserResponse;
 import quick.pager.shop.user.response.Response;
@@ -39,12 +39,12 @@ public interface SysUserService {
     /**
      * 创建用户
      */
-    Response<Long> create(SysUserParam param);
+    Response<Long> create(SysUserSaveParam param);
 
     /**
      * 修改用户
      */
-    Response<Long> modify(SysUserParam param);
+    Response<Long> modify(SysUserSaveParam param);
 
     /**
      * 用户登陆权限信息

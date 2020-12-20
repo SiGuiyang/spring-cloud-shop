@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.risk.fallback.RiskClientFallbackFactory;
-import quick.pager.shop.risk.request.BlackListPageRequest;
-import quick.pager.shop.risk.request.BlackListSaveRequest;
+import quick.pager.shop.risk.request.WhiteBlacklistPageRequest;
+import quick.pager.shop.risk.request.WhiteBlacklistSaveRequest;
 import quick.pager.shop.user.response.Response;
 
 /**
@@ -29,7 +29,7 @@ public interface RiskClient {
      * @return 黑名单列表
      */
     @PostMapping(value = "/blackList/list")
-    Response queryList(@RequestBody BlackListPageRequest request);
+    Response queryList(@RequestBody WhiteBlacklistPageRequest request);
 
     /**
      * 新增黑名单
@@ -38,7 +38,7 @@ public interface RiskClient {
      * @return 黑名单主键
      */
     @PostMapping(value = "/create")
-    Response<Long> create(@RequestBody BlackListSaveRequest request);
+    Response<Long> create(@RequestBody WhiteBlacklistSaveRequest request);
 
     /**
      * 修改
@@ -47,7 +47,7 @@ public interface RiskClient {
      * @return 黑名单主键
      */
     @PutMapping(value = "/modify")
-    Response<Long> modify(@RequestBody BlackListSaveRequest request);
+    Response<Long> modify(@RequestBody WhiteBlacklistSaveRequest request);
 
     /**
      * 删除黑名单

@@ -1,14 +1,13 @@
 package quick.pager.shop.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.configuration.ShopRedisTemplate;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.mapper.SMSTemplateMapper;
 import quick.pager.shop.model.SMSTemplate;
@@ -29,7 +28,7 @@ import quick.pager.shop.utils.DateUtils;
 public class SMSTemplateServiceImpl extends ServiceImpl<SMSTemplateMapper, SMSTemplate> implements SMSTemplateService {
 
     @Autowired
-    private ShopRedisTemplate shopRedisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public Response<Long> create(SMSTemplateSaveRequest request) {
@@ -38,16 +37,16 @@ public class SMSTemplateServiceImpl extends ServiceImpl<SMSTemplateMapper, SMSTe
         smsTemplate.setCreateTime(DateUtils.dateTime());
         this.baseMapper.insert(smsTemplate);
 
-        shopRedisTemplate.opsForValue().set("sms:template:code:" + smsTemplate.getTemplateCode(), JSON.toJSONString(smsTemplate), 24 * 30 * 60 * 60L);
-        return new Response<>(smsTemplate.getId());
+        redisTemplate.opsForValue().set("sms:template:code:" + smsTemplate.getTemplateCode(), smsTemplate, 24 * 30 * 60 * 60L);
+        return Response.toResponse(smsTemplate.getId());
     }
 
     @Override
     public Response<Long> modify(SMSTemplateSaveRequest request) {
         SMSTemplate smsTemplate = this.convert(request);
         this.baseMapper.updateById(smsTemplate);
-        shopRedisTemplate.opsForValue().set("sms:template:code:" + smsTemplate.getTemplateCode(), JSON.toJSONString(smsTemplate), 24 * 30 * 60 * 60L);
-        return new Response<>(smsTemplate.getId());
+        redisTemplate.opsForValue().set("sms:template:code:" + smsTemplate.getTemplateCode(), smsTemplate, 24 * 30 * 60 * 60L);
+        return Response.toResponse(smsTemplate.getId());
     }
 
     @Override
@@ -66,25 +65,24 @@ public class SMSTemplateServiceImpl extends ServiceImpl<SMSTemplateMapper, SMSTe
     public Response<SMSTemplateResponse> sms(String templateCode) {
 
         SMSTemplateResponse response;
-        String result = (String) shopRedisTemplate.opsForValue().get("sms:template:code:" + templateCode);
-        if (StringUtils.isEmpty(result)) {
+        SMSTemplate result = (SMSTemplate) redisTemplate.opsForValue().get("sms:template:code:" + templateCode);
+        if (Objects.isNull(result)) {
             SMSTemplate smsTemplate = new SMSTemplate();
             smsTemplate.setTemplateCode(templateCode);
             SMSTemplate template = this.baseMapper.selectOne(new QueryWrapper<>(smsTemplate));
             if (Objects.isNull(template)) {
-                return new Response<>(ResponseStatus.Code.FAIL_CODE, "未知短信渠道");
+                return Response.toError(ResponseStatus.Code.FAIL_CODE, "未知短信渠道");
             }
             response = this.convert(template);
         } else {
-            SMSTemplate template = JSON.parseObject(result, SMSTemplate.class);
-            response = this.convert(template);
+            response = this.convert(result);
         }
 
-        return new Response<>(response);
+        return Response.toResponse(response);
     }
 
     private SMSTemplate convert(SMSTemplateSaveRequest request) {
-        return BeanCopier.create(request, new SMSTemplate()).copy();
+        return BeanCopier.copy(request, new SMSTemplate());
     }
 
     private SMSTemplateResponse convert(SMSTemplate template) {

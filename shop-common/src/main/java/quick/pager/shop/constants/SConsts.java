@@ -58,6 +58,11 @@ public interface SConsts {
      */
     String EMPTY = "";
     /**
+     * 英文中横杠
+     */
+    String SHOULDER = "-";
+
+    /**
      * 斜杠
      */
     String SLASH = "/";

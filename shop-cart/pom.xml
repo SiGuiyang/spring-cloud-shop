@@ -16,14 +16,7 @@
     <artifactId>shop-cart</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-cart</name>
     <description>购物车服务</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <build>
         <plugins>

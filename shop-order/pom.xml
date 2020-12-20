@@ -16,7 +16,6 @@
     <artifactId>shop-order</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-order</name>
     <description>订单服务</description>
 
     <properties>

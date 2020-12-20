@@ -44,7 +44,7 @@ public class SystemConfigDetailController {
     @PutMapping("/config/detail/modify")
     public Response<Long> modify(@RequestBody SystemConfigDetailSaveRequest request) {
         if (Objects.isNull(request)) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
 
         return systemConfigDetailService.modify(request);

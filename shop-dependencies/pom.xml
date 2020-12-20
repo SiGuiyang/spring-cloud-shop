@@ -9,7 +9,7 @@
 
     <version>cloud-1.0</version>
 
-    <name>Spring Cloud Shop Dependencies</name>
+    <name>SPRING::CLOUD::SHOP::DEPENDENCIES</name>
     <description>Spring Cloud Shop Dependencies</description>
 
     <properties>
@@ -32,6 +32,7 @@
         <spring-cloud-openfeign.version>2.2.2.RELEASE</spring-cloud-openfeign.version>
         <spring-cloud-gateway.version>2.2.2.RELEASE</spring-cloud-gateway.version>
         <spring-cloud-commons.version>2.2.2.RELEASE</spring-cloud-commons.version>
+        <spring-cloud-sleuth.version>2.2.2.RELEASE</spring-cloud-sleuth.version>
         <spring-cloud-netflix.version>2.2.2.RELEASE</spring-cloud-netflix.version>
         <spring-cloud-stream.version>Horsham.SR3</spring-cloud-stream.version>
         <mybatis-boot.version>1.3.2</mybatis-boot.version>
@@ -40,7 +41,9 @@
         <cglib.version>3.2.10</cglib.version>
         <gson.version>2.8.5</gson.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-collections4.version>4.2</commons-collections4.version>
         <aliyun.version>1.0.0</aliyun.version>
+        <shardingsphere.version>4.1.0</shardingsphere.version>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +53,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-commons-dependencies</artifactId>
                 <version>${spring-cloud-commons.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-sleuth-dependencies</artifactId>
+                <version>${spring-cloud-sleuth.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -86,13 +97,13 @@
                 <scope>import</scope>
             </dependency>
 
-            <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-stream-dependencies</artifactId>-->
-            <!--<version>${spring-cloud-stream.version}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>import</scope>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-stream-dependencies</artifactId>
+                <version>${spring-cloud-stream.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -117,6 +128,12 @@
                 <version>${aliyun.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>${shardingsphere.version}</version>
             </dependency>
 
             <dependency>
@@ -239,6 +256,12 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>${commons-beanutils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
             </dependency>
 
         </dependencies>

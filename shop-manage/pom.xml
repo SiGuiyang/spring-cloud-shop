@@ -11,15 +11,7 @@
     <artifactId>shop-manage</artifactId>
     <packaging>jar</packaging>
 
-    <name>shop-manage</name>
     <description>平台管理服务</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <seata.version>0.5.0</seata.version>
-    </properties>
 
     <dependencies>
         <!-- start spring cloud alibaba -->
@@ -48,6 +40,14 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
         </dependency>
         <!-- end spring cloud -->
 
@@ -87,16 +87,15 @@
         <!-- start 客户端授权-->
         <dependency>
             <groupId>quick.pager</groupId>
-            <artifactId>shop-auth-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>quick.pager</groupId>
             <artifactId>shop-auth-resource</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- end 客户端授权-->
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

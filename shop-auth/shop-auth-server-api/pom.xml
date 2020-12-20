@@ -12,14 +12,7 @@
     <artifactId>shop-auth-server-api</artifactId>
     <packaging>jar</packaging>
 
-    <name>shop-auth-server-api</name>
     <description>授权服务</description>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
 
@@ -89,12 +82,6 @@
             <groupId>quick.pager</groupId>
             <artifactId>shop-common</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>easyexcel</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     </dependencies>

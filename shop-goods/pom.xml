@@ -16,7 +16,6 @@
     <artifactId>shop-goods</artifactId>
     <packaging>pom</packaging>
 
-    <name>shop-goods</name>
     <description>商品服务</description>
 
     <properties>

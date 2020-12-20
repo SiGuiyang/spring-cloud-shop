@@ -1,6 +1,5 @@
 package quick.pager.shop.goods.response.classification;
 
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import quick.pager.shop.user.response.BasicResponse;
@@ -17,31 +16,15 @@ public class GoodsClassificationResponse extends BasicResponse {
 
     private Long id;
     /**
-     * 商品父级Id
-     */
-    private Long parentId;
-    /**
-     * banner 主键
-     */
-    private Long bannerId;
-    /**
-     * banner名称
-     */
-    private String bannerName;
-    /**
      * 分类名称
      */
     private String className;
+
+    private Long spuId;
+
+    private String spuName;
     /**
-     * 父级菜单名称
+     * 序号
      */
-    private String parentClassName;
-    /**
-     * 分类图标
-     */
-    private String icon;
-    /**
-     * 子集分类
-     */
-    private List<GoodsClassificationResponse> children;
+    private Integer sequence;
 }

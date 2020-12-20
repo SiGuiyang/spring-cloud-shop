@@ -12,12 +12,6 @@
 
     <artifactId>shop-risk-api</artifactId>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
-
     <dependencies>
         <!-- start spring cloud alibaba -->
         <dependency>
@@ -46,17 +40,16 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
         <!-- end spring cloud -->
 
         <!-- start spring boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
@@ -78,12 +71,6 @@
         <!-- end database -->
 
         <!-- start 客户端授权-->
-        <dependency>
-            <groupId>quick.pager</groupId>
-            <artifactId>shop-auth-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>quick.pager</groupId>
             <artifactId>shop-auth-resource</artifactId>

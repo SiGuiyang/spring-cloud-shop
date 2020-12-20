@@ -5,27 +5,22 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import quick.pager.shop.mapper.ExchangeActivityMapper;
+import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.mapper.ActivityMapper;
 import quick.pager.shop.mapper.ExchangeActivityMembersMapper;
 import quick.pager.shop.mapper.ExchangeActivityRuleMapper;
-import quick.pager.shop.model.ExchangeActivity;
+import quick.pager.shop.model.Activity;
 import quick.pager.shop.model.ExchangeActivityMember;
 import quick.pager.shop.model.ExchangeActivityRule;
-import quick.pager.shop.activity.request.exchange.ExchangeActivityPageRequest;
 import quick.pager.shop.activity.request.exchange.ExchangeActivityRecordPageRequest;
-import quick.pager.shop.activity.request.exchange.ExchangeActivitySaveRequest;
 import quick.pager.shop.activity.response.exchange.ExchangeActivityRecordResponse;
-import quick.pager.shop.activity.response.exchange.ExchangeActivityResponse;
+import quick.pager.shop.service.ActivityService;
 import quick.pager.shop.user.response.Response;
 import quick.pager.shop.service.ExchangeService;
-import quick.pager.shop.utils.BeanCopier;
-import quick.pager.shop.utils.DateUtils;
 
 /**
  * 满赠换购
@@ -33,60 +28,23 @@ import quick.pager.shop.utils.DateUtils;
  * @author siguiyang
  */
 @Service
-public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, ExchangeActivity> implements ExchangeService {
+public class ExchangeServiceImpl implements ExchangeService {
 
+    @Autowired
+    private ActivityMapper activityMapper;
     @Autowired
     private ExchangeActivityMembersMapper exchangeActivityMembersMapper;
     @Autowired
     private ExchangeActivityRuleMapper exchangeActivityRuleMapper;
-
-
+    @Autowired
+    private ActivityService activityService;
     @Override
-    public Response<ExchangeActivityResponse> queryInfo(Long activityId) {
-        ExchangeActivity activity = this.baseMapper.selectById(activityId);
-        return new Response<>(this.convert(activity));
-    }
+    public Response<List<ExchangeActivityRecordResponse>> record(final ExchangeActivityRecordPageRequest request) {
 
-    @Override
-    public Response<List<ExchangeActivityResponse>> queryPage(ExchangeActivityPageRequest request) {
+        if (activityService.nonExists(request.getActivityId())) {
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "活动不存在");
+        }
 
-        LambdaQueryWrapper<ExchangeActivity> qw = new LambdaQueryWrapper<ExchangeActivity>()
-                .likeRight(StringUtils.isNotEmpty(request.getActivityName()), ExchangeActivity::getActivityName, request.getActivityName())
-                .between(CollectionUtils.isNotEmpty(request.getTimeRange()), ExchangeActivity::getBeginTime, request.getTimeRange().get(0), request.getTimeRange().get(1));
-
-        Response<List<ExchangeActivity>> response = this.toPage(request.getPage(), request.getPageSize(), qw);
-
-        return Response.toResponse(Optional.ofNullable(response.getData()).orElse(Collections.emptyList()).stream()
-                        .map(this::convert)
-                        .collect(Collectors.toList()),
-                response.getTotal());
-    }
-
-    @Override
-    public Response<Long> create(ExchangeActivitySaveRequest request) {
-
-        ExchangeActivity exchangeActivity = this.convert(request);
-
-        exchangeActivity.setDeleteStatus(Boolean.FALSE);
-        exchangeActivity.setServerStatus(Boolean.FALSE);
-        exchangeActivity.setCreateTime(DateUtils.dateTime());
-        exchangeActivity.setUpdateTime(DateUtils.dateTime());
-        this.baseMapper.insert(exchangeActivity);
-
-        return new Response<>(exchangeActivity.getId());
-    }
-
-    @Override
-    public Response<Long> modify(ExchangeActivitySaveRequest request) {
-        ExchangeActivity exchangeActivity = this.convert(request);
-        exchangeActivity.setUpdateTime(DateUtils.dateTime());
-        this.baseMapper.updateById(exchangeActivity);
-
-        return new Response<>(exchangeActivity.getId());
-    }
-
-    @Override
-    public Response<List<ExchangeActivityRecordResponse>> record(ExchangeActivityRecordPageRequest request) {
         LambdaQueryWrapper<ExchangeActivityMember> wrapper = new LambdaQueryWrapper<ExchangeActivityMember>()
                 .eq(ExchangeActivityMember::getDeleteStatus, Boolean.FALSE)
                 .eq(ExchangeActivityMember::getActivityId, request.getActivityId())
@@ -103,15 +61,7 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, Exc
         return Response.toResponse(responseList, count);
     }
 
-    private ExchangeActivity convert(ExchangeActivitySaveRequest request) {
-        return BeanCopier.create(request, new ExchangeActivity()).copy();
-    }
-
-    private ExchangeActivityResponse convert(ExchangeActivity activity) {
-        return BeanCopier.create(activity, new ExchangeActivityResponse()).copy();
-    }
-
-    private ExchangeActivityRecordResponse convert(ExchangeActivityMember member) {
+    private ExchangeActivityRecordResponse convert(final ExchangeActivityMember member) {
         ExchangeActivityRecordResponse response = new ExchangeActivityRecordResponse();
 
         response.setId(member.getId());
@@ -123,7 +73,7 @@ public class ExchangeServiceImpl extends ServiceImpl<ExchangeActivityMapper, Exc
         response.setDeleteStatus(member.getDeleteStatus());
         // 活动名称
         if (Objects.nonNull(member.getActivityId())) {
-            ExchangeActivity activity = this.baseMapper.selectById(member.getActivityId());
+            Activity activity = this.activityMapper.selectById(member.getActivityId());
             response.setActivityId(member.getActivityId());
             response.setActivityName(Objects.nonNull(activity) ? activity.getActivityName() : null);
         }

@@ -41,7 +41,7 @@ public class FormController {
     @PostMapping("/dynamic/form/create")
     public Response<Long> create(@RequestBody FormSaveRequest request) {
         if (check(null, request.getBizType())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "已存在相同表单模型");
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "已存在相同表单模型");
         }
         return formService.create(request);
     }
@@ -52,10 +52,10 @@ public class FormController {
     @PutMapping("/dynamic/form/modify")
     public Response<Long> modify(@RequestBody FormSaveRequest request) {
         if (Objects.isNull(request.getId())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
         }
         if (check(request.getId(), request.getBizType())) {
-            return new Response<>(ResponseStatus.Code.FAIL_CODE, "已存在相同表单模型");
+            return Response.toError(ResponseStatus.Code.FAIL_CODE, "已存在相同表单模型");
         }
         return formService.modify(request);
     }
@@ -74,7 +74,7 @@ public class FormController {
      */
     @GetMapping("/dynamic/form/get")
     public Response<List<FieldResponse>> get(@RequestParam String bizType) {
-        return new Response<>(formService.get(bizType));
+        return Response.toResponse(formService.get(bizType));
     }
 
     /**

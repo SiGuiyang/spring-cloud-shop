@@ -2,11 +2,11 @@ package quick.pager.shop.risk.fallback;
 
 import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
-import quick.pager.shop.risk.request.BlackListPageRequest;
+import quick.pager.shop.risk.request.WhiteBlacklistPageRequest;
 import quick.pager.shop.risk.client.RiskClient;
 import quick.pager.shop.constants.ResponseStatus;
 import quick.pager.shop.user.response.Response;
-import quick.pager.shop.risk.request.BlackListSaveRequest;
+import quick.pager.shop.risk.request.WhiteBlacklistSaveRequest;
 
 /**
  * 风控服务熔断
@@ -19,23 +19,23 @@ public class RiskClientFallbackFactory implements FallbackFactory<RiskClient> {
     public RiskClient create(Throwable cause) {
         return new RiskClient() {
             @Override
-            public Response queryList(BlackListPageRequest request) {
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            public Response queryList(WhiteBlacklistPageRequest request) {
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response<Long> create(BlackListSaveRequest request) {
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            public Response<Long> create(WhiteBlacklistSaveRequest request) {
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
-            public Response<Long> modify(BlackListSaveRequest request) {
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+            public Response<Long> modify(WhiteBlacklistSaveRequest request) {
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response<Long> delete(Long id) {
-                return new Response<>(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
+                return Response.toError(ResponseStatus.Code.EXCEPTION_CODE, ResponseStatus.TELNET_EXCEPTION);
             }
         };
     }

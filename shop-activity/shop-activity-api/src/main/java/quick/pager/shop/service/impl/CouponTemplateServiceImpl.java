@@ -43,7 +43,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<DiscountCouponTemplat
         template.setCreateTime(DateUtils.dateTime());
         this.baseMapper.insert(template);
 
-        return new Response<>(template.getId());
+        return Response.toResponse(template.getId());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class CouponTemplateServiceImpl extends ServiceImpl<DiscountCouponTemplat
         BeanCopier.create(request, template).copy();
         this.baseMapper.updateById(template);
 
-        return new Response<>(template.getId());
+        return Response.toResponse(template.getId());
     }
 
     @Override

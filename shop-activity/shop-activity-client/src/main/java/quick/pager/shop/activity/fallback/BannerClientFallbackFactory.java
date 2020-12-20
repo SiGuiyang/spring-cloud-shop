@@ -27,27 +27,31 @@ public class BannerClientFallbackFactory implements FallbackFactory<BannerClient
             @Override
             public Response<BannerResponse> queryByPk(Long id) {
                 log.error(cause.getMessage());
-                return new Response<BannerResponse>(ResponseStatus.Code.FAIL_CODE, ResponseStatus.PARAMS_EXCEPTION);
+                return Response.toError(ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<BannerResponse>> queryList(BannerOtherRequest request) {
-                return null;
+                log.error(cause.getMessage());
+                return Response.toError(ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<List<BannerResponse>> queryPage(BannerPageRequest request) {
-                return null;
+                log.error(cause.getMessage());
+                return Response.toError(ResponseStatus.TELNET_EXCEPTION);
             }
 
             @Override
             public Response<Long> create(BannerSaveRequest request) {
-                return null;
+                log.error(cause.getMessage());
+                return Response.toError(ResponseStatus.PARAMS_EXCEPTION);
             }
 
             @Override
             public Response<Long> modify(BannerSaveRequest request) {
-                return null;
+                log.error(cause.getMessage());
+                return Response.toError(ResponseStatus.PARAMS_EXCEPTION);
             }
         };
     }

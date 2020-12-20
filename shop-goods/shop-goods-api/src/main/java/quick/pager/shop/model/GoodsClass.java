@@ -22,9 +22,9 @@ public class GoodsClass extends Model {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商品父级Id
+     * 商品spuId
      */
-    private Long parentId;
+    private Long spuId;
 
     /**
      * 分类名称
@@ -32,9 +32,9 @@ public class GoodsClass extends Model {
     private String className;
 
     /**
-     * 分类图标
+     * 序号
      */
-    private String icon;
+    private Integer sequence;
 
 
 }

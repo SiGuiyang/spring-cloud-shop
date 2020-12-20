@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import quick.pager.shop.model.ImageModel;
+import quick.pager.shop.goods.dto.UploadDTO;
 import quick.pager.shop.user.response.BasicResponse;
 
 /**
@@ -24,10 +24,6 @@ public class GoodsSkuResponse extends BasicResponse {
      */
     private Long goodsId;
     /**
-     * 商品名称
-     */
-    private String goodsName;
-    /**
      * sku名称
      */
     private String skuName;
@@ -39,6 +35,19 @@ public class GoodsSkuResponse extends BasicResponse {
      * 说明
      */
     private String description;
+    /**
+     * 商品状态 0 未上架 1 上架
+     */
+    private Boolean state;
+    /**
+     * false 表示sku未失效
+     * true 表示sku失效
+     */
+    private Boolean expire = Boolean.FALSE;
+    /**
+     * 含重量
+     */
+    private BigDecimal weight;
     /**
      * 商品价格
      */
@@ -54,11 +63,10 @@ public class GoodsSkuResponse extends BasicResponse {
     /**
      * 入库量，库存量
      */
-    private Integer inventory;
-
+    private Integer stock;
     /**
      * 图片集
      */
-    private List<ImageModel> images;
+    private List<UploadDTO> images;
 
 }

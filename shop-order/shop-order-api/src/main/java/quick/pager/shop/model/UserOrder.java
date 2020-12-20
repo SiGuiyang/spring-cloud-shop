@@ -29,7 +29,7 @@ public class UserOrder extends Model {
     /**
      * 配送地址主键
      */
-    private Long deliveryAddressId;
+    private Long addrId;
     /**
      * 优惠券主键
      */
@@ -44,16 +44,22 @@ public class UserOrder extends Model {
     private String orderCode;
     /**
      * 订单状态
+     *
+     * @see quick.pager.shop.order.enums.OrderStatusEnums
      */
     private String orderStatus;
     /**
      * 订单类型
+     *
+     * @see quick.pager.shop.order.enums.OrderTypeEnums
      */
     private Integer orderType;
     /**
      * 支付方式
      * 0：支付宝
      * 1：微信
+     *
+     * @see quick.pager.shop.order.enums.PayTypeEnums
      */
     private Integer payType;
     /**

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,11 +17,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import quick.pager.shop.user.client.AuthClient;
-import quick.pager.shop.user.client.UserClient;
-import quick.pager.shop.configuration.ShopRedisTemplate;
-import quick.pager.shop.dto.UserDTO;
+import quick.pager.shop.constants.RedisKeys;
+import quick.pager.shop.client.AppUserProfileDTO;
+import quick.pager.shop.model.LoginUser;
+import quick.pager.shop.client.AuthClient;
+import quick.pager.shop.client.UserDTO;
 import quick.pager.shop.exception.OAuth2SmsInvalidException;
+import quick.pager.shop.client.UserClient;
 import quick.pager.shop.user.response.Response;
 
 /**
@@ -36,17 +40,13 @@ public class UserServiceImpl implements UserDetailsService {
     @Autowired
     private UserClient userClient;
     @Autowired
-    private ShopRedisTemplate shopRedisTemplate;
-    /**
-     * 短信登陆redis key
-     */
-    private static final String REDIS_SMS_PREFIX = "sms:login:code";
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Response<UserDTO> sysUserResponse = authClient.getSysUser(username);
-        if (null == sysUserResponse || null == sysUserResponse.getData()) {
+        if (!sysUserResponse.check() || Objects.isNull(sysUserResponse.getData())) {
             throw new UsernameNotFoundException("用户不存在");
         }
 
@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserDetailsService {
      * @return 授权人
      * @throws UsernameNotFoundException 未找到用户
      */
-    public Collection<? extends GrantedAuthority> loadUserBySMS(String phone, String smsCode) throws UsernameNotFoundException {
+    public LoginUser loadUserBySMS(final String phone, final String smsCode) throws UsernameNotFoundException {
 
         // 是否输入短信验证码
         if (StringUtils.isEmpty(smsCode)) {
             throw new OAuth2SmsInvalidException("请输入短信验证码");
         }
-        String redisSmsCode = (String) shopRedisTemplate.opsForValue().get(REDIS_SMS_PREFIX + phone);
+        String redisSmsCode = (String) redisTemplate.opsForValue().get(RedisKeys.REDIS_SMS_LOGIN_PREFIX + phone);
 
         // redis 中短信验证码是否存在，过期
         if (StringUtils.isEmpty(redisSmsCode)) {
@@ -83,11 +83,19 @@ public class UserServiceImpl implements UserDetailsService {
             throw new OAuth2SmsInvalidException("短信验证码不正确");
         }
 
-        Response<UserDTO> sysUserResponse = authClient.getSysUser(phone);
-        if (null == sysUserResponse || null == sysUserResponse.getData()) {
-            throw new UsernameNotFoundException("用户不存在");
+        Response<AppUserProfileDTO> profileInfoRes = userClient.login(phone);
+        if (profileInfoRes.check()) {
+            AppUserProfileDTO resData = profileInfoRes.getData();
+            return LoginUser.builder()
+                    .id(resData.getId())
+                    .phone(resData.getPhone())
+                    .username(resData.getUsername())
+                    .avatar(resData.getAvatar())
+                    .gender(resData.getGender())
+                    .birthday(resData.getBirthday())
+                    .build();
         }
-        return getGrantedAuthority(sysUserResponse.getData().getId());
+        throw new UsernameNotFoundException("用户不存在");
     }
 
 

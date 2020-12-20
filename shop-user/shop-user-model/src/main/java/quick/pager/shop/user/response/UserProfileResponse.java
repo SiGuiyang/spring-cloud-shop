@@ -1,18 +1,23 @@
 package quick.pager.shop.user.response;
 
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 /**
  * 用户信息
  *
  * @author siguiyang
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserProfileResponse extends BasicResponse {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UserProfileResponse implements Serializable {
     private static final long serialVersionUID = -2189550686183346833L;
 
     private Long id;
@@ -30,17 +35,9 @@ public class UserProfileResponse extends BasicResponse {
      */
     private Boolean gender;
     /**
-     * 年龄
-     */
-    private Integer age;
-    /**
-     * 邮箱地址
-     */
-    private String email;
-    /**
      * 生日
      */
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     /**
      * 头像地址
      */

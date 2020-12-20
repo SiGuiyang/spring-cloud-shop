@@ -39,7 +39,7 @@ public class SystemConfigDetailServiceImpl extends ServiceImpl<SystemConfigDetai
             wrapper.eq(SystemConfigDetail::getConfigKey, request.getConfigKey());
         }
 
-        return new Response<>(this.baseMapper.selectList(wrapper).stream().map(this::convert).collect(Collectors.toList()));
+        return Response.toResponse(this.baseMapper.selectList(wrapper).stream().map(this::convert).collect(Collectors.toList()));
     }
 
     @Override
@@ -49,14 +49,14 @@ public class SystemConfigDetailServiceImpl extends ServiceImpl<SystemConfigDetai
         systemConfigDetail.setDeleteStatus(Boolean.FALSE);
         systemConfigDetail.setConfigStatus(Boolean.FALSE);
         this.baseMapper.insert(systemConfigDetail);
-        return new Response<>(systemConfigDetail.getId());
+        return Response.toResponse(systemConfigDetail.getId());
     }
 
     @Override
     public Response<Long> modify(SystemConfigDetailSaveRequest request) {
         SystemConfigDetail systemConfigDetail = this.convert(request);
         this.baseMapper.updateById(systemConfigDetail);
-        return new Response<>(systemConfigDetail.getId());
+        return Response.toResponse(systemConfigDetail.getId());
     }
 
     /**

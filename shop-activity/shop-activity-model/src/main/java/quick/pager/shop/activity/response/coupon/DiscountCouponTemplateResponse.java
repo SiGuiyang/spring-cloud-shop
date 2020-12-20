@@ -39,6 +39,10 @@ public class DiscountCouponTemplateResponse extends BasicResponse {
      */
     private Integer templateType;
     /**
+     * 模板类型名称
+     */
+    private Integer templateTypeName;
+    /**
      * 模板名称
      */
     private String templateName;

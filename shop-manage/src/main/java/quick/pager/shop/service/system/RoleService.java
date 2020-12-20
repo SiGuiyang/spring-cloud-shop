@@ -19,35 +19,35 @@ public interface RoleService {
     /**
      * 查询列表
      */
-    Response<List<RoleResponse>> queryPage(RolePageParam param);
+    Response<List<RoleResponse>> queryPage(final RolePageParam param);
 
     /**
      * 查询列表，无分页
      */
-    Response<List<RoleResponse>> queryList(RoleOtherParam param);
+    Response<List<RoleResponse>> queryList(final RoleOtherParam param);
 
     /**
      * 新增
      */
-    Response<Long> create(RoleSaveParam param);
+    Response<Long> create(final RoleSaveParam param);
 
     /**
      * 修改
      */
-    Response<Long> modify(RoleSaveParam param);
+    Response<Long> modify(final RoleSaveParam param);
 
     /**
      * 删除
      *
      * @param id 主键
      */
-    Response<Long> delete(Long id);
+    Response<Long> delete(final Long id);
 
     /**
      * 查询角色的权限
      *
      * @param roleId 角色主键
      */
-    Response<PermissionResponse> queryRolePermission(Long roleId);
+    Response<PermissionResponse> queryRolePermission(final Long roleId);
 
 }
