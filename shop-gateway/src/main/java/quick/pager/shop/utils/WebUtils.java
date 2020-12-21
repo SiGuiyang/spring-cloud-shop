@@ -39,4 +39,15 @@ public class WebUtils {
     public static String getParameter(ServerHttpRequest request, String key) {
         return request.getQueryParams().getFirst(key);
     }
+
+    /**
+     * 获取请求参数
+     *
+     * @param request request 请求对象
+     * @param key     请求参数的key
+     * @return 参数内容
+     */
+    public static String getHeader(ServerHttpRequest request, String key) {
+        return request.getHeaders().getFirst(key);
+    }
 }

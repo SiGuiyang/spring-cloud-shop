@@ -30,6 +30,7 @@ import quick.pager.shop.cart.request.CartRequest;
 import quick.pager.shop.cart.response.GoodsCartResponse;
 import quick.pager.shop.service.CartService;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 import quick.pager.shop.utils.DateUtils;
 
 /**
@@ -103,13 +104,13 @@ public class CartServiceImpl implements CartService {
                     goodsCart.setUpdateTime(DateUtils.dateTime());
                     goodsCart.setCreateTime(DateUtils.dateTime());
                     goodsCart.setDeleteStatus(Boolean.FALSE);
-                    this.goodsCartMapper.insert(goodsCart);
+                    Assert.isTrue(this.goodsCartMapper.insert(goodsCart) > 0, () -> "添加购物车失败");
                 } else {
                     GoodsCart updateGoodsCart = new GoodsCart();
                     updateGoodsCart.setId(goodsCart.getId());
                     updateGoodsCart.setQuantity(goodsCart.getQuantity() + IConsts.ONE);
                     updateGoodsCart.setUpdateTime(DateUtils.dateTime());
-                    this.goodsCartMapper.updateById(updateGoodsCart);
+                    Assert.isTrue(this.goodsCartMapper.updateById(updateGoodsCart) > 0, () -> "添加购物车失败");
                 }
             } else {
                 return Response.toError(ResponseStatus.Code.FAIL_CODE, "您操作太快，请稍后重试");
@@ -131,27 +132,20 @@ public class CartServiceImpl implements CartService {
     public Response<Long> delete(final Long id) {
 
         GoodsCart goodsCart = this.goodsCartMapper.selectById(id);
-        if (Objects.isNull(goodsCart)) {
-            return Response.toError(ResponseStatus.Code.FAIL_CODE, "当前购物车栏不存在");
-        }
+        Assert.isTrue(Objects.nonNull(goodsCart), () -> "当前购物车栏不存在");
 
         int delete = this.goodsCartMapper.deleteById(id);
 
-        if (delete > 0) {
-            return Response.toResponse(id);
-        }
-        return Response.toError(ResponseStatus.Code.FAIL_CODE, "删除购物车失败");
+        Assert.isTrue(delete > 0, () -> "删除购物车失败");
+        return Response.toResponse(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Response<List<Long>> deleteBatch(final List<Long> ids) {
         int delete = goodsCartMapper.deleteBatchIds(ids);
-
-        if (delete > 0) {
-            return Response.toResponse(ids);
-        }
-        return Response.toError(ResponseStatus.Code.FAIL_CODE, "删除购物车失败");
+        Assert.isTrue(delete > 0, () -> "删除购物车失败");
+        return Response.toResponse(ids);
     }
 
 

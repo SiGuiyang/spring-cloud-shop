@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import quick.pager.shop.constants.ResponseStatus;
+import quick.pager.shop.model.UserDTO;
 import quick.pager.shop.user.response.Response;
 
 /**

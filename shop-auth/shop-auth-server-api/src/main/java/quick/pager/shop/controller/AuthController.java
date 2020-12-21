@@ -2,51 +2,58 @@ package quick.pager.shop.controller;
 
 import java.security.Principal;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
+import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import quick.pager.shop.model.LoginUser;
+import quick.pager.shop.user.response.Response;
+import quick.pager.shop.utils.Assert;
 
 /**
  * 权限验证授权
  *
  * @author siguiyang
  */
-@Controller
-@SessionAttributes("authorizationRequest")
+@RestController
+@Slf4j
 public class AuthController {
 
-    @RequestMapping("/oauth/confirm_access")
-    public String getAccessConfirmation(Map<String, Object> model, HttpServletRequest request) {
-        // 获取用户名
-        String userName = ((UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal())
-                .getUsername();
-        model.put("userName", userName);
+    @Resource
+    private TokenEndpoint tokenEndpoint;
 
-        request.setAttribute("authorize", model);
-        request.setAttribute("username", userName);
-        return "authorize";
-    }
+    /**
+     * 自定义授权
+     *
+     * @param principal  鉴权auth
+     * @param parameters 请求参数
+     */
+    @RequestMapping("/oauth/token")
+    public Response<Object> login(Principal principal, @RequestParam
+            Map<String, String> parameters) {
+        try {
+            OAuth2AccessToken postAccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
 
+            Assert.isTrue(Objects.nonNull(postAccessToken), () -> "授权登录失败");
 
-    @GetMapping("/callback")
-    @ResponseBody
-    public Object callback(Principal principal, @RequestParam String code) {
+            return Response.toResponse(postAccessToken.getAdditionalInformation().get("profile"));
+        } catch (HttpRequestMethodNotSupportedException e) {
+            log.error("登录失败");
+        }
 
-        System.out.println(code);
-
-        return "success";
+        return Response.toError("登录失败");
     }
 
     @RequestMapping("/oauth/principal")
-    @ResponseBody
     public Principal getPrincipal(Principal principal) {
         return principal;
     }

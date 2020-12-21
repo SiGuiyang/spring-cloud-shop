@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,7 +20,7 @@ import quick.pager.shop.constants.RedisKeys;
 import quick.pager.shop.client.AppUserProfileDTO;
 import quick.pager.shop.model.LoginUser;
 import quick.pager.shop.client.AuthClient;
-import quick.pager.shop.client.UserDTO;
+import quick.pager.shop.model.UserDTO;
 import quick.pager.shop.exception.OAuth2SmsInvalidException;
 import quick.pager.shop.client.UserClient;
 import quick.pager.shop.user.response.Response;
@@ -54,7 +53,11 @@ public class UserServiceImpl implements UserDetailsService {
 
         Collection<? extends GrantedAuthority> grantedAuthorities = this.getGrantedAuthority(sysUser.getId());
 
-        return new User(username, sysUser.getPassword(), grantedAuthorities);
+        UserDTO userDTO = new UserDTO(username, sysUser.getPassword(), grantedAuthorities);
+        userDTO.setId(sysUser.getId());
+        userDTO.setNickName(sysUser.getNickName());
+        userDTO.setAvatar(sysUser.getAvatar());
+        return userDTO;
     }
 
     /**

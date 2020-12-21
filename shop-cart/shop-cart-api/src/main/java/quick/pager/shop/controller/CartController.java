@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import quick.pager.shop.cart.request.CartOtherRequest;
 import quick.pager.shop.cart.request.CartRequest;
 import quick.pager.shop.cart.response.GoodsCartResponse;
+import quick.pager.shop.model.LoginUser;
 import quick.pager.shop.service.CartService;
 import quick.pager.shop.constants.ConstantsClient;
 import quick.pager.shop.user.response.Response;
+import quick.pager.shop.util.AuthUtils;
 
 /**
  * 购物车
@@ -29,13 +31,12 @@ public class CartController {
     /**
      * 用户购物车列表
      *
-     * @param userId 用户主键
-     * @param page   页码
+     * @param page 页码
      */
-    @PostMapping("/app/user/{userId}/{page}/page")
-    public Response<List<GoodsCartResponse>> page(@PathVariable("userId") Long userId, @PathVariable("page") Integer page) {
-
-        return cartService.page(userId, page);
+    @PostMapping("/app/user/{page}/page")
+    public Response<List<GoodsCartResponse>> page(@PathVariable("page") Integer page) {
+        LoginUser principal = (LoginUser) AuthUtils.getPrincipal().getPrincipal();
+        return cartService.page(principal.getId(), page);
     }
 
 
@@ -58,7 +59,8 @@ public class CartController {
      */
     @PostMapping("/app/cart/create")
     public Response<Long> create(@RequestBody CartRequest request) {
-
+        LoginUser principal = (LoginUser) AuthUtils.getPrincipal().getPrincipal();
+        request.setUserId(principal.getId());
         return cartService.create(request);
     }
 

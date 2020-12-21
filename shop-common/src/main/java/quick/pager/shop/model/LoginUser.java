@@ -2,6 +2,7 @@ package quick.pager.shop.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,14 @@ public class LoginUser implements Serializable {
      * 昵称
      */
     private String username;
+    /**
+     * 权限
+     */
+    private List<String> authorities;
+    /**
+     * 登录token
+     */
+    private String token;
     /**
      * 头像
      */

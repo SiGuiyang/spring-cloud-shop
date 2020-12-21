@@ -1,6 +1,10 @@
 package quick.pager.shop.configuration;
 
+import com.google.common.collect.Lists;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.sql.DataSource;
@@ -10,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -25,10 +31,13 @@ import org.springframework.security.oauth2.provider.code.AuthorizationCodeServic
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeTokenGranter;
 import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import quick.pager.shop.model.UserDTO;
 import quick.pager.shop.granter.PhonePasswordTokenGranter;
 import quick.pager.shop.granter.SmsTokenGranter;
+import quick.pager.shop.model.LoginUser;
 import quick.pager.shop.service.UserServiceImpl;
 import quick.pager.shop.translator.DefaultWebResponseExceptionTranslator;
 
@@ -74,6 +83,7 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
                 .authenticationManager(authenticationManager)
                 .authorizationCodeServices(authorizationCodeServices)
                 .exceptionTranslator(webResponseExceptionTranslator)
+                .tokenServices(tokenServices())
                 .tokenStore(tokenStore())
                 .userDetailsService(userServiceImpl)
                 .tokenGranter(new CompositeTokenGranter(getTokenGranters(endpoints.getAuthorizationCodeServices(), endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory())))
@@ -101,5 +111,38 @@ public class OAuth2SecurityConfiguration extends AuthorizationServerConfigurerAd
     @Bean
     public TokenStore tokenStore() {
         return new RedisTokenStore(redisConnectionFactory);
+    }
+
+    @Bean
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(tokenStore());
+        tokenServices.setClientDetailsService(clientDetails());
+        tokenServices.setAccessTokenValiditySeconds(60 * 60 * 24);
+        tokenServices.setTokenEnhancer((accessToken, authentication) -> {
+            Object principal = authentication.getPrincipal();
+            final Map<String, Object> additionalInfo = new HashMap<>();
+            if (principal instanceof UserDTO) {
+                UserDTO userDTO = (UserDTO) principal;
+                additionalInfo.put("profile", LoginUser.builder()
+                        .id(userDTO.getId())
+                        .phone(userDTO.getUsername())
+                        .username(userDTO.getNickName())
+                        .avatar(userDTO.getAvatar())
+                        .authorities(Optional.ofNullable(userDTO.getAuthorities()).orElse(Lists.newArrayList()).stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                        .token(accessToken.getValue())
+                        .build());
+
+            } else if (principal instanceof LoginUser) {
+                LoginUser user = (LoginUser) principal;
+                user.setToken(accessToken.getValue());
+                additionalInfo.put("profile", user);
+            }
+
+            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+            return accessToken;
+        });
+        return tokenServices;
+
     }
 }
