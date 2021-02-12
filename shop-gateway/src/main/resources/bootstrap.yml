@@ -55,7 +55,7 @@ spring:
           predicates:
             - Path=/oss/**
         - id: shop-cart
-          uri: lb://shoop-cart
+          uri: lb://shop-cart
           predicates:
             - Path=/cart/**
         - id: shop-settlement

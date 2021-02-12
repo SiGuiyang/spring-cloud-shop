@@ -36,7 +36,6 @@ public class AppUserCodeController {
 
         Assert.isTrue(StringUtils.isNoneEmpty(request.getPhone()), () -> "手机号不能为空");
         Assert.isTrue(Validator.isMobile(request.getPhone()), () -> "手机号码不正确");
-
         Assert.isTrue(StringUtils.isNoneEmpty(request.getSource()), () -> "事件源不能为空");
 
         return smsCodeService.send(request);

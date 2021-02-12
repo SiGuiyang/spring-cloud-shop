@@ -33,9 +33,13 @@ public class Activity extends Model {
      * 活动状态
      */
     private Boolean state;
-
+    /**
+     * 开始时间
+     */
     private LocalDateTime beginTime;
-
+    /**
+     * 结束时间
+     */
     private LocalDateTime endTime;
 
 }
