@@ -22,7 +22,7 @@
         <guava.version>20.0</guava.version>
         <qiniu.version>7.2.11</qiniu.version>
         <happy.version>0.1.4</happy.version>
-        <httpclient.version>4.5.5</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <okhttp.version>3.14.7</okhttp.version>
         <mybatis.version>3.4.6</mybatis.version>
         <lombok.version>1.18.12</lombok.version>
