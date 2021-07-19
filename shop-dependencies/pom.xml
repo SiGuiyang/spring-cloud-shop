@@ -14,7 +14,7 @@
 
     <properties>
         <education.version>1.0</education.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <hutool.version>4.1.14</hutool.version>
         <easyexcel.version>2.2.6</easyexcel.version>
         <xerces.version>2.11.0</xerces.version>
