@@ -76,7 +76,6 @@
         <module>shop-goods</module>
         <module>shop-job</module>
         <module>shop-manage</module>
-        <module>shop-mq</module>
         <module>shop-order</module>
         <module>shop-oss</module>
         <module>shop-platform</module>

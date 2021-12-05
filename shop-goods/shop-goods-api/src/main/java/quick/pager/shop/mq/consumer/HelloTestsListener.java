@@ -1,9 +1,11 @@
-package quick.pager.shop.listener.goods;
+package quick.pager.shop.mq.consumer;
 
-import java.io.IOException;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import quick.pager.shop.mq.GoodsMQ;
+
+import java.io.IOException;
 
 @Component
 public class HelloTestsListener {

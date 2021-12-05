@@ -1,7 +1,8 @@
-package quick.pager.shop.listener.activity;
+package quick.pager.shop.mq.consumer;
 
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
+import quick.pager.shop.mq.ActivityMQ;
 
 /**
  * 站内行发送监听器

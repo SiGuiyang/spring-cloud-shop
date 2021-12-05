@@ -9,7 +9,7 @@
 
     <version>cloud-1.0</version>
 
-    <name>SPRING::CLOUD::SHOP::DEPENDENCIES</name>
+    <name>spring::cloud::shop::dependencies</name>
     <description>Spring Cloud Shop Dependencies</description>
 
     <properties>
