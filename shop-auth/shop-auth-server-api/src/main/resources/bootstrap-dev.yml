@@ -5,6 +5,13 @@ spring:
         server-addr: 106.54.251.32:8848
         group: shop
         namespace: 0759bc76-60b5-4f32-acd5-e5095cf2b93d
+        extension-configs:
+          - data-id: shop-common.properties
+            group: shop
+            refresh: true
+          - data-id: shop-redis.properties
+            group: shop
+            refresh: true
       discovery:
         server-addr: 106.54.251.32:8848
         group: shop
