@@ -17,7 +17,7 @@
         <junit.version>4.12</junit.version>
         <hutool.version>4.1.14</hutool.version>
         <easyexcel.version>2.2.6</easyexcel.version>
-        <xerces.version>2.11.0</xerces.version>
+        <xerces.version>2.12.2</xerces.version>
         <fastjson.version>1.2.47</fastjson.version>
         <guava.version>20.0</guava.version>
         <qiniu.version>7.2.11</qiniu.version>
