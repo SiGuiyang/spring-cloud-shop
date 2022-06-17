@@ -18,7 +18,7 @@
         <hutool.version>4.1.14</hutool.version>
         <easyexcel.version>2.2.6</easyexcel.version>
         <xerces.version>2.11.0</xerces.version>
-        <fastjson.version>1.2.47</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <guava.version>20.0</guava.version>
         <qiniu.version>7.2.11</qiniu.version>
         <happy.version>0.1.4</happy.version>
