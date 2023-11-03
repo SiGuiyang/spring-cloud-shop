@@ -117,7 +117,7 @@ public class DefaultWebResponseExceptionTranslator implements WebResponseExcepti
     }
 
     @SuppressWarnings("serial")
-    private static class ForbiddenException extends OAuth2Exception {
+    private static final class ForbiddenException extends OAuth2Exception {
 
         private ForbiddenException(String msg, Throwable t) {
             super(msg, t);
@@ -136,7 +136,7 @@ public class DefaultWebResponseExceptionTranslator implements WebResponseExcepti
     }
 
     @SuppressWarnings("serial")
-    private static class ServerErrorException extends OAuth2Exception {
+    private static final class ServerErrorException extends OAuth2Exception {
 
         private ServerErrorException(String msg, Throwable t) {
             super(msg, t);
@@ -155,7 +155,7 @@ public class DefaultWebResponseExceptionTranslator implements WebResponseExcepti
     }
 
     @SuppressWarnings("serial")
-    private static class UnauthorizedException extends OAuth2Exception {
+    private static final class UnauthorizedException extends OAuth2Exception {
 
         private UnauthorizedException(String msg, Throwable t) {
             super(msg, t);
@@ -174,7 +174,7 @@ public class DefaultWebResponseExceptionTranslator implements WebResponseExcepti
     }
 
     @SuppressWarnings("serial")
-    private static class MethodNotAllowed extends OAuth2Exception {
+    private static final class MethodNotAllowed extends OAuth2Exception {
 
         private MethodNotAllowed(String msg, Throwable t) {
             super(msg, t);

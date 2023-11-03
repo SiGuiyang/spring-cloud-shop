@@ -13,9 +13,9 @@ public enum PayTypeEnums implements IEnum<Integer> {
     WECHAT(2, "微信"),
     HUABEI(3, "花呗");
 
-    private int code;
+    private final int code;
 
-    private String desc;
+    private final String desc;
 
     PayTypeEnums(int code, String desc) {
         this.code = code;

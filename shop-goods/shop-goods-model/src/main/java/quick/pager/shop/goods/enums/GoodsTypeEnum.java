@@ -13,8 +13,8 @@ public enum GoodsTypeEnum {
     SECOND_KILL(4, "秒杀商品"),
     EXCHANGE(5, "满赠换购商品");
 
-    private int code;
-    private String name;
+    private final int code;
+    private final String name;
 
     GoodsTypeEnum(int code, String name) {
         this.code = code;

@@ -36,9 +36,9 @@ public enum OrderStatusEnums implements IEnum<String> {
     BS012("BS012", "退货中"),
     BS013("BS013", "已关闭");
 
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 
     OrderStatusEnums(String code, String desc) {
         this.code = code;

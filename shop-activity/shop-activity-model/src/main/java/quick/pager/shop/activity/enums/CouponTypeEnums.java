@@ -15,9 +15,9 @@ public enum CouponTypeEnums implements IEnum<Integer> {
     private int type;
     private String name;
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 
     CouponTypeEnums(Integer code, String desc) {
         this.code = code;

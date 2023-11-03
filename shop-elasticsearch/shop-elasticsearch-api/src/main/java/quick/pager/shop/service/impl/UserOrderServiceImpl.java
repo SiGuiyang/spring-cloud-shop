@@ -69,7 +69,6 @@ public class UserOrderServiceImpl implements UserOrderService {
     }
 
     private ESUserOrderResponse conv(ESUserOrder order) {
-        ESUserOrderResponse resp = new ESUserOrderResponse();
-        return resp;
+        return new ESUserOrderResponse();
     }
 }

@@ -27,9 +27,9 @@ import java.util.Map;
  */
 public class BeanCopier<T> implements Copier<T> {
 
-    private Object source;
-    private T dest;
-    private CopyOptions copyOptions;
+    private final Object source;
+    private final T dest;
+    private final CopyOptions copyOptions;
 
 
     /**
@@ -136,7 +136,7 @@ public class BeanCopier<T> implements Copier<T> {
             }
             actualEditable = copyOptions.editable;
         }
-        final HashSet<String> ignoreSet = (null != copyOptions.ignoreProperties) ? CollUtil.newHashSet(copyOptions.ignoreProperties) : null;
+        final HashSet<String> ignoreSet = null != copyOptions.ignoreProperties ? CollUtil.newHashSet(copyOptions.ignoreProperties) : null;
         final Map<String, String> fieldReverseMapping = copyOptions.getReversedMapping();
 
         final Collection<BeanDesc.PropDesc> props = BeanUtil.getBeanDesc(actualEditable).getProps();

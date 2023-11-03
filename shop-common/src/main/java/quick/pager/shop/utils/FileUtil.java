@@ -49,35 +49,35 @@ public class FileUtil {
      * @return Content-Type
      */
     public static String getContentType(String filenameExtension) {
-        if (filenameExtension.equalsIgnoreCase(".bmp")) {
+        if (".bmp".equalsIgnoreCase(filenameExtension)) {
             return "image/bmp";
         }
-        if (filenameExtension.equalsIgnoreCase(".gif")) {
+        if (".gif".equalsIgnoreCase(filenameExtension)) {
             return "image/gif";
         }
-        if (filenameExtension.equalsIgnoreCase(".jpeg") ||
-                filenameExtension.equalsIgnoreCase(".jpg") ||
-                filenameExtension.equalsIgnoreCase(".png")) {
+        if (".jpeg".equalsIgnoreCase(filenameExtension) ||
+                ".jpg".equalsIgnoreCase(filenameExtension) ||
+                ".png".equalsIgnoreCase(filenameExtension)) {
             return "image/jpg";
         }
-        if (filenameExtension.equalsIgnoreCase(".html")) {
+        if (".html".equalsIgnoreCase(filenameExtension)) {
             return "text/html";
         }
-        if (filenameExtension.equalsIgnoreCase(".txt")) {
+        if (".txt".equalsIgnoreCase(filenameExtension)) {
             return "text/plain";
         }
-        if (filenameExtension.equalsIgnoreCase(".vsd")) {
+        if (".vsd".equalsIgnoreCase(filenameExtension)) {
             return "application/vnd.visio";
         }
-        if (filenameExtension.equalsIgnoreCase(".pptx") ||
-                filenameExtension.equalsIgnoreCase(".ppt")) {
+        if (".pptx".equalsIgnoreCase(filenameExtension) ||
+                ".ppt".equalsIgnoreCase(filenameExtension)) {
             return "application/vnd.ms-powerpoint";
         }
-        if (filenameExtension.equalsIgnoreCase(".docx") ||
-                filenameExtension.equalsIgnoreCase(".doc")) {
+        if (".docx".equalsIgnoreCase(filenameExtension) ||
+                ".doc".equalsIgnoreCase(filenameExtension)) {
             return "application/msword";
         }
-        if (filenameExtension.equalsIgnoreCase(".xml")) {
+        if (".xml".equalsIgnoreCase(filenameExtension)) {
             return "text/xml";
         }
         return "image/jpg";

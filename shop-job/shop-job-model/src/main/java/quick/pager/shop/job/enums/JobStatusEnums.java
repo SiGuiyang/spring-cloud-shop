@@ -22,9 +22,9 @@ public enum JobStatusEnums implements IEnum<Integer> {
     BLOCKED(5, "阻塞"),
     NONE(6, "不存在");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 
     JobStatusEnums(Integer code, String desc) {
         this.code = code;

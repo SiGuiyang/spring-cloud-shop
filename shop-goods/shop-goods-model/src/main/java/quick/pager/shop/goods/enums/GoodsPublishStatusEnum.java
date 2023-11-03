@@ -13,9 +13,9 @@ public enum GoodsPublishStatusEnum implements IEnum<Integer> {
     PASS(1, "审核通过"),
     REFUSE(2, "审核拒绝");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 
     GoodsPublishStatusEnum(int code, String desc) {
         this.code = code;

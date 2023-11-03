@@ -25,6 +25,6 @@ public class Assert {
     }
 
     private static String nullSafeGet(Supplier<String> messageSupplier) {
-        return (messageSupplier != null ? messageSupplier.get() : null);
+        return messageSupplier != null ? messageSupplier.get() : null;
     }
 }

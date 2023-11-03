@@ -15,9 +15,9 @@ public enum SMSCodeEnums {
 
     INITIAL_CIPHER_SMS("1003", "发送初始密码短信验证码");
 
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 
     SMSCodeEnums(String code, String desc) {
         this.code = code;

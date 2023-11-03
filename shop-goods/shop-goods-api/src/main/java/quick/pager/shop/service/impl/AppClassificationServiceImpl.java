@@ -64,7 +64,7 @@ public class AppClassificationServiceImpl implements AppClassificationService {
                 List<Object> result = opsForList.range(key, 0L, size);
 
                 if (CollectionUtils.isNotEmpty(result)) {
-                    return Response.toResponse(result.stream().map(item -> (CommonResponse) item).collect(Collectors.toList()));
+                    return Response.toResponse(result.stream().map(CommonResponse.class::cast).collect(Collectors.toList()));
                 }
             }
         }

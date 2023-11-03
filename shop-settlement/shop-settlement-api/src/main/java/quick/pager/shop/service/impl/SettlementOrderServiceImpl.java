@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import io.seata.spring.annotation.GlobalTransactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -94,7 +95,7 @@ public class SettlementOrderServiceImpl implements SettlementOrderService {
     private RedissonClient redissonClient;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-    @Value(("${spring.profiles.active}"))
+    @Value("${spring.profiles.active}")
     private String env;
 
     @Override
@@ -178,7 +179,7 @@ public class SettlementOrderServiceImpl implements SettlementOrderService {
                 userOrderSaveReq.setPayType(PayTypeEnums.parse(request.getPayType()));
                 userOrderSaveReq.setDeliveryTime(request.getDeliveryTime());
                 userOrderSaveReq.setIntegral(integral);
-                userOrderSaveReq.setIntegralAmount(Objects.nonNull(integral) ? BigDecimal.valueOf(integral).divide(BigDecimal.valueOf(100), 2) : BigDecimal.ZERO);
+                userOrderSaveReq.setIntegralAmount(Objects.nonNull(integral) ? BigDecimal.valueOf(integral).divide(BigDecimal.valueOf(100), RoundingMode.CEILING) : BigDecimal.ZERO);
                 userOrderSaveReq.setOrderAmount(request.getOrderAmount());
                 userOrderSaveReq.setDiscountAmount(request.getDiscountAmount());
                 userOrderSaveReq.setPayAmount(request.getPayAmount());

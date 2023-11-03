@@ -151,6 +151,6 @@ public class CopyOptions {
      * @since 4.1.10
      */
     protected Map<String, String> getReversedMapping() {
-        return (null != this.fieldMapping) ? MapUtil.reverse(this.fieldMapping) : null;
+        return null != this.fieldMapping ? MapUtil.reverse(this.fieldMapping) : null;
     }
 }

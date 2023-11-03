@@ -9,9 +9,9 @@ package quick.pager.shop.enums;
 public enum SortEnums implements IEnum<String> {
     DESC("DESC", "倒序"),
     AES("AES", "升序");
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 
     SortEnums(String code, String desc) {
         this.code = code;

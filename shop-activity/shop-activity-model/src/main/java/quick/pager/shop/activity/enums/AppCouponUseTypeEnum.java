@@ -13,9 +13,9 @@ public enum AppCouponUseTypeEnum implements IEnum<String> {
     UNUSED("UNUSED", "未使用"),
     USED("USED", "未使用"),
     EXPIRE("EXPIRE", "未使用");
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 
     AppCouponUseTypeEnum(String code, String desc) {
         this.code = code;

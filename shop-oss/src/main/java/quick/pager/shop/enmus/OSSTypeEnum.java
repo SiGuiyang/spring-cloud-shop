@@ -12,9 +12,9 @@ public enum OSSTypeEnum implements IEnum<String> {
     ALIYUN("ALIYUN", "阿里云"),
     QINIU("QINIU", "七牛云");
 
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 
     OSSTypeEnum(String code, String desc) {
         this.code = code;

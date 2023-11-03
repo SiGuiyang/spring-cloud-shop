@@ -15,9 +15,9 @@ public enum OrderEnums implements IEnum<Integer> {
     RAISED(4, "待自提"),
     EVALUATED(5, "待评价");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 
     OrderEnums(Integer code, String desc) {
         this.code = code;

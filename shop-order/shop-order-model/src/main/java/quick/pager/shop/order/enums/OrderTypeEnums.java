@@ -14,9 +14,9 @@ public enum OrderTypeEnums implements IEnum<Integer> {
     SEC_KILL(4, "秒杀订单"),
     INTEGRAL(5, "积分订单");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 
     OrderTypeEnums(Integer code, String desc) {
         this.code = code;

@@ -12,9 +12,9 @@ public enum TradeTypeEnums implements IEnum<Integer> {
     PAY(0, "支付下单"),
     REFUSE(1, "退款");
 
-    private Integer code;
+    private final Integer code;
 
-    private String desc;
+    private final String desc;
 
     TradeTypeEnums(Integer code, String desc) {
         this.code = code;

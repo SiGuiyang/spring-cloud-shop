@@ -7,9 +7,9 @@ public enum CartOptEnums implements IEnum<String> {
     ADD("ADD", "添加购物车"),
     MODIFY("MODIFY", "修改购物车");
 
-    private String code;
+    private final String code;
 
-    private String desc;
+    private final String desc;
 
     CartOptEnums(String code, String desc) {
         this.code = code;

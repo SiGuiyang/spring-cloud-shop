@@ -105,12 +105,14 @@ public class ManageNoSpringTests {
         int temp = arr[start];
 
         while (start < end) {
-            while (start < end && arr[start] < temp)
+            while (start < end && arr[start] < temp) {
                 start++;
+            }
             arr[start] = arr[end];
 
-            while (start < end && arr[end] > temp)
+            while (start < end && arr[end] > temp) {
                 end--;
+            }
             arr[end] = arr[start];
         }
         arr[start] = temp;
